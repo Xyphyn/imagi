@@ -1,0 +1,38 @@
+:root {
+    --card-color: #222;
+    --background-color: #111;
+    --text-color: #fff;
+    --accent-color: #7700ff;
+
+    font-family: 'Cantarell', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+html,body {
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    color: var(--text-color);
+
+}
+
+button {
+    outline: none;
+    border-radius: 8px;
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0.5rem 0.65rem;
+    transition: background-color 250ms;
+}
+
+button:hover {
+    background-color: var(--accent-color);
+    cursor: pointer;
+}
