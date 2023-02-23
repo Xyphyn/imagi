@@ -6,8 +6,15 @@
     let expanded: boolean = false
     let expandedPost: any
 
+    let uploading: boolean = false
+
     let posts: any[] = []
     let unsubscribe: () => void
+
+    let newPost = {
+        files: undefined,
+        description: '',
+    }
 
     onMount(async () => {
         const resultList = await pb.collection('posts').getList(1, 50, {
@@ -25,7 +32,7 @@
                         .collection('users')
                         .getOne(record.user)
                     record.expand = { user }
-                    posts = [...posts, record]
+                    posts = [record, ...posts]
                 }
                 if (action === 'delete') {
                     posts = posts.filter((post) => post.id !== record.id)
@@ -38,8 +45,6 @@
     })
 
     function getFile(post: any, fullQuality: boolean) {
-        console.log(post)
-
         const firstFilename = post.image
         if (fullQuality) {
             return pb.getFileUrl(post, firstFilename)
@@ -49,16 +54,36 @@
     }
 
     function expandView(post: any) {
-        console.log(post)
         expandedPost = post
 
         expanded = true
     }
 
-    function upload() {}
+    function uploadDialog() {
+        uploading = true
+    }
+
+    function uploadPost() {
+        console.log('upload')
+        console.log(newPost.files)
+
+        if (newPost.files!.length <= 0 || newPost.description == '') {
+            return
+        }
+
+        const dataArray = new FormData()
+        dataArray.append('image', newPost.files![0])
+        dataArray.append('description', newPost.description)
+        dataArray.append('user', $currentUser!.id)
+
+        pb.collection('posts').create(dataArray)
+
+        newPost.files = undefined
+        newPost.description = ''
+    }
 </script>
 
-<h1>Images <button on:click={upload} /></h1>
+<h1>Images <button on:click={uploadDialog}>Upload</button></h1>
 <div class="posts">
     {#each posts as post (post.id)}
         <div
@@ -87,6 +112,29 @@
     {/if}
 </Modal>
 
+<Modal bind:expanded={uploading}>
+    <h1>Upload</h1>
+    <form on:submit|preventDefault={uploadPost} class="upload-form">
+        <label for="file-upload" class="custom-file-upload">
+            Pick an image
+            <input
+                id="file-upload"
+                placeholder="Image"
+                type="file"
+                bind:files={newPost.files}
+            />
+        </label>
+        <input
+            placeholder="Description [required]"
+            type="text"
+            maxlength="64"
+            bind:value={newPost.description}
+        />
+
+        <button type="submit">Upload</button>
+    </form>
+</Modal>
+
 <style>
     .posts {
         display: grid;
@@ -103,6 +151,7 @@
         background-color: rgba(255, 255, 255, 0.1);
         max-width: 512px;
         transition: transform 250ms;
+        box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
     .post:hover {
@@ -112,9 +161,18 @@
 
     .post-image {
         border-radius: 1rem;
+        width: 100%;
     }
 
     .expanded-image {
-        width: 80%;
+        position: relative;
+        max-width: 80%;
+        border-radius: 8px;
+    }
+
+    .upload-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 </style>

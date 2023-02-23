@@ -22,7 +22,7 @@ html,body {
 
 }
 
-button {
+button,.custom-file-upload {
     outline: none;
     border-radius: 8px;
     border: 1px solid var(--accent-color);
@@ -32,7 +32,20 @@ button {
     transition: background-color 250ms;
 }
 
-button:hover {
+button:hover,.custom-file-upload:hover {
     background-color: var(--accent-color);
     cursor: pointer;
+}
+
+input {
+    outline: none;
+    border: 1px solid var(--accent-color);
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--text-color);
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px;
+}
+
+input[type="file"] {
+    display: none;
 }
