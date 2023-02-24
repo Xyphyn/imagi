@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Cantarell';
+    src: url('/font/Cantarell-VF.otf');
+}
+
 :root {
     --card-color: #222;
     --background-color: #111;

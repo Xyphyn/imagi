@@ -18,7 +18,6 @@
                 username,
                 password,
                 passwordConfirm: password,
-                name: 'hi mom!',
             }
             const createdUser = await pb.collection('users').create(data)
             await login()

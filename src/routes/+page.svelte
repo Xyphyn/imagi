@@ -2,6 +2,7 @@
     import { onMount, onDestroy } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import Modal from '$lib/Modal.svelte'
+    import { goto } from '$app/navigation'
 
     let expanded: boolean = false
     let expandedPost: any
@@ -60,14 +61,14 @@
     }
 
     function uploadDialog() {
+        if (!$currentUser?.id) {
+            goto('/login')
+        }
         uploading = true
     }
 
     function uploadPost() {
-        console.log('upload')
-        console.log(newPost.files)
-
-        if (newPost.files!.length <= 0 || newPost.description == '') {
+        if (newPost.files == undefined || newPost.description == '') {
             return
         }
 
@@ -83,7 +84,11 @@
     }
 </script>
 
-<h1>Images <button on:click={uploadDialog}>Upload</button></h1>
+<h1>
+    The Meme Dump <button on:click={uploadDialog}>Upload</button>
+    {#if !$currentUser?.id}<button on:click={() => goto('/login')}>Login</button
+        >{/if}
+</h1>
 <div class="posts">
     {#each posts as post (post.id)}
         <div
@@ -103,7 +108,10 @@
 
 <Modal bind:expanded>
     {#if expandedPost}
-        <p>{expandedPost.description}</p>
+        <p>
+            {expandedPost.description}
+            <span class="username">@{expandedPost.expand?.user.username}</span>
+        </p>
         <img
             class="expanded-image"
             src={getFile(expandedPost, true)}
@@ -114,6 +122,7 @@
 
 <Modal bind:expanded={uploading}>
     <h1>Upload</h1>
+    <p>File size must be less than 5MB. Supported types: png, jpg, webp, gif</p>
     <form on:submit|preventDefault={uploadPost} class="upload-form">
         <label for="file-upload" class="custom-file-upload">
             Pick an image
@@ -142,6 +151,7 @@
         gap: 1rem;
         grid-template-columns: repeat(auto-fit, minmax(256px, 2fr));
         grid-auto-flow: dense;
+        transition: grid-template-columns 250ms;
     }
 
     .post {
@@ -162,11 +172,15 @@
     .post-image {
         border-radius: 1rem;
         width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
     }
 
     .expanded-image {
-        position: relative;
+        display: inline-block;
         max-width: 80%;
+        max-height: 80%;
+        position: relative;
         border-radius: 8px;
     }
 
@@ -174,5 +188,9 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .username {
+        opacity: 0.3;
     }
 </style>
