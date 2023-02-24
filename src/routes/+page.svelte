@@ -4,12 +4,27 @@
     import Modal from '$lib/Modal.svelte'
     import { goto } from '$app/navigation'
 
-    let expanded: boolean = false
-    let expandedPost: any
+    interface Post {
+        image: any
+        id: string
+        description: string
+        user: string
+        expand: any
+    }
 
-    let uploading: boolean = false
+    interface ModalData {
+        uploading: boolean
+        expandedView: boolean
+        expandedPost: Post | undefined
+    }
 
-    let posts: any[] = []
+    let modalData: ModalData = {
+        uploading: false,
+        expandedView: false,
+        expandedPost: undefined,
+    }
+
+    let posts: Post[] = []
     let unsubscribe: () => void
 
     let newPost = {
@@ -18,7 +33,7 @@
     }
 
     onMount(async () => {
-        const resultList = await pb.collection('posts').getList(1, 50, {
+        const resultList = await pb.collection('posts').getList<Post>(1, 50, {
             sort: '-created',
             expand: 'user',
         })
@@ -27,11 +42,12 @@
 
         unsubscribe = await pb
             .collection('posts')
-            .subscribe('*', async ({ action, record }) => {
+            .subscribe<Post>('*', async ({ action, record }) => {
                 if (action === 'create') {
                     const user = await pb
                         .collection('users')
                         .getOne(record.user)
+
                     record.expand = { user }
                     posts = [record, ...posts]
                 }
@@ -54,17 +70,17 @@
         }
     }
 
-    function expandView(post: any) {
-        expandedPost = post
+    function expandView(post: Post) {
+        modalData.expandedPost = post
 
-        expanded = true
+        modalData.expandedView = true
     }
 
     function uploadDialog() {
         if (!$currentUser?.id) {
             goto('/login')
         }
-        uploading = true
+        modalData.uploading = true
     }
 
     function uploadPost() {
@@ -81,6 +97,11 @@
 
         newPost.files = undefined
         newPost.description = ''
+    }
+
+    function deletePost(post: Post | undefined) {
+        modalData.expandedView = false
+        pb.collection('posts').delete(post!.id)
     }
 </script>
 
@@ -106,21 +127,28 @@
     {/each}
 </div>
 
-<Modal bind:expanded>
-    {#if expandedPost}
+<Modal bind:expanded={modalData.expandedView}>
+    {#if modalData.expandedPost}
         <p>
-            {expandedPost.description}
-            <span class="username">@{expandedPost.expand?.user.username}</span>
+            {modalData.expandedPost.description}
+            <span class="username"
+                >@{modalData.expandedPost.expand?.user.username}</span
+            >
         </p>
         <img
             class="expanded-image"
-            src={getFile(expandedPost, true)}
+            src={getFile(modalData.expandedPost, true)}
             alt="Expanded"
         />
+        {#if modalData.expandedPost.expand?.user.id == $currentUser?.id}
+            <button on:click={() => deletePost(modalData.expandedPost)}
+                >Delete</button
+            >
+        {/if}
     {/if}
 </Modal>
 
-<Modal bind:expanded={uploading}>
+<Modal bind:expanded={modalData.uploading}>
     <h1>Upload</h1>
     <p>File size must be less than 5MB. Supported types: png, jpg, webp, gif</p>
     <form on:submit|preventDefault={uploadPost} class="upload-form">
