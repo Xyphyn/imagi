@@ -4,6 +4,9 @@
     import Modal from '$lib/Modal.svelte'
     import { goto } from '$app/navigation'
     import Loader from '$lib/Loader.svelte'
+    import nprogress from 'nprogress'
+
+    let page = 0
 
     interface Post {
         image: any
@@ -37,13 +40,39 @@
         description: '',
     }
 
-    onMount(async () => {
-        const resultList = await pb.collection('posts').getList<Post>(1, 50, {
-            sort: '-created',
-            expand: 'user',
-        })
+    async function getPage(increment: boolean) {
+        if (increment) {
+            page++
+        } else {
+            if (page > 1) {
+                page--
+            }
+        }
+
+        nprogress.start()
+
+        const resultList = await pb
+            .collection('posts')
+            .getList<Post>(page, 50, {
+                sort: '-created',
+                expand: 'user',
+            })
+
+        if (Math.ceil(resultList.totalItems / 50) < page) {
+            page = Math.ceil(resultList.totalItems / 50)
+        }
+
+        if (page <= 0) {
+            page = 1
+        }
 
         posts = resultList.items
+
+        nprogress.done()
+    }
+
+    onMount(async () => {
+        getPage(true)
 
         unsubscribe = await pb
             .collection('posts')
@@ -152,6 +181,19 @@
         </div>
     {/each}
 </div>
+<div class="navigation">
+    <button
+        on:click={() => {
+            getPage(false)
+        }}>Back</button
+    >
+    {page}
+    <button
+        on:click={() => {
+            getPage(true)
+        }}>Next</button
+    >
+</div>
 
 <Modal bind:expanded={modalData.expandedView}>
     {#if modalData.expandedPost}
@@ -259,5 +301,14 @@
 
     .error {
         color: #ff2f2f;
+    }
+
+    .navigation {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 2rem;
     }
 </style>
