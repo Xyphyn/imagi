@@ -5,16 +5,10 @@
     import { goto } from '$app/navigation'
     import Loader from '$lib/Loader.svelte'
     import nprogress from 'nprogress'
+    import CommentSection from '$lib/CommentSection.svelte'
+    import type { Post } from '$lib/types/post'
 
     let page = 0
-
-    interface Post {
-        image: any
-        id: string
-        description: string
-        user: string
-        expand: any
-    }
 
     interface ModalData {
         uploading: boolean
@@ -46,6 +40,8 @@
         } else {
             if (page > 1) {
                 page--
+            } else {
+                return
             }
         }
 
@@ -160,41 +156,52 @@
     }
 </script>
 
-<h1>
-    The Meme Dump <button on:click={uploadDialog}>Upload</button>
-    {#if !$currentUser?.id}<button on:click={() => goto('/login')}>Login</button
-        >{/if}
-</h1>
-<div class="posts">
-    {#each posts as post (post.id)}
-        <div
-            class="post"
-            on:click={() => expandView(post)}
-            on:keypress={() => expandView(post)}
+<div class="container">
+    <h1
+        style="display: flex; flex-direction: row; gap: 1rem; align-items:center;"
+    >
+        <img
+            src="/imagi.svg"
+            alt="imagi"
+            class="logo"
+            title="Yes, I stole the Jetbrains logo. If this ever gets popular I'll make my own."
+        />
+        Imagi
+        <button on:click={uploadDialog}>Upload</button>
+        {#if !$currentUser?.id}<button on:click={() => goto('/login')}
+                >Login</button
+            >{/if}
+    </h1>
+    <div class="posts">
+        {#each posts as post (post.id)}
+            <div
+                class="post"
+                on:click={() => expandView(post)}
+                on:keypress={() => expandView(post)}
+            >
+                <!-- <img class="avatar" alt="avatar" width="40px" /> -->
+                <img
+                    class="post-image"
+                    src={getFile(post, false)}
+                    alt={post.description}
+                />
+            </div>
+        {/each}
+    </div>
+    <div class="navigation">
+        <button
+            on:click={() => {
+                getPage(false)
+            }}>Back</button
         >
-            <!-- <img class="avatar" alt="avatar" width="40px" /> -->
-            <img
-                class="post-image"
-                src={getFile(post, false)}
-                alt={post.description}
-            />
-        </div>
-    {/each}
+        {page}
+        <button
+            on:click={() => {
+                getPage(true)
+            }}>Next</button
+        >
+    </div>
 </div>
-<div class="navigation">
-    <button
-        on:click={() => {
-            getPage(false)
-        }}>Back</button
-    >
-    {page}
-    <button
-        on:click={() => {
-            getPage(true)
-        }}>Next</button
-    >
-</div>
-
 <Modal bind:expanded={modalData.expandedView}>
     {#if modalData.expandedPost}
         <p>
@@ -213,6 +220,7 @@
                 >Delete {#if modalData.loading}<Loader />{/if}</button
             >
         {/if}
+        <CommentSection post={modalData.expandedPost} />
     {/if}
 </Modal>
 
@@ -310,5 +318,13 @@
         align-items: center;
         gap: 2rem;
         margin-top: 2rem;
+    }
+
+    .container {
+        margin: 2rem;
+    }
+
+    .logo {
+        width: 64px;
     }
 </style>

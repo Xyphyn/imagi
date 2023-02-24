@@ -12,14 +12,19 @@
     on:close={() => (expanded = false)}
     on:click|self={() => dialog.close()}
 >
+    <button class="close-button" on:click={() => dialog.close()}>Close</button>
     <div on:click|stopPropagation class="dialog-container">
         <slot />
-        <!-- svelte-ignore a11y-autofocus -->
-        <button autofocus on:click={() => dialog.close()}>Close</button>
     </div>
 </dialog>
 
 <style>
+    .close-button {
+        position: relative;
+        top: 0.5rem;
+        left: 0.5rem;
+    }
+
     dialog {
         max-width: 70%;
         max-height: 90%;

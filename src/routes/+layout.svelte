@@ -18,3 +18,10 @@
 <div class="main-container">
     <slot />
 </div>
+
+<style>
+    .main-container {
+        margin: 0;
+        padding: 0;
+    }
+</style>
