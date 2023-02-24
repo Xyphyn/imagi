@@ -3,6 +3,7 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import Modal from '$lib/Modal.svelte'
     import { goto } from '$app/navigation'
+    import Loader from '$lib/Loader.svelte'
 
     interface Post {
         image: any
@@ -16,12 +17,16 @@
         uploading: boolean
         expandedView: boolean
         expandedPost: Post | undefined
+        err: any
+        loading: boolean
     }
 
     let modalData: ModalData = {
         uploading: false,
         expandedView: false,
         expandedPost: undefined,
+        err: undefined,
+        loading: false,
     }
 
     let posts: Post[] = []
@@ -71,12 +76,16 @@
     }
 
     function expandView(post: Post) {
+        modalData.err = undefined
+
         modalData.expandedPost = post
 
         modalData.expandedView = true
     }
 
     function uploadDialog() {
+        modalData.err = undefined
+
         if (!$currentUser?.id) {
             goto('/login')
         }
@@ -87,21 +96,38 @@
         if (newPost.files == undefined || newPost.description == '') {
             return
         }
+        pb.cancelAllRequests()
+        modalData.loading = true
 
         const dataArray = new FormData()
         dataArray.append('image', newPost.files![0])
         dataArray.append('description', newPost.description)
         dataArray.append('user', $currentUser!.id)
 
-        pb.collection('posts').create(dataArray)
-
-        newPost.files = undefined
-        newPost.description = ''
+        pb.collection('posts')
+            .create(dataArray)
+            .catch((err) => {
+                modalData.err = err
+                modalData.loading = false
+            })
+            .then(() => {
+                newPost.files = undefined
+                newPost.description = ''
+                modalData.loading = false
+            })
     }
 
     function deletePost(post: Post | undefined) {
-        modalData.expandedView = false
-        pb.collection('posts').delete(post!.id)
+        modalData.loading = true
+        pb.collection('posts')
+            .delete(post!.id)
+            .catch(() => {
+                modalData.loading = false
+            })
+            .then(() => {
+                modalData.loading = false
+                modalData.expandedView = false
+            })
     }
 </script>
 
@@ -142,7 +168,7 @@
         />
         {#if modalData.expandedPost.expand?.user.id == $currentUser?.id}
             <button on:click={() => deletePost(modalData.expandedPost)}
-                >Delete</button
+                >Delete {#if modalData.loading}<Loader />{/if}</button
             >
         {/if}
     {/if}
@@ -151,6 +177,9 @@
 <Modal bind:expanded={modalData.uploading}>
     <h1>Upload</h1>
     <p>File size must be less than 5MB. Supported types: png, jpg, webp, gif</p>
+    {#if modalData.err}
+        <p class="error">Failed to upload. Check the filesize.</p>
+    {/if}
     <form on:submit|preventDefault={uploadPost} class="upload-form">
         <label for="file-upload" class="custom-file-upload">
             Pick an image
@@ -158,6 +187,7 @@
                 id="file-upload"
                 placeholder="Image"
                 type="file"
+                accept="image/*"
                 bind:files={newPost.files}
             />
         </label>
@@ -168,7 +198,12 @@
             bind:value={newPost.description}
         />
 
-        <button type="submit">Upload</button>
+        <button type="submit"
+            >Upload
+            {#if modalData.loading}
+                <Loader />
+            {/if}</button
+        >
     </form>
 </Modal>
 
@@ -220,5 +255,9 @@
 
     .username {
         opacity: 0.3;
+    }
+
+    .error {
+        color: #ff2f2f;
     }
 </style>

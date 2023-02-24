@@ -8,6 +8,7 @@
     --background-color: #111;
     --text-color: #fff;
     --accent-color: #7700ff;
+    --accent-color-bright: #ffffff;
 
     font-family: 'Cantarell', sans-serif;
     background-color: var(--background-color);
@@ -34,7 +35,11 @@ button,.custom-file-upload {
     color: var(--text-color);
     background-color: rgba(0, 0, 0, 0);
     padding: 0.5rem 0.65rem;
-    transition: background-color 250ms;
+    transition: background-color 250ms, all 250ms;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 button:hover,.custom-file-upload:hover {
