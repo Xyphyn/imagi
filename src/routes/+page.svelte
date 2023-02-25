@@ -31,7 +31,12 @@
     let posts: Post[] = []
     let unsubscribe: () => void
 
-    let newPost = {
+    interface NewPost {
+        files: undefined | any
+        description: string
+    }
+
+    let newPost: NewPost = {
         files: undefined,
         description: '',
     }
@@ -103,16 +108,22 @@
     }
 
     function expandView(post: Post) {
-        modalData.expandedImage = ''
         modalData.err = undefined
 
-        modalData.expandedPost = post
-        modalData.expandedView = true
+        if (post != modalData.expandedPost) {
+            modalData.expandedPost = post
 
-        modalData.expandedImage = getFile(post, true)
+            modalData.expandedImage = getFile(post, true)
+
+            modalData.loading = true
+        }
+        modalData.expandedView = true
     }
 
     function uploadDialog() {
+        newPost.description = ''
+        newPost.files = undefined
+
         modalData.err = undefined
 
         if (!$currentUser?.id) {
@@ -185,6 +196,7 @@
                 <!-- <img class="avatar" alt="avatar" width="40px" /> -->
                 <img
                     class="post-image"
+                    loading="lazy"
                     src={getFile(post, false)}
                     alt={post.description}
                 />
@@ -218,9 +230,10 @@
         {/if}
         <img
             class="expanded-image"
+            loading="eager"
             src={modalData.expandedImage}
             on:load={() => (modalData.loading = false)}
-            on:loadstart={() => (modalData.loading = true)}
+            on:loadstart={() => console.log('started loading')}
             alt="Expanded"
         />
         {#if modalData.expandedPost.expand?.user.id == $currentUser?.id}
@@ -240,7 +253,14 @@
     {/if}
     <form on:submit|preventDefault={uploadPost} class="upload-form">
         <label for="file-upload" class="custom-file-upload">
-            Pick an image
+            {#if newPost.files}
+                <span
+                    style="max-width: 24ch; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"
+                    >{newPost.files[0].name}</span
+                >
+            {:else}
+                Pick an image
+            {/if}
             <input
                 id="file-upload"
                 placeholder="Image"
@@ -283,7 +303,6 @@
         max-width: 512px;
         transition: transform 250ms;
         box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-        animation: popin 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
     }
 
     .post:hover {

@@ -98,11 +98,19 @@
             </div>
         {/each}
     {:else}
-        <Loader />
+        <div class="loader">
+            <Loader />
+        </div>
     {/if}
 </div>
 
 <style>
+    .loader {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
     .comment-text {
         width: 100%;
     }

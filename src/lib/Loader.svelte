@@ -25,7 +25,6 @@
         border-radius: 100%;
         animation: moonStretchDelay var(--duration) 0s infinite linear;
         animation-fill-mode: forwards;
-        position: relative;
     }
     .circle-one {
         top: var(--moonSize);
