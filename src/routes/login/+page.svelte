@@ -9,7 +9,6 @@
         const user = await pb
             .collection('users')
             .authWithPassword(username, password)
-        console.log(user)
     }
 
     async function signUp() {

@@ -109,8 +109,6 @@
         modalData.expandedPost = post
         modalData.expandedView = true
 
-        modalData.loading = true
-
         modalData.expandedImage = getFile(post, true)
     }
 
@@ -285,6 +283,7 @@
         max-width: 512px;
         transition: transform 250ms;
         box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+        animation: popin 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
     }
 
     .post:hover {

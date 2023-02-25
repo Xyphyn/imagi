@@ -3,6 +3,17 @@
     src: url('/font/Cantarell-VF.otf');
 }
 
+@keyframes popin {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
 :root {
     --card-color: #222;
     --background-color: #111;

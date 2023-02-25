@@ -43,7 +43,6 @@
     $: {
         if (post != prevPost) {
             prevPost = post
-            console.log('Loading comments')
             comments = undefined
             getComments(post)
         }
@@ -153,6 +152,7 @@
         justify-content: center;
         border-radius: 8px;
         border: 1px solid var(--accent-color);
+        animation: popin 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
     }
 
     p {
