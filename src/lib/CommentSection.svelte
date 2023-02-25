@@ -7,7 +7,7 @@
 
     export let post: Post
 
-    let comments: any[] = []
+    let comments: any[] | undefined
     let newComment = ''
     let submitting: boolean = false
 
@@ -27,16 +27,20 @@
                 const user = await pb.collection('users').getOne(record.user)
 
                 record.expand = { user }
-                comments = [record, ...comments]
+                comments = [record, ...comments!]
             }
 
             if (action == 'delete') {
-                comments = comments.filter((comment) => comment.id != record.id)
+                comments = comments!.filter(
+                    (comment) => comment.id != record.id
+                )
             }
         })
     }
 
     $: {
+        pb.collection('comments').unsubscribe('*')
+        comments = undefined
         getComments(post)
     }
 
@@ -82,12 +86,16 @@
             >Submit {#if submitting}<Loader />{/if}</button
         >
     </form>
-    {#each comments as comment}
-        <div class="comment">
-            <p class="username">@{comment.expand?.user.username}</p>
-            <p>{comment.content}</p>
-        </div>
-    {/each}
+    {#if comments}
+        {#each comments as comment}
+            <div class="comment">
+                <p class="username">@{comment.expand?.user.username}</p>
+                <p>{comment.content}</p>
+            </div>
+        {/each}
+    {:else}
+        <Loader />
+    {/if}
 </div>
 
 <style>

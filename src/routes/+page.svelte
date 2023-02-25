@@ -14,6 +14,7 @@
         uploading: boolean
         expandedView: boolean
         expandedPost: Post | undefined
+        expandedImage: string
         err: any
         loading: boolean
     }
@@ -22,6 +23,7 @@
         uploading: false,
         expandedView: false,
         expandedPost: undefined,
+        expandedImage: '',
         err: undefined,
         loading: false,
     }
@@ -101,11 +103,15 @@
     }
 
     function expandView(post: Post) {
+        modalData.expandedImage = ''
         modalData.err = undefined
 
         modalData.expandedPost = post
-
         modalData.expandedView = true
+
+        modalData.loading = true
+
+        modalData.expandedImage = getFile(post, true)
     }
 
     function uploadDialog() {
@@ -210,15 +216,20 @@
                 >@{modalData.expandedPost.expand?.user.username}</span
             >
         </p>
+        {#if modalData.loading}
+            <Loader />
+        {/if}
         <img
             class="expanded-image"
-            src={getFile(modalData.expandedPost, true)}
+            src={modalData.expandedImage}
+            on:load={() => (modalData.loading = false)}
+            on:loadstart={() => (modalData.loading = true)}
             alt="Expanded"
         />
         {#if modalData.expandedPost.expand?.user.id == $currentUser?.id}
             <button on:click={() => deletePost(modalData.expandedPost)}
-                >Delete {#if modalData.loading}<Loader />{/if}</button
-            >
+                >Delete
+            </button>
         {/if}
         <CommentSection post={modalData.expandedPost} />
     {/if}
