@@ -75,6 +75,10 @@
                 newComment = ''
             })
     }
+
+    function deleteComment(comment: any) {
+        pb.collection('comments').delete(comment.id)
+    }
 </script>
 
 <div class="comments">
@@ -95,6 +99,12 @@
             <div class="comment">
                 <p class="username">@{comment.expand?.user.username}</p>
                 <p>{comment.content}</p>
+                {#if comment.user == $currentUser?.id}
+                    <button
+                        on:click={() => deleteComment(comment)}
+                        class="delete">Delete</button
+                    >
+                {/if}
             </div>
         {/each}
     {:else}
@@ -105,6 +115,13 @@
 </div>
 
 <style>
+    .delete {
+        position: fixed;
+        right: 0.5rem;
+        top: 0.5rem;
+        width: min-content;
+    }
+
     .loader {
         width: 100%;
         display: flex;
@@ -151,6 +168,10 @@
         padding: 2rem;
         box-sizing: border-box;
         gap: 1rem;
+    }
+
+    .comments .comment {
+        animation: popin 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
     }
 
     .comment {

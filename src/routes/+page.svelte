@@ -200,6 +200,12 @@
                     src={getFile(post, false)}
                     alt={post.description}
                 />
+                <div class="post-description-container">
+                    <span class="post-description">{post.description}</span>
+                    <span class="post-author"
+                        >@{post.expand?.user.username}</span
+                    >
+                </div>
             </div>
         {/each}
     </div>
@@ -303,6 +309,7 @@
         max-width: 512px;
         transition: transform 250ms;
         box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+        position: relative;
     }
 
     .post:hover {
@@ -311,10 +318,39 @@
     }
 
     .post-image {
+        display: inline-block;
         border-radius: 1rem;
         width: 100%;
         aspect-ratio: 1/1;
         object-fit: cover;
+    }
+
+    .post-description-container {
+        display: inline-flex;
+        box-shadow: inset 0px 32px 26px 0px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        justify-content: space-between;
+    }
+
+    .post-description {
+        position: relative;
+        max-width: 60%;
+        left: 1rem;
+        top: 1rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .post-author {
+        opacity: 0.5;
+        position: relative;
+        top: 1rem;
+        right: 1rem;
     }
 
     .expanded-image {
