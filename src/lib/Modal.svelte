@@ -26,8 +26,7 @@
     }
 
     dialog {
-        max-width: 70%;
-        max-height: 90%;
+        height: auto;
         border-radius: 8px;
         border: none;
         padding: 0;
@@ -42,14 +41,11 @@
         align-items: center;
         justify-content: center;
         gap: 1rem;
+        margin: 2rem;
     }
 
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.3);
-    }
-
-    dialog > div {
-        padding: 1em;
     }
 
     dialog[open] {

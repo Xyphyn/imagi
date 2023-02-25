@@ -7,6 +7,8 @@
 
     export let post: Post
 
+    let prevPost: Post
+
     let comments: any[] | undefined
     let newComment = ''
     let submitting: boolean = false
@@ -39,9 +41,12 @@
     }
 
     $: {
-        pb.collection('comments').unsubscribe('*')
-        comments = undefined
-        getComments(post)
+        if (post != prevPost) {
+            prevPost = post
+            console.log('Loading comments')
+            comments = undefined
+            getComments(post)
+        }
     }
 
     function comment() {
@@ -113,7 +118,6 @@
         width: 100%;
         justify-content: center;
         gap: 12px;
-        margin-top: 12px;
     }
 
     @media screen and (min-width: 640px) {
@@ -136,7 +140,7 @@
         display: flex;
         flex-direction: column;
         color: white;
-        width: 80%;
+        width: 100%;
         padding: 2rem;
         box-sizing: border-box;
         gap: 1rem;
@@ -147,8 +151,8 @@
         padding: 1rem;
         flex-direction: column;
         justify-content: center;
-        background-color: rgba(255, 255, 255, 0.1);
         border-radius: 8px;
+        border: 1px solid var(--accent-color);
     }
 
     p {

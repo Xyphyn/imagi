@@ -128,7 +128,6 @@
             return
         }
         pb.cancelAllRequests()
-        modalData.loading = true
 
         const dataArray = new FormData()
         dataArray.append('image', newPost.files![0])
@@ -273,7 +272,7 @@
         display: grid;
         width: 100%;
         gap: 1rem;
-        grid-template-columns: repeat(auto-fit, minmax(256px, 2fr));
+        grid-template-columns: repeat(auto-fill, minmax(256px, 2fr));
         grid-auto-flow: dense;
         transition: grid-template-columns 250ms;
     }
@@ -302,8 +301,7 @@
 
     .expanded-image {
         display: inline-block;
-        max-width: 80%;
-        max-height: 80%;
+        max-width: 100%;
         position: relative;
         border-radius: 8px;
     }
@@ -311,6 +309,9 @@
     .upload-form {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
         gap: 1rem;
     }
 
