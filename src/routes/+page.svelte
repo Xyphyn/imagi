@@ -7,8 +7,10 @@
     import nprogress from 'nprogress'
     import CommentSection from '$lib/CommentSection.svelte'
     import type { Post } from '$lib/types/post'
+    import { page } from '$app/stores'
+    import LikeButton from '$lib/LikeButton.svelte'
 
-    let page = 0
+    let pageNumber = 0
 
     interface ModalData {
         uploading: boolean
@@ -43,10 +45,10 @@
 
     async function getPage(increment: boolean) {
         if (increment) {
-            page++
+            pageNumber++
         } else {
-            if (page > 1) {
-                page--
+            if (pageNumber > 1) {
+                pageNumber--
             } else {
                 return
             }
@@ -56,17 +58,17 @@
 
         const resultList = await pb
             .collection('posts')
-            .getList<Post>(page, 50, {
+            .getList<Post>(pageNumber, 50, {
                 sort: '-created',
                 expand: 'user',
             })
 
-        if (Math.ceil(resultList.totalItems / 50) < page) {
-            page = Math.ceil(resultList.totalItems / 50)
+        if (Math.ceil(resultList.totalItems / 50) < pageNumber) {
+            pageNumber = Math.ceil(resultList.totalItems / 50)
         }
 
-        if (page <= 0) {
-            page = 1
+        if (pageNumber <= 0) {
+            pageNumber = 1
         }
 
         posts = resultList.items
@@ -98,6 +100,14 @@
         })
     })
 
+    if ($page.url.searchParams.has('post')) {
+        const postParam = $page.url.searchParams.get('post')?.toString()!
+
+        pb.collection('posts')
+            .getOne<Post>(postParam, { expand: 'user' })
+            .then((p) => expandView(p))
+    }
+
     function getFile(post: any, fullQuality: boolean) {
         const firstFilename = post.image
         if (fullQuality) {
@@ -109,6 +119,12 @@
 
     function expandView(post: Post) {
         modalData.err = undefined
+
+        $page.url.searchParams.set('post', post.id)
+
+        if (typeof window != 'undefined') {
+            history.pushState(null, '', $page.url.href)
+        }
 
         if (post != modalData.expandedPost) {
             modalData.expandedPost = post
@@ -215,7 +231,7 @@
                 getPage(false)
             }}>Back</button
         >
-        {page}
+        {pageNumber}
         <button
             on:click={() => {
                 getPage(true)
@@ -234,6 +250,7 @@
         {#if modalData.loading}
             <Loader />
         {/if}
+        <LikeButton post={modalData.expandedPost} />
         <img
             class="expanded-image"
             loading="eager"
