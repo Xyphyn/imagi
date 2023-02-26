@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Cantarell';
+    font-family: 'Golos';
     src: url('/font/Golos.ttf');
 }
 
@@ -22,7 +22,7 @@
     --accent-color-bright: #ffffff;
     --border-radius: 8px;
 
-    font-family: 'Cantarell', sans-serif;
+    font-family: 'Golos', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
 }

@@ -3,7 +3,7 @@
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
 
-    export let expanded: boolean
+    export let uploading: boolean
     let loading: boolean
 
     interface NewPost {
@@ -40,7 +40,7 @@
     }
 </script>
 
-<Modal bind:expanded>
+<Modal bind:expanded={uploading}>
     <h1>Upload</h1>
     <p>File size must be less than 5MB. Supported types: png, jpg, webp, gif</p>
     <form on:submit|preventDefault={uploadPost} class="upload-form">

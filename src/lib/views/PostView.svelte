@@ -19,9 +19,17 @@
             loading = true
         }
 
+        if (post == undefined) {
+            expanded = false
+        }
+
         if (post != prevPost) {
             prevPost = post
             image = getFile(post, true)
+
+            if (isVideo(image)) {
+                loading = false
+            }
         }
     }
 
@@ -45,7 +53,7 @@
             {post.description}
             <span class="username">@{post.expand?.user.username}</span>
         </p>
-        {#if loading}
+        {#if loading && !isVideo(image)}
             <Loader />
         {/if}
         <LikeButton {post} />

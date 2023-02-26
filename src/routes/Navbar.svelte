@@ -1,12 +1,32 @@
 <script lang="ts">
+    // @ts-nocheck
     import { goto } from '$app/navigation'
-    import { currentUser } from '$lib/pocketbase'
+    import { currentUser, pb } from '$lib/pocketbase'
+    import UploadView from '$lib/views/UploadView.svelte'
 
-    function uploadDialog() {}
+    let uploading: boolean = false
+
+    function getProfilePicture() {
+        const firstFilename = $currentUser!.avatar
+        let url = pb.getFileUrl($currentUser!, firstFilename, {
+            thumb: '256x256',
+        })
+        if (url == '') {
+            url = `https://avatars.dicebear.com/api/identicon/${$currentUser.username}.svg`
+        }
+        return url
+    }
+
+    function uploadDialog() {
+        if (!$currentUser?.id) {
+            goto('/login')
+        }
+        uploading = true
+    }
 </script>
 
 <nav>
-    <h1 class="logo">
+    <h1 class="logo" on:click={() => goto('/')} on:keypress={() => goto('/')}>
         <img
             src="/imagi.svg"
             class="logo-image"
@@ -19,9 +39,16 @@
     {#if !$currentUser?.id}<button on:click={() => goto('/login')}>Login</button
         >
     {:else}
-        Logged in
+        <img
+            src={getProfilePicture()}
+            alt="Profile"
+            class="profile"
+            on:click={() => goto('/profile')}
+            on:keypress={() => goto('/profile')}
+        />
     {/if}
 </nav>
+<UploadView bind:uploading />
 
 <style>
     nav {
@@ -38,10 +65,26 @@
     .logo {
         display: flex;
         align-items: center;
+        gap: 0.25rem;
         margin-right: auto;
     }
 
     .logo-image {
-        width: 64px;
+        width: 48px;
+    }
+
+    .logo:hover {
+        cursor: pointer;
+    }
+
+    .profile {
+        border-radius: 100%;
+        width: 48px;
+        transition: all 250ms;
+    }
+
+    .profile:hover {
+        transform: translateY(-4px);
+        cursor: pointer;
     }
 </style>

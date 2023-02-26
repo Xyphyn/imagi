@@ -32,16 +32,6 @@
     let posts: Post[] = []
     let unsubscribe: () => void
 
-    interface NewPost {
-        files: undefined | any
-        description: string
-    }
-
-    let newPost: NewPost = {
-        files: undefined,
-        description: '',
-    }
-
     async function getPage(increment: boolean) {
         if (increment) {
             pageNumber++
@@ -105,6 +95,7 @@
         pb.collection('posts')
             .getOne<Post>(postParam, { expand: 'user' })
             .then((p) => expandView(p))
+            .catch((err) => {})
     }
 
     function expandView(post: Post) {
@@ -125,19 +116,6 @@
         }
         modalData.expandedView = true
         modalData.uploading = false
-    }
-
-    function uploadDialog() {
-        newPost.description = ''
-        newPost.files = undefined
-
-        modalData.err = undefined
-
-        if (!$currentUser?.id) {
-            goto('/login')
-        }
-        modalData.expandedView = false
-        modalData.uploading = true
     }
 </script>
 
@@ -175,7 +153,6 @@
     </div>
 </div>
 <PostView expanded={modalData.expandedView} post={modalData.expandedPost} />
-<UploadView expanded={modalData.uploading} />
 
 <style>
     .posts {
