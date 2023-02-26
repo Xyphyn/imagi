@@ -21,7 +21,21 @@
 
         if (likeObject != undefined) {
             liked = true
+        } else {
+            liked = false
         }
+
+        pb.collection('likes').subscribe('*', async ({ action, record }) => {
+            if (record.post != post.id) return
+
+            if (action == 'create') {
+                likes++
+            }
+
+            if (action == 'delete') {
+                likes--
+            }
+        })
     }
 
     function like() {
@@ -33,8 +47,6 @@
         pb.cancelAllRequests()
 
         if (liked) {
-            likes++
-
             pb.collection('likes')
                 .create({
                     user: $currentUser?.id,
@@ -44,8 +56,6 @@
                     likeObject = record
                 })
         } else {
-            likes--
-
             if (likeObject) {
                 pb.collection('likes').delete(likeObject.id)
             }
@@ -54,8 +64,10 @@
 
     $: {
         if (post != prevPost) {
+            pb.collection('likes').unsubscribe('*')
             prevPost = post
             likes = 0
+            liked = false
             fetchLikes(post)
         }
     }
