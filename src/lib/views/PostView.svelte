@@ -51,7 +51,7 @@
     {#if expanded}
         <p>
             {post.description}
-            <span class="username">@{post.expand?.user.username}</span>
+            <span style="opacity: 0.3;">@{post.expand?.user.username}</span>
         </p>
         {#if loading && !isVideo(image)}
             <Loader />

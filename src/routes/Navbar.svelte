@@ -60,6 +60,7 @@
         height: 4rem;
         gap: 1rem;
         margin: 1rem;
+        background-color: var(--background-color);
     }
 
     .logo {
