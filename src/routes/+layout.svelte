@@ -4,6 +4,7 @@
     import '../style/default.css'
     import nprogress from 'nprogress'
     import { navigating } from '$app/stores'
+    import Navbar from './Navbar.svelte'
 
     $: {
         if ($navigating) {
@@ -16,6 +17,7 @@
 </script>
 
 <div class="main-container">
+    <Navbar />
     <slot />
 </div>
 

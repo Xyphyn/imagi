@@ -1,14 +1,13 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
-    import Modal from '$lib/Modal.svelte'
     import { goto } from '$app/navigation'
-    import Loader from '$lib/Loader.svelte'
     import nprogress from 'nprogress'
-    import CommentSection from '$lib/CommentSection.svelte'
     import type { Post } from '$lib/types/post'
     import { page } from '$app/stores'
-    import LikeButton from '$lib/LikeButton.svelte'
+    import { getFile, isVideo } from './app'
+    import PostView from '$lib/views/PostView.svelte'
+    import UploadView from '$lib/views/UploadView.svelte'
 
     let pageNumber = 0
 
@@ -108,15 +107,6 @@
             .then((p) => expandView(p))
     }
 
-    function getFile(post: any, fullQuality: boolean) {
-        const firstFilename = post.image
-        if (fullQuality) {
-            return pb.getFileUrl(post, firstFilename)
-        } else {
-            return pb.getFileUrl(post, firstFilename, { thumb: '256x256' })
-        }
-    }
-
     function expandView(post: Post) {
         modalData.err = undefined
 
@@ -134,6 +124,7 @@
             modalData.loading = true
         }
         modalData.expandedView = true
+        modalData.uploading = false
     }
 
     function uploadDialog() {
@@ -145,73 +136,12 @@
         if (!$currentUser?.id) {
             goto('/login')
         }
+        modalData.expandedView = false
         modalData.uploading = true
-    }
-
-    function isVideo(url: string) {
-        const content = new URL(url)
-        return (
-            content.pathname.endsWith('webm') ||
-            content.pathname.endsWith('mp4')
-        )
-    }
-
-    function uploadPost() {
-        if (newPost.files == undefined || newPost.description == '') {
-            return
-        }
-        pb.cancelAllRequests()
-
-        const dataArray = new FormData()
-        dataArray.append('image', newPost.files![0])
-        dataArray.append('description', newPost.description)
-        dataArray.append('user', $currentUser!.id)
-
-        pb.collection('posts')
-            .create(dataArray)
-            .catch((err) => {
-                modalData.err = err
-                modalData.loading = false
-            })
-            .then(() => {
-                newPost.files = undefined
-                newPost.description = ''
-                modalData.loading = false
-            })
-    }
-
-    function deletePost(post: Post | undefined) {
-        modalData.loading = true
-        pb.collection('posts')
-            .delete(post!.id)
-            .catch(() => {
-                modalData.loading = false
-            })
-            .then(() => {
-                modalData.loading = false
-                modalData.expandedView = false
-            })
     }
 </script>
 
 <div class="container">
-    <nav>
-        <h1
-            style="display: flex; flex-direction: row; gap: 1rem; align-items:center;"
-        >
-            <img
-                src="/imagi.svg"
-                alt="imagi"
-                class="logo"
-                title="Yes, I stole the Jetbrains logo. If this ever gets popular I'll make my own."
-            />
-            Imagi
-            <button on:click={uploadDialog}>Upload</button>
-            {#if !$currentUser?.id}<button on:click={() => goto('/login')}
-                    >Login</button
-                >{/if}
-        </h1>
-    </nav>
     <div class="posts">
         {#each posts as post (post.id)}
             <div
@@ -219,7 +149,6 @@
                 on:click={() => expandView(post)}
                 on:keypress={() => expandView(post)}
             >
-                <!-- <img class="avatar" alt="avatar" width="40px" /> -->
                 {#if isVideo(getFile(post, false))}
                     <img class="post-image" src="/svg/play.svg" alt="Video" />
                 {:else}
@@ -240,120 +169,35 @@
         {/each}
     </div>
     <div class="navigation">
-        <button
-            on:click={() => {
-                getPage(false)
-            }}>Back</button
-        >
+        <button on:click={() => getPage(false)}>Back</button>
         {pageNumber}
-        <button
-            on:click={() => {
-                getPage(true)
-            }}>Next</button
-        >
+        <button on:click={() => getPage(true)}>Next</button>
     </div>
 </div>
-<Modal bind:expanded={modalData.expandedView}>
-    {#if modalData.expandedPost}
-        <p>
-            {modalData.expandedPost.description}
-            <span class="username"
-                >@{modalData.expandedPost.expand?.user.username}</span
-            >
-        </p>
-        {#if modalData.loading}
-            <Loader />
-        {/if}
-        <LikeButton post={modalData.expandedPost} />
-        {#if isVideo(modalData.expandedImage)}
-            {#key modalData.expandedImage}
-                <!-- svelte-ignore a11y-media-has-caption -->
-                <video
-                    on:load={() => (modalData.loading = false)}
-                    controls
-                    autoplay
-                    loop
-                    width="600px"
-                >
-                    <source
-                        on:load={() => (modalData.loading = false)}
-                        src={modalData.expandedImage}
-                    />
-                </video>
-            {/key}
-        {:else}
-            <img
-                class="expanded-image"
-                src={modalData.expandedImage}
-                on:load={() => (modalData.loading = false)}
-                on:loadstart={() => console.log('started loading')}
-                alt="Expanded"
-            />
-        {/if}
-        {#if modalData.expandedPost.expand?.user.id == $currentUser?.id}
-            <button on:click={() => deletePost(modalData.expandedPost)}
-                >Delete
-            </button>
-        {/if}
-        <CommentSection post={modalData.expandedPost} />
-    {/if}
-</Modal>
-
-<Modal bind:expanded={modalData.uploading}>
-    <h1>Upload</h1>
-    <p>File size must be less than 5MB. Supported types: png, jpg, webp, gif</p>
-    {#if modalData.err}
-        <p class="error">Failed to upload. Check the filesize.</p>
-    {/if}
-    <form on:submit|preventDefault={uploadPost} class="upload-form">
-        <label for="file-upload" class="custom-file-upload">
-            {#if newPost.files}
-                <span
-                    style="max-width: 24ch; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"
-                    >{newPost.files[0].name}</span
-                >
-            {:else}
-                Pick an image
-            {/if}
-            <input
-                id="file-upload"
-                placeholder="Image"
-                type="file"
-                accept="image/*"
-                bind:files={newPost.files}
-            />
-        </label>
-        <input
-            placeholder="Description [required]"
-            type="text"
-            maxlength="64"
-            bind:value={newPost.description}
-        />
-
-        <button type="submit"
-            >Upload
-            {#if modalData.loading}
-                <Loader />
-            {/if}</button
-        >
-    </form>
-</Modal>
+<PostView expanded={modalData.expandedView} post={modalData.expandedPost} />
+<UploadView expanded={modalData.uploading} />
 
 <style>
     .posts {
         display: grid;
-        width: 100%;
         gap: 1rem;
-        grid-template-columns: repeat(auto-fill, minmax(256px, 2fr));
+        grid-template-columns: repeat(auto-fit, minmax(324px, 2fr));
         grid-auto-flow: dense;
         transition: grid-template-columns 250ms;
     }
 
+    @media screen and (min-width: 640px) {
+        .posts {
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
+    }
+
     .post {
-        border-radius: 1rem;
+        border-radius: var(--border-radius);
         display: flex;
         flex-direction: column;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: var(--card-color);
         max-width: 512px;
         transition: transform 250ms;
         box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -367,7 +211,7 @@
 
     .post-image {
         display: inline-block;
-        border-radius: 1rem;
+        border-radius: var(--border-radius);
         width: 100%;
         aspect-ratio: 1/1;
         object-fit: cover;
@@ -375,6 +219,7 @@
 
     .post-description-container {
         display: inline-flex;
+        border-radius: var(--border-radius);
         box-shadow: inset 0px 32px 26px 0px rgba(0, 0, 0, 0.5);
         width: 100%;
         height: 100%;
@@ -401,30 +246,6 @@
         right: 1rem;
     }
 
-    .expanded-image {
-        display: inline-block;
-        max-width: 100%;
-        position: relative;
-        border-radius: 8px;
-    }
-
-    .upload-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        gap: 1rem;
-    }
-
-    .username {
-        opacity: 0.3;
-    }
-
-    .error {
-        color: #ff2f2f;
-    }
-
     .navigation {
         display: flex;
         flex-direction: row;
@@ -436,9 +257,5 @@
 
     .container {
         margin: 2rem;
-    }
-
-    .logo {
-        width: 64px;
     }
 </style>
