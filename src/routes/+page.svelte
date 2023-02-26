@@ -148,6 +148,14 @@
         modalData.uploading = true
     }
 
+    function isVideo(url: string) {
+        const content = new URL(url)
+        return (
+            content.pathname.endsWith('webm') ||
+            content.pathname.endsWith('mp4')
+        )
+    }
+
     function uploadPost() {
         if (newPost.files == undefined || newPost.description == '') {
             return
@@ -187,21 +195,23 @@
 </script>
 
 <div class="container">
-    <h1
-        style="display: flex; flex-direction: row; gap: 1rem; align-items:center;"
-    >
-        <img
-            src="/imagi.svg"
-            alt="imagi"
-            class="logo"
-            title="Yes, I stole the Jetbrains logo. If this ever gets popular I'll make my own."
-        />
-        Imagi
-        <button on:click={uploadDialog}>Upload</button>
-        {#if !$currentUser?.id}<button on:click={() => goto('/login')}
-                >Login</button
-            >{/if}
-    </h1>
+    <nav>
+        <h1
+            style="display: flex; flex-direction: row; gap: 1rem; align-items:center;"
+        >
+            <img
+                src="/imagi.svg"
+                alt="imagi"
+                class="logo"
+                title="Yes, I stole the Jetbrains logo. If this ever gets popular I'll make my own."
+            />
+            Imagi
+            <button on:click={uploadDialog}>Upload</button>
+            {#if !$currentUser?.id}<button on:click={() => goto('/login')}
+                    >Login</button
+                >{/if}
+        </h1>
+    </nav>
     <div class="posts">
         {#each posts as post (post.id)}
             <div
@@ -210,12 +220,16 @@
                 on:keypress={() => expandView(post)}
             >
                 <!-- <img class="avatar" alt="avatar" width="40px" /> -->
-                <img
-                    class="post-image"
-                    loading="lazy"
-                    src={getFile(post, false)}
-                    alt={post.description}
-                />
+                {#if isVideo(getFile(post, false))}
+                    <img class="post-image" src="/svg/play.svg" alt="Video" />
+                {:else}
+                    <img
+                        class="post-image"
+                        loading="lazy"
+                        src={getFile(post, false)}
+                        alt={post.description}
+                    />
+                {/if}
                 <div class="post-description-container">
                     <span class="post-description">{post.description}</span>
                     <span class="post-author"
@@ -251,14 +265,31 @@
             <Loader />
         {/if}
         <LikeButton post={modalData.expandedPost} />
-        <img
-            class="expanded-image"
-            loading="eager"
-            src={modalData.expandedImage}
-            on:load={() => (modalData.loading = false)}
-            on:loadstart={() => console.log('started loading')}
-            alt="Expanded"
-        />
+        {#if isVideo(modalData.expandedImage)}
+            {#key modalData.expandedImage}
+                <!-- svelte-ignore a11y-media-has-caption -->
+                <video
+                    on:load={() => (modalData.loading = false)}
+                    controls
+                    autoplay
+                    loop
+                    width="600px"
+                >
+                    <source
+                        on:load={() => (modalData.loading = false)}
+                        src={modalData.expandedImage}
+                    />
+                </video>
+            {/key}
+        {:else}
+            <img
+                class="expanded-image"
+                src={modalData.expandedImage}
+                on:load={() => (modalData.loading = false)}
+                on:loadstart={() => console.log('started loading')}
+                alt="Expanded"
+            />
+        {/if}
         {#if modalData.expandedPost.expand?.user.id == $currentUser?.id}
             <button on:click={() => deletePost(modalData.expandedPost)}
                 >Delete
