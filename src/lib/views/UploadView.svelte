@@ -41,10 +41,13 @@
     }
 </script>
 
-<Modal bind:expanded={uploading}>
-    <h1>Upload</h1>
-    <p>File size must be less than 5MB. Supported types: png, jpg, webp, gif</p>
+<Modal bind:expanded={uploading} fullHeight={false}>
     <form on:submit|preventDefault={uploadPost} class="upload-form">
+        <h1>Upload</h1>
+        <p>
+            File size must be less than 5MB. Supported types: png, jpg, webp,
+            gif
+        </p>
         <label for="file-upload" class="custom-file-upload">
             {#if newPost.files}
                 <span

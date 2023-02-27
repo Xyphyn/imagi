@@ -56,10 +56,14 @@
 
         height: 4rem;
         gap: 1rem;
-        margin: 1rem;
-        background-color: var(--background-color);
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: rgba(var(--background-color-rgb), 0.8);
         position: sticky;
+        top: 0;
         z-index: 1;
+
+        backdrop-filter: blur(64px);
     }
 
     .logo {

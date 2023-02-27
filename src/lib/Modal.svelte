@@ -4,6 +4,8 @@
     let dialog: HTMLDialogElement // HTMLDialogElement
 
     $: if (dialog && expanded) dialog.showModal()
+
+    export let fullHeight: boolean = true
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -11,6 +13,7 @@
     bind:this={dialog}
     on:close={() => (expanded = false)}
     on:click|self={() => dialog.close()}
+    class={`${fullHeight ? 'full-height' : ''}`}
 >
     <button class="close-button" on:click={() => dialog.close()}>Close</button>
     <div on:click|stopPropagation class="dialog-container">
@@ -19,6 +22,10 @@
 </dialog>
 
 <style>
+    .full-height {
+        height: auto;
+    }
+
     .close-button {
         position: relative;
         top: 0.5rem;
@@ -26,7 +33,6 @@
     }
 
     dialog {
-        height: auto;
         border-radius: 8px;
         border: none;
         padding: 0;

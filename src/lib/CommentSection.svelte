@@ -6,6 +6,7 @@
     import { goto } from '$app/navigation'
 
     export let post: Post
+    export let commentCount: number = 0
 
     let prevPost: Post
 
@@ -21,6 +22,7 @@
         })
 
         comments = resultList.items
+        commentCount = comments.length
 
         pb.collection('comments').subscribe('*', async ({ action, record }) => {
             if (record.post != post.id) return
@@ -30,12 +32,14 @@
 
                 record.expand = { user }
                 comments = [record, ...comments!]
+                commentCount = comments.length
             }
 
             if (action == 'delete') {
                 comments = comments!.filter(
                     (comment) => comment.id != record.id
                 )
+                commentCount = comments.length
             }
         })
     }
