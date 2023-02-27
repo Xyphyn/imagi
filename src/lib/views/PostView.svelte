@@ -6,7 +6,7 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import { getFile, isVideo } from '../../routes/app'
     import CommentSection from '$lib/CommentSection.svelte'
-    import Fa from 'svelte-fa/src/fa.svelte'
+    import Fa from 'svelte-fa'
     import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
     import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
     import { faVolumeMute } from '@fortawesome/free-solid-svg-icons/faVolumeMute'

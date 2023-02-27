@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation'
     import type { Post } from '$lib/types/post'
     import { currentUser, pb } from './pocketbase'
-    import Fa from 'svelte-fa/src/fa.svelte'
+    import Fa from 'svelte-fa'
     import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 
     export let post: Post
