@@ -4,6 +4,7 @@
 
     let username: string
     let password: string
+    let files: any = undefined
 
     async function login() {
         const user = await pb
@@ -13,11 +14,14 @@
 
     async function signUp() {
         try {
-            const data = {
-                username,
-                password,
-                passwordConfirm: password,
+            const data = new FormData()
+            data.append('username', username)
+            data.append('password', password)
+            data.append('passwordConfirm', password)
+            if (files) {
+                data.append('avatar', files[0])
             }
+
             const createdUser = await pb.collection('users').create(data)
             await login()
         } catch (err) {
@@ -52,6 +56,23 @@
                 type="password"
                 bind:value={password}
             />
+            <label for="profile-upload" class="custom-file-upload">
+                {#if files}
+                    <span
+                        style="max-width: 24ch; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"
+                        >{files[0].name}</span
+                    >
+                {:else}
+                    Avatar (optional)
+                {/if}
+                <input
+                    id="profile-upload"
+                    placeholder="Image"
+                    type="file"
+                    accept="image/*"
+                    bind:files
+                />
+            </label>
             <button on:click={signUp}>Sign Up</button>
             <button on:click={login}>Login</button>
         </form>

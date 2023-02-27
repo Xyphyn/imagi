@@ -11,9 +11,6 @@
         let url = pb.getFileUrl($currentUser!, firstFilename, {
             thumb: '256x256',
         })
-        if (url == '') {
-            url = `https://avatars.dicebear.com/api/identicon/${$currentUser.username}.svg`
-        }
         return url
     }
 
@@ -61,6 +58,8 @@
         gap: 1rem;
         margin: 1rem;
         background-color: var(--background-color);
+        position: sticky;
+        z-index: 1;
     }
 
     .logo {
@@ -81,6 +80,8 @@
     .profile {
         border-radius: 100%;
         width: 48px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
         transition: all 250ms;
     }
 
