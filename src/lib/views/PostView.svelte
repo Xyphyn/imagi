@@ -10,7 +10,7 @@
     import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
     import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
     import { faVolumeMute } from '@fortawesome/free-solid-svg-icons/faVolumeMute'
-    import { faVolumeHigh } from '@fortawesome/free-solid-svg-icons/faVolumeHigh'
+    import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp'
 
     export let expanded: boolean
     export let post: Post
@@ -79,7 +79,7 @@
                         on:click={() => (videoMuted = !videoMuted)}
                         class="mute"
                         >{#if videoMuted}<Fa icon={faVolumeMute} />{:else}<Fa
-                                icon={faVolumeHigh}
+                                icon={faVolumeUp}
                             />{/if}</button
                     >
                 {/key}
