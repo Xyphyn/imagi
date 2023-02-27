@@ -126,26 +126,32 @@
             </div>
         {/if}
         {#each posts as post (post.id)}
-            <div
-                class="post"
-                on:click={() => expandView(post)}
-                on:keypress={() => expandView(post)}
-            >
-                {#if isVideo(getFile(post, false))}
-                    <img class="post-image" src="/svg/play.svg" alt="Video" />
-                {:else}
-                    <img
-                        class="post-image"
-                        loading="lazy"
-                        src={getFile(post, false)}
-                        alt={post.description}
-                    />
-                {/if}
-                <div class="post-description-container">
-                    <span class="post-description">{post.description}</span>
-                    <span class="post-author"
-                        >@{post.expand?.user.username}</span
-                    >
+            <div class="post-container">
+                <div
+                    class="post"
+                    on:click={() => expandView(post)}
+                    on:keypress={() => expandView(post)}
+                >
+                    {#if isVideo(getFile(post, false))}
+                        <img
+                            class="post-image"
+                            src="/svg/play.svg"
+                            alt="Video"
+                        />
+                    {:else}
+                        <img
+                            class="post-image"
+                            loading="lazy"
+                            src={getFile(post, false)}
+                            alt={post.description}
+                        />
+                    {/if}
+                    <div class="post-description-container">
+                        <span class="post-description">{post.description}</span>
+                        <span class="post-author"
+                            >@{post.expand?.user.username}</span
+                        >
+                    </div>
                 </div>
             </div>
         {/each}
@@ -180,12 +186,16 @@
         flex-direction: column;
         background-color: var(--card-color);
         max-width: 512px;
-        transition: transform 250ms;
         box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
         position: relative;
+        transition: transform 250ms;
+    }
 
-        animation: popin 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        @for $i from 1 through 6 {
+    .post-container {
+        opacity: 0;
+
+        animation: popin 0.5s cubic-bezier(0.17, 0.89, 0.33, 1.5) forwards;
+        @for $i from 1 through 50 {
             &:nth-child(#{$i}) {
                 animation-delay: #{($i - 1) * 0.1}s;
             }
