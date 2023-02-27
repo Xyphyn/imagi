@@ -8,6 +8,7 @@
     import { getFile, isVideo } from './app'
     import PostView from '$lib/views/PostView.svelte'
     import UploadView from '$lib/views/UploadView.svelte'
+    import Loader from '$lib/Loader.svelte'
 
     let pageNumber = 0
 
@@ -121,6 +122,11 @@
 
 <div class="container">
     <div class="posts">
+        {#if posts.length == 0}
+            <div style="justify-self: center;">
+                <Loader />
+            </div>
+        {/if}
         {#each posts as post (post.id)}
             <div
                 class="post"
