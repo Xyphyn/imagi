@@ -158,7 +158,7 @@
 </div>
 <PostView expanded={modalData.expandedView} post={modalData.expandedPost} />
 
-<style>
+<style lang="scss">
     .posts {
         display: grid;
         gap: 1rem;
@@ -183,6 +183,13 @@
         transition: transform 250ms;
         box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
         position: relative;
+
+        animation: popin 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        @for $i from 1 through 6 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{($i - 1) * 0.1}s;
+            }
+        }
     }
 
     .post:hover {

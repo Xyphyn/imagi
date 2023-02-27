@@ -1,10 +1,8 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
     import type { Post } from '$lib/types/post'
+    import Icon from './Icon.svelte'
     import { currentUser, pb } from './pocketbase'
-    import Fa from 'svelte-fa'
-    import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
-
     export let post: Post
     let prevPost: Post
 
@@ -85,7 +83,7 @@
             liked ? `var(--background-color)` : `var(--accent-color)`
         }`}
     >
-        <Fa icon={faHeart} class="heart" />
+        <Icon icon="heart" />
         {likes}
     </button>
 </div>
@@ -101,10 +99,12 @@
     .like-button:hover {
         background-color: var(--selected);
         color: var(--purple);
+        fill: var(--purple);
     }
 
     .likes {
         display: flex;
+        align-items: center;
         align-items: center;
         flex-direction: row;
         gap: 4px;

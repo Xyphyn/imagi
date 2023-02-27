@@ -6,11 +6,7 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import { getFile, isVideo } from '../../routes/app'
     import CommentSection from '$lib/CommentSection.svelte'
-    import Fa from 'svelte-fa'
-    import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
-    import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
-    import { faVolumeMute } from '@fortawesome/free-solid-svg-icons/faVolumeMute'
-    import { faVolumeUp } from '@fortawesome/free-solid-svg-icons/faVolumeUp'
+    import Icon from '$lib/Icon.svelte'
 
     export let expanded: boolean
     export let post: Post
@@ -78,9 +74,8 @@
                     <button
                         on:click={() => (videoMuted = !videoMuted)}
                         class="mute"
-                        >{#if videoMuted}<Fa icon={faVolumeMute} />{:else}<Fa
-                                icon={faVolumeUp}
-                            />{/if}</button
+                        >{#if videoMuted}<Icon icon="volume-mute" />
+                        {:else}<Icon icon="volume" />{/if}</button
                     >
                 {/key}
             {:else}
@@ -88,14 +83,13 @@
                     class="expanded-image"
                     src={image}
                     on:load={() => (loading = false)}
-                    on:loadstart={() => console.log('started loading')}
                     alt="Expanded"
                 />
             {/if}
             {#if post.expand?.user.id == $currentUser?.id}
-                <button on:click={() => deletePost(post)} class="delete"
-                    ><Fa icon={faTrash} /></button
-                >
+                <button on:click={() => deletePost(post)} class="delete">
+                    <Icon icon="trash" />
+                </button>
             {/if}
             <div class="actions">
                 <span>{post.description}</span>
@@ -104,8 +98,7 @@
                 >
                 <LikeButton {post} />
                 <div class="comments">
-                    <Fa icon={faComment} />
-                    {comments ?? 0}
+                    <Icon icon="comment" />{comments ?? 0}
                 </div>
             </div>
         </div>
@@ -114,6 +107,13 @@
 </Modal>
 
 <style>
+    .comments {
+        display: flex;
+        flex-direction: row;
+        gap: 0.25rem;
+        align-items: center;
+    }
+
     .delete,
     .mute {
         position: absolute;
