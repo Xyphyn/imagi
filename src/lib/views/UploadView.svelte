@@ -20,6 +20,7 @@
         if (newPost.files == undefined || newPost.title == '') {
             return
         }
+        loading = true
         pb.cancelAllRequests()
 
         const dataArray = new FormData()
@@ -71,7 +72,7 @@
         <button type="submit"
             >Upload
             {#if loading}
-                <Loader />
+                <Loader size={16} />
             {/if}</button
         >
     </form>

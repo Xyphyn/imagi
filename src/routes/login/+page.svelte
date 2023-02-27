@@ -1,19 +1,24 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
+    import Loader from '$lib/Loader.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
 
     let username: string
     let password: string
     let files: any = undefined
+    let loading = false
 
     async function login() {
+        loading = true
         const user = await pb
             .collection('users')
             .authWithPassword(username, password)
+        loading = false
     }
 
     async function signUp() {
         try {
+            loading = true
             const data = new FormData()
             data.append('username', username)
             data.append('password', password)
@@ -24,6 +29,7 @@
 
             const createdUser = await pb.collection('users').create(data)
             await login()
+            loading = false
         } catch (err) {
             console.error(err)
         }
@@ -40,6 +46,9 @@
 
 <div class="container">
     <h1>Log In</h1>
+    {#if loading}
+        <Loader />
+    {/if}
     <p>Your password must have at least 8 characters, and at most 72.</p>
     {#if $currentUser}
         <p class="login-form">

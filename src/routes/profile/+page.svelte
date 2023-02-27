@@ -11,9 +11,7 @@
     }
 
     function changeProfile() {
-        console.log('uploading')
         if (files == undefined) {
-            console.log('empty')
             return
         }
         pb.cancelAllRequests()
@@ -60,7 +58,7 @@
         <button type="submit"
             >Upload
             {#if loading}
-                <Loader />
+                <Loader size={16} />
             {/if}</button
         >
     </form>
