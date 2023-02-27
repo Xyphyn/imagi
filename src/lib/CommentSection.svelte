@@ -91,7 +91,7 @@
             bind:value={newComment}
         />
         <button type="submit" class="comment-submit"
-            >Submit {#if submitting}<Loader />{/if}</button
+            >Submit {#if submitting}<Loader size={16} />{/if}</button
         >
     </form>
     {#if comments}

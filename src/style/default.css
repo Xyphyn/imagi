@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Golos';
-    src: url('/font/Golos.ttf');
+    font-family: 'Inter';
+    src: url('/font/Inter.ttf');
 }
 
 @keyframes popin {
@@ -15,14 +15,14 @@
 }
 
 :root {
-    --card-color: #3a3c59;
-    --background-color: #2a2e45;
+    --card-color: #202020;
+    --background-color: #1a1919;
     --text-color: #fff;
-    --accent-color: #7b59e0;
-    --accent-color-bright: #ffffff;
+    --accent-color: #72efdd;
+    --accent-color-bright: #fff;
     --border-radius: 8px;
 
-    font-family: 'Golos', sans-serif;
+    font-family: 'Inter';
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -56,27 +56,39 @@ body {
 button,
 .custom-file-upload {
     outline: none;
+    font-size: 14px;
     border-radius: 8px;
     border: 1px solid var(--accent-color);
+    background-color: transparent;
     color: var(--text-color);
-    background-color: rgba(0, 0, 0, 0);
     padding: 0.5rem 0.65rem;
     transition: all 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 button:hover,
 .custom-file-upload:hover {
     background-color: var(--accent-color);
     cursor: pointer;
+    color: var(--background-color);
 }
 
 button:active,
 .custom-file-upload:active {
     transform: scale(95%);
+}
+
+.button-major {
+    color: var(--background-color);
+    background-color: var(--accent-color);
+}
+
+.button-major:hover {
+    background-color: transparent;
+    color: var(--text-color);
 }
 
 input {
@@ -184,4 +196,9 @@ input[type='file'] {
     100% {
         transform: rotate(360deg);
     }
+}
+
+svg {
+    fill: var(--text-color);
+    stroke: var(--text-color);
 }

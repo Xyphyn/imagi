@@ -7,6 +7,7 @@
     let password: string
     let files: any = undefined
     let loading = false
+    let signup: boolean = false
 
     async function login() {
         loading = true
@@ -56,8 +57,8 @@
             <button on:click={signOut}>Sign Out</button>
             <button on:click={redirect}>Main Page</button>
         </p>
-    {:else}
-        <form on:submit|preventDefault class="login-form">
+    {:else if signup}
+        <form on:submit|preventDefault={signUp} class="login-form">
             <input placeholder="Username" type="text" bind:value={username} />
 
             <input
@@ -65,6 +66,7 @@
                 type="password"
                 bind:value={password}
             />
+
             <label for="profile-upload" class="custom-file-upload">
                 {#if files}
                     <span
@@ -82,8 +84,29 @@
                     bind:files
                 />
             </label>
-            <button on:click={signUp}>Sign Up</button>
-            <button on:click={login}>Login</button>
+            <button class="button-major" type="submit" on:click={signUp}
+                >Sign Up</button
+            >
+            <p>
+                Already have an account?
+                <button on:click={() => (signup = false)}>Login</button>
+            </p>
+        </form>
+    {:else}
+        <form on:submit|preventDefault={login} class="login-form">
+            <input placeholder="Username" type="text" bind:value={username} />
+
+            <input
+                placeholder="Password"
+                type="password"
+                bind:value={password}
+            />
+            <button type="submit" class="button-major">Login</button>
+            <p>
+                Don't have an account? <button on:click={() => (signup = true)}
+                    >Sign Up</button
+                >
+            </p>
         </form>
     {/if}
 </div>

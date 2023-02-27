@@ -32,7 +32,7 @@
         />
         Imagi
     </h1>
-    <button on:click={uploadDialog}>Upload</button>
+    <button on:click={uploadDialog} class="button-major">Post</button>
     {#if !$currentUser?.id}<button on:click={() => goto('/login')}>Login</button
         >
     {:else}

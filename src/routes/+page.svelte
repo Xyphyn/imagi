@@ -1,13 +1,11 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
-    import { goto } from '$app/navigation'
     import nprogress from 'nprogress'
     import type { Post } from '$lib/types/post'
     import { page } from '$app/stores'
     import { getFile, isVideo } from './app'
     import PostView from '$lib/views/PostView.svelte'
-    import UploadView from '$lib/views/UploadView.svelte'
     import Loader from '$lib/Loader.svelte'
 
     let pageNumber = 0
@@ -213,6 +211,7 @@
     }
 
     .post-description {
+        color: white;
         position: relative;
         max-width: 60%;
         left: 1rem;
@@ -223,6 +222,7 @@
     }
 
     .post-author {
+        color: white;
         opacity: 0.5;
         position: relative;
         top: 1rem;
