@@ -6,6 +6,7 @@
 
     export let uploading: boolean
     let loading: boolean
+    let error: any
 
     interface NewPost {
         files: FileList | undefined
@@ -18,6 +19,7 @@
     }
 
     function uploadPost() {
+        error = undefined
         if (newPost.files == undefined || newPost.title == '') {
             showToast(
                 'Error',
@@ -37,32 +39,38 @@
         pb.collection('posts')
             .create(dataArray)
             .catch((err) => {
+                console.log('ouch')
                 loading = false
+                error = err
                 switch (err.status) {
                     case 400:
                         showToast(
                             'Error',
-                            'There was an error uploading. Check the file size.',
+                            'There was an error uploading. If you are not verified, go to your profile.',
                             'error'
                         )
+                        break
                     case 429:
                         showToast(
                             'Error',
                             'You are being rate limited. Are you spamming? Hope you enjoy your IP becoming public.',
                             'error'
                         )
+                        break
                     case 403:
                         showToast(
                             'Error',
                             'There was an error uploading. Try logging out and back in.',
                             'error'
                         )
+                        break
                     default:
                         showToast(
                             'Error',
                             'There was an error uploading.',
                             'error'
                         )
+                        break
                 }
             })
             .then(() => {
@@ -71,7 +79,13 @@
                 loading = false
                 uploading = false
 
-                showToast('Success', 'Successfully uploaded post.', 'success')
+                if (!error) {
+                    showToast(
+                        'Success',
+                        'Successfully uploaded post.',
+                        'success'
+                    )
+                }
             })
     }
 </script>

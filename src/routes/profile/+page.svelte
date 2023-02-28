@@ -6,6 +6,7 @@
     import PostList from '$lib/PostList.svelte'
     import type { Post } from '$lib/types/post'
     import { onMount } from 'svelte'
+    import { showToast } from '../app'
     let loading = false
     let files: any = undefined
     let posts: Post[]
@@ -14,6 +15,8 @@
         modal: false,
         confirmation: '',
     }
+
+    let email: string
 
     onMount(async () => {
         const results = await pb.collection('posts').getList<Post>(1, 50, {
@@ -64,6 +67,26 @@
                 goto('/')
             })
     }
+
+    function changeEmail() {
+        pb.collection('users')
+            .requestEmailChange(email)
+            .then(() => {
+                showToast(
+                    'Success',
+                    'Email updated successfully. Check your email for a verification link.',
+                    'success'
+                )
+                pb.collection('users').requestVerification(email)
+            })
+            .catch((err) => {
+                showToast(
+                    'Error',
+                    'Could not update your email. Is it valid? It may be already taken.',
+                    'error'
+                )
+            })
+    }
 </script>
 
 <div class="settings-container">
@@ -96,6 +119,17 @@
                     <Loader size={16} />
                 {/if}</button
             >
+        </form>
+        <form on:submit|preventDefault={changeEmail} class="form">
+            <p>Change Email</p>
+            <input
+                placeholder="New Email"
+                type="text"
+                accept="image/*"
+                bind:value={email}
+            />
+
+            <button type="submit">Change</button>
         </form>
         <div class="delete-account form">
             <p>Delete Account</p>
@@ -131,8 +165,15 @@
 <style>
     .settings {
         display: flex;
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    @media screen and (min-width: 640px) {
+        .settings {
+            flex-direction: row;
+            align-items: center;
+        }
     }
 
     .settings-container {

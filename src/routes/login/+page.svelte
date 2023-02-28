@@ -4,11 +4,15 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import { showToast } from '../app'
 
-    let username: string
-    let password: string
-    let files: any = undefined
-    let loading = false
+    let form: any = {
+        email: '',
+        username: '',
+        password: '',
+        files: undefined,
+    }
+
     let signup: boolean = false
+    let loading = false
 
     let checks: any = {
         rules: false,
@@ -19,7 +23,7 @@
         loading = true
         const user = await pb
             .collection('users')
-            .authWithPassword(username, password)
+            .authWithPassword(form.username, form.password)
             .catch((err) => {
                 showToast('Error', 'Invalid password/username.', 'error')
                 loading = false
@@ -33,17 +37,18 @@
             loading = true
 
             const data = new FormData()
-            data.append('username', username)
-            data.append('password', password)
-            data.append('passwordConfirm', password)
+            data.append('email', form.email)
+            data.append('username', form.username)
+            data.append('password', form.password)
+            data.append('passwordConfirm', form.password)
 
-            if (username == undefined || password == undefined) {
+            if (form.username == undefined || form.password == undefined) {
                 loading = false
                 return
             }
 
-            if (files) {
-                data.append('avatar', files[0])
+            if (form.files) {
+                data.append('avatar', form.files[0])
             }
 
             const createdUser = await pb
@@ -57,6 +62,12 @@
                     )
                 })
             await login()
+            pb.collection('users').requestVerification(form.email)
+            showToast(
+                'Success',
+                'Successfully signed up. Check your email for a verification link.',
+                'success'
+            )
             loading = false
         } catch (err) {
             console.error(err)
@@ -86,19 +97,25 @@
         </p>
     {:else if signup}
         <form on:submit|preventDefault={signUp} class="login-form">
-            <input placeholder="Username" type="text" bind:value={username} />
+            <input placeholder="Email" type="text" bind:value={form.email} />
+
+            <input
+                placeholder="Username"
+                type="text"
+                bind:value={form.username}
+            />
 
             <input
                 placeholder="Password"
                 type="password"
-                bind:value={password}
+                bind:value={form.password}
             />
 
             <label for="profile-upload" class="custom-file-upload">
-                {#if files}
+                {#if form.files}
                     <span
                         style="max-width: 24ch; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"
-                        >{files[0].name}</span
+                        >{form.files[0].name}</span
                     >
                 {:else}
                     Avatar (optional)
@@ -108,7 +125,7 @@
                     placeholder="Image"
                     type="file"
                     accept="image/*"
-                    bind:files
+                    bind:files={form.files}
                 />
             </label>
             <label for="checkbox-rules" class="check"
@@ -139,12 +156,16 @@
         </form>
     {:else}
         <form on:submit|preventDefault={login} class="login-form">
-            <input placeholder="Username" type="text" bind:value={username} />
+            <input
+                placeholder="Email or Username"
+                type="text"
+                bind:value={form.username}
+            />
 
             <input
                 placeholder="Password"
                 type="password"
-                bind:value={password}
+                bind:value={form.password}
             />
             <button type="submit" class="button-major">Login</button>
             <p>
