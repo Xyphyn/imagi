@@ -119,6 +119,7 @@
     }
 </script>
 
+<title>Imagi</title>
 <div class="container">
     <PostList {posts} />
     <div class="navigation">

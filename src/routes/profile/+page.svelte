@@ -89,6 +89,7 @@
     }
 </script>
 
+<title>Imagi | Profile</title>
 <div class="settings-container">
     <h1>Hello, {$currentUser?.username}</h1>
     <button on:click={signOut}>Log Out</button>

@@ -83,6 +83,7 @@
     }
 </script>
 
+<title>Imagi | Login</title>
 <div class="container">
     <h1>{signup ? 'Sign Up' : 'Log In'}</h1>
     {#if loading}
