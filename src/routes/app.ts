@@ -24,6 +24,7 @@ export function showToast(title: string, description: string, type: ToastType) {
         title,
         description,
         type,
-        duration: 1000
+        duration: 5000,
+        theme: 'dark',
     })
 }

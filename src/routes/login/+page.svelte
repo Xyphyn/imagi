@@ -2,6 +2,7 @@
     import { goto } from '$app/navigation'
     import Loader from '$lib/Loader.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import { showToast } from '../app'
 
     let username: string
     let password: string
@@ -19,7 +20,12 @@
         const user = await pb
             .collection('users')
             .authWithPassword(username, password)
+            .catch((err) => {
+                showToast('Error', 'Invalid password/username.', 'error')
+                loading = false
+            })
         loading = false
+        showToast('Success', 'Logged in successfully.', 'success')
     }
 
     async function signUp() {
@@ -30,15 +36,26 @@
             data.append('username', username)
             data.append('password', password)
             data.append('passwordConfirm', password)
+
             if (username == undefined || password == undefined) {
                 loading = false
                 return
             }
+
             if (files) {
                 data.append('avatar', files[0])
             }
 
-            const createdUser = await pb.collection('users').create(data)
+            const createdUser = await pb
+                .collection('users')
+                .create(data)
+                .catch((err) => {
+                    showToast(
+                        'Error',
+                        'There was an error signing up. Check your connection.',
+                        'error'
+                    )
+                })
             await login()
             loading = false
         } catch (err) {

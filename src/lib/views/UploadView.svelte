@@ -2,6 +2,7 @@
     import Loader from '$lib/Loader.svelte'
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import { showToast } from '../../routes/app'
 
     export let uploading: boolean
     let loading: boolean
@@ -18,6 +19,11 @@
 
     function uploadPost() {
         if (newPost.files == undefined || newPost.title == '') {
+            showToast(
+                'Error',
+                'You forgot to upload a file/description.',
+                'warning'
+            )
             return
         }
         loading = true
@@ -32,11 +38,40 @@
             .create(dataArray)
             .catch((err) => {
                 loading = false
+                switch (err.status) {
+                    case 400:
+                        showToast(
+                            'Error',
+                            'There was an error uploading. Check the file size.',
+                            'error'
+                        )
+                    case 429:
+                        showToast(
+                            'Error',
+                            'You are being rate limited. Are you spamming? Hope you enjoy your IP becoming public.',
+                            'error'
+                        )
+                    case 403:
+                        showToast(
+                            'Error',
+                            'There was an error uploading. Try logging out and back in.',
+                            'error'
+                        )
+                    default:
+                        showToast(
+                            'Error',
+                            'There was an error uploading.',
+                            'error'
+                        )
+                }
             })
             .then(() => {
                 newPost.files = undefined
                 newPost.title = ''
                 loading = false
+                uploading = false
+
+                showToast('Success', 'Successfully uploaded post.', 'success')
             })
     }
 </script>

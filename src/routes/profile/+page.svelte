@@ -58,7 +58,11 @@
         )
             return
 
-        pb.collection('users').delete($currentUser?.id!)
+        pb.collection('users')
+            .delete($currentUser?.id!)
+            .then(() => {
+                goto('/')
+            })
     }
 </script>
 

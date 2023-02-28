@@ -3,7 +3,7 @@
     import nprogress from 'nprogress'
     import { navigating } from '$app/stores'
     import Navbar from './Navbar.svelte'
-    import { toasts, ToastContainer, FlatToast } from 'svelte-toasts'
+    import { ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts'
 
     let cursor = 'auto'
 
@@ -21,8 +21,11 @@
 
 <div class="main-container" style={`cursor: ${cursor}`}>
     <Navbar />
-    <ToastContainer placement={'top-right'} showProgress={true} duration={1000}
-        >te</ToastContainer
+    <ToastContainer
+        placement={'top-right'}
+        showProgress={true}
+        duration={1000}
+        let:data><BootstrapToast {data} /></ToastContainer
     >
     <slot />
 </div>
