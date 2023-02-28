@@ -1,10 +1,17 @@
 <script lang="ts">
-    type Icon = 'heart' | 'comment' | 'trash' | 'volume-mute' | 'volume'
+    type Icon =
+        | 'heart'
+        | 'comment'
+        | 'trash'
+        | 'volume-mute'
+        | 'volume'
+        | 'download'
 
     export let icon: Icon
+    export let shadow: boolean = false
 </script>
 
-<div class="icon">
+<div class={`icon ${shadow ? 'shadow' : ''}`}>
     {#if icon == 'heart'}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
             ><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
@@ -38,6 +45,13 @@
             ><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
                 d="M301.1 34.8C312.6 40 320 51.4 320 64V448c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352H64c-35.3 0-64-28.7-64-64V224c0-35.3 28.7-64 64-64h67.8L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3zM425 167l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"
             /></svg
+        >
+    {:else if icon == 'download'}<svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            ><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"
+            /></svg
         >{/if}
 
     <slot />
@@ -51,5 +65,9 @@
         flex-direction: row;
         color: var(--color);
         fill: var(--color);
+    }
+
+    .shadow {
+        filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.7));
     }
 </style>

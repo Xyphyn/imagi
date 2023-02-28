@@ -26,6 +26,7 @@
 		"nprogress": "^0.2.0",
 		"pocketbase": "^0.11.1",
 		"svelte-fontawesome": "^0.0.3",
-		"svelte-preprocess": "^5.0.1"
+		"svelte-preprocess": "^5.0.1",
+		"svelte-toasts": "^1.1.2"
 	}
 }

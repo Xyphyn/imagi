@@ -9,6 +9,11 @@
     let loading = false
     let signup: boolean = false
 
+    let checks: any = {
+        rules: false,
+        ip: false,
+    }
+
     async function login() {
         loading = true
         const user = await pb
@@ -20,10 +25,15 @@
     async function signUp() {
         try {
             loading = true
+
             const data = new FormData()
             data.append('username', username)
             data.append('password', password)
             data.append('passwordConfirm', password)
+            if (username == undefined || password == undefined) {
+                loading = false
+                return
+            }
             if (files) {
                 data.append('avatar', files[0])
             }
@@ -46,7 +56,7 @@
 </script>
 
 <div class="container">
-    <h1>Log In</h1>
+    <h1>{signup ? 'Sign Up' : 'Log In'}</h1>
     {#if loading}
         <Loader />
     {/if}
@@ -84,8 +94,26 @@
                     bind:files
                 />
             </label>
-            <button class="button-major" type="submit" on:click={signUp}
-                >Sign Up</button
+            <label for="checkbox-rules" class="check"
+                >I will not spam, or harass others.
+                <input
+                    id="checkbox-rules"
+                    type="checkbox"
+                    bind:checked={checks.rules}
+                /><span class="custom-check" /></label
+            >
+            <label for="checkbox-ip" class="check"
+                >If I do, my IP will be made public.<input
+                    id="checkbox-ip"
+                    type="checkbox"
+                    bind:checked={checks.ip}
+                /><span class="custom-check" /></label
+            >
+            <button
+                class={`button-major ${
+                    checks.ip && checks.rules ? '' : 'disabled'
+                }`}
+                type="submit">Sign Up</button
             >
             <p>
                 Already have an account?
@@ -123,6 +151,26 @@
     .login-form {
         display: flex;
         flex-direction: column;
+        gap: 1rem;
+    }
+
+    .disabled {
+        opacity: 0.6;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .check {
+        border: 1px solid var(--accent-color);
+        padding: 0.5rem 0.65rem;
+        border-radius: var(--border-radius);
+        font-size: 14px;
+    }
+
+    p {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         gap: 1rem;
     }
 </style>

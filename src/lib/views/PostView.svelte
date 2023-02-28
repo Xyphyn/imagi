@@ -7,6 +7,7 @@
     import { getFile, isVideo } from '../../routes/app'
     import CommentSection from '$lib/CommentSection.svelte'
     import Icon from '$lib/Icon.svelte'
+    import { goto } from '$app/navigation'
 
     export let expanded: boolean
     export let post: Post
@@ -74,8 +75,11 @@
                     <button
                         on:click={() => (videoMuted = !videoMuted)}
                         class="mute"
-                        >{#if videoMuted}<Icon icon="volume-mute" />
-                        {:else}<Icon icon="volume" />{/if}</button
+                        >{#if videoMuted}<Icon
+                                icon="volume-mute"
+                                shadow={true}
+                            />
+                        {:else}<Icon icon="volume" shadow={true} />{/if}</button
                     >
                 {/key}
             {:else}
@@ -88,9 +92,13 @@
             {/if}
             {#if post.expand?.user.id == $currentUser?.id}
                 <button on:click={() => deletePost(post)} class="delete">
-                    <Icon icon="trash" />
+                    <Icon icon="trash" shadow={true} />
                 </button>
             {/if}
+
+            <button on:click={() => goto(image)} class="download">
+                <Icon icon="download" shadow={true} />
+            </button>
             <div class="actions">
                 <span>{post.description}</span>
                 <span style="opacity: 0.3; margin-right: auto;"
@@ -115,7 +123,8 @@
     }
 
     .delete,
-    .mute {
+    .mute,
+    .download {
         position: absolute;
         top: 0;
         right: 0;
@@ -125,12 +134,17 @@
     }
 
     .delete:hover,
-    .mute:hover {
+    .mute:hover,
+    .download:hover {
         color: black;
     }
 
     .mute {
         left: 0;
+    }
+
+    .download {
+        right: 3rem;
     }
 
     .image-container {

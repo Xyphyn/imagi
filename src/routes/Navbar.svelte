@@ -17,6 +17,8 @@
     function uploadDialog() {
         if (!$currentUser?.id) {
             goto('/login')
+            uploading = false
+            return
         }
         uploading = true
     }

@@ -12,6 +12,7 @@ specifiers:
   svelte-check: ^3.0.1
   svelte-fontawesome: ^0.0.3
   svelte-preprocess: ^5.0.1
+  svelte-toasts: ^1.1.2
   tslib: ^2.4.1
   typescript: ^4.9.3
   vite: ^4.0.0
@@ -22,6 +23,7 @@ dependencies:
   pocketbase: 0.11.1
   svelte-fontawesome: 0.0.3
   svelte-preprocess: 5.0.1_fsk2356kdqta2rdbnwwjn3abbe
+  svelte-toasts: 1.1.2
 
 devDependencies:
   '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.8.3
@@ -935,6 +937,10 @@ packages:
       strip-indent: 3.0.0
       svelte: 3.55.1
       typescript: 4.9.5
+
+  /svelte-toasts/1.1.2:
+    resolution: {integrity: sha512-m+yL4eEKXyJoyjTYaH1j1GFwF0Pi8YDqnVfwWPDmwi4712iZesv+TNCmToSNlav3R5Vkmc8ZBRkT8DOcu3sywQ==}
+    dev: false
 
   /svelte/3.55.1:
     resolution: {integrity: sha512-S+87/P0Ve67HxKkEV23iCdAh/SX1xiSfjF1HOglno/YTbSTW7RniICMCofWGdJJbdjw3S+0PfFb1JtGfTXE0oQ==}

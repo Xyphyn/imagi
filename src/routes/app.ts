@@ -1,4 +1,6 @@
 import { pb } from "$lib/pocketbase"
+import { toasts } from "svelte-toasts"
+import type { ToastType } from "svelte-toasts/types/common"
 
 export function getFile(post: any, fullQuality: boolean) {
     const firstFilename = post.image
@@ -15,4 +17,13 @@ export function isVideo(url: string) {
         content.pathname.endsWith('webm') ||
         content.pathname.endsWith('mp4')
     )
+}
+
+export function showToast(title: string, description: string, type: ToastType) {
+    toasts.add({
+        title,
+        description,
+        type,
+        duration: 1000
+    })
 }
