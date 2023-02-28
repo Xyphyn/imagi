@@ -203,3 +203,13 @@ svg {
     fill: var(--text-color);
     stroke: var(--text-color);
 }
+
+a {
+    text-decoration: none;
+    font-size: inherit;
+    color: var(--text-color);
+}
+
+a:hover {
+    color: var(--accent-color);
+}

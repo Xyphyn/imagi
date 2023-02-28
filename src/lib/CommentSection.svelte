@@ -101,7 +101,9 @@
     {#if comments}
         {#each comments as comment}
             <div class="comment">
-                <p class="username">@{comment.expand?.user.username}</p>
+                <a class="username" href={`/profile/${comment.user}`}
+                    >@{comment.expand?.user.username}</a
+                >
                 <p>{comment.content}</p>
                 {#if comment.user == $currentUser?.id}
                     <button

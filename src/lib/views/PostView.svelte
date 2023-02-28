@@ -90,19 +90,23 @@
                     alt="Expanded"
                 />
             {/if}
-            {#if post.expand?.user.id == $currentUser?.id}
-                <button on:click={() => deletePost(post)} class="delete">
-                    <Icon icon="trash" shadow={true} />
-                </button>
-            {/if}
+            <div class="post-actions">
+                {#if post.expand?.user.id == $currentUser?.id}
+                    <button on:click={() => deletePost(post)} class="delete">
+                        <Icon icon="trash" shadow={true} />
+                    </button>
+                {/if}
 
-            <button on:click={() => goto(image)} class="download">
-                <Icon icon="download" shadow={true} />
-            </button>
+                <button on:click={() => goto(image)} class="download">
+                    <Icon icon="download" shadow={true} />
+                </button>
+            </div>
             <div class="actions">
                 <span>{post.description}</span>
-                <span style="opacity: 0.3; margin-right: auto;"
-                    >@{post.expand?.user.username}</span
+                <a
+                    style="opacity: 0.3; margin-right: auto;"
+                    href={`/profile/${post.user}`}
+                    >@{post.expand?.user.username}</a
                 >
                 <LikeButton {post} />
                 <div class="comments">
@@ -122,9 +126,8 @@
         align-items: center;
     }
 
-    .delete,
-    .mute,
-    .download {
+    .post-actions,
+    .mute {
         position: absolute;
         top: 0;
         right: 0;
@@ -133,18 +136,19 @@
         color: var(--accent-color);
     }
 
-    .delete:hover,
-    .mute:hover,
-    .download:hover {
+    .post-actions:hover,
+    .mute:hover {
         color: black;
+    }
+
+    .post-actions {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 1rem;
     }
 
     .mute {
         left: 0;
-    }
-
-    .download {
-        right: 3rem;
     }
 
     .image-container {

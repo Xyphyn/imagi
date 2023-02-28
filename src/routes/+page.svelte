@@ -129,7 +129,7 @@
     </div>
 </div>
 
-<style lang="scss">
+<style>
     .navigation {
         display: flex;
         flex-direction: row;
