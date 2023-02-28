@@ -1,5 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
+
+process.env = {...process.env, ...loadEnv('dev', process.cwd())}
 
 export default defineConfig({
 	plugins: [sveltekit()],
