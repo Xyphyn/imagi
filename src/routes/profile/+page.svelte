@@ -74,7 +74,7 @@
             .then(() => {
                 showToast(
                     'Success',
-                    'Email updated successfully. Check your email for a verification link.',
+                    'Email updated successfully. Check your email for a verification link. You will need to log back in.',
                     'success'
                 )
                 pb.collection('users').requestVerification(email)

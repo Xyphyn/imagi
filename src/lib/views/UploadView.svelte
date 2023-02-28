@@ -46,7 +46,7 @@
                     case 400:
                         showToast(
                             'Error',
-                            'There was an error uploading. If you are not verified, go to your profile.',
+                            'There was an error uploading. If you are not verified, go to your profile. You may need to refresh your login.',
                             'error'
                         )
                         break
