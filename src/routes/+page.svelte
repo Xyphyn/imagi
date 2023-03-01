@@ -29,13 +29,17 @@
         loading: false,
     }
 
+    type Sort = 'created' | 'popularity'
+
+    let sort: Sort = 'created'
+
     let posts: Post[] = []
     let unsubscribe: () => void
 
-    async function getPage(increment: boolean) {
-        if (increment) {
+    async function getPage(increment: boolean | undefined) {
+        if (increment == true) {
             pageNumber++
-        } else {
+        } else if (increment == false) {
             if (pageNumber > 1) {
                 pageNumber--
             } else {
@@ -45,10 +49,12 @@
 
         nprogress.start()
 
+        const sortString = sort == 'created' ? '-created' : ''
+
         const resultList = await pb
             .collection('posts')
             .getList<Post>(pageNumber, 50, {
-                sort: '-created',
+                sort: `-created`,
                 expand: 'user',
             })
 
@@ -121,6 +127,22 @@
 
 <title>Imagi</title>
 <div class="container">
+    <div class="actions">
+        <div class="sorts">
+            <button
+                on:click={() => (sort = 'created')}
+                class={`${sort == 'created' ? 'button-major' : ''}`}
+                >Recent</button
+            >
+            <!-- <button
+                on:click={() => (sort = 'popularity')}
+                class={`${sort == 'popularity' ? 'button-major' : ''}`}
+                >Popular</button
+            > -->
+        </div>
+        <h1>Recent Posts</h1>
+    </div>
+
     <PostList {posts} />
     <div class="navigation">
         <button on:click={() => getPage(false)}>Back</button>
@@ -141,5 +163,16 @@
 
     .container {
         margin: 2rem;
+    }
+
+    .sorts {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .button-major:hover {
+        background-color: var(--accent-color);
+        color: var(--background-color);
     }
 </style>

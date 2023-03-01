@@ -154,7 +154,7 @@
     .image-container {
         position: relative;
         max-width: 64rem;
-        min-width: 24rem;
+        min-width: 60%;
         max-height: 100%;
         width: auto;
         height: 100%;
