@@ -31,5 +31,10 @@ export function showToast(title: string, description: string, type: ToastType) {
 
 export function getProfilePicture(user: any): string {
     const firstFilename = user.avatar
-    return pb.getFileUrl(user, firstFilename, { thumb: '128x128' })
+    
+    try { const url = pb.getFileUrl(user, firstFilename, { thumb: '128x128' })
+return url }
+    catch {
+        return `https://avatars.dicebear.com/api/identicon/${user.username}.svg`
+    }
 }

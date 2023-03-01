@@ -114,11 +114,25 @@
                 </div>
             </div>
         </div>
+        {#if post.expand?.community?.name}
+            <a
+                class="community"
+                href={`/community/${post.expand?.community.name}`}
+                >{post.expand?.community.name}</a
+            >
+        {/if}
         <CommentSection bind:commentCount={comments} {post} />
     {/if}
 </Modal>
 
 <style>
+    .community {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 1rem;
+    }
+
     .comments {
         display: flex;
         flex-direction: row;

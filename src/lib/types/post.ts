@@ -3,6 +3,7 @@ export interface Post {
     id: string
     description: string
     user: string
+    community: string
     expand: any
 }
 
