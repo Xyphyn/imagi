@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { page } from '$app/stores'
     import Icon from '$lib/Icon.svelte'
     import Loader from '$lib/Loader.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
@@ -8,10 +9,6 @@
     import UserAvatar from '$lib/UserAvatar.svelte'
     import type { Admin } from 'pocketbase'
     import { onMount } from 'svelte'
-
-    interface ProfileData {
-        id: string
-    }
 
     interface Stats {
         comments: number
@@ -23,7 +20,7 @@
         posts: 0,
     }
 
-    export let data: ProfileData
+    let userId = $page.params.slug
 
     // The stupid type definitions aren't the same between pb.authStore.model.
     let user: any
@@ -34,7 +31,7 @@
     onMount(async () => {
         user = await pb
             .collection('users')
-            .getOne(data.id)
+            .getOne(userId)
             .catch((err) => {
                 error = err
             })
