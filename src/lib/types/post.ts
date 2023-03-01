@@ -5,3 +5,11 @@ export interface Post {
     user: string
     expand: any
 }
+
+export interface Community {
+    id: string,
+    name: string,
+    user: string,
+    description: string,
+    expand: any
+}

@@ -28,3 +28,8 @@ export function showToast(title: string, description: string, type: ToastType) {
         theme: 'dark',
     })
 }
+
+export function getProfilePicture(user: any): string {
+    const firstFilename = user.avatar
+    return pb.getFileUrl(user, firstFilename, { thumb: '128x128' })
+}
