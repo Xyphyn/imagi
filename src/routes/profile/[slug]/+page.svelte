@@ -61,8 +61,8 @@
         <h1>{user.username}</h1>
         <span>Joined <PrettyDate unformattedDate={user.created} /></span>
         <div class="stats">
-            <span><Icon icon="message" /> {stats.posts}</span>
-            <span><Icon icon="comment" /> {stats.comments}</span>
+            <span class="icon"><Icon icon="message" /> {stats.posts}</span>
+            <span class="icon"><Icon icon="comment" /> {stats.comments}</span>
         </div>
 
         <h1>{user.username}'s posts</h1>
