@@ -34,6 +34,7 @@
         />
         Imagi
     </h1>
+    <button on:click={() => goto('/explore')}>Explore</button>
     <button on:click={uploadDialog} class="button-major">Post</button>
     {#if !$currentUser?.id}<button on:click={() => goto('/login')}>Login</button
         >

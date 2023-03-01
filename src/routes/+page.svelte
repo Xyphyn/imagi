@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import nprogress from 'nprogress'
-    import type { Post } from '$lib/types/post'
+    import type { Community, Post } from '$lib/types/post'
     import { page } from '$app/stores'
     import { getFile, isVideo } from './app'
     import PostView from '$lib/views/PostView.svelte'
@@ -29,7 +29,7 @@
         loading: false,
     }
 
-    type Sort = 'created' | 'popularity'
+    type Sort = 'created' | 'following'
 
     let sort: Sort = 'created'
 
@@ -49,12 +49,19 @@
 
         nprogress.start()
 
-        const sortString = sort == 'created' ? '-created' : ''
+        let filterString = ''
+
+        if ($currentUser?.communities) {
+            filterString = $currentUser?.communities
+                .map((community: Community) => `community.id = "${community}"`)
+                .join(' || ')
+        }
 
         const resultList = await pb
             .collection('posts')
             .getList<Post>(pageNumber, 50, {
                 sort: `-created`,
+                filter: sort == 'following' ? filterString : '',
                 expand: 'user',
             })
 
@@ -130,17 +137,28 @@
     <div class="actions">
         <div class="sorts">
             <button
-                on:click={() => (sort = 'created')}
+                on:click={() => {
+                    sort = 'created'
+                    getPage(undefined)
+                }}
                 class={`${sort == 'created' ? 'button-major' : ''}`}
                 >Recent</button
             >
-            <!-- <button
-                on:click={() => (sort = 'popularity')}
-                class={`${sort == 'popularity' ? 'button-major' : ''}`}
-                >Popular</button
-            > -->
+            {#if currentUser}
+                <button
+                    on:click={() => {
+                        sort = 'following'
+                        getPage(undefined)
+                    }}
+                    class={`${sort == 'following' ? 'button-major' : ''}`}
+                    >Following</button
+                >
+            {/if}
         </div>
-        <h1>Recent Posts</h1>
+        <h1>
+            {#if sort == 'following'}Followed Posts{:else if sort == 'created'}Recent
+                Posts{/if}
+        </h1>
     </div>
 
     <PostList {posts} />

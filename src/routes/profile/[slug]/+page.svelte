@@ -5,6 +5,7 @@
     import PostList from '$lib/PostList.svelte'
     import PrettyDate from '$lib/PrettyDate.svelte'
     import type { Post } from '$lib/types/post'
+    import UserAvatar from '$lib/UserAvatar.svelte'
     import type { Admin } from 'pocketbase'
     import { onMount } from 'svelte'
 
@@ -59,8 +60,9 @@
     {#if error}
         <p>There is no user with that id.</p>
     {:else if user}
+        <UserAvatar {user} width={128} />
         <h1>{user.username}</h1>
-        <span>Created <PrettyDate unformattedDate={user.created} /></span>
+        <span>Joined <PrettyDate unformattedDate={user.created} /></span>
         <div class="stats">
             <span><Icon icon="message" /> {stats.posts}</span>
             <span><Icon icon="comment" /> {stats.comments}</span>

@@ -4,6 +4,8 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import Loader from './Loader.svelte'
     import { goto } from '$app/navigation'
+    import Icon from './Icon.svelte'
+    import UserAvatar from './UserAvatar.svelte'
 
     export let post: Post
     export let commentCount: number = 0
@@ -101,16 +103,19 @@
     {#if comments}
         {#each comments as comment}
             <div class="comment">
-                <a class="username" href={`/profile/${comment.user}`}
-                    >@{comment.expand?.user.username}</a
-                >
-                <p>{comment.content}</p>
-                {#if comment.user == $currentUser?.id}
-                    <button
-                        on:click={() => deleteComment(comment)}
-                        class="delete">Delete</button
+                <UserAvatar user={comment.expand?.user} width={32} />
+                <div class="comment-content">
+                    <a class="username" href={`/profile/${comment.user}`}
+                        >@{comment.expand?.user.username}</a
                     >
-                {/if}
+                    <p>{comment.content}</p>
+                    {#if comment.user == $currentUser?.id}
+                        <button
+                            on:click={() => deleteComment(comment)}
+                            class="delete"><Icon icon="trash" /></button
+                        >
+                    {/if}
+                </div>
             </div>
         {/each}
     {:else}
@@ -136,6 +141,7 @@
 
     .comment-text {
         width: 100%;
+        box-sizing: border-box;
     }
 
     .comment-submit {
@@ -171,23 +177,25 @@
         flex-direction: column;
         color: white;
         width: 100%;
-        padding: 2rem;
         box-sizing: border-box;
         gap: 1rem;
-    }
-
-    .comments .comment {
-        animation: popin 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
     }
 
     .comment {
         display: flex;
         padding: 1rem;
+        flex-direction: row;
+        border-radius: 8px;
+        animation: popin 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+        border: 1px solid var(--accent-color);
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .comment-content {
+        display: flex;
         flex-direction: column;
         justify-content: center;
-        border-radius: 8px;
-        border: 1px solid var(--accent-color);
-        animation: popin 500ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
     }
 
     p {
