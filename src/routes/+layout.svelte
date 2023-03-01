@@ -10,10 +10,8 @@
 
     onMount(() => {
         if (!window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            console.log('Light')
             import('../style/light.css')
         } else {
-            console.log('Dark')
             import('../style/dark.css')
         }
     })
