@@ -175,7 +175,7 @@
     .comments {
         display: flex;
         flex-direction: column;
-        color: white;
+        color: var(--text-color);
         width: 100%;
         box-sizing: border-box;
         gap: 1rem;

@@ -180,13 +180,22 @@
         gap: 1rem;
         max-width: 100%;
         width: 100%;
+        color: var(--text-color);
+        fill: var(--text-color);
     }
 
     @media screen and (min-width: 640px) {
         .actions {
             position: absolute;
             bottom: 0;
+            color: white;
             padding: 1rem;
+            fill: white;
+        }
+
+        .post-actions {
+            color: white;
+            fill: white;
         }
 
         .image-container {

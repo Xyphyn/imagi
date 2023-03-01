@@ -77,13 +77,13 @@
         height: 14px;
         display: flex;
         flex-direction: row;
-        fill: white;
-        color: white;
+        fill: inherit;
+        color: inherit;
     }
 
     svg {
-        fill: white;
-        color: white;
+        fill: inherit;
+        color: inherit;
     }
 
     .shadow {

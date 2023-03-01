@@ -94,6 +94,7 @@
         background-color: var(--selected);
         border: none;
         gap: 0.25rem;
+        color: var(--text-color);
     }
 
     .like-button:hover {
@@ -103,10 +104,17 @@
     }
 
     .likes {
+        color: var(--text-color);
         display: flex;
         align-items: center;
         align-items: center;
         flex-direction: row;
         gap: 4px;
+    }
+
+    @media screen and (min-width: 640px) {
+        .like-button {
+            color: white;
+        }
     }
 </style>
