@@ -4,8 +4,17 @@
     import { navigating } from '$app/stores'
     import Navbar from './Navbar.svelte'
     import { ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts'
+    import { onMount } from 'svelte'
 
     let cursor = 'auto'
+
+    onMount(() => {
+        if (!window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            import('../style/light.css')
+        } else {
+            import('../style/dark.css')
+        }
+    })
 
     $: {
         if ($navigating) {

@@ -1,0 +1,9 @@
+:root {
+    --card-color: #202020;
+    --background-color: #1a1919;
+    --background-color-rgb: 26, 25, 25;
+    --text-color: #fff;
+    --accent-color: #72efdd;
+    --accent-color-bright: #fff;
+    --border-radius: 8px;
+}

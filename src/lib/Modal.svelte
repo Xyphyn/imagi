@@ -37,7 +37,7 @@
         border: none;
         padding: 0;
         background-color: var(--card-color);
-        color: #fff;
+        color: var(--text-color);
         box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 

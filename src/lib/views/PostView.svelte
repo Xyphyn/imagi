@@ -104,9 +104,9 @@
             <div class="actions">
                 <span>{post.description}</span>
                 <a
-                    style="opacity: 0.3; margin-right: auto;"
+                    class="username"
                     href={`/profile/${post.user}`}
-                    >@{post.expand?.user.username}</a
+                    data-sveltekit-preload-data>@{post.expand?.user.username}</a
                 >
                 <LikeButton {post} />
                 <div class="comments">
@@ -180,17 +180,36 @@
         gap: 1rem;
         max-width: 100%;
         width: 100%;
+        color: var(--text-color);
+        fill: var(--text-color);
+    }
+
+    .username {
+        opacity: 0.3;
+        margin-right: auto;
+        color: var(--text-color);
     }
 
     @media screen and (min-width: 640px) {
         .actions {
             position: absolute;
             bottom: 0;
+            color: white;
             padding: 1rem;
+            fill: white;
+        }
+
+        .post-actions {
+            color: white;
+            fill: white;
         }
 
         .image-container {
             box-shadow: inset 0px -58px 29px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .username {
+            color: white;
         }
     }
 </style>

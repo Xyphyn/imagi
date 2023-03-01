@@ -1,0 +1,21 @@
+:root {
+    --card-color: #ffffff;
+    --background-color: #f0f0f0;
+    --background-color-rgb: 240, 240, 240;
+    --text-color: #000;
+    --accent-color: #72efdd;
+    --accent-color-bright: #000;
+
+    transition: background-color 250ms;
+}
+
+button:hover,
+.custom-file-upload:hover {
+    background-color: var(--accent-color);
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.button-major {
+    color: var(--text-color);
+}
