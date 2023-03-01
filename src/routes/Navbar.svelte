@@ -1,6 +1,7 @@
 <script lang="ts">
     // @ts-nocheck
     import { goto } from '$app/navigation'
+    import Icon from '$lib/Icon.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import UploadView from '$lib/views/UploadView.svelte'
 
