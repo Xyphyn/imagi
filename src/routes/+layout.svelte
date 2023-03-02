@@ -14,7 +14,23 @@
         } else {
             import('../style/dark.css')
         }
+
+        let color = localStorage.getItem('color') ?? '#72efdd'
+
+        const r: any = document.querySelector(':root')
+        r.style.setProperty('--accent-color', color)
     })
+
+    // function getRandomHexColor(): string {
+    //     const hexChars = '0123456789ABCDEF'
+    //     let color = '#'
+    //     for (let i = 0; i < 3; i++) {
+    //         const randomValue = Math.floor(127 + Math.random() * 128) // Generates a random value from 0 to 255
+    //         const hexValue = randomValue.toString(16).padStart(2, '0') // Converts the random value to a two-digit hexadecimal string
+    //         color += hexValue
+    //     }
+    //     return color
+    // }
 
     $: {
         if ($navigating) {
@@ -28,7 +44,7 @@
     }
 </script>
 
-<div class="main-container" style={`cursor: ${cursor}`}>
+<div class="main-container" style={`cursor: ${cursor};`}>
     <Navbar />
     <ToastContainer
         placement={'top-right'}

@@ -6,6 +6,7 @@
     import { goto } from '$app/navigation'
     import Icon from './Icon.svelte'
     import UserAvatar from './UserAvatar.svelte'
+    import { showToast } from '../routes/app'
 
     export let post: Post
     export let commentCount: number = 0
@@ -84,8 +85,25 @@
                 content: newComment,
             })
             .catch((err) => {
-                console.log(err)
                 submitting = false
+
+                switch (err.status) {
+                    case 429:
+                        showToast(
+                            'Error',
+                            'You are being rate limited. Please do not comment so fast.',
+                            'error'
+                        )
+                        break
+
+                    default:
+                        showToast(
+                            'Error',
+                            'There was an error commenting. Try logging back in.',
+                            'error'
+                        )
+                        break
+                }
             })
             .then(() => {
                 submitting = false

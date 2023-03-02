@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { goto } from '$app/navigation'
+    //@ts-nocheck
+    import { goto, invalidate } from '$app/navigation'
     import Loader from '$lib/Loader.svelte'
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
@@ -17,6 +18,8 @@
     }
 
     let email: string
+
+    let color: string
 
     onMount(async () => {
         const results = await pb.collection('posts').getList<Post>(1, 50, {
@@ -139,6 +142,22 @@
                 {#if loading}
                     <Loader size={16} />
                 {/if}</button
+            >
+        </div>
+
+        <div class="form">
+            <p>Choose Accent Color</p>
+            <input type="color" bind:value={color} />
+            <button
+                on:click={() => {
+                    localStorage.setItem('color', color)
+                    const r = document
+                        .querySelector(':root')
+                        .style.setProperty('--accent-color', color)
+                }}>Change</button
+            >
+            <button on:click={() => localStorage.removeItem('color')}
+                >Reset</button
             >
         </div>
     </div>
