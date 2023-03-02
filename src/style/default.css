@@ -1,6 +1,7 @@
 @font-face {
     font-family: 'Inter';
     src: url('/font/Inter.ttf');
+    font-display: swap;
 }
 
 @keyframes popin {
