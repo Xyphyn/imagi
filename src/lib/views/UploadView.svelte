@@ -4,6 +4,7 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import type { Community } from '$lib/types/post'
     import { showToast } from '../../routes/app'
+    import Typeahead from 'svelte-typeahead'
 
     export let uploading: boolean
     let loading: boolean
@@ -104,6 +105,22 @@
                 }
             })
     }
+
+    let communities: Community[] = []
+
+    function updateCommunities(input: any) {
+        let string = input.detail
+
+        pb.collection('communities')
+            .getList<Community>(1, 50, {
+                filter: `name ~ "${string}"`,
+            })
+            .then((data) => {
+                communities = data.items
+            })
+    }
+
+    const extract = (item: Community) => item.name
 </script>
 
 <Modal bind:expanded={uploading} fullHeight={false}>
@@ -130,12 +147,19 @@
                 bind:files={newPost.files}
             />
         </label>
-        <input
-            placeholder="Community (optional)"
-            type="text"
-            maxlength="32"
+        <Typeahead
+            maxlength={32}
             bind:value={newPost.community}
-        />
+            hideLabel={true}
+            placeholder="Community (optional)"
+            debounce={500}
+            on:type={updateCommunities}
+            data={communities}
+            {extract}
+            let:result
+        >
+            {@html result.string}
+        </Typeahead>
         <input
             placeholder="Title (required)"
             type="text"
