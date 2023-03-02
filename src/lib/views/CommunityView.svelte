@@ -39,13 +39,18 @@
                 )
 
                 loading = false
+
+                formData.name = undefined
+                formData.description = ''
+
+                expanded = false
             })
             .catch((err) => {
                 loading = false
 
                 showToast(
                     'Error',
-                    "Could not create community. The community name must be alphanumeric lowercase. Check if you're verified.",
+                    "Could not create community. The community name must be at least 3 characters, and alphanumeric lowercase. The description must be at least 5 characters. Check if you're verified.",
                     'error'
                 )
             })
