@@ -4,6 +4,7 @@ import type { ToastType } from 'svelte-toasts/types/common'
 
 export function getFile(post: any, fullQuality: boolean) {
     const firstFilename = post.image
+    if (firstFilename == '' || firstFilename == undefined) return ''
     if (fullQuality) {
         return pb.getFileUrl(post, firstFilename)
     } else {
@@ -30,8 +31,6 @@ export function getProfilePicture(user: any): string {
     const firstFilename: string = user.avatar
 
     if (firstFilename != undefined && firstFilename != '') {
-        console.log(firstFilename != undefined && firstFilename != '')
-
         return pb.getFileUrl(user, firstFilename, { thumb: '128x128' })
     } else {
         return `https://avatars.dicebear.com/api/identicon/${user.username}.svg`
