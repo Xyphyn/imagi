@@ -5,10 +5,14 @@
     import type { Community } from '$lib/types/post'
     import type { User } from '$lib/types/user'
     import UserAvatar from '$lib/UserAvatar.svelte'
+    import CommunityView from '$lib/views/CommunityView.svelte'
     import { onMount } from 'svelte'
+    import { getFile } from '../app'
 
     let users: User[] = []
     let communities: Community[] = []
+
+    let creating: boolean = false
 
     onMount(async () => {
         pb.collection('users')
@@ -38,7 +42,11 @@
             </div>
         {/each}
     </div>
-    <h1>New Communities</h1>
+    <h1 style="display: flex; flex-direction: row; gap: 1rem;">
+        New Communities <button on:click={() => (creating = true)}
+            >Create</button
+        >
+    </h1>
     <div class="communities">
         {#if communities.length == 0}
             <Loader />
@@ -49,14 +57,23 @@
                 on:click={() => goto(`/community/${community.name}`)}
                 on:keypress={() => goto(`/community/${community.name}`)}
             >
-                <span class="community-name">{community.name}</span>
-                <span class="community-description"
-                    >{community.description}</span
-                >
+                <img
+                    src={getFile(community, false)}
+                    alt={community.name.substring(0, 1)}
+                    width={48}
+                    style="background-color: var(--card-color);"
+                />
+                <div class="community-content">
+                    <span class="community-name">{community.name}</span>
+                    <span class="community-description"
+                        >{community.description}</span
+                    >
+                </div>
             </div>
         {/each}
     </div>
 </div>
+<CommunityView bind:expanded={creating} />
 
 <style>
     .community {
@@ -65,8 +82,15 @@
         padding: 2rem;
         border-radius: var(--border-radius);
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
         transition: transform 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    .community-content {
+        display: flex;
+        flex-direction: column;
     }
 
     .community:hover {

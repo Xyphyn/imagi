@@ -5,6 +5,7 @@
     import PostList from '$lib/PostList.svelte'
     import type { Community, Post } from '$lib/types/post'
     import { onDestroy, onMount } from 'svelte'
+    import { getFile } from '../../app'
 
     interface LoadData {
         name: string
@@ -86,12 +87,17 @@
 </script>
 
 <div class="community-container">
-    <h1>{name}</h1>
     {#if !community}
         <Loader />
     {:else if error}
         <span>No community exists with that name.</span>
     {:else}
+        <img
+            src={getFile(community, false)}
+            alt={community.name.substring(0, 1)}
+            width={128}
+        />
+        <span class="title">{name}</span>
         <span>{community.description}</span>
         <button
             on:click={follow}
@@ -120,9 +126,15 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: 1rem;
     }
 
     .posts {
         width: 100%;
+    }
+
+    .title {
+        font-size: 36px;
+        font-weight: bold;
     }
 </style>
