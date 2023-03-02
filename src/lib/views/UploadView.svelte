@@ -69,7 +69,7 @@
                     case 429:
                         showToast(
                             'Error',
-                            'You are being rate limited. Are you spamming? Hope you enjoy your IP becoming public.',
+                            'You are being rate limited. You are making too many posts. Please wait a while before trying again.',
                             'error'
                         )
                         break

@@ -138,7 +138,7 @@
                 /><span class="custom-check" /></label
             >
             <label for="checkbox-ip" class="check"
-                >If I do, my IP will be made public.<input
+                >If I do, my IP/account may be blacklisted/deleted.<input
                     id="checkbox-ip"
                     type="checkbox"
                     bind:checked={checks.ip}
