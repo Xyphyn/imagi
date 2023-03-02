@@ -179,7 +179,7 @@
     .expanded-image {
         position: relative;
         display: inline-block;
-        min-width: 40%;
+        min-width: 20vw;
         max-width: 100%;
         position: relative;
         border-radius: 8px;
@@ -191,6 +191,7 @@
         flex-direction: row;
         align-items: center;
         box-sizing: border-box;
+        overflow: hidden;
         gap: 1rem;
         max-width: 100%;
         width: 100%;
