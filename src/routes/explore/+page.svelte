@@ -85,7 +85,7 @@
                     src={getFile(community, false)}
                     alt={community.name.substring(0, 1)}
                     width={48}
-                    style="background-color: var(--card-color);"
+                    style="background-color: var(--card-color); border-radius: 100%;"
                 />
                 <div class="community-content">
                     <span class="community-name">{community.name}</span>

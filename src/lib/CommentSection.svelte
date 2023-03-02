@@ -16,7 +16,7 @@
     let newComment = ''
     let submitting: boolean = false
 
-    let unsubscribe: () => void
+    let unsubscribe: () => void = () => {}
 
     async function getComments(post: Post) {
         const resultList = await pb.collection('comments').getList(1, 50, {
