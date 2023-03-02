@@ -40,7 +40,10 @@
                 on:keypress={() => expandView(post)}
             >
                 {#if isVideo(getFile(post, false))}
-                    <img class="post-image" src="/svg/play.svg" alt="Video" />
+                    <!-- svelte-ignore a11y-media-has-caption -->
+                    <video class="post-image"
+                        ><source src={getFile(post, false)} /></video
+                    >
                 {:else}
                     <img
                         class="post-image"
