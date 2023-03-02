@@ -62,7 +62,7 @@
             .getList<Post>(pageNumber, 50, {
                 sort: `-created`,
                 filter: sort == 'following' ? filterString : '',
-                expand: 'user',
+                expand: 'user, community',
             })
 
         if (Math.ceil(resultList.totalItems / 50) < pageNumber) {
@@ -89,7 +89,11 @@
                         .collection('users')
                         .getOne(record.user)
 
-                    record.expand = { user }
+                    const community = await pb
+                        .collection('communities')
+                        .getOne(record.community)
+
+                    record.expand = { user, community }
                     posts = [record, ...posts]
                 }
                 if (action === 'delete') {

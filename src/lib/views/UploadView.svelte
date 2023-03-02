@@ -2,7 +2,9 @@
     import Loader from '$lib/Loader.svelte'
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import type { Community } from '$lib/types/post'
     import { showToast } from '../../routes/app'
+    import Typeahead from 'svelte-typeahead'
 
     export let uploading: boolean
     let loading: boolean
@@ -11,14 +13,16 @@
     interface NewPost {
         files: FileList | undefined
         title: string
+        community: string
     }
 
     let newPost: NewPost = {
         files: undefined,
         title: '',
+        community: '',
     }
 
-    function uploadPost() {
+    async function uploadPost() {
         error = undefined
         if (newPost.files == undefined || newPost.title == '') {
             showToast(
@@ -35,6 +39,18 @@
         dataArray.append('image', newPost.files![0])
         dataArray.append('description', newPost.title)
         dataArray.append('user', $currentUser!.id)
+
+        if (newPost.community != '' && newPost.community != undefined) {
+            const community = (
+                await pb.collection('communities').getList<Community>(1, 1, {
+                    filter: `name = "${newPost.community}"`,
+                })
+            ).items[0]
+
+            if (community) {
+                dataArray.append('community', community.id)
+            }
+        }
 
         pb.collection('posts')
             .create(dataArray)
@@ -76,6 +92,7 @@
             .then(() => {
                 newPost.files = undefined
                 newPost.title = ''
+                newPost.community = ''
                 loading = false
                 uploading = false
 
@@ -88,6 +105,22 @@
                 }
             })
     }
+
+    let communities: Community[] = []
+
+    function updateCommunities(input: any) {
+        let string = input.detail
+
+        pb.collection('communities')
+            .getList<Community>(1, 50, {
+                filter: `name ~ "${string}"`,
+            })
+            .then((data) => {
+                communities = data.items
+            })
+    }
+
+    const extract = (item: Community) => item.name
 </script>
 
 <Modal bind:expanded={uploading} fullHeight={false}>
@@ -114,6 +147,19 @@
                 bind:files={newPost.files}
             />
         </label>
+        <Typeahead
+            maxlength={32}
+            bind:value={newPost.community}
+            hideLabel={true}
+            placeholder="Community (optional)"
+            debounce={500}
+            on:type={updateCommunities}
+            data={communities}
+            {extract}
+            let:result
+        >
+            {@html result.string}
+        </Typeahead>
         <input
             placeholder="Title (required)"
             type="text"

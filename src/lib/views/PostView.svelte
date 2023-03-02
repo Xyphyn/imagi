@@ -114,11 +114,25 @@
                 </div>
             </div>
         </div>
+        {#if post.expand?.community?.name}
+            <a
+                class="community"
+                href={`/community/${post.expand?.community.name}`}
+                >{post.expand?.community.name}</a
+            >
+        {/if}
         <CommentSection bind:commentCount={comments} {post} />
     {/if}
 </Modal>
 
 <style>
+    .community {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 1rem;
+    }
+
     .comments {
         display: flex;
         flex-direction: row;
@@ -153,7 +167,7 @@
 
     .image-container {
         position: relative;
-        max-width: 64rem;
+        max-width: 70vw;
         min-width: 40%;
         max-height: 100%;
         width: auto;
@@ -165,8 +179,9 @@
     .expanded-image {
         position: relative;
         display: inline-block;
-        min-width: 40%;
+        min-width: 20vw;
         max-width: 100%;
+        max-height: 90vh;
         position: relative;
         border-radius: 8px;
         z-index: -1;
@@ -177,6 +192,7 @@
         flex-direction: row;
         align-items: center;
         box-sizing: border-box;
+        overflow: hidden;
         gap: 1rem;
         max-width: 100%;
         width: 100%;

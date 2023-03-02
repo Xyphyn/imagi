@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
     import type { Post } from '$lib/types/post'
     import { currentUser, pb } from '$lib/pocketbase'
     import Loader from './Loader.svelte'
@@ -16,6 +16,8 @@
     let newComment = ''
     let submitting: boolean = false
 
+    let unsubscribe: () => void = () => {}
+
     async function getComments(post: Post) {
         const resultList = await pb.collection('comments').getList(1, 50, {
             filter: `post.id = "${post.id}"`,
@@ -26,28 +28,37 @@
         comments = resultList.items
         commentCount = comments.length
 
-        pb.collection('comments').subscribe('*', async ({ action, record }) => {
-            if (record.post != post.id) return
+        unsubscribe = await pb
+            .collection('comments')
+            .subscribe('*', async ({ action, record }) => {
+                if (record.post != post.id) return
 
-            if (action == 'create') {
-                const user = await pb.collection('users').getOne(record.user)
+                if (action == 'create') {
+                    const user = await pb
+                        .collection('users')
+                        .getOne(record.user)
 
-                record.expand = { user }
-                comments = [record, ...comments!]
-                commentCount = comments.length
-            }
+                    record.expand = { user }
+                    comments = [record, ...comments!]
+                    commentCount = comments.length
+                }
 
-            if (action == 'delete') {
-                comments = comments!.filter(
-                    (comment) => comment.id != record.id
-                )
-                commentCount = comments.length
-            }
-        })
+                if (action == 'delete') {
+                    comments = comments!.filter(
+                        (comment) => comment.id != record.id
+                    )
+                    commentCount = comments.length
+                }
+            })
     }
+
+    onDestroy(() => {
+        unsubscribe()
+    })
 
     $: {
         if (post != prevPost) {
+            unsubscribe()
             prevPost = post
             comments = undefined
             getComments(post)
