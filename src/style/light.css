@@ -3,7 +3,6 @@
     --background-color: #f0f0f0;
     --background-color-rgb: 240, 240, 240;
     --text-color: #000;
-    --accent-color: #72efdd;
     --accent-color-bright: #000;
 
     transition: background-color 250ms;
