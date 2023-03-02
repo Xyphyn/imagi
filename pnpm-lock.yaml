@@ -12,6 +12,7 @@ specifiers:
   svelte-check: ^3.0.1
   svelte-fontawesome: ^0.0.3
   svelte-preprocess: ^5.0.1
+  svelte-search: ^2.0.1
   svelte-toasts: ^1.1.2
   tslib: ^2.4.1
   typescript: ^4.9.3
@@ -32,6 +33,7 @@ devDependencies:
   sass: 1.58.3
   svelte: 3.55.1
   svelte-check: 3.0.4_sass@1.58.3+svelte@3.55.1
+  svelte-search: 2.0.1
   tslib: 2.5.0
   typescript: 4.9.5
   vite: 4.1.4_sass@1.58.3
@@ -937,6 +939,10 @@ packages:
       strip-indent: 3.0.0
       svelte: 3.55.1
       typescript: 4.9.5
+
+  /svelte-search/2.0.1:
+    resolution: {integrity: sha512-JBoObru/BUk86EmuRtYBa99xnH1RB8jqDuYYJHH0PUzN9BINo1+1GZataC/m5368BG3kZRb3wZI5ztjoi1WWXg==}
+    dev: true
 
   /svelte-toasts/1.1.2:
     resolution: {integrity: sha512-m+yL4eEKXyJoyjTYaH1j1GFwF0Pi8YDqnVfwWPDmwi4712iZesv+TNCmToSNlav3R5Vkmc8ZBRkT8DOcu3sywQ==}
