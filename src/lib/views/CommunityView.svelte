@@ -39,8 +39,6 @@
                 )
 
                 loading = false
-
-                goto(`/community/${formData.name}`)
             })
             .catch((err) => {
                 loading = false

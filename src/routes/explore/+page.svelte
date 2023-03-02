@@ -6,13 +6,16 @@
     import type { User } from '$lib/types/user'
     import UserAvatar from '$lib/UserAvatar.svelte'
     import CommunityView from '$lib/views/CommunityView.svelte'
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
     import { getFile } from '../app'
 
     let users: User[] = []
     let communities: Community[] = []
 
     let creating: boolean = false
+
+    let userUnsubscribe: () => void = () => {}
+    let communityUnsubscribe: () => void = () => {}
 
     onMount(async () => {
         pb.collection('users')
@@ -26,6 +29,27 @@
             .then((data) => {
                 communities = data.items
             })
+
+        userUnsubscribe = await pb
+            .collection('users')
+            .subscribe<User>('*', ({ action, record }) => {
+                if (action == 'create') {
+                    users = [record, ...users]
+                }
+            })
+
+        communityUnsubscribe = await pb
+            .collection('communities')
+            .subscribe<Community>('*', ({ action, record }) => {
+                if (action == 'create') {
+                    communities = [record, ...communities]
+                }
+            })
+    })
+
+    onDestroy(() => {
+        userUnsubscribe()
+        communityUnsubscribe()
     })
 </script>
 
