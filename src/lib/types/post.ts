@@ -8,9 +8,9 @@ export interface Post {
 }
 
 export interface Community {
-    id: string,
-    name: string,
-    user: string,
-    description: string,
+    id: string
+    name: string
+    description: string
+    owner: string
     expand: any
 }

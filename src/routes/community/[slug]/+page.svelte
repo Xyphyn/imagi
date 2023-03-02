@@ -5,7 +5,7 @@
     import PostList from '$lib/PostList.svelte'
     import type { Community, Post } from '$lib/types/post'
     import { onDestroy, onMount } from 'svelte'
-    import { getFile } from '../../app'
+    import { getFile, showToast } from '../../app'
 
     interface LoadData {
         name: string
@@ -19,6 +19,11 @@
     let error: any
 
     let posts: Post[]
+
+    let formData: any = {
+        files: undefined,
+        loading: false,
+    }
 
     let unsubscribe = () => {}
 
@@ -84,6 +89,21 @@
             })
             .then(() => {})
     }
+
+    function changeCommunityAvatar() {
+        const data = new FormData()
+        data.append('image', formData.files[0])
+
+        pb.collection('communities')
+            .update(community.id, data)
+            .then(() => {
+                showToast(
+                    'Success!',
+                    'Successfully updated the community profile photo. You may need to refresh to see changes.',
+                    'success'
+                )
+            })
+    }
 </script>
 
 <div class="community-container">
@@ -96,9 +116,44 @@
             src={getFile(community, false)}
             alt={community.name.substring(0, 1)}
             width={128}
+            style="border-radius: 100%;"
         />
         <span class="title">{name}</span>
         <span>{community.description}</span>
+        {#if community.owner == $currentUser?.id}
+            <div class="management">
+                <form
+                    on:submit|preventDefault={changeCommunityAvatar}
+                    class="form"
+                >
+                    <p>Change Community Picture</p>
+                    <label for="community-upload" class="custom-file-upload">
+                        {#if formData.files}
+                            <span
+                                style="max-width: 24ch; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"
+                                >{formData.files[0].name}</span
+                            >
+                        {:else}
+                            Pick an image
+                        {/if}
+                        <input
+                            id="community-upload"
+                            placeholder="Image"
+                            type="file"
+                            accept="image/*"
+                            bind:files={formData.files}
+                        />
+                    </label>
+
+                    <button type="submit"
+                        >Upload
+                        {#if formData.loading}
+                            <Loader size={16} />
+                        {/if}</button
+                    >
+                </form>
+            </div>
+        {/if}
         <button
             on:click={follow}
             class={`${
@@ -127,6 +182,17 @@
         align-items: center;
         justify-content: center;
         gap: 1rem;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        background-color: var(--card-color);
+        padding: 1rem;
+        border-radius: var(--border-radius);
     }
 
     .posts {
