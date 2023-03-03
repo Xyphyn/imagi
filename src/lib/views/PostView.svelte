@@ -91,7 +91,7 @@
                 />
             {/if}
             <div class="post-actions">
-                {#if post.expand?.user.id == $currentUser?.id}
+                {#if post.expand?.user.id == $currentUser?.id || (post.expand?.community != null && post.expand?.community.owner == $currentUser?.id)}
                     <button on:click={() => deletePost(post)} class="delete">
                         <Icon icon="trash" shadow={true} />
                     </button>

@@ -42,7 +42,7 @@
         posts = (
             await pb.collection('posts').getList<Post>(1, 50, {
                 filter: `community.id = "${community.id}"`,
-                expand: 'user',
+                expand: 'user, community',
             })
         ).items
 
@@ -56,7 +56,11 @@
                         .collection('users')
                         .getOne(record.user)
 
-                    record.expand = { user }
+                    const community = await pb
+                        .collection('communities')
+                        .getOne(record.community)
+
+                    record.expand = { user, community }
                     posts = [record, ...posts]
                 }
 
