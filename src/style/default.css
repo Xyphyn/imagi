@@ -256,3 +256,10 @@ a {
 a:hover {
     color: var(--accent-color);
 }
+
+.profile-image {
+    background-color: var(--card-color);
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
