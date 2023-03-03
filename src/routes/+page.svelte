@@ -8,6 +8,7 @@
     import PostView from '$lib/views/PostView.svelte'
     import Loader from '$lib/Loader.svelte'
     import PostList from '$lib/PostList.svelte'
+    import { goto } from '$app/navigation'
 
     let pageNumber = 0
 
@@ -34,6 +35,7 @@
     let sort: Sort = 'created'
 
     let posts: Post[] = []
+    let communities: Community[] = []
     let unsubscribe: () => void
 
     async function getPage(increment: boolean | undefined) {
@@ -101,6 +103,17 @@
                 }
             })
 
+        if ($currentUser) {
+            pb.collection('users')
+                .getOne($currentUser!.id, {
+                    expand: 'communities',
+                })
+                .then((data) => {
+                    const coms: any = data.expand?.communities
+                    communities = coms
+                })
+        }
+
         onDestroy(() => {
             unsubscribe?.()
         })
@@ -151,6 +164,7 @@
             {#if currentUser}
                 <button
                     on:click={() => {
+                        if (!$currentUser) goto('/login')
                         sort = 'following'
                         getPage(undefined)
                     }}
@@ -159,6 +173,24 @@
                 >
             {/if}
         </div>
+        {#if sort == 'following'}
+            <h1>Followed Communities</h1>
+            <div class="communities">
+                {#each communities as community}
+                    <div class="community">
+                        <img
+                            src={getFile(community, false)}
+                            alt={community.name.substring(0, 1)}
+                            class="profile-image"
+                            width={48}
+                        />
+                        <a href={`/community/${community.name}`}
+                            >{community.name}</a
+                        >
+                    </div>
+                {/each}
+            </div>
+        {/if}
         <h1>
             {#if sort == 'following'}Followed Posts{:else if sort == 'created'}Recent
                 Posts{/if}
@@ -174,6 +206,20 @@
 </div>
 
 <style>
+    .communities {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: auto;
+        gap: 1rem;
+    }
+
+    .community {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
     .navigation {
         display: flex;
         flex-direction: row;

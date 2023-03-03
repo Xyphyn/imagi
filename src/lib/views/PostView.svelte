@@ -167,9 +167,9 @@
 
     .image-container {
         position: relative;
-        max-width: 70vw;
         min-width: 40%;
         max-height: 100%;
+        max-width: 100%;
         width: auto;
         height: 100%;
         border-radius: 8px;
@@ -179,9 +179,9 @@
     .expanded-image {
         position: relative;
         display: inline-block;
-        min-width: 20vw;
+        min-width: 30vw;
         max-width: 100%;
-        max-height: 90vh;
+        max-height: 80vh;
         position: relative;
         border-radius: 8px;
         z-index: -1;
