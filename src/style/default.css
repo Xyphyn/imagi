@@ -74,11 +74,14 @@ body {
     font-size: 14px;
     color: var(--text-color);
     margin-top: 0.1rem;
+
+    animation: popin 250ms forwards cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .svelte-typeahead-list {
-    gap: 1rem;
     background-color: var(--card-color) !important;
+    gap: 1rem;
+    padding: 1rem;
 }
 
 .selected {
@@ -118,6 +121,7 @@ button:hover,
     background-color: var(--accent-color);
     cursor: pointer;
     color: var(--background-color);
+    box-shadow: 0px 0px 15px -3px var(--accent-color);
 }
 
 button:active,
