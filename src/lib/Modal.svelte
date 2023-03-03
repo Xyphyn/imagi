@@ -34,7 +34,7 @@
 
     dialog {
         border-radius: 8px;
-        border: none;
+        border: 1px solid var(--accent-color);
         padding: 0;
         background-color: var(--card-color);
         color: var(--text-color);
