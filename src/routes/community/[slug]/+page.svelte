@@ -116,7 +116,7 @@
             src={getFile(community, false)}
             alt={community.name.substring(0, 1)}
             width={128}
-            style="border-radius: 100%;"
+            class="profile-image"
         />
         <span class="title">{name}</span>
         <span>{community.description}</span>
