@@ -5,6 +5,7 @@
     import Navbar from './Navbar.svelte'
     import { ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts'
     import { onMount } from 'svelte'
+    import { goto } from '$app/navigation'
 
     let cursor = 'auto'
 
@@ -53,9 +54,36 @@
         let:data><BootstrapToast {data} /></ToastContainer
     >
     <slot />
+    <footer class="card">
+        <span class="footer-title">Imagi</span>
+        <span>A real-time social app.</span>
+        <div class="footer-content">
+            <a href="https://github.com/Xyphyn/Imagi">Github</a>
+        </div>
+    </footer>
 </div>
 
 <style>
+    footer {
+        border-top: 1px solid rgba(127, 127, 127, 0.5);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .footer-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .footer-content {
+        margin-top: 1rem;
+        opacity: 80%;
+        display: flex;
+        flex-direction: row;
+    }
+
     .main-container {
         margin: 0;
         padding: 0;

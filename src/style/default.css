@@ -267,3 +267,7 @@ a:hover {
     aspect-ratio: 1/1;
     object-fit: cover;
 }
+
+.card {
+    background-color: var(--card-color);
+}
