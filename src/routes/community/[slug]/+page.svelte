@@ -7,6 +7,7 @@
     import { onDestroy, onMount } from 'svelte'
     import { getFile, showToast } from '../../app'
 
+    import PrettyDate from '$lib/PrettyDate.svelte'
     interface LoadData {
         name: string
     }
@@ -30,7 +31,10 @@
     onMount(async () => {
         const results = await pb
             .collection('communities')
-            .getList<Community>(1, 1, { filter: `name = "${name}"` })
+            .getList<Community>(1, 1, {
+                filter: `name = "${name}"`,
+                expand: 'owner',
+            })
 
         if (results.totalItems == 0) {
             error = 'No community'
@@ -124,6 +128,12 @@
         />
         <span class="title">{name}</span>
         <span>{community.description}</span>
+        <span style="opacity: 40%;"
+            >Created <PrettyDate unformattedDate={community.created} /> by
+            <a href={`/profile/${community.owner}`}
+                >@{community.expand?.owner.username}</a
+            ></span
+        >
         {#if community.owner == $currentUser?.id}
             <div class="management">
                 <form
