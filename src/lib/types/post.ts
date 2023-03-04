@@ -11,6 +11,7 @@ export interface Community {
     id: string
     name: string
     description: string
+    created: string
     owner: string
     expand: any
 }
