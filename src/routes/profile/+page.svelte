@@ -8,11 +8,6 @@
     import type { Post } from '$lib/types/post'
     import { onMount } from 'svelte'
     import { showToast } from '../app'
-    import {
-        Disclosure,
-        DisclosureButton,
-        DisclosurePanel,
-    } from '@rgossiaux/svelte-headlessui'
     let loading = false
     let files: any = undefined
     let posts: Post[]

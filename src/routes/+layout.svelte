@@ -53,7 +53,9 @@
         duration={1000}
         let:data><BootstrapToast {data} /></ToastContainer
     >
-    <slot />
+    <main>
+        <slot />
+    </main>
     <footer class="card">
         <span class="footer-title">Imagi</span>
         <span>A real-time social app.</span>
@@ -64,11 +66,16 @@
 </div>
 
 <style>
+    main {
+        flex: 1;
+    }
+
     footer {
         border-top: 1px solid rgba(127, 127, 127, 0.5);
         padding: 2rem;
         display: flex;
         flex-direction: column;
+        margin-top: 2rem;
         gap: 1rem;
     }
 
@@ -87,5 +94,6 @@
     .main-container {
         margin: 0;
         padding: 0;
+        height: 100vh;
     }
 </style>
