@@ -8,6 +8,7 @@
     import CommentSection from '$lib/CommentSection.svelte'
     import Icon from '$lib/Icon.svelte'
     import { goto } from '$app/navigation'
+    import PrettyDate from '$lib/PrettyDate.svelte'
 
     export let expanded: boolean
     export let post: Post
@@ -120,7 +121,10 @@
                 href={`/community/${post.expand?.community.name}`}
                 >{post.expand?.community.name}</a
             >
-        {/if}
+            {/if}
+            <span class="username">
+                <PrettyDate unformattedDate={post.created} />
+            </span>
         <CommentSection bind:commentCount={comments} {post} />
     {/if}
 </Modal>
