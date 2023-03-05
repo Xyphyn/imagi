@@ -4,7 +4,7 @@
 </script>
 
 <div
-    class="flex flex-col w-screen h-screen bg-white dark:bg-slate-900 dark:text-white text-slate-800"
+    class="flex flex-col w-full h-full bg-white dark:bg-slate-900 dark:text-white text-slate-800"
 >
     <Navbar />
     <main>

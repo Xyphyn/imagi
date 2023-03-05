@@ -6,9 +6,8 @@
 </script>
 
 <div
-    class="bg-slate-50 shadow-xl aspect-square rounded-lg hover:-translate-y-2 transition-transform ease-linear duration-250 cursor-pointer"
+    class="bg-slate-50 shadow-xl aspect-square rounded-lg hover:-translate-y-2 transition-transform ease-out duration-250 cursor-pointer"
 >
-    <span class="">{post.description}</span>
     <img
         src={pb.getFileUrl(post, post.image, { thumb: '128x128' })}
         alt={post.description}

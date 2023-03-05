@@ -6,7 +6,9 @@
     import { currentUser, pb } from './pocketbase'
 </script>
 
-<nav class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center">
+<nav
+    class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center backdrop-blur-xl z-10"
+>
     <div
         class="hover:cursor-pointer flex flex-row items-center mr-auto"
         on:click={() => goto('/')}
