@@ -81,7 +81,9 @@
 </script>
 
 <Dialog bind:open={dialogOpen} />
-<TabGroup class="flex flex-col w-full justify-center items-center gap-4">
+<TabGroup
+    class="flex flex-col w-full justify-center items-center gap-4 overflow-hidden"
+>
     <TabList class="max-w-xl w-full flex flex-row gap-4">
         <Tab
             class={({ selected }) =>

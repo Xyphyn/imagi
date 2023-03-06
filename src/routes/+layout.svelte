@@ -16,7 +16,7 @@
 </script>
 
 <div
-    class="flex flex-col w-full h-full bg-slate-50 dark:bg-slate-900 dark:text-white text-slate-800"
+    class="flex flex-col w-full h-full bg-slate-50 dark:bg-slate-900 dark:text-white text-slate-800 overflow-x-hidden"
 >
     <Navbar />
     <main>
