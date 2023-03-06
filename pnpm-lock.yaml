@@ -5,6 +5,7 @@ specifiers:
   '@sveltejs/adapter-auto': ^2.0.0
   '@sveltejs/kit': ^1.5.0
   autoprefixer: ^10.4.13
+  nprogress: ^0.2.0
   pocketbase: ^0.12.0
   postcss: ^8.4.21
   svelte: ^3.54.0
@@ -23,6 +24,7 @@ devDependencies:
   '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.10.0
   '@sveltejs/kit': 1.10.0_svelte@3.55.1+vite@4.1.4
   autoprefixer: 10.4.13_postcss@8.4.21
+  nprogress: 0.2.0
   postcss: 8.4.21
   svelte: 3.55.1
   svelte-check: 3.0.4_pehl75e5jsy22vp33udjja4soi
@@ -840,6 +842,10 @@ packages:
   /normalize-range/0.1.2:
     resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: true
 
   /object-hash/3.0.0:

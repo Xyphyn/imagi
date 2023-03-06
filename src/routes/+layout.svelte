@@ -1,6 +1,18 @@
 <script>
     import Navbar from '../lib/Navbar.svelte'
     import '../style/default.css'
+    import nprogress from 'nprogress'
+    import 'nprogress/nprogress.css'
+    import { navigating } from '$app/stores'
+
+    $: {
+        if ($navigating) {
+            nprogress.start()
+        }
+        if (!$navigating) {
+            nprogress.done()
+        }
+    }
 </script>
 
 <div
