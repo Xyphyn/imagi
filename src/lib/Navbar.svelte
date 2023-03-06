@@ -31,7 +31,12 @@
         on:keypress={() => goto('/')}
     >
         <img src="/logo.svg" alt="Imagi logo" class="w-12" />
-        <span class="font-bold text-2xl">Imagi</span>
+        <span class="font-bold text-2xl"
+            >Imagi <span
+                class="bg-gradient-to-br from-primary to-secondary text-base px-2 py-1 rounded-sm text-black"
+                >BETA</span
+            >
+        </span>
     </div>
     <Menu class="relative inline-block text-left">
         <MenuButton>
@@ -50,6 +55,7 @@
             <MenuItems
                 class="flex flex-col gap-4 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
             >
+                Create a...
                 <MenuItem>
                     <Button class="w-full"
                         ><Icon src={ChatBubbleOvalLeftEllipsis} width="20" /> Post</Button

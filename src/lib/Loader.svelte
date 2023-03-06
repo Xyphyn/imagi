@@ -19,6 +19,11 @@
 </div>
 
 <style lang="postcss">
+    @media (prefers-color-scheme: dark) {
+        .wrapper {
+            --color: #fff;
+        }
+    }
     .wrapper {
         height: var(--size);
         width: var(--size);
