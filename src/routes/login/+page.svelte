@@ -2,14 +2,15 @@
     import Button from '$lib/Button.svelte'
     import FilePicker from '$lib/FilePicker.svelte'
     import Loader from '$lib/Loader.svelte'
+    import { pb } from '$lib/pocketbase'
     import {
+        Dialog,
         Tab,
         TabGroup,
         TabList,
         TabPanel,
         TabPanels,
     } from '@rgossiaux/svelte-headlessui'
-    import { flip } from 'svelte/animate'
 
     interface FormData {
         email: string
@@ -37,13 +38,49 @@
         loading: false,
     }
 
-    function signUp() {
+    async function signUp() {
         formData.loading = true
+        const data = new FormData()
+        data.append('email', formData.email)
+        data.append('username', formData.username)
+        data.append('password', formData.password)
+        data.append('passwordConfirm', formData.password)
+        if (formData.username == undefined || formData.password == undefined) {
+            formData.loading = false
+            return
+        }
+        if (formData.images) {
+            data.append('avatar', formData.images[0])
+        }
+
+        const createdUser = await pb
+            .collection('users')
+            .create(data)
+            .catch((err) => {
+                dialogOpen = true
+            })
+
+        await login()
+        pb.collection('users').requestVerification(formData.email)
+        dialogOpen = true
+        formData.loading = false
     }
 
-    function login() {}
+    async function login() {
+        formData.loading = true
+        const user = await pb
+            .collection('users')
+            .authWithPassword(formData.username, formData.password)
+            .catch((err) => {
+                formData.loading = false
+            })
+        formData.loading = false
+    }
+
+    let dialogOpen = false
 </script>
 
+<Dialog bind:open={dialogOpen} />
 <TabGroup class="flex flex-col w-full justify-center items-center gap-4">
     <TabList class="max-w-xl w-full flex flex-row gap-4">
         <Tab
