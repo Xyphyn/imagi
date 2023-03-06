@@ -27,6 +27,19 @@ html {
     }
 }
 
+@keyframes scalein {
+    from {
+        transform: scale(90%);
+    }
+    to {
+        transform: scale(100%);
+    }
+}
+
 .popin {
     animation: popin 400ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+.scalein {
+    animation: scalein 400ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 }

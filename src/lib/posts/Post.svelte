@@ -6,7 +6,7 @@
         UsersResponse,
     } from '../types/pb-types'
 
-    export let post: PostsResponse<UsersResponse>
+    export let post: PostsResponse<any>
 </script>
 
 <div
