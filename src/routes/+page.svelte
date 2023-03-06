@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Live from '$lib/misc/Live.svelte'
     import { pb } from '../lib/pocketbase'
     import PostList from '../lib/posts/PostList.svelte'
     import {
@@ -21,4 +22,5 @@
     }
 </script>
 
+<Live />
 <PostList posts={fetchPosts()} />
