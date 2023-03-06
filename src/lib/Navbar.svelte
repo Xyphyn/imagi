@@ -11,11 +11,19 @@
     } from '@rgossiaux/svelte-headlessui'
     import Button from './Button.svelte'
     import { currentUser, pb } from './pocketbase'
-    import { Icon, ArrowLeftOnRectangle, UserCircle } from 'svelte-hero-icons'
+    import {
+        Icon,
+        ArrowLeftOnRectangle,
+        UserCircle,
+        PlusCircle,
+        ChatBubbleOvalLeftEllipsis,
+        Cog6Tooth,
+        Newspaper,
+    } from 'svelte-hero-icons'
 </script>
 
 <nav
-    class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center backdrop-blur-xl z-10"
+    class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center backdrop-blur-xl z-10 gap-4"
 >
     <div
         class="hover:cursor-pointer flex flex-row items-center mr-auto"
@@ -25,6 +33,36 @@
         <img src="/logo.svg" alt="Imagi logo" class="w-12" />
         <span class="font-bold text-2xl">Imagi</span>
     </div>
+    <Menu class="relative inline-block text-left">
+        <MenuButton>
+            <Button major={true}
+                ><Icon src={PlusCircle} size="24" /> Create</Button
+            >
+        </MenuButton>
+        <Transition
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+        >
+            <MenuItems
+                class="flex flex-col gap-4 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+            >
+                <MenuItem>
+                    <Button class="w-full"
+                        ><Icon src={ChatBubbleOvalLeftEllipsis} width="20" /> Post</Button
+                    >
+                </MenuItem>
+                <MenuItem>
+                    <Button class="w-full"
+                        ><Icon src={Newspaper} width="20" /> Community</Button
+                    >
+                </MenuItem>
+            </MenuItems>
+        </Transition>
+    </Menu>
     {#if $currentUser}
         <Menu class="relative inline-block text-left">
             <MenuButton>
@@ -34,8 +72,6 @@
                     })}
                     alt="Profile"
                     class="rounded-full w-12 aspect-square object-cover cursor-pointer"
-                    on:click={() => {}}
-                    on:keypress={() => {}}
                 /></MenuButton
             >
             <Transition
@@ -47,19 +83,33 @@
                 leaveTo="transform opacity-0 scale-95"
             >
                 <MenuItems
-                    class="flex flex-col gap-4 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+                    class="flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
                 >
+                    <span class="opacity-30">@{$currentUser.username}</span>
                     <MenuItem>
-                        <Button class="w-full" onclick={() => goto('/profile')}>
-                            <Icon src={UserCircle} size="24" />
+                        <Button
+                            class="w-full"
+                            onclick={() =>
+                                goto(`/user/${$currentUser.username}`)}
+                        >
+                            <Icon src={UserCircle} size="20" />
                             Profile
                         </Button>
                     </MenuItem>
                     <MenuItem>
                         <Button
                             class="w-full"
+                            onclick={() => goto(`/settings`)}
+                        >
+                            <Icon src={Cog6Tooth} size="20" />
+                            Settings
+                        </Button>
+                    </MenuItem>
+                    <MenuItem>
+                        <Button
+                            class="w-full"
                             onclick={() => pb.authStore.clear()}
-                            ><Icon src={ArrowLeftOnRectangle} size="24" />Log
+                            ><Icon src={ArrowLeftOnRectangle} size="20" />Log
                             Out</Button
                         ></MenuItem
                     >
