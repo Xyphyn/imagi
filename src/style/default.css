@@ -4,9 +4,29 @@
 
 input {
     @apply w-52 border border-slate-300 dark:border-slate-500 px-3 py-2 rounded-md shadow-md text-sm
-    focus:outline-accent focus:outline-4 bg-transparent;
+     focus:outline-4 bg-transparent;
 }
 
 :root {
-    @apply bg-white dark:bg-slate-900 dark:text-white text-slate-800;
+    @apply bg-slate-50 dark:bg-slate-900 dark:text-white text-slate-800;
+}
+
+body,
+html {
+    @apply m-0 p-0;
+}
+
+@keyframes popin {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.popin {
+    animation: popin 400ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 }

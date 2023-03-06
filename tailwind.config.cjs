@@ -5,7 +5,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "accent": "#72efdd"
+        "primary": "#72efdd",
+        "secondary": "#51dbf0"
       },
       transitionTimingFunction: {
         'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)'

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { SpinnerTypes } from './types/spinner'
-    export let color: SpinnerTypes['color'] = 'var(--accent-color-bright)'
+    export let color: SpinnerTypes['color'] = '#000'
     export let unit: SpinnerTypes['unit'] = 'px'
     export let duration: SpinnerTypes['duration'] = '0.6s'
     export let size: SpinnerTypes['size'] = '24'
@@ -18,7 +18,7 @@
     <div class="circle-two" class:pause-animation={pause} />
 </div>
 
-<style>
+<style lang="postcss">
     .wrapper {
         height: var(--size);
         width: var(--size);
@@ -30,6 +30,7 @@
     }
     .circle-one {
         top: var(--moonSize);
+        @apply bg-black dark:bg-white;
         background-color: var(--color);
         width: calc(var(--size) / 7);
         height: calc(var(--size) / 7);
@@ -41,6 +42,7 @@
     }
     .circle-two {
         opacity: 0.1;
+        @apply border-black dark:border-white;
         border: calc(var(--size) / 7) solid var(--color);
         height: var(--size);
         width: var(--size);
