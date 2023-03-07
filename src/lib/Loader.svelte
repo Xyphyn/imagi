@@ -12,7 +12,7 @@
 <div
     class="wrapper"
     class:pause-animation={pause}
-    style="--size: {size}{unit}; --color: {color}; --moonSize: {top}{unit}; --duration: {duration};"
+    style="--size: {size}{unit}; --color: #000; --moonSize: {top}{unit}; --duration: {duration};"
 >
     <div class="circle-one" class:pause-animation={pause} />
     <div class="circle-two" class:pause-animation={pause} />
@@ -21,7 +21,7 @@
 <style lang="postcss">
     @media (prefers-color-scheme: dark) {
         .wrapper {
-            --color: #fff;
+            --color: #fff !important;
         }
     }
     .wrapper {

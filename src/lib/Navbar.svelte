@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     // @ts-nocheck - Because typescript is being stupid.
 
     import { goto } from '$app/navigation'
@@ -20,6 +20,15 @@
         Cog6Tooth,
         Newspaper,
     } from 'svelte-hero-icons'
+    import Upload from './views/Upload.svelte'
+
+    interface Menus {
+        upload: boolean
+    }
+
+    let views: Menus = {
+        upload: false,
+    }
 </script>
 
 <nav
@@ -57,7 +66,7 @@
             >
                 Create a...
                 <MenuItem>
-                    <Button class="w-full"
+                    <Button class="w-full" onclick={() => (views.upload = true)}
                         ><Icon src={ChatBubbleOvalLeftEllipsis} width="20" /> Post</Button
                     >
                 </MenuItem>
@@ -126,3 +135,4 @@
         <Button onclick={() => goto('/login')}>Login</Button>
     {/if}
 </nav>
+<Upload bind:open={views.upload} />

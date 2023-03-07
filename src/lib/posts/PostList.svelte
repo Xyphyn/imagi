@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { pb } from '$lib/pocketbase'
+    import { onMount } from 'svelte'
     import { flip } from 'svelte/animate'
     import Loader from '../Loader.svelte'
     import type {
@@ -9,23 +11,22 @@
     import Post from './Post.svelte'
     import PostView from './PostView.svelte'
 
-    export let posts: Promise<PostsResponse<UsersResponse>[]>
+    export let posts: PostsResponse<UsersResponse>[] | undefined
 
     let open = false
-    $: {
-        console.log(open)
-    }
 </script>
 
 <div
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 w-full gap-4 p-4"
 >
-    {#await posts}
+    {#if !posts}
         <Loader />
-    {:then posts}
+    {:else}
         {#each posts as post (post.id)}
-            <div animate:flip class="popin"><Post {post} bind:open /></div>
+            <div animate:flip={{ duration: 500 }} class="popin">
+                <Post {post} bind:open />
+            </div>
         {/each}
-    {/await}
+    {/if}
 </div>
 <PostView bind:open />

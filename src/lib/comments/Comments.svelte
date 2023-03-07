@@ -45,7 +45,18 @@
 
     $: {
         if (post != prevPost) {
+            comments = undefined
             prevPost = post
+            pb.collection('comments')
+                .getList<CommentsResponse<any>>(1, 50, {
+                    filter: `post.id = "${post.id}"`,
+                    expand: 'user',
+                    sort: '-created',
+                })
+                .then((data) => {
+                    comments = data.items
+                })
+
             pb.collection('comments').unsubscribe('*')
 
             pb.collection('comments').subscribe<CommentsResponse<any>>(
@@ -93,7 +104,7 @@
         <Live />
     </div>
     {#each comments as comment (comment.id)}
-        <div class="w-full p-1 flex flex-row gap-2 popin">
+        <div class="w-full p-1 flex flex-row gap-2 popin box-border">
             <Avatar user={comment.expand?.user} width={48} />
             <div class="inline-flex flex-col">
                 <a
