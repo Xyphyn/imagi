@@ -3,6 +3,7 @@
     import Button from '$lib/Button.svelte'
     import FilePicker from '$lib/FilePicker.svelte'
     import Loader from '$lib/Loader.svelte'
+    import Colored from '$lib/misc/Colored.svelte'
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
 
@@ -52,9 +53,9 @@
 <Modal bind:open>
     <form
         on:submit|preventDefault={upload}
-        class="flex flex-col items-center gap-4 max-w-[50vw] w-screen"
+        class="flex flex-col items-center gap-4 p-4"
     >
-        <h1 class="font-bold text-2xl">Create a Post</h1>
+        <Colored><h1 class="font-bold text-2xl">Create a Post</h1></Colored>
         <FilePicker bind:files={formData.files}>Pick a file</FilePicker>
         <div>
             <label for="upload-description" class="my-1 block"

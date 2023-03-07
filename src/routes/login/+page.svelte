@@ -2,6 +2,7 @@
     import Button from '$lib/Button.svelte'
     import FilePicker from '$lib/FilePicker.svelte'
     import Loader from '$lib/Loader.svelte'
+    import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
     import {
         Dialog,
@@ -108,7 +109,7 @@
                 on:submit|preventDefault={login}
                 class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
             >
-                <h1 class="text-xl font-bold">Log In</h1>
+                <Colored><h1 class="text-2xl font-bold">Log In</h1></Colored>
                 <div>
                     <label for="login-username" class="block my-1"
                         >Username/Email</label
@@ -145,7 +146,7 @@
                 on:submit|preventDefault={signUp}
                 class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
             >
-                <h1 class="text-xl font-bold">Sign Up</h1>
+                <Colored><h1 class="text-2xl font-bold">Sign Up</h1></Colored>
                 <div>
                     <label for="signup-email" class="block my-1">Email</label>
                     <input
