@@ -5,18 +5,33 @@
     import { onMount } from 'svelte'
     import { pb } from '$lib/pocketbase'
     import PostList from '$lib/posts/PostList.svelte'
+    import Button from '$lib/Button.svelte'
 
     let posts: PostsResponse<any>[] | undefined
 
-    onMount(async () => {
+    let page = 1
+
+    async function fetchPage(p: number) {
+        if (p < 1) {
+            page = 1
+        }
+
         const results = await pb
             .collection('posts')
-            .getList<PostsResponse<any>>(1, 50, {
+            .getList<PostsResponse<any>>(p, 50, {
                 expand: 'user, community',
                 sort: '-created',
             })
 
+        if (p > Math.ceil(results.totalItems / 50)) {
+            page--
+        }
+
         posts = results.items
+    }
+
+    onMount(async () => {
+        fetchPage(page)
 
         pb.collection('posts').subscribe<PostsResponse<any>>(
             '*',
@@ -41,3 +56,8 @@
 
 <Live />
 <PostList {posts} />
+<div class="w-full flex flex-row mx-auto gap-4 items-center justify-center">
+    <Button onclick={() => fetchPage(--page)}>Back</Button>
+    <span>{page}</span>
+    <Button onclick={() => fetchPage(++page)}>Next</Button>
+</div>
