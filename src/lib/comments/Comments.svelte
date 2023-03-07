@@ -6,6 +6,7 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
     import { onMount } from 'svelte'
+    import { Icon, ChatBubbleLeft } from 'svelte-hero-icons'
     import { flip } from 'svelte/animate'
 
     export let post: PostsResponse<any>
@@ -87,14 +88,17 @@
 
 <form on:submit|preventDefault={comment} class="flex flex-row gap-1 w-full">
     <input
-        class="w-full flex-[2]"
+        class="w-full flex-auto"
         type="text"
         placeholder="What are you thinking?"
         maxlength="256"
         bind:value={newComment}
     />
-    <Button type="submit" class="w-full flex-1" major={true}
-        >Comment {#if submitting}<Loader color="#fff" size={14} />{/if}</Button
+    <Button type="submit" class="w-min" major={true}
+        ><Icon src={ChatBubbleLeft} size="20" /> Comment {#if submitting}<Loader
+                color="#fff"
+                size={14}
+            />{/if}</Button
     >
 </form>
 {#if !comments}

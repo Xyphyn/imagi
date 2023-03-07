@@ -15,7 +15,7 @@
         Icon,
         ArrowLeftOnRectangle,
         UserCircle,
-        PlusCircle,
+        Plus,
         ChatBubbleOvalLeftEllipsis,
         Cog6Tooth,
         Newspaper,
@@ -41,7 +41,7 @@
         on:keypress={() => goto('/')}
     >
         <img src="/logo.svg" alt="Imagi logo" class="w-12" />
-        <span class="font-bold text-2xl"
+        <span class="font-bold text-2xl hidden md:block"
             >Imagi <span
                 class="bg-gradient-to-br from-primary to-secondary text-base px-2 py-1 rounded-md text-black"
                 >BETA</span
@@ -50,9 +50,7 @@
     </div>
     <Menu class="relative inline-block text-left z-20">
         <MenuButton>
-            <Button major={true}
-                ><Icon src={PlusCircle} size="24" /> Create</Button
-            >
+            <Button major={true}><Icon src={Plus} size="20" /> Create</Button>
         </MenuButton>
         <Transition
             enter="transition ease-out duration-100"

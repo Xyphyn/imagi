@@ -12,7 +12,7 @@
     on:click={onclick}
     {type}
     class={`border-slate-300 dark:border-slate-500 px-3 py-2 rounded-md shadow-md text-sm
-focus:outline-4 bg-transparent flex flex-row gap-2 items-center hover:brightness-110 ${
+focus:outline-4 bg-transparent flex flex-row gap-2 items-center hover:brightness-110 transition-all ${
         major
             ? 'bg-gradient-to-br from-primary to-secondary text-black'
             : 'border hover:dark:bg-slate-800 hover:bg-white'
