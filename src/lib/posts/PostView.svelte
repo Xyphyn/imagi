@@ -95,8 +95,9 @@
                 {#if $openPost.user == $currentUser?.id}
                     <MenuItem>
                         <Button
-                            class="w-full bg-gradient-to-br from-red-400 to-red-500 text-white"
+                            class="w-full"
                             major={true}
+                            colorType="danger"
                             onclick={() => {
                                 pb.collection('posts').delete($openPost.id)
                             }}><Icon src={Trash} width="16" />Delete</Button

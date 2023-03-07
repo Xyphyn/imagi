@@ -3,6 +3,7 @@
     export let type: 'button' | 'submit' | 'reset' | null | undefined =
         undefined
     export let major: boolean = false
+    export let colorType: 'danger' | 'success' | undefined = undefined
 
     let clazz: string = ''
     export { clazz as class }
@@ -16,5 +17,12 @@ focus:outline-4 bg-transparent flex flex-row gap-2 items-center hover:brightness
         major
             ? 'bg-gradient-to-br from-primary to-secondary text-black border-transparent dark:border-transparent'
             : 'hover:dark:bg-slate-800 hover:bg-white'
+    } ${
+        // Please forgive me for this
+        colorType == 'danger'
+            ? 'bg-gradient-to-br from-red-400 to-red-500 text-white'
+            : colorType == 'success'
+            ? 'bg-gradient-to-br from-green-400 to-green-500'
+            : ''
     } ${clazz}`}><slot /></button
 >
