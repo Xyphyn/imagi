@@ -13,6 +13,7 @@
 
     function postView() {
         openPost.set(post)
+
         open = true
     }
 </script>

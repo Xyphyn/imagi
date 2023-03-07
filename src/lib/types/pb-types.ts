@@ -5,6 +5,7 @@
 export enum Collections {
     Comments = 'comments',
     Communities = 'communities',
+    Counts = 'counts',
     Likes = 'likes',
     Posts = 'posts',
     Users = 'users',
@@ -47,6 +48,12 @@ export type CommunitiesRecord = {
     image?: string
 }
 
+export type CountsRecord = {
+    username: string
+    comments: number
+    posts: number
+}
+
 export type LikesRecord = {
     user: RecordIdString
     post: RecordIdString
@@ -70,6 +77,7 @@ export type CommentsResponse<Texpand = unknown> = CommentsRecord &
     BaseSystemFields<Texpand>
 export type CommunitiesResponse<Texpand = unknown> = CommunitiesRecord &
     BaseSystemFields<Texpand>
+export type CountsResponse = CountsRecord & BaseSystemFields
 export type LikesResponse<Texpand = unknown> = LikesRecord &
     BaseSystemFields<Texpand>
 export type PostsResponse<Texpand = unknown> = PostsRecord &
@@ -82,6 +90,7 @@ export type UsersResponse<Texpand = unknown> = UsersRecord &
 export type CollectionRecords = {
     comments: CommentsRecord
     communities: CommunitiesRecord
+    counts: CountsRecord
     likes: LikesRecord
     posts: PostsRecord
     users: UsersRecord
@@ -90,6 +99,7 @@ export type CollectionRecords = {
 export type CollectionResponses = {
     comments: CommentsResponse
     communities: CommunitiesResponse
+    counts: CountsResponse
     likes: LikesResponse
     posts: PostsResponse
     users: UsersResponse

@@ -23,7 +23,7 @@
     class="flex flex-col w-full h-screen dark:text-white text-slate-800 overflow-x-hidden transition-colors -z-20"
 >
     <Navbar />
-    <main>
+    <main class="m-4 box-border">
         <slot />
     </main>
     <div class="absolute overflow-hidden w-screen -z-10 pointer-events-none">

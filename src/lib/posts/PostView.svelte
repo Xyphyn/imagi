@@ -30,7 +30,7 @@
     let image: string = ''
 
     openPost.subscribe((post) => {
-        if (prevPost != post) {
+        if (prevPost != post && post != undefined) {
             image = ''
             loading = true
             prevPost = post
@@ -64,47 +64,52 @@
             <Comments post={$openPost} />
         {/if}
     </div>
-    <Menu class="text-left absolute top-0 right-0 m-2">
-        <MenuButton
-            ><Button class="gap-0 px-1 py-[2px] -z-10"
-                ><Icon size="20" src={EllipsisHorizontal} /></Button
-            ></MenuButton
-        >
-        <Transition
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
-        >
-            <MenuItems
-                class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+    {#if $openPost}
+        <Menu class="text-left absolute top-0 right-0 m-4">
+            <MenuButton
+                ><Button class="gap-0 px-1 py-[2px] -z-10"
+                    ><Icon size="20" src={EllipsisHorizontal} /></Button
+                ></MenuButton
             >
-                <Colored><h1 class="font-bold">Post Actions</h1></Colored>
-                <MenuItem>
-                    <Button
-                        class="w-full"
-                        major={false}
-                        onclick={() => {
-                            goto(pb.getFileUrl($openPost, $openPost.image))
-                        }}
-                        ><Icon src={ArrowDownTray} width="16" />Download</Button
-                    >
-                </MenuItem>
-                {#if $openPost.user == $currentUser?.id}
+            <Transition
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+            >
+                <MenuItems
+                    class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+                >
+                    <Colored><h1 class="font-bold">Post Actions</h1></Colored>
                     <MenuItem>
                         <Button
                             class="w-full"
-                            major={true}
-                            colorType="danger"
+                            major={false}
                             onclick={() => {
-                                pb.collection('posts').delete($openPost.id)
-                            }}><Icon src={Trash} width="16" />Delete</Button
+                                goto(pb.getFileUrl($openPost, $openPost.image))
+                            }}
+                            ><Icon
+                                src={ArrowDownTray}
+                                width="16"
+                            />Download</Button
                         >
                     </MenuItem>
-                {/if}
-            </MenuItems>
-        </Transition>
-    </Menu>
+                    {#if $openPost.user == $currentUser?.id}
+                        <MenuItem>
+                            <Button
+                                class="w-full"
+                                major={true}
+                                colorType="danger"
+                                onclick={() => {
+                                    pb.collection('posts').delete($openPost.id)
+                                }}><Icon src={Trash} width="16" />Delete</Button
+                            >
+                        </MenuItem>
+                    {/if}
+                </MenuItems>
+            </Transition>
+        </Menu>
+    {/if}
 </Modal>

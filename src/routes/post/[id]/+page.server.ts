@@ -9,6 +9,9 @@ export async function load({ params }) {
     const post = await pb
         .collection('posts')
         .getOne(params.id, { expand: 'user', $autoCancel: false })
+        .catch((err) => {
+            throw error(404, 'Not found')
+        })
 
     if (post) return { post: JSON.parse(JSON.stringify(post)) }
 
