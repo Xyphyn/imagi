@@ -19,6 +19,7 @@
         ChatBubbleOvalLeftEllipsis,
         Cog6Tooth,
         Newspaper,
+        GlobeAlt,
     } from 'svelte-hero-icons'
     import Upload from './views/Upload.svelte'
     import Colored from './misc/Colored.svelte'
@@ -48,9 +49,18 @@
             >
         </span>
     </div>
+    <Button major={false}
+        ><Icon src={GlobeAlt} size="20" /><span class="hidden sm:block"
+            >Explore</span
+        ></Button
+    >
     <Menu class="relative inline-block text-left z-20">
         <MenuButton>
-            <Button major={true}><Icon src={Plus} size="20" /> Create</Button>
+            <Button major={true}
+                ><Icon src={Plus} size="20" /><span class="hidden sm:block"
+                    >Create</span
+                ></Button
+            >
         </MenuButton>
         <Transition
             enter="transition ease-out duration-100"

@@ -5,6 +5,7 @@
     import { pb } from '$lib/pocketbase'
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
     import { onMount } from 'svelte'
+    import Likes from '$lib/posts/Likes.svelte'
 
     let loading = true
 
@@ -32,5 +33,6 @@
         class="rounded-lg shadow-md w-96"
         on:load={() => (loading = false)}
     />
+    <Likes {post} />
     <Comments {post} />
 </div>
