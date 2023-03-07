@@ -4,7 +4,10 @@ specifiers:
   '@rgossiaux/svelte-headlessui': ^1.0.2
   '@sveltejs/adapter-auto': ^2.0.0
   '@sveltejs/kit': ^1.5.0
+  '@types/eventsource': ^1.1.11
+  '@types/nprogress': ^0.2.0
   autoprefixer: ^10.4.13
+  eventsource: ^2.0.2
   nprogress: ^0.2.0
   pocketbase: ^0.12.0
   postcss: ^8.4.21
@@ -17,12 +20,15 @@ specifiers:
   vite: ^4.0.0
 
 dependencies:
+  '@types/eventsource': 1.1.11
+  eventsource: 2.0.2
   pocketbase: 0.12.0
 
 devDependencies:
   '@rgossiaux/svelte-headlessui': 1.0.2_svelte@3.55.1
   '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.10.0
   '@sveltejs/kit': 1.10.0_svelte@3.55.1+vite@4.1.4
+  '@types/nprogress': 0.2.0
   autoprefixer: 10.4.13_postcss@8.4.21
   nprogress: 0.2.0
   postcss: 8.4.21
@@ -347,6 +353,14 @@ packages:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
     dev: true
 
+  /@types/eventsource/1.1.11:
+    resolution: {integrity: sha512-L7wLDZlWm5mROzv87W0ofIYeQP5K2UhoFnnUyEWLKM6UBb0ZNRgAqp98qE5DkgfBXdWfc2kYmw9KZm4NLjRbsw==}
+    dev: false
+
+  /@types/nprogress/0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
+    dev: true
+
   /@types/pug/2.0.6:
     resolution: {integrity: sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==}
     dev: true
@@ -592,6 +606,11 @@ packages:
   /esm-env/1.0.0:
     resolution: {integrity: sha512-Cf6VksWPsTuW01vU9Mk/3vRue91Zevka5SjyNf3nEpokFRuqt/KjUQoGAwq9qMmhpLTHmXzSIrFRw8zxWzmFBA==}
     dev: true
+
+  /eventsource/2.0.2:
+    resolution: {integrity: sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /fast-glob/3.2.12:
     resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
