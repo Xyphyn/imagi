@@ -11,7 +11,7 @@
 </script>
 
 <Disclosure
-    class="flex flex-col items-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg h-full"
+    class="flex flex-col items-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg h-full gap-4"
 >
     <Colored
         ><h1 class="font-bold text-4xl self-center mx-auto">
@@ -19,7 +19,7 @@
         </h1></Colored
     >
     <DisclosureButton
-        class="flex flex-row self-start justify-between w-full gap-4"
+        class="flex flex-row self-start justify-between w-full gap-4 p-4 bg-slate-50 dark:bg-slate-700 rounded-lg"
         let:open
         ><span>General</span>
         <Icon
@@ -30,7 +30,7 @@
     >
     <DisclosurePanel>
         <div
-            class="flex flex-row justify-between w-full items-center shadow-lg p-4 my-2 dark:bg-slate-700 bg-white rounded-lg"
+            class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
         >
             <span class="flex flex-col w-[80%]"
                 >No-SSR Posts <span class="opacity-50 text-sm"
