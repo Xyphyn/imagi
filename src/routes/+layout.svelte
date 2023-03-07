@@ -16,15 +16,14 @@
 </script>
 
 <div
-    class="flex flex-col w-full h-screen bg-slate-50 dark:bg-slate-900 dark:text-white text-slate-800 overflow-x-hidden transition-colors -z-10"
+    class="flex flex-col w-full h-screen dark:text-white text-slate-800 overflow-x-hidden transition-colors -z-20"
 >
     <Navbar />
     <main>
         <slot />
     </main>
     <svg
-        class="absolute w-[64rem] h-auto rotate-[30deg] overflow-hidden -top-96 -left-96 blur-3xl z-[1] pointer-events-none"
-        style="overflow-x:hidden;"
+        class="absolute w-[64rem] h-auto rotate-[30deg] overflow-hidden -top-96 -left-96 blur-3xl -z-10 pointer-events-none"
         viewBox="0 0 1155 678"
         xmlns="http://www.w3.org/2000/svg"
         ><path
