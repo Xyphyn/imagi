@@ -21,6 +21,7 @@
         Newspaper,
     } from 'svelte-hero-icons'
     import Upload from './views/Upload.svelte'
+    import Colored from './misc/Colored.svelte'
 
     interface Menus {
         upload: boolean
@@ -62,9 +63,9 @@
             leaveTo="transform opacity-0 scale-95"
         >
             <MenuItems
-                class="flex flex-col gap-4 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+                class="flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
             >
-                Create a...
+                <Colored><h1 class="text-2xl font-bold">Create</h1></Colored>
                 <MenuItem>
                     <Button class="w-full" onclick={() => (views.upload = true)}
                         ><Icon src={ChatBubbleOvalLeftEllipsis} width="20" /> Post</Button
@@ -98,9 +99,13 @@
                 leaveTo="transform opacity-0 scale-95"
             >
                 <MenuItems
-                    class="flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+                    class="flex flex-col gap-2 absolute right-0 p-4 w-56 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
                 >
-                    <span class="opacity-30">@{$currentUser.username}</span>
+                    <Colored
+                        ><h1 class="font-bold text-2xl">
+                            {$currentUser.username}
+                        </h1></Colored
+                    >
                     <MenuItem>
                         <Button
                             class="w-full"

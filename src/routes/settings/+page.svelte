@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Colored from '$lib/misc/Colored.svelte'
     import {
         Disclosure,
         DisclosureButton,
@@ -12,6 +13,11 @@
 <Disclosure
     class="flex flex-col items-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg h-full"
 >
+    <Colored
+        ><h1 class="font-bold text-4xl self-center mx-auto">
+            User Settings
+        </h1></Colored
+    >
     <DisclosureButton
         class="flex flex-row self-start justify-between w-full gap-4"
         let:open

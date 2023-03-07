@@ -93,7 +93,7 @@
         maxlength="256"
         bind:value={newComment}
     />
-    <Button type="submit" class="w-full flex-1"
+    <Button type="submit" class="w-full flex-1" major={true}
         >Comment {#if submitting}<Loader color="#fff" size={14} />{/if}</Button
     >
 </form>
