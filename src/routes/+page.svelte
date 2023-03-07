@@ -1,5 +1,6 @@
 <script lang="ts">
     import Live from '$lib/misc/Live.svelte'
+    import Modal from '$lib/Modal.svelte'
     import { pb } from '../lib/pocketbase'
     import PostList from '../lib/posts/PostList.svelte'
     import {

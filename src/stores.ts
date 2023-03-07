@@ -1,3 +1,4 @@
+import type { PostsResponse } from '$lib/types/pb-types'
 import { writable } from 'svelte/store'
 
 interface UserSettings {
@@ -9,6 +10,7 @@ const defaultSettings: UserSettings = {
 }
 
 export const userSettings = writable(defaultSettings)
+export const openPost = writable<PostsResponse<any>>()
 
 function mergeObjects<T>(obj1: any, obj2: any): T {
     for (let prop in obj2) {

@@ -7,8 +7,14 @@
         UsersResponse,
     } from '../types/pb-types'
     import Post from './Post.svelte'
+    import PostView from './PostView.svelte'
 
     export let posts: Promise<PostsResponse<UsersResponse>[]>
+
+    let open = false
+    $: {
+        console.log(open)
+    }
 </script>
 
 <div
@@ -18,7 +24,8 @@
         <Loader />
     {:then posts}
         {#each posts as post (post.id)}
-            <div animate:flip class="popin"><Post {post} /></div>
+            <div animate:flip class="popin"><Post {post} bind:open /></div>
         {/each}
     {/await}
 </div>
+<PostView bind:open />

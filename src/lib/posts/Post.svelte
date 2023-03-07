@@ -6,14 +6,27 @@
         UsersRecord,
         UsersResponse,
     } from '../types/pb-types'
+    import { openPost, userSettings } from '../../stores'
 
     export let post: PostsResponse<any>
+    export let open = false
+
+    function postView() {
+        openPost.set(post)
+        open = true
+    }
 </script>
 
 <div
     class="relative bg-slate-50 dark:bg-slate-900 shadow-xl aspect-square rounded-lg hover:-translate-y-2 transition-transform ease-out duration-250 cursor-pointer"
-    on:click={() => goto(`/post/${post.id}`)}
-    on:keypress={() => goto(`/post/${post.id}`)}
+    on:click={() => {
+        if (!$userSettings.nossr) goto(`/post/${post.id}`)
+        else postView()
+    }}
+    on:keypress={() => {
+        if (!$userSettings.nossr) goto(`/post/${post.id}`)
+        else postView()
+    }}
 >
     <img
         src={pb.getFileUrl(post, post.image, { thumb: '128x128' })}

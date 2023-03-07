@@ -1,0 +1,28 @@
+<script lang="ts">
+    import { Icon, ArrowLeft } from 'svelte-hero-icons'
+
+    export let open: boolean = false
+
+    let dialog: HTMLDialogElement // HTMLDialogElement
+
+    $: if (dialog && open) dialog.showModal()
+</script>
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<dialog
+    bind:this={dialog}
+    on:close={() => (open = false)}
+    on:click|self={() => dialog.close()}
+    class={`min-h-[30vh] min-w-[30vw] flex flex-col justify-center align-middle rounded-lg
+     shadow-lg bg-white dark:bg-slate-800 text-inherit ${open ? '' : 'hidden'}`}
+>
+    <button
+        class="inline-flex flex-row items-center gap-1 opacity-50 hover:opacity-75 transition-opacity absolute top-0 left-0 m-4"
+        on:click={() => dialog.close()}
+        ><Icon src={ArrowLeft} size="20" /> Back</button
+    >
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div on:click|stopPropagation class="dialog-container">
+        <slot />
+    </div>
+</dialog>

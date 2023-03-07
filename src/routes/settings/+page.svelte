@@ -10,7 +10,7 @@
 </script>
 
 <Disclosure
-    class="flex flex-col items-center max-w-lg mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full"
+    class="flex flex-col items-center max-w-lg mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg h-full"
 >
     <DisclosureButton
         class="flex flex-row self-start justify-between w-full gap-4"
@@ -36,7 +36,7 @@
                     $userSettings.nossr = e.detail
                 }}
                 class={`w-12 relative inline-flex rounded-full transition-colors ${
-                    $userSettings.nossr ? 'bg-primary' : 'bg-slate-700 '
+                    $userSettings.nossr ? 'bg-primary' : 'bg-slate-700'
                 }`}
             >
                 <span

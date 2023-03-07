@@ -38,7 +38,7 @@
             >
         </span>
     </div>
-    <Menu class="relative inline-block text-left">
+    <Menu class="relative inline-block text-left z-20">
         <MenuButton>
             <Button major={true}
                 ><Icon src={PlusCircle} size="24" /> Create</Button
@@ -70,7 +70,7 @@
         </Transition>
     </Menu>
     {#if $currentUser}
-        <Menu class="relative inline-block text-left">
+        <Menu class="relative inline-block text-left z-20">
             <MenuButton>
                 <img
                     src={pb.getFileUrl($currentUser, $currentUser.avatar, {
