@@ -8,8 +8,13 @@
 
     let loading = true
 
+    let prevPost: PostsResponse<any>
+
     openPost.subscribe((post) => {
-        loading = true
+        if (prevPost != post) {
+            loading = true
+            prevPost = post
+        }
     })
     export let open: boolean = false
 </script>

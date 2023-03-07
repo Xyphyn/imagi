@@ -32,7 +32,7 @@
 </script>
 
 <nav
-    class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center backdrop-blur-xl z-10 gap-4"
+    class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center z-10 gap-4"
 >
     <div
         class="hover:cursor-pointer flex flex-row items-center mr-auto"
