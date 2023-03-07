@@ -12,17 +12,15 @@
 <button
     on:click={onclick}
     {type}
-    class={`active:scale-95  border border-slate-300 dark:border-slate-500 px-3 py-2 rounded-md shadow-md text-sm
+    class={`active:scale-95 border border-slate-300 dark:border-slate-500 px-3 py-2 rounded-md shadow-md text-sm
 focus:outline-4 bg-transparent flex flex-row gap-2 items-center hover:brightness-110 transition-all ease-out-expo ${
-        major
-            ? 'bg-gradient-to-br from-primary to-secondary text-black border-transparent dark:border-transparent'
-            : 'hover:dark:bg-slate-800 hover:bg-white'
-    } ${
         // Please forgive me for this
         colorType == 'danger'
-            ? 'bg-gradient-to-br from-red-400 to-red-500 text-white'
+            ? 'bg-gradient-to-br from-red-400 to-red-500 text-white border-transparent dark:border-transparent'
             : colorType == 'success'
-            ? 'bg-gradient-to-br from-green-400 to-green-500'
-            : ''
+            ? 'bg-gradient-to-br from-green-400 to-green-500 border-transparent dark:border-transparent'
+            : major
+            ? 'bg-gradient-to-br from-primary to-secondary text-black border-transparent dark:border-transparent'
+            : 'hover:dark:bg-slate-800 hover:bg-white'
     } ${clazz}`}><slot /></button
 >
