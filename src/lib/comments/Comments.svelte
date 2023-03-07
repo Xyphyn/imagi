@@ -2,12 +2,21 @@
     import Avatar from '$lib/Avatar.svelte'
     import Button from '$lib/Button.svelte'
     import Loader from '$lib/Loader.svelte'
-    import { pb } from '$lib/pocketbase'
+    import Live from '$lib/misc/Live.svelte'
+    import { currentUser, pb } from '$lib/pocketbase'
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
+    import { onMount } from 'svelte'
+    import { flip } from 'svelte/animate'
 
     export let post: PostsResponse<any>
+    let prevPost: PostsResponse<any>
 
-    async function fetchComments() {
+    let submitting = false
+
+    let comments: CommentsResponse<any>[] | undefined
+    let newComment = ''
+
+    onMount(async () => {
         const results = await pb
             .collection('comments')
             .getList<CommentsResponse<any>>(1, 50, {
@@ -16,24 +25,75 @@
                 sort: '-created',
             })
 
-        return results.items
+        comments = results.items
+    })
+
+    function comment() {
+        submitting = true
+
+        pb.collection('comments')
+            .create({
+                user: $currentUser!.id,
+                content: newComment,
+                post: post.id,
+            })
+            .then(() => (submitting = false))
+            .catch(() => (submitting = false))
+
+        newComment = ''
+    }
+
+    $: {
+        if (post != prevPost) {
+            prevPost = post
+            pb.collection('comments').unsubscribe('*')
+
+            pb.collection('comments').subscribe<CommentsResponse<any>>(
+                `*`,
+                async ({ record, action }) => {
+                    if (record.post != post.id) return
+
+                    if (action == 'create') {
+                        const user = await pb
+                            .collection('users')
+                            .getOne(record.user)
+
+                        record.expand = { user }
+
+                        comments = [record, ...comments!]
+                    }
+
+                    if (action == 'delete') {
+                        comments = comments?.filter(
+                            (comment) => comment.id != record.id
+                        )
+                    }
+                }
+            )
+        }
     }
 </script>
 
-<div class="flex flex-row gap-1 w-full">
+<form on:submit|preventDefault={comment} class="flex flex-row gap-1 w-full">
     <input
         class="w-full flex-[2]"
         type="text"
         placeholder="What are you thinking?"
         maxlength="256"
+        bind:value={newComment}
     />
-    <Button class="w-full flex-1" type="submit">Comment</Button>
-</div>
-{#await fetchComments()}
+    <Button type="submit" class="w-full flex-1"
+        >Comment {#if submitting}<Loader color="#fff" size={14} />{/if}</Button
+    >
+</form>
+{#if !comments}
     <Loader />
-{:then comments}
-    {#each comments as comment}
-        <div class="w-full p-1 flex flex-row gap-2">
+{:else}
+    <div class="self-start">
+        <Live />
+    </div>
+    {#each comments as comment (comment.id)}
+        <div class="w-full p-1 flex flex-row gap-2 popin">
             <Avatar user={comment.expand?.user} width={48} />
             <div class="inline-flex flex-col">
                 <a
@@ -45,4 +105,4 @@
             </div>
         </div>
     {/each}
-{/await}
+{/if}
