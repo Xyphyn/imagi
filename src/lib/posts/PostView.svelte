@@ -11,10 +11,14 @@
 
     let prevPost: PostsResponse<any>
 
+    let image: string = ''
+
     openPost.subscribe((post) => {
         if (prevPost != post) {
+            image = ''
             loading = true
             prevPost = post
+            image = pb.getFileUrl($openPost, $openPost.image)
         }
     })
     export let open: boolean = false
@@ -33,7 +37,7 @@
                 <Loader />
             {/if}
             <img
-                src={pb.getFileUrl($openPost, $openPost.image)}
+                src={image}
                 alt={$openPost.description}
                 class="rounded-lg shadow-md w-96"
                 on:load={() => (loading = false)}

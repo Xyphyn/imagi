@@ -105,7 +105,7 @@
     <TabPanels>
         <TabPanel>
             <form
-                on:submit={login}
+                on:submit|preventDefault={login}
                 class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
             >
                 <h1 class="text-xl font-bold">Log In</h1>
@@ -142,7 +142,7 @@
         </TabPanel>
         <TabPanel>
             <form
-                on:submit={signUp}
+                on:submit|preventDefault={signUp}
                 class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
             >
                 <h1 class="text-xl font-bold">Sign Up</h1>
