@@ -9,6 +9,7 @@
         Switch,
     } from '@rgossiaux/svelte-headlessui'
     import { Icon, ChevronRight } from 'svelte-hero-icons'
+    import { toast } from '../../app'
     import { userSettings } from '../../stores'
 
     interface AccountSettings {
@@ -23,12 +24,12 @@
 <div
     class="flex flex-col items-center justify-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg gap-4"
 >
+    <Colored
+        ><h1 class="font-bold text-4xl self-center mx-auto">
+            User Settings
+        </h1></Colored
+    >
     <Disclosure class="w-full">
-        <Colored
-            ><h1 class="font-bold text-4xl self-center mx-auto">
-                User Settings
-            </h1></Colored
-        >
         <DisclosureButton
             class="flex flex-row self-start justify-between w-full gap-4 p-4 bg-slate-50 dark:bg-slate-700 rounded-lg"
             let:open={general}
@@ -92,9 +93,22 @@
                     <Button
                         major={true}
                         onclick={() => {
-                            pb.collection('users').requestEmailChange(
-                                accountSettings.email
-                            )
+                            pb.collection('users')
+                                .requestEmailChange(accountSettings.email)
+                                .then(() => {
+                                    toast(
+                                        'Confirmation',
+                                        'Confirm your new email, a verification link was sent to your inbox.',
+                                        'info'
+                                    )
+                                })
+                                .catch(() => {
+                                    toast(
+                                        'Error',
+                                        'Could not change email. The email may be invalid or already taken.',
+                                        'error'
+                                    )
+                                })
                         }}>Change</Button
                     >
                 </div>

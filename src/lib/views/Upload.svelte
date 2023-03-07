@@ -6,6 +6,8 @@
     import Colored from '$lib/misc/Colored.svelte'
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import { Icon, PencilSquare } from 'svelte-hero-icons'
+    import { toast } from '../../app'
 
     export let open = false
 
@@ -44,6 +46,16 @@
 
         pb.collection('posts')
             .create(data)
+            .catch((err) => {
+                switch (err.status) {
+                    case 429:
+                        toast('Error', 'You are being rate limited.', 'error')
+                        break
+                    default:
+                        toast('Error', 'Could not create post.', 'error')
+                        break
+                }
+            })
             .finally(() => {
                 formData.loading = false
             })
@@ -84,7 +96,9 @@
             />
         </div>
         <Button type="submit" major={true}
-            >Post {#if formData.loading}<Loader size={16} />{/if}</Button
+            ><Icon src={PencilSquare} size="20" /> Post {#if formData.loading}<Loader
+                    size={16}
+                />{/if}</Button
         >
     </form>
 </Modal>

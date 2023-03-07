@@ -29,6 +29,7 @@
 	"dependencies": {
 		"@types/eventsource": "^1.1.11",
 		"eventsource": "^2.0.2",
-		"pocketbase": "^0.12.0"
+		"pocketbase": "^0.12.0",
+		"svelte-toasts": "^1.1.2"
 	}
 }

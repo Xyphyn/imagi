@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
     import Button from '$lib/Button.svelte'
     import FilePicker from '$lib/FilePicker.svelte'
     import Loader from '$lib/Loader.svelte'
@@ -12,6 +13,7 @@
         TabPanel,
         TabPanels,
     } from '@rgossiaux/svelte-headlessui'
+    import { toast } from '../../app'
 
     interface FormData {
         email: string
@@ -46,7 +48,11 @@
         data.append('username', formData.username)
         data.append('password', formData.password)
         data.append('passwordConfirm', formData.password)
-        if (formData.username == undefined || formData.password == undefined) {
+        if (
+            formData.username == undefined ||
+            formData.password == undefined ||
+            formData.email == undefined
+        ) {
             formData.loading = false
             return
         }
@@ -57,13 +63,23 @@
         const createdUser = await pb
             .collection('users')
             .create(data)
+            .then(() => {
+                toast(
+                    'Success',
+                    'Successfully signed up. Check your email for a verification link.',
+                    'success'
+                )
+            })
             .catch((err) => {
-                dialogOpen = true
+                toast(
+                    'Error',
+                    'Could not sign up. Your username must be alphanumeric, and password 8-72 characters.',
+                    'error'
+                )
             })
 
         await login()
         pb.collection('users').requestVerification(formData.email)
-        dialogOpen = true
         formData.loading = false
     }
 
@@ -72,16 +88,18 @@
         const user = await pb
             .collection('users')
             .authWithPassword(formData.username, formData.password)
+            .then(() => {
+                goto('/')
+            })
             .catch((err) => {
                 formData.loading = false
+
+                toast('Error', 'Invalid credentials.', 'error')
             })
         formData.loading = false
     }
-
-    let dialogOpen = false
 </script>
 
-<Dialog bind:open={dialogOpen} />
 <TabGroup
     class="flex flex-col w-full justify-center items-center gap-4 overflow-hidden p-4"
 >

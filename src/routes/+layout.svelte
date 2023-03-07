@@ -4,6 +4,7 @@
     import nprogress from 'nprogress'
     import 'nprogress/nprogress.css'
     import { navigating } from '$app/stores'
+    import { ToastContainer, FlatToast } from 'svelte-toasts'
 
     nprogress.configure({
         showSpinner: false,
@@ -18,6 +19,10 @@
         }
     }
 </script>
+
+<ToastContainer placement="top-right" let:data>
+    <FlatToast {data} />
+</ToastContainer>
 
 <div
     class="flex flex-col w-full h-screen dark:text-white text-slate-800 overflow-x-hidden transition-colors -z-20"
