@@ -15,6 +15,7 @@
     let submitting = false
 
     let comments: CommentsResponse<any>[] | undefined
+    export let commentCount: number = 0
     let newComment = ''
 
     onMount(async () => {
@@ -27,6 +28,7 @@
             })
 
         comments = results.items
+        commentCount = comments.length
     })
 
     function comment() {
@@ -80,6 +82,8 @@
                             (comment) => comment.id != record.id
                         )
                     }
+
+                    commentCount = comments!.length
                 }
             )
         }
@@ -104,11 +108,10 @@
 {#if !comments}
     <Loader />
 {:else}
-    <div class="self-start">
-        <Live />
-    </div>
     {#each comments as comment (comment.id)}
-        <div class="w-full p-1 flex flex-row gap-2 popin box-border">
+        <div
+            class="w-full p-4 flex flex-row gap-2 popin box-border bg-slate-50 dark:bg-slate-600 rounded-lg"
+        >
             <Avatar user={comment.expand?.user} width={48} />
             <div class="inline-flex flex-col">
                 <a

@@ -11,7 +11,7 @@
 </script>
 
 <Disclosure
-    class="flex flex-col items-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg h-full gap-4"
+    class="flex flex-col items-center justify-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg gap-4"
 >
     <Colored
         ><h1 class="font-bold text-4xl self-center mx-auto">

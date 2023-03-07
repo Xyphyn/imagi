@@ -1,6 +1,6 @@
 <script lang="ts">
     import Avatar from '$lib/Avatar.svelte'
-    import Comments from '$lib/comments/Comments.svelte'
+    import Comments from '$lib/posts/Comments.svelte'
     import Loader from '$lib/Loader.svelte'
     import { pb } from '$lib/pocketbase'
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'

@@ -1,10 +1,11 @@
 <script lang="ts">
-    import Comments from '$lib/comments/Comments.svelte'
+    import Comments from '$lib/posts/Comments.svelte'
     import Loader from '$lib/Loader.svelte'
     import Modal from '$lib/Modal.svelte'
     import { pb } from '$lib/pocketbase'
     import type { PostsResponse } from '$lib/types/pb-types'
     import { openPost } from '../../stores'
+    import Likes from './Likes.svelte'
 
     let loading = true
 
@@ -37,6 +38,9 @@
                 class="rounded-lg shadow-md w-96"
                 on:load={() => (loading = false)}
             />
+            <div class="">
+                <Likes post={$openPost} />
+            </div>
             <Comments post={$openPost} />
         {/if}
     </div>

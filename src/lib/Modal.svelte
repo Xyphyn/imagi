@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon, ArrowLeft } from 'svelte-hero-icons'
+    import { Icon, ChevronLeft } from 'svelte-hero-icons'
 
     export let open: boolean = false
 
@@ -21,7 +21,7 @@
     <button
         class="inline-flex flex-row items-center gap-1 opacity-50 hover:opacity-75 transition-opacity relative top-0 left-0"
         on:click={() => dialog.close()}
-        ><Icon src={ArrowLeft} size="20" /> Back</button
+        ><Icon src={ChevronLeft} size="20" /> Back</button
     >
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click|stopPropagation class="dialog-container">

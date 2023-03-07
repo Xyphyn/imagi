@@ -5,6 +5,10 @@
     import 'nprogress/nprogress.css'
     import { navigating } from '$app/stores'
 
+    nprogress.configure({
+        showSpinner: false,
+    })
+
     $: {
         if ($navigating) {
             nprogress.start()

@@ -6,7 +6,7 @@ interface UserSettings {
 }
 
 const defaultSettings: UserSettings = {
-    nossr: false,
+    nossr: true,
 }
 
 export const userSettings = writable(defaultSettings)
