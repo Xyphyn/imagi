@@ -49,7 +49,7 @@
             >
         </span>
     </div>
-    <Button major={false}
+    <Button major={false} onclick={() => goto('/explore')}
         ><Icon src={GlobeAlt} size="20" /><span class="hidden sm:block"
             >Explore</span
         ></Button

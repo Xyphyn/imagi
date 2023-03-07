@@ -106,9 +106,8 @@
     }
 
     function copyComment(comment: CommentsResponse<any>) {
-        console.log(navigator.clipboard)
         if (typeof navigator.clipboard != 'undefined') {
-            navigator.clipboard.writeText('text')
+            navigator.clipboard.writeText(comment.content)
         }
     }
 </script>

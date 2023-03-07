@@ -83,7 +83,7 @@
 
 <Dialog bind:open={dialogOpen} />
 <TabGroup
-    class="flex flex-col w-full justify-center items-center gap-4 overflow-hidden"
+    class="flex flex-col w-full justify-center items-center gap-4 overflow-hidden p-4"
 >
     <TabList class="max-w-xl w-full flex flex-row gap-4">
         <Tab
@@ -104,7 +104,7 @@
         >
     </TabList>
     <TabPanels>
-        <TabPanel>
+        <TabPanel class="px-4">
             <form
                 on:submit|preventDefault={login}
                 class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"

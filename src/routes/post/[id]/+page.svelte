@@ -14,7 +14,14 @@
 </script>
 
 <title>Imagi: {post.description}</title>
-
+<meta content={`Imagi: ${post.description}`} property="og:title" />
+<meta
+    content={`View this post on Imagi, a real-time social app.`}
+    property="og:description"
+/>
+<meta content={pb.getFileUrl(post, post.image)} property="og:image" />
+<meta content={`#72efdd`} data-react-helmet="true" name="theme-color" />
+<meta name="twitter:card" content="summary_large_image" />
 <div
     class="popin w-max mx-auto flex flex-col justify-center items-center p-4 gap-4 bg-white dark:bg-slate-800 rounded-lg shadow-lg outline-none max-w-[95vw] z-10"
 >
