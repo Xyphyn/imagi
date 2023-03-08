@@ -89,7 +89,7 @@
                 leaveTo="transform opacity-0 scale-95"
             >
                 <MenuItems
-                    class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+                    class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-700 rounded-md shadow-lg"
                 >
                     <Colored><h1 class="font-bold">Post Actions</h1></Colored>
                     <MenuItem>

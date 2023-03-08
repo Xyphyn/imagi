@@ -13,10 +13,8 @@
     bind:this={dialog}
     on:close={() => (open = false)}
     on:click|self={() => dialog.close()}
-    class={`min-h-[30vh] min-w-[30vw] flex flex-col align-middle rounded-lg
-     shadow-lg bg-white dark:bg-slate-800 text-inherit ${
-         open ? 'backdrop-blur-lg' : 'hidden'
-     } scalein`}
+    class={`min-h-[30vh] min-w-[30vw] hidden open:flex flex-col open:backdrop:bg-black open:backdrop:bg-opacity-30 backdrop:opacity-100 align-middle rounded-lg
+     shadow-lg bg-white dark:bg-slate-800 text-inherit scalein`}
 >
     <button
         class="inline-flex flex-row items-center gap-1 opacity-50 hover:opacity-75 transition-opacity relative top-0 left-0"

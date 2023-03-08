@@ -23,8 +23,10 @@
         <Loader />
     {:else}
         {#each posts as post (post.id)}
-            <div animate:flip={{ duration: 500 }} class="popin">
-                <Post {post} bind:open />
+            <div animate:flip={{ duration: 500 }}>
+                <div class="popin">
+                    <Post {post} bind:open />
+                </div>
             </div>
         {/each}
     {/if}
