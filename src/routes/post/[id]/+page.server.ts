@@ -2,19 +2,24 @@ import { pb } from '$lib/pocketbase'
 import { error } from '@sveltejs/kit'
 import eventsource from 'eventsource'
 
+//@ts-ignore
+global.EventSource = eventsource
+pb.autoCancellation(false)
+
 // @ts-ignore
 export async function load({ params }) {
-    //@ts-ignore
-    global.EventSource = eventsource
-    pb.autoCancellation(false)
-    const post = await pb
-        .collection('posts')
-        .getOne(params.id, { expand: 'user', $autoCancel: false })
-        .catch((err) => {
-            throw error(404, 'Not found')
-        })
+    try {
+        const post = await pb
+            .collection('posts')
+            .getOne(params.id, { expand: 'user', $autoCancel: false })
+            .catch((err) => {
+                throw error(404, 'Not found')
+            })
 
-    if (post) return { post: JSON.parse(JSON.stringify(post)) }
+        if (post) return { post: JSON.parse(JSON.stringify(post)) }
 
-    throw error(404, 'Not found')
+        throw error(404, 'Not found')
+    } catch (err) {
+        throw error(500, 'Something went wrong.')
+    }
 }
