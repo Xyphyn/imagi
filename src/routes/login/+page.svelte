@@ -99,6 +99,7 @@
     }
 </script>
 
+<title>Imagi | Login</title>
 <TabGroup
     class="flex flex-col w-full justify-center items-center gap-4 overflow-hidden p-4"
 >

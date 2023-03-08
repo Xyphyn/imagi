@@ -30,6 +30,7 @@
     })
 </script>
 
+<title>Imagi | Explore</title>
 <div class="flex flex-col box-border items-center m-4">
     <h1 class="text-4xl font-bold md:self-start"><Colored>Explore</Colored></h1>
     <span class="self-start mt-4">New Users</span>

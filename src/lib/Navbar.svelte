@@ -41,7 +41,13 @@
         on:click={() => goto('/')}
         on:keypress={() => goto('/')}
     >
-        <img src="/logo.svg" alt="Imagi logo" class="w-12" />
+        <img
+            src="/logo.svg"
+            alt="Imagi logo"
+            class="w-12"
+            width={48}
+            height={48}
+        />
         <span class="font-bold text-2xl hidden md:block"
             >Imagi <span
                 class="bg-gradient-to-br from-primary to-secondary text-base px-2 py-1 rounded-md text-black"

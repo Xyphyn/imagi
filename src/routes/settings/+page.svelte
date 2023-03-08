@@ -45,6 +45,7 @@
     }
 </script>
 
+<title>Imagi | Settings</title>
 <div
     class="flex flex-col items-center justify-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg gap-4"
 >

@@ -85,6 +85,7 @@
     })
 </script>
 
+<title>Imagi</title>
 <div class="flex flex-row gap-4 mb-4 ml-4">
     <Button
         major={sort == 'recent'}
