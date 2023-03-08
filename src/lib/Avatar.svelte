@@ -4,11 +4,22 @@
 
     export let width: number = 48
     export let user: UsersResponse | any
+
+    export let type: 'community' | 'user' = 'user'
 </script>
 
-<img
-    src={pb.getFileUrl(user, user.avatar, { thumb: '128x128' })}
-    class={`w-[${width}px] rounded-full aspect-square object-cover bg-white dark:bg-slate-700 grid place-items-center`}
-    {width}
-    alt={user.username.substring(0, 1)}
-/>
+{#if type == 'user'}
+    <img
+        src={pb.getFileUrl(user, user.avatar, { thumb: '128x128' })}
+        class={`w-[${width}px] rounded-full aspect-square object-cover bg-white dark:bg-slate-700 grid place-items-center`}
+        {width}
+        alt={user.username.substring(0, 1)}
+    />
+{:else if type == 'community'}
+    <img
+        src={pb.getFileUrl(user, user.image, { thumb: '128x128' })}
+        class={`w-[${width}px] rounded-full aspect-square object-cover bg-white dark:bg-slate-700 grid place-items-center`}
+        {width}
+        alt={user.name.substring(0, 1)}
+    />
+{/if}
