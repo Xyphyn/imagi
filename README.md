@@ -1,38 +1,26 @@
-# create-svelte
+# [Imagi](https://imagi.xylight.us)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+A **realtime** social app.
 
-## Creating a project
+*This is the in-progress beta version. It is being rewritten with better practices in mind and TailwindCSS.*
 
-If you're seeing this, you've probably already done this step. Congrats!
+Upload images in real time, and get comments, likes, and more, live.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Stack Name: **PVSS**. (I'm trying to find a library with I i can use.)
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+**Awesome Projects**
 
-## Developing
+*This couldn't exist without these.*
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- [Pocketbase](https://github.com/pocketbase/pocketbase)
+- [SvelteKit](https://kit.svelte.dev)
+- [Vite](https://vitejs.dev)
+- [TypeScript](https://typescriptlang.org)
 
-```bash
-npm run dev
+**Other Useful Stuff**
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+*Makes the app more enjoyable to use.*
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [nprogress](https://ricostacruz.com/nprogress/)
+- [Svelte Toasts](https://github.com/zerodevx/svelte-toast)
+- [sass](https://sass-lang.com)
