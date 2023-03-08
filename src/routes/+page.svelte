@@ -1,19 +1,33 @@
 <script lang="ts">
     import Live from '$lib/misc/Live.svelte'
     import Modal from '$lib/Modal.svelte'
-    import type { PostsResponse } from '$lib/types/pb-types'
+    import type {
+        CommunitiesResponse,
+        PostsResponse,
+    } from '$lib/types/pb-types'
     import { onMount } from 'svelte'
-    import { pb } from '$lib/pocketbase'
+    import { currentUser, pb } from '$lib/pocketbase'
     import PostList from '$lib/posts/PostList.svelte'
     import Button from '$lib/Button.svelte'
+    import nProgress from 'nprogress'
 
     let posts: PostsResponse<any>[] | undefined
 
+    let sort: 'recent' | 'following' = 'recent'
     let page = 1
 
     async function fetchPage(p: number) {
+        nProgress.start()
+
         if (p < 1) {
             page = 1
+        }
+
+        let filterString = ''
+        if ($currentUser?.communities) {
+            filterString = $currentUser?.communities
+                .map((community: string) => `community.id = "${community}"`)
+                .join(' || ')
         }
 
         const results = await pb
@@ -21,6 +35,7 @@
             .getList<PostsResponse<any>>(p, 50, {
                 expand: 'user, community',
                 sort: '-created',
+                filter: sort == 'following' ? filterString : '',
             })
 
         if (p > Math.ceil(results.totalItems / 50)) {
@@ -28,6 +43,8 @@
         }
 
         posts = results.items
+
+        nProgress.done()
     }
 
     onMount(async () => {
@@ -37,6 +54,16 @@
             '*',
             async ({ record, action }) => {
                 if (action == 'create') {
+                    if (sort == 'following') {
+                        if (
+                            !$currentUser?.communities.includes(
+                                record.community
+                            )
+                        ) {
+                            return
+                        }
+                    }
+
                     const user = await pb
                         .collection('users')
                         .getOne(record.user)
@@ -61,6 +88,23 @@
         )
     })
 </script>
+
+<div class="flex flex-row gap-4 mb-4 ml-4">
+    <Button
+        major={sort == 'recent'}
+        onclick={() => {
+            sort = 'recent'
+            fetchPage(page)
+        }}>Recent</Button
+    >
+    <Button
+        major={sort == 'following'}
+        onclick={() => {
+            sort = 'following'
+            fetchPage(page)
+        }}>Following</Button
+    >
+</div>
 
 <Live />
 <PostList {posts} />
