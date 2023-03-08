@@ -25,7 +25,7 @@
         loading: false,
     }
 
-    function upload() {
+    async function upload() {
         if (!$currentUser) {
             goto('/login')
         }
@@ -41,13 +41,33 @@
         data.append('image', formData.files![0])
         data.append('description', formData.description)
         data.append('user', $currentUser!.id)
+        if (formData.community != '') {
+            const community = await pb
+                .collection('communities')
+                .getList(1, 1, { filter: `name = "${formData.community}"` })
+
+            if (community.items.length == 0) {
+                toast('Error', "The given community doesn't exist.", 'error')
+                formData.loading = false
+                return
+            }
+
+            data.append('community', community.items[0].id)
+        }
 
         formData.description = ''
+        formData.community = ''
 
         pb.collection('posts')
             .create(data)
             .catch((err) => {
                 switch (err.status) {
+                    case 400:
+                        toast(
+                            'Error',
+                            'Could not create post. Check that the filesize is under 8MB, and if given, the community exists.',
+                            'error'
+                        )
                     case 429:
                         toast('Error', 'You are being rate limited.', 'error')
                         break
@@ -82,17 +102,16 @@
             />
         </div>
 
-        <div class="opacity-50">
-            <label for="upload-community" class="my-1 block cursor-not-allowed"
-                >Community</label
+        <div>
+            <label for="upload-community" class="my-1 block"
+                >Community (Optional)</label
             >
             <input
                 id="upload-community"
                 type="text"
                 maxlength="64"
-                disabled={true}
                 placeholder="cats"
-                class=" cursor-not-allowed"
+                bind:value={formData.community}
             />
         </div>
         <Button type="submit" major={true}

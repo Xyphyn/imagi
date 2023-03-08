@@ -41,7 +41,15 @@
                         .collection('users')
                         .getOne(record.user)
 
-                    record.expand = { user }
+                    if (record.community) {
+                        const community = await pb
+                            .collection('communities')
+                            .getOne(record.community)
+
+                        record.expand = { user, community }
+                    } else {
+                        record.expand = { user }
+                    }
 
                     posts = [record, ...posts!]
                 }

@@ -44,12 +44,10 @@
             .getList<PostsResponse<any>>(1, 50, {
                 filter: `user.id = "${user.id}"`,
                 sort: '-created',
-                expand: 'user',
+                expand: 'user, community',
             })
 
         posts = postResults.items
-
-        console.log(user)
 
         counts = await pb.collection('counts').getOne<CountsResponse>(user.id)
     })

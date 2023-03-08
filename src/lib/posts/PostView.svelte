@@ -34,7 +34,7 @@
             image = ''
             loading = true
             prevPost = post
-            image = pb.getFileUrl($openPost, $openPost.image)
+            image = pb.getFileUrl(post, post.image)
         }
     })
     export let open: boolean = false
@@ -44,10 +44,21 @@
     <div class="max-w-[95vw] items-center flex flex-col gap-4">
         {#if $openPost}
             <div class="self-start inline-flex justify-between w-full">
-                <span>{$openPost.description}</span><a
+                <span>{$openPost.description}</span>
+                <a
                     href={`/user/${$openPost.expand?.user.username}`}
-                    class="opacity-30">@{$openPost.expand?.user.username}</a
+                    class="opacity-30"
                 >
+                    {#if $openPost.expand?.community}
+                        <a
+                            href={`/community/${$openPost.expand?.community.name}`}
+                        >
+                            {$openPost.expand?.community.name} •
+                        </a>
+                    {/if}
+
+                    @{$openPost.expand?.user.username}
+                </a>
             </div>
             {#if loading}
                 <Loader />
@@ -58,9 +69,7 @@
                 class="rounded-lg shadow-md w-96"
                 on:load={() => (loading = false)}
             />
-            <div class="">
-                <Likes post={$openPost} />
-            </div>
+            <Likes post={$openPost} />
             <Comments post={$openPost} />
         {/if}
     </div>
