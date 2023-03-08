@@ -6,6 +6,7 @@ import eventsource from 'eventsource'
 export async function load({ params }) {
     //@ts-ignore
     global.EventSource = eventsource
+    pb.autoCancellation(false)
     const post = await pb
         .collection('posts')
         .getOne(params.id, { expand: 'user', $autoCancel: false })
