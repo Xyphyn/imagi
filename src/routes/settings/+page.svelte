@@ -1,8 +1,10 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
     import Button from '$lib/Button.svelte'
+    import FilePicker from '$lib/FilePicker.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import DeleteAccount from '$lib/views/DeleteAccount.svelte'
     import {
         Disclosure,
         DisclosureButton,
@@ -16,11 +18,15 @@
     interface AccountSettings {
         email: string
         bio: string
+        pfp: FileList | null
     }
+
+    let deleting = false
 
     let accountSettings: AccountSettings = {
         email: $currentUser?.email ?? '',
         bio: $currentUser?.bio ?? '',
+        pfp: null,
     }
 
     function changeBio() {
@@ -39,6 +45,30 @@
                 toast(
                     'Error',
                     'Failed to change bio. Try refreshing your login.',
+                    'error'
+                )
+            })
+    }
+
+    function changeAvatar() {
+        if (!accountSettings.pfp || accountSettings.pfp.length <= 0) return
+
+        const data = new FormData()
+        data.append('avatar', accountSettings.pfp[0])
+
+        pb.collection('users')
+            .update($currentUser!.id, data)
+            .then(() => {
+                toast(
+                    'Success',
+                    'Success! You may need to refresh to see changes.',
+                    'success'
+                )
+            })
+            .catch(() => {
+                toast(
+                    'Error',
+                    "Could not change avatar. Check the image's file size.",
                     'error'
                 )
             })
@@ -156,6 +186,33 @@
                     >
                 </div>
             </DisclosurePanel>
+            <DisclosurePanel
+                class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
+            >
+                <span>Change Avatar</span>
+                <div class="flex flex-row gap-2">
+                    <FilePicker
+                        forId="changeAvatar"
+                        bind:files={accountSettings.pfp}
+                        class="w-full">Avatar</FilePicker
+                    >
+                    <Button major={true} onclick={changeAvatar}>Change</Button>
+                </div>
+            </DisclosurePanel>
+            <DisclosurePanel
+                class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
+            >
+                <span>Delete Account</span>
+                <div class="flex flex-row gap-2">
+                    <Button
+                        colorType="danger"
+                        major={true}
+                        onclick={() => (deleting = true)}
+                        >Delete
+                    </Button>
+                </div>
+            </DisclosurePanel>
         {/if}
     </Disclosure>
 </div>
+<DeleteAccount bind:open={deleting} />

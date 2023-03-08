@@ -201,8 +201,9 @@
                 </div>
                 <div>
                     <label for="signup-avatar" class="block my-1">Avatar</label>
-                    <FilePicker bind:files={formData.images}
-                        >Pick an image</FilePicker
+                    <FilePicker
+                        forId="signup-avatar"
+                        bind:files={formData.images}>Pick an image</FilePicker
                     >
                 </div>
                 <Button class="mt-4" major={true} type="submit"

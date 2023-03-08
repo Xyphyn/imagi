@@ -58,7 +58,7 @@
             {#each communities as community}
                 <div
                     class="rounded-lg bg-slate-50 dark:bg-slate-800 shadow-lg flex flex-row
-                    p-4 w-full cursor-pointer hover:-translate-y-1 transition-transform transform-gpu gap-4 items-center justify-center"
+                    p-6 w-full cursor-pointer hover:-translate-y-1 transition-transform transform-gpu gap-4 items-center justify-center"
                     on:click={() => goto(`/community/${community.name}`)}
                     on:keypress={() => goto(`/community/${community.name}`)}
                 >

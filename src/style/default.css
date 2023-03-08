@@ -50,3 +50,16 @@ html {
 .scalein {
     animation: scalein 400ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 }
+
+::-webkit-scrollbar {
+    position: absolute;
+    right: 0;
+    width: 4px;
+    height: 4px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgb(71 85 105);
+}
