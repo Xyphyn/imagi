@@ -105,7 +105,9 @@
 
 <Live />
 <PostList {posts} />
-<div class="w-full flex flex-row mx-auto gap-4 items-center justify-center">
+<div
+    class="w-full flex flex-row mx-auto gap-4 items-center justify-center box-border"
+>
     <Button onclick={() => fetchPage(--page)}>Back</Button>
     <span>{page}</span>
     <Button onclick={() => fetchPage(++page)}>Next</Button>
