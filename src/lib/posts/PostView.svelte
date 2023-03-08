@@ -11,6 +11,7 @@
         Icon,
         ArrowDownTray,
         Trash,
+        Square2Stack,
     } from 'svelte-hero-icons'
     import {
         Menu,
@@ -22,6 +23,7 @@
     import Button from '$lib/Button.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { goto } from '$app/navigation'
+    import { page } from '$app/stores'
 
     let loading = true
 
@@ -92,6 +94,20 @@
                     class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-700 rounded-md shadow-lg"
                 >
                     <Colored><h1 class="font-bold">Post Actions</h1></Colored>
+                    <MenuItem>
+                        <Button
+                            class="w-full"
+                            major={false}
+                            onclick={() => {
+                                if (typeof navigator.clipboard != 'undefined') {
+                                    navigator.clipboard.writeText(
+                                        `${$page.url.host}/post/${$openPost.id}`
+                                    )
+                                }
+                            }}
+                            ><Icon src={Square2Stack} width="16" />Copy Link</Button
+                        >
+                    </MenuItem>
                     <MenuItem>
                         <Button
                             class="w-full"
