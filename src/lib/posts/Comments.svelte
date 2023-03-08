@@ -20,7 +20,6 @@
         Trash,
         Square2Stack,
     } from 'svelte-hero-icons'
-    import SvelteMarkdown from 'svelte-markdown'
 
     export let post: PostsResponse<any>
     let prevPost: PostsResponse<any>
@@ -123,7 +122,6 @@
     />
     <Button type="submit" class="w-min" major={true}
         ><Icon src={ChatBubbleLeft} size="20" /> Comment {#if submitting}<Loader
-                color="#fff"
                 size={14}
             />{/if}</Button
     >
@@ -143,11 +141,7 @@
                         href={`/user/${comment.expand?.user.username}`}
                         >@{comment.expand?.user.username}</a
                     >
-                    <span class="break-words border-box"
-                        ><SvelteMarkdown
-                            renderers={{ image: undefined, html: undefined }}
-                            source={comment.content}
-                        /></span
+                    <span class="break-words border-box">{comment.content}</span
                     >
                 </div>
             </div>

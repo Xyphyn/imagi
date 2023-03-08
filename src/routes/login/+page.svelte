@@ -6,7 +6,6 @@
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
     import {
-        Dialog,
         Tab,
         TabGroup,
         TabList,

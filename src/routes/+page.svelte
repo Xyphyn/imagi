@@ -1,10 +1,6 @@
 <script lang="ts">
     import Live from '$lib/misc/Live.svelte'
-    import Modal from '$lib/Modal.svelte'
-    import type {
-        CommunitiesResponse,
-        PostsResponse,
-    } from '$lib/types/pb-types'
+    import type { PostsResponse } from '$lib/types/pb-types'
     import { onMount } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import PostList from '$lib/posts/PostList.svelte'

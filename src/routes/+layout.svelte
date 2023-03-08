@@ -61,8 +61,16 @@
 <style>
     @font-face {
         font-family: 'Inter';
-        src: url('/font/Inter.ttf');
+        src: url('/font/Inter.woff2') format('woff2');
         font-display: swap;
+        font-weight: normal;
+    }
+
+    @font-face {
+        font-family: 'Inter';
+        src: url('/font/Inter-bold.woff2') format('woff2');
+        font-display: swap;
+        font-weight: bold;
     }
 
     :root {

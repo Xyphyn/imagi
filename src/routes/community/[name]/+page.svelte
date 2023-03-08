@@ -3,7 +3,6 @@
     import { goto } from '$app/navigation'
 
     import { page } from '$app/stores'
-    import Avatar from '$lib/Avatar.svelte'
     import Button from '$lib/Button.svelte'
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
@@ -12,14 +11,11 @@
     import type {
         CommunitiesResponse,
         CommunityCountsResponse,
-        CountsResponse,
         PostsResponse,
-        UsersResponse,
     } from '$lib/types/pb-types'
     import { onMount } from 'svelte'
     import {
         Calendar,
-        ChatBubbleLeftEllipsis,
         Icon,
         PencilSquare,
         UserCircle,

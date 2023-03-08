@@ -3,8 +3,7 @@
     import Comments from '$lib/posts/Comments.svelte'
     import Loader from '$lib/Loader.svelte'
     import { pb } from '$lib/pocketbase'
-    import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
-    import { onMount } from 'svelte'
+    import type { PostsResponse } from '$lib/types/pb-types'
     import Likes from '$lib/posts/Likes.svelte'
 
     let loading = true
