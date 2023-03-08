@@ -22,6 +22,7 @@
         ChatBubbleLeftEllipsis,
         Icon,
         PencilSquare,
+        UserCircle,
         UserGroup,
     } from 'svelte-hero-icons'
 
@@ -38,6 +39,7 @@
             .collection('communities')
             .getList<CommunitiesResponse<any>>(1, 1, {
                 filter: `name = "${communityParam}"`,
+                expand: 'owner',
             })
 
         if (results.items.length == 0) {
@@ -95,6 +97,7 @@
         />
 
         <h1 class="text-4xl font-bold"><Colored>{community.name}</Colored></h1>
+        <p class="italic">{community.description}</p>
         <div class="w-full flex flex-row justify-center gap-4">
             {#if counts}
                 <span class="flex flex-row items-center gap-1"
@@ -109,6 +112,12 @@
                     ><Icon src={Calendar} size="20" />
                     {new Date(community.created).toLocaleDateString()}</span
                 >
+                <span class="flex flex-row items-center gap-1">
+                    <Icon src={UserCircle} size="20" />
+                    <a href={`/user/${community.expand?.owner.username}`}
+                        >@{community.expand?.owner.username}</a
+                    >
+                </span>
             {:else}
                 <Loader />
             {/if}

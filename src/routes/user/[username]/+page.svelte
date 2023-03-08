@@ -61,6 +61,9 @@
     {:else if user}
         <Avatar {user} width={128} />
         <h1 class="text-4xl font-bold"><Colored>{user.username}</Colored></h1>
+        {#if user.bio}
+            <p class="opacity-75">{user.bio}</p>
+        {/if}
         <div class="w-full flex flex-row justify-center gap-4">
             {#if counts}
                 <span class="flex flex-row items-center gap-1"

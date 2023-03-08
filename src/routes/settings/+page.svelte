@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
     import Button from '$lib/Button.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
@@ -14,10 +15,33 @@
 
     interface AccountSettings {
         email: string
+        bio: string
     }
 
     let accountSettings: AccountSettings = {
         email: $currentUser?.email ?? '',
+        bio: $currentUser?.bio ?? '',
+    }
+
+    function changeBio() {
+        if (!$currentUser) {
+            goto('/login')
+        }
+
+        pb.collection('users')
+            .update($currentUser!.id, {
+                bio: accountSettings.bio,
+            })
+            .then(() => {
+                toast('Success', 'Successfully changed bio.', 'success')
+            })
+            .catch(() => {
+                toast(
+                    'Error',
+                    'Failed to change bio. Try refreshing your login.',
+                    'error'
+                )
+            })
     }
 </script>
 
@@ -110,6 +134,24 @@
                                     )
                                 })
                         }}>Change</Button
+                    >
+                </div>
+            </DisclosurePanel>
+            <DisclosurePanel
+                class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
+            >
+                <span>Bio</span>
+                <div class="relative">
+                    <textarea
+                        cols="30"
+                        rows="5"
+                        maxlength="128"
+                        placeholder="I like to argue with people online"
+                        bind:value={accountSettings.bio}
+                    /><Button
+                        class="absolute bottom-0 right-0 m-2"
+                        major={true}
+                        onclick={changeBio}>Change</Button
                     >
                 </div>
             </DisclosurePanel>
