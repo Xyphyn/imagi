@@ -4,7 +4,7 @@
     import nprogress from 'nprogress'
     import type { Community, Post } from '$lib/types/post'
     import { page } from '$app/stores'
-    import { getFile, isVideo } from './app'
+    import { getFile, isVideo, showToast } from './app'
     import PostView from '$lib/views/PostView.svelte'
     import Loader from '$lib/Loader.svelte'
     import PostList from '$lib/PostList.svelte'
@@ -147,6 +147,8 @@
         modalData.expandedView = true
         modalData.uploading = false
     }
+
+    showToast('Beta', 'Try the new Imagi at https://v2.xylight.us!', 'info')
 </script>
 
 <title>Imagi</title>
