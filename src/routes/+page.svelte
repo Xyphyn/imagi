@@ -12,6 +12,7 @@
     import Colored from '$lib/misc/Colored.svelte'
     import Loader from '$lib/Loader.svelte'
     import Avatar from '$lib/Avatar.svelte'
+    import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
 
     let posts: PostsResponse<any>[] | undefined
     let communities: CommunitiesResponse<any>[] | undefined
@@ -111,14 +112,7 @@
             </div>
         {/each}
     {:else}
-        <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
-            <div
-                class="w-8 h-8 rounded-full animate-pulse bg-white dark:bg-slate-700"
-            />
-            <div
-                class="w-24 h-8 animate-pulse bg-white dark:bg-slate-700 rounded-full"
-            />
-        </div>
+        <RowSkeleton />
     {/if}
 </div>
 <h1 class="font-bold text-4xl m-4 mt-0">

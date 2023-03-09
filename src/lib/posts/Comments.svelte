@@ -137,7 +137,7 @@
                 <Avatar user={comment.expand?.user} width={48} />
                 <div class="inline-flex flex-col w-full">
                     <a
-                        class="opacity-30 w-max"
+                        class="text-slate-400 dark:text-slate-500 w-max"
                         href={`/user/${comment.expand?.user.username}`}
                         >@{comment.expand?.user.username}</a
                     >

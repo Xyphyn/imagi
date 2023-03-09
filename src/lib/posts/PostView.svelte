@@ -49,7 +49,7 @@
                 <span>{$openPost.description}</span>
                 <a
                     href={`/user/${$openPost.expand?.user.username}`}
-                    class="opacity-30"
+                    class="text-slate-400 dark:text-slate-500"
                 >
                     {#if $openPost.expand?.community}
                         <a

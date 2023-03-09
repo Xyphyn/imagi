@@ -6,6 +6,7 @@
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
+    import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
     import type {
         CommunitiesResponse,
         UsersResponse,
@@ -38,7 +39,14 @@
         class="h-12 flex flex-row min-w-[100%] overflow-x-auto gap-4 self-start"
     >
         {#if !users}
-            <Loader />
+            <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
+                <div
+                    class="w-8 h-8 rounded-full animate-pulse bg-white dark:bg-slate-700"
+                />
+                <div
+                    class="w-24 h-8 animate-pulse bg-white dark:bg-slate-700 rounded-full"
+                />
+            </div>
         {:else}
             {#each users as user}
                 <div class="flex flex-row items-center gap-2 flex-shrink-0">
@@ -53,7 +61,7 @@
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full mt-4"
     >
         {#if !communities}
-            <Loader />
+            <RowSkeleton />
         {:else}
             {#each communities as community}
                 <div

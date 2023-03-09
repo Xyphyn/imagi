@@ -39,6 +39,8 @@
     <span
         class="absolute bottom-0 left-0 w-full py-2 px-4 bg-white text-black dark:bg-slate-800 dark:text-white rounded-b-lg flex flex-row justify-between"
         >{post.description}
-        <span class="opacity-30">@{post.expand?.user.username}</span></span
+        <span class="text-slate-400 dark:text-slate-500"
+            >@{post.expand?.user.username}</span
+        ></span
     >
 </div>
