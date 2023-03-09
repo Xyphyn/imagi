@@ -11,7 +11,9 @@
     export let post: PostsResponse<any>
     export let open = false
 
-    let image = pb.getFileUrl(post, post.image, { thumb: '128x128' })
+    let image = pb.getFileUrl(post, post.image, {
+        thumb: $userSettings.thumbSize,
+    })
 
     function postView() {
         openPost.set(post)
@@ -35,6 +37,7 @@
         src={image.endsWith('webm') || image.endsWith('mp4') ? '' : image}
         alt={post.description}
         class="w-full h-full object-cover aspect-square rounded-lg"
+        loading="lazy"
     />
     <span
         class="absolute bottom-0 left-0 w-full py-2 px-4 bg-white text-black dark:bg-slate-800 dark:text-white rounded-b-lg flex flex-row justify-between"

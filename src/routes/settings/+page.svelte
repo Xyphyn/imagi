@@ -122,6 +122,28 @@
                 /></Switch
             >
         </DisclosurePanel>
+        <DisclosurePanel
+            class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg gap-4"
+        >
+            <span class="flex flex-col w-[80%]"
+                >Thumbnail Size <span class="opacity-50 text-sm"
+                    >The image size of post thumbnails. This does not affect
+                    expanded view.</span
+                >
+            </span>
+            <Button
+                onclick={() => ($userSettings.thumbSize = '64x64')}
+                major={$userSettings.thumbSize == '64x64'}>64x64</Button
+            >
+            <Button
+                onclick={() => ($userSettings.thumbSize = '128x128')}
+                major={$userSettings.thumbSize == '128x128'}>128x128</Button
+            >
+            <Button
+                onclick={() => ($userSettings.thumbSize = '256x256')}
+                major={$userSettings.thumbSize == '256x256'}>256x256</Button
+            >
+        </DisclosurePanel>
     </Disclosure>
     <Disclosure class="w-full">
         {#if $currentUser}
