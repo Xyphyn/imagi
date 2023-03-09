@@ -60,13 +60,13 @@
             >Explore</span
         ></Button
     >
-    <Menu class="relative inline-block text-left z-20">
+    <Menu class="relative text-left z-20">
         <MenuButton>
             <Button major={true}
                 ><Icon src={Plus} size="20" /><span class="hidden sm:block"
                     >Create</span
-                ></Button
-            >
+                >
+            </Button>
         </MenuButton>
         <Transition
             enter="transition ease-out duration-100"

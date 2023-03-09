@@ -20,11 +20,17 @@
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 w-full gap-4 p-4"
 >
     {#if !posts}
-        <Loader />
+        <div
+            class="popin relative bg-white dark:bg-slate-800 shadow-xl aspect-square h-full animate-pulse rounded-lg"
+        >
+            <span
+                class="absolute bottom-0 left-0 w-full py-2 px-4 h-8 animate-pulse bg-white text-black dark:bg-slate-800 dark:text-white rounded-b-lg flex flex-row justify-between"
+            />
+        </div>
     {:else}
         {#each posts as post (post.id)}
-            <div animate:flip={{ duration: 500 }}>
-                <div class="popin">
+            <div animate:flip={{ duration: 500 }} class="w-full h-full">
+                <div class="popin w-full h-full">
                     <Post {post} bind:open />
                 </div>
             </div>

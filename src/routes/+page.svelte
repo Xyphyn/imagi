@@ -102,18 +102,25 @@
 
 <title>Imagi</title>
 <h1 class="font-bold text-4xl m-4 mt-0"><Colored>Communities</Colored></h1>
-{#if communities}
-    <div class="flex flex-row m-4 gap-4 overflow-auto">
+<div class="flex flex-row m-4 gap-4 overflow-auto h-12">
+    {#if communities}
         {#each communities as community}
-            <div class="flex flex-row items-center gap-2 flex-shrink-0">
+            <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
                 <Avatar user={community} type="community" width={32} />
                 <a href={`/community/${community.name}`}>{community.name}</a>
             </div>
         {/each}
-    </div>
-{:else}
-    <Loader />
-{/if}
+    {:else}
+        <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
+            <div
+                class="w-8 h-8 rounded-full animate-pulse bg-white dark:bg-slate-700"
+            />
+            <div
+                class="w-24 h-8 animate-pulse bg-white dark:bg-slate-700 rounded-full"
+            />
+        </div>
+    {/if}
+</div>
 <h1 class="font-bold text-4xl m-4 mt-0">
     <Colored>Posts</Colored>
 </h1>
@@ -136,10 +143,12 @@
 
 <Live />
 <PostList {posts} />
-<div
-    class="w-full flex flex-row mx-auto gap-4 items-center justify-center box-border"
->
-    <Button onclick={() => fetchPage(--page)}>Back</Button>
-    <span>{page}</span>
-    <Button onclick={() => fetchPage(++page)}>Next</Button>
-</div>
+{#if posts}
+    <div
+        class="w-full flex flex-row mx-auto gap-4 items-center justify-center box-border"
+    >
+        <Button onclick={() => fetchPage(--page)}>Back</Button>
+        <span>{page}</span>
+        <Button onclick={() => fetchPage(++page)}>Next</Button>
+    </div>
+{/if}

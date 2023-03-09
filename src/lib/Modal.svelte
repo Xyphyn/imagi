@@ -22,7 +22,7 @@
         ><Icon src={ChevronLeft} size="20" /> Back</button
     >
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click|stopPropagation class="dialog-container">
+    <div on:click|stopPropagation>
         <slot />
     </div>
 </dialog>
