@@ -1,13 +1,20 @@
 <script lang="ts">
     import Live from '$lib/misc/Live.svelte'
-    import type { PostsResponse } from '$lib/types/pb-types'
+    import type {
+        CommunitiesResponse,
+        PostsResponse,
+    } from '$lib/types/pb-types'
     import { onMount } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import PostList from '$lib/posts/PostList.svelte'
     import Button from '$lib/Button.svelte'
     import nProgress from 'nprogress'
+    import Colored from '$lib/misc/Colored.svelte'
+    import Loader from '$lib/Loader.svelte'
+    import Avatar from '$lib/Avatar.svelte'
 
     let posts: PostsResponse<any>[] | undefined
+    let communities: CommunitiesResponse<any>[] | undefined
 
     let sort: 'recent' | 'following' = 'recent'
     let page = 1
@@ -45,6 +52,14 @@
 
     onMount(async () => {
         fetchPage(page)
+
+        pb.collection('communities')
+            .getList<CommunitiesResponse>(1, 50, {
+                sort: '-created',
+            })
+            .then((data) => {
+                communities = data.items
+            })
 
         pb.collection('posts').subscribe<PostsResponse<any>>(
             '*',
@@ -86,6 +101,22 @@
 </script>
 
 <title>Imagi</title>
+<h1 class="font-bold text-4xl m-4 mt-0"><Colored>Communities</Colored></h1>
+{#if communities}
+    <div class="flex flex-row m-4 gap-4 overflow-auto">
+        {#each communities as community}
+            <div class="flex flex-row items-center gap-2 flex-shrink-0">
+                <Avatar user={community} type="community" width={32} />
+                <a href={`/community/${community.name}`}>{community.name}</a>
+            </div>
+        {/each}
+    </div>
+{:else}
+    <Loader />
+{/if}
+<h1 class="font-bold text-4xl m-4 mt-0">
+    <Colored>Posts</Colored>
+</h1>
 <div class="flex flex-row gap-4 mb-4 ml-4">
     <Button
         major={sort == 'recent'}

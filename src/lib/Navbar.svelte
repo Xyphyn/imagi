@@ -44,12 +44,12 @@
         <img
             src="/logo.svg"
             alt="Imagi logo"
-            class="w-12"
+            class="w-12 mr-2"
             width={48}
             height={48}
         />
-        <span class="font-bold text-2xl hidden md:block"
-            >Imagi <span
+        <span class="font-bold text-2xl hidden md:flex items-center gap-2"
+            >imagi <span
                 class="bg-gradient-to-br from-primary to-secondary text-base px-2 py-1 rounded-md text-black"
                 >BETA</span
             >

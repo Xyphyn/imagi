@@ -63,3 +63,11 @@ html {
     border-radius: 4px;
     background-color: rgb(71 85 105);
 }
+
+#nprogress .bar {
+    @apply bg-gradient-to-r from-primary to-secondary !important;
+}
+
+#nprogress .peg {
+    @apply shadow-primary !important;
+}

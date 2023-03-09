@@ -127,7 +127,7 @@
                 on:submit|preventDefault={login}
                 class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
             >
-                <Colored><h1 class="text-2xl font-bold">Log In</h1></Colored>
+                <Colored><h1 class="text-3xl font-bold">Log In</h1></Colored>
                 <div>
                     <label for="login-username" class="block my-1"
                         >Username/Email</label
@@ -164,7 +164,7 @@
                 on:submit|preventDefault={signUp}
                 class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
             >
-                <Colored><h1 class="text-2xl font-bold">Sign Up</h1></Colored>
+                <Colored><h1 class="text-3xl font-bold">Sign Up</h1></Colored>
                 <div>
                     <label for="signup-email" class="block my-1">Email</label>
                     <input

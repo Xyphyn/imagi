@@ -43,7 +43,7 @@
 </script>
 
 <Modal bind:open>
-    <div class="max-w-[95vw] items-center flex flex-col gap-4">
+    <div class="max-w-[95vw] items-center flex flex-col gap-4 p-4">
         {#if $openPost}
             <div class="self-start inline-flex justify-between w-full">
                 <span>{$openPost.description}</span>
