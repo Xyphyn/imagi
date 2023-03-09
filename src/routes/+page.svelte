@@ -80,14 +80,22 @@
                         .collection('users')
                         .getOne(record.user)
 
+                    let stats = await pb
+                        .collection('postCounts')
+                        .getOne(record.id)
+
                     if (record.community) {
                         const community = await pb
                             .collection('communities')
                             .getOne(record.community)
 
-                        record.expand = { user, community }
+                        record.expand = {
+                            user,
+                            community,
+                            'postCounts(post)': [stats],
+                        }
                     } else {
-                        record.expand = { user }
+                        record.expand = { user, 'postCounts(post)': [stats] }
                     }
 
                     posts = [record, ...posts!]
