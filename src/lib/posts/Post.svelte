@@ -7,6 +7,7 @@
         UsersResponse,
     } from '../types/pb-types'
     import { openPost, userSettings } from '../../stores'
+    import { ChatBubbleOvalLeftEllipsis, Heart, Icon } from 'svelte-hero-icons'
 
     export let post: PostsResponse<any>
     export let open = false
@@ -40,10 +41,21 @@
         loading="lazy"
     />
     <span
-        class="absolute bottom-0 left-0 w-full py-2 px-4 bg-white text-black dark:bg-slate-800 dark:text-white rounded-b-lg flex flex-row justify-between"
-        >{post.description}
-        <span class="text-slate-400 dark:text-slate-500"
-            >@{post.expand?.user.username}</span
-        ></span
+        class="absolute bottom-0 left-0 w-full py-2 px-4 bg-white text-black dark:bg-slate-800 dark:text-white rounded-b-lg flex flex-row gap-2"
     >
+        {post.description}
+        <span class="text-slate-400 dark:text-slate-500 mr-auto">
+            @{post.expand?.user.username}</span
+        >
+        {#if post.expand['postCounts(post)']}
+            <span class="flex flex-row items-center">
+                <Icon src={ChatBubbleOvalLeftEllipsis} mini={true} size="18" />
+                {post.expand['postCounts(post)'][0].comments}
+            </span>
+            <span class="flex flex-row items-center">
+                <Icon src={Heart} mini={true} size="18" />
+                {post.expand['postCounts(post)'][0].likes}
+            </span>
+        {/if}
+    </span>
 </div>

@@ -3,6 +3,7 @@
     import { goto } from '$app/navigation'
 
     import { page } from '$app/stores'
+    import Avatar from '$lib/Avatar.svelte'
     import Button from '$lib/Button.svelte'
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
@@ -35,7 +36,7 @@
             .collection('communities')
             .getList<CommunitiesResponse<any>>(1, 1, {
                 filter: `name = "${communityParam}"`,
-                expand: 'owner',
+                expand: 'owner,communityCounts(community)',
             })
 
         if (results.items.length == 0) {
@@ -43,6 +44,8 @@
             return
         }
         community = results.items[0]
+
+        counts = community.expand['communityCounts(community)'][0]
 
         const postResults = await pb
             .collection('posts')
@@ -53,10 +56,6 @@
             })
 
         posts = postResults.items
-
-        counts = await pb
-            .collection('communityCounts')
-            .getOne<CommunityCountsResponse>(community.id)
     })
 
     function follow(community: CommunitiesResponse) {
@@ -84,14 +83,7 @@
     {#if err}
         <span>404 - Not found</span>
     {:else if community}
-        <img
-            src={pb.getFileUrl(community, community.image, {
-                thumb: '128x128',
-            })}
-            class={`w-[128px] rounded-full aspect-square object-cover bg-white dark:bg-slate-700 grid place-items-center`}
-            width={128}
-            alt={community.name.substring(0, 1)}
-        />
+        <Avatar user={community} type="community" width={128} />
 
         <h1 class="text-4xl font-bold"><Colored>{community.name}</Colored></h1>
         <p class="italic">{community.description}</p>

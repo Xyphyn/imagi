@@ -31,6 +31,7 @@
             .collection('users')
             .getList<UsersResponse<any>>(1, 1, {
                 filter: `username = "${userParam}"`,
+                expand: `counts(user)`,
             })
 
         if (results.items.length == 0) {
@@ -38,6 +39,7 @@
             return
         }
         user = results.items[0]
+        counts = user.expand['counts(user)'][0]
 
         const postResults = await pb
             .collection('posts')
@@ -48,8 +50,6 @@
             })
 
         posts = postResults.items
-
-        counts = await pb.collection('counts').getOne<CountsResponse>(user.id)
     })
 </script>
 

@@ -6,18 +6,32 @@
     export let user: UsersResponse | any
 
     export let type: 'community' | 'user' = 'user'
+
+    function getAvatar() {
+        if (type == 'community' && (user.image == '' || !user.image))
+            return `https://avatars.dicebear.com/api/identicon/${user.name}.svg`
+
+        if (type == 'user' && (user.avatar == '' || !user.avatar))
+            return `https://avatars.dicebear.com/api/identicon/${user.username}.svg`
+
+        return pb.getFileUrl(
+            user,
+            type == 'community' ? user.image : user.avatar,
+            { thumb: '128x128' }
+        )
+    }
 </script>
 
 {#if type == 'user'}
     <img
-        src={pb.getFileUrl(user, user.avatar, { thumb: '128x128' })}
+        src={getAvatar()}
         class={`w-[${width}px] rounded-full aspect-square object-cover bg-white dark:bg-slate-700 grid place-items-center`}
         {width}
         alt={user.username.substring(0, 1)}
     />
 {:else if type == 'community'}
     <img
-        src={pb.getFileUrl(user, user.image, { thumb: '128x128' })}
+        src={getAvatar()}
         class={`w-[${width}px] rounded-full aspect-square object-cover bg-white dark:bg-slate-700 grid place-items-center`}
         {width}
         alt={user.name.substring(0, 1)}

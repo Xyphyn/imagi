@@ -37,7 +37,7 @@
         const results = await pb
             .collection('posts')
             .getList<PostsResponse<any>>(p, 50, {
-                expand: 'user, community',
+                expand: 'user,postCounts(post),community',
                 sort: '-created',
                 filter: sort == 'following' ? filterString : '',
             })
@@ -112,7 +112,9 @@
             </div>
         {/each}
     {:else}
-        <RowSkeleton />
+        {#each new Array(15) as items}
+            <RowSkeleton />
+        {/each}
     {/if}
 </div>
 <h1 class="font-bold text-4xl m-4 mt-0">
