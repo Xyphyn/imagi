@@ -1,63 +1,79 @@
-<script lang="ts">
+<script>
+    import Navbar from '../lib/Navbar.svelte'
     import '../style/default.css'
     import nprogress from 'nprogress'
+    import 'nprogress/nprogress.css'
     import { navigating } from '$app/stores'
-    import Navbar from './Navbar.svelte'
-    import { ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts'
-    import { onMount } from 'svelte'
+    import { ToastContainer, FlatToast } from 'svelte-toasts'
 
-    let cursor = 'auto'
-
-    onMount(() => {
-        if (!window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            import('../style/light.css')
-        } else {
-            import('../style/dark.css')
-        }
-
-        let color = localStorage.getItem('color') ?? '#72efdd'
-
-        const r: any = document.querySelector(':root')
-        r.style.setProperty('--accent-color', color)
+    nprogress.configure({
+        showSpinner: false,
     })
-
-    // function getRandomHexColor(): string {
-    //     const hexChars = '0123456789ABCDEF'
-    //     let color = '#'
-    //     for (let i = 0; i < 3; i++) {
-    //         const randomValue = Math.floor(127 + Math.random() * 128) // Generates a random value from 0 to 255
-    //         const hexValue = randomValue.toString(16).padStart(2, '0') // Converts the random value to a two-digit hexadecimal string
-    //         color += hexValue
-    //     }
-    //     return color
-    // }
 
     $: {
         if ($navigating) {
-            cursor = 'wait !important'
             nprogress.start()
         }
         if (!$navigating) {
-            cursor = 'auto'
             nprogress.done()
         }
     }
 </script>
 
-<div class="main-container" style={`cursor: ${cursor};`}>
+<ToastContainer placement="top-right" let:data>
+    <FlatToast {data} />
+</ToastContainer>
+
+<div
+    class="relative flex flex-col dark:text-white text-slate-800 overflow-x-hidden transition-colors"
+>
     <Navbar />
-    <ToastContainer
-        placement={'top-right'}
-        showProgress={true}
-        duration={1000}
-        let:data><BootstrapToast {data} /></ToastContainer
-    >
-    <slot />
+    <main class="p-4">
+        <slot />
+    </main>
+    <div class="absolute overflow-hidden box-border -z-10 pointer-events-none">
+        <svg
+            class="relative box-border w-[64rem] h-auto rotate-[30deg] overflow-hidden -top-96 -left-96 blur-3xl"
+            viewBox="0 0 1155 678"
+            xmlns="http://www.w3.org/2000/svg"
+            ><path
+                d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
+                fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)"
+                fill-opacity=".3"
+            /><defs
+                ><linearGradient
+                    gradientUnits="userSpaceOnUse"
+                    id="45de2b6b-92d5-4d68-a6a0-9b9b2abad533"
+                    x1="1155.49"
+                    x2="-78.208"
+                    y1=".177"
+                    y2="474.645"
+                    ><stop stop-color="#9089FC" /><stop
+                        stop-color="#FF80B5"
+                        offset="1"
+                    /></linearGradient
+                ></defs
+            ></svg
+        >
+    </div>
 </div>
 
 <style>
-    .main-container {
-        margin: 0;
-        padding: 0;
+    @font-face {
+        font-family: 'Inter';
+        src: url('/font/Inter.woff2') format('woff2');
+        font-display: swap;
+        font-weight: normal;
+    }
+
+    @font-face {
+        font-family: 'Inter';
+        src: url('/font/Inter-bold.woff2') format('woff2');
+        font-display: swap;
+        font-weight: bold;
+    }
+
+    :root {
+        font-family: 'Inter', sans-serif;
     }
 </style>

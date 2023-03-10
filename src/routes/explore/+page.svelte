@@ -1,164 +1,84 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
+
+    // @ts-ignore
+    import Avatar from '$lib/Avatar.svelte'
     import Loader from '$lib/Loader.svelte'
+    import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
-    import type { Community } from '$lib/types/post'
-    import type { User } from '$lib/types/user'
-    import UserAvatar from '$lib/UserAvatar.svelte'
-    import CommunityView from '$lib/views/CommunityView.svelte'
-    import { onDestroy, onMount } from 'svelte'
-    import { getFile } from '../app'
+    import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
+    import type {
+        CommunitiesResponse,
+        UsersResponse,
+    } from '$lib/types/pb-types'
+    import { onMount } from 'svelte'
 
-    let users: User[] = []
-    let communities: Community[] = []
-
-    let creating: boolean = false
-
-    let userUnsubscribe: () => void = () => {}
-    let communityUnsubscribe: () => void = () => {}
+    let users: UsersResponse[] | undefined
+    let communities: CommunitiesResponse[] | undefined
 
     onMount(async () => {
         pb.collection('users')
-            .getList<User>(1, 30, { sort: '-created' })
+            .getList<UsersResponse>(1, 40, { sort: '-created' })
             .then((data) => {
                 users = data.items
             })
 
         pb.collection('communities')
-            .getList<Community>(1, 30, { sort: '-created' })
+            .getList<CommunitiesResponse>(1, 40, { sort: '-created' })
             .then((data) => {
                 communities = data.items
             })
-
-        userUnsubscribe = await pb
-            .collection('users')
-            .subscribe<User>('*', ({ action, record }) => {
-                if (action == 'create') {
-                    users = [record, ...users]
-                }
-            })
-
-        communityUnsubscribe = await pb
-            .collection('communities')
-            .subscribe<Community>('*', ({ action, record }) => {
-                if (action == 'create') {
-                    communities = [record, ...communities]
-                }
-            })
-    })
-
-    onDestroy(() => {
-        userUnsubscribe()
-        communityUnsubscribe()
     })
 </script>
 
-<div class="container">
-    <h1>New Users</h1>
-    <div class="users">
-        {#if users.length == 0}
-            <Loader />
-        {/if}
-        {#each users as user}
-            <div class="user">
-                <UserAvatar {user} />
-                <a href={`/profile/${user.id}`}>{user.username}</a>
-            </div>
-        {/each}
-    </div>
-    <h1 style="display: flex; flex-direction: row; gap: 1rem;">
-        New Communities <button on:click={() => (creating = true)}
-            >Create</button
-        >
-    </h1>
-    <div class="communities">
-        {#if communities.length == 0}
-            <Loader />
-        {/if}
-        {#each communities as community}
-            <div
-                class="community"
-                on:click={() => goto(`/community/${community.name}`)}
-                on:keypress={() => goto(`/community/${community.name}`)}
-            >
-                <img
-                    src={getFile(community, false)}
-                    alt={community.name.substring(0, 1)}
-                    width={48}
-                    class="profile-image"
+<title>Imagi | Explore</title>
+<div class="flex flex-col box-border items-center p-4">
+    <h1 class="text-4xl font-bold md:self-start"><Colored>Explore</Colored></h1>
+    <span class="self-start mt-4">New Users</span>
+    <div class="flex flex-row gap-4 overflow-auto h-12 self-start box-border">
+        {#if !users}
+            <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
+                <div
+                    class="w-8 h-8 rounded-full animate-pulse bg-white dark:bg-slate-700"
                 />
-                <div class="community-content">
-                    <span class="community-name">{community.name}</span>
-                    <span class="community-description"
-                        >{community.description}</span
-                    >
-                </div>
+                <div
+                    class="w-24 h-8 animate-pulse bg-white dark:bg-slate-700 rounded-full"
+                />
             </div>
-        {/each}
+        {:else}
+            {#each users as user}
+                <div class="flex flex-row items-center gap-2 flex-shrink-0">
+                    <Avatar {user} width={32} />
+                    <a href={`/user/${user.username}`}>{user.username}</a>
+                </div>
+            {/each}
+        {/if}
+    </div>
+    <span class="self-start mt-4">New Communities</span>
+    <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full mt-4"
+    >
+        {#if !communities}
+            <RowSkeleton />
+        {:else}
+            {#each communities as community}
+                <div
+                    class="rounded-lg bg-slate-50 dark:bg-slate-800 shadow-lg flex flex-row
+                    p-6 w-full cursor-pointer hover:-translate-y-1 transition-transform transform-gpu gap-4 items-center justify-center"
+                    on:click={() => goto(`/community/${community.name}`)}
+                    on:keypress={() => goto(`/community/${community.name}`)}
+                >
+                    <Avatar user={community} type="community" width={48} />
+                    <div class="flex flex-col">
+                        <span class="font-bold text-lg"
+                            ><Colored>{community.name}</Colored></span
+                        >
+                        <span class="opacity-70 text-sm"
+                            >{community.description}</span
+                        >
+                    </div>
+                </div>
+            {/each}
+        {/if}
     </div>
 </div>
-<CommunityView bind:expanded={creating} />
-
-<style>
-    .community {
-        background-color: var(--card-color);
-        min-width: 12rem;
-        padding: 2rem;
-        border-radius: var(--border-radius);
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-        transition: transform 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-
-    .community-content {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .community:hover {
-        transform: translateY(-10px);
-        cursor: pointer;
-    }
-
-    .community-name {
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .communities {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(324px, 2fr));
-        grid-auto-flow: dense;
-        transition: grid-template-columns 250ms;
-        width: 100%;
-        gap: 1rem;
-    }
-
-    .user {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        box-sizing: border-box;
-        margin: 1rem;
-    }
-
-    .users {
-        width: 100%;
-        height: 2rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: left;
-        gap: 1rem;
-        overflow: auto;
-    }
-</style>

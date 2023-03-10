@@ -1,82 +1,28 @@
 <script lang="ts">
-    export let expanded: boolean // boolean
+    import { Icon, ChevronLeft } from 'svelte-hero-icons'
+
+    export let open: boolean = false
 
     let dialog: HTMLDialogElement // HTMLDialogElement
 
-    $: if (dialog && expanded) dialog.showModal()
-
-    export let fullHeight: boolean = true
+    $: if (dialog && open) dialog.showModal()
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <dialog
     bind:this={dialog}
-    on:close={() => (expanded = false)}
+    on:close={() => (open = false)}
     on:click|self={() => dialog.close()}
-    class={`${fullHeight ? 'full-height' : ''}`}
+    class={`min-h-[30vh] min-w-[30vw] hidden open:flex flex-col open:backdrop:bg-black open:backdrop:bg-opacity-30 backdrop:opacity-100 align-middle rounded-lg
+     shadow-lg bg-white dark:bg-slate-800 text-inherit scalein`}
 >
-    <button class="close-button" on:click={() => dialog.close()}>Close</button>
-    <div on:click|stopPropagation class="dialog-container">
+    <button
+        class="inline-flex flex-row items-center gap-1 opacity-50 hover:opacity-75 transition-opacity relative top-0 left-0"
+        on:click={() => dialog.close()}
+        ><Icon src={ChevronLeft} size="20" /> Back</button
+    >
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div on:click|stopPropagation>
         <slot />
     </div>
 </dialog>
-
-<style>
-    .full-height {
-        height: auto;
-    }
-
-    .close-button {
-        position: relative;
-        top: 0.5rem;
-        left: 0.5rem;
-    }
-
-    dialog {
-        border-radius: 8px;
-        border: 1px solid var(--accent-color);
-        padding: 0;
-        background-color: var(--card-color);
-        color: var(--text-color);
-        box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-
-    .dialog-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        margin: 2rem;
-    }
-
-    dialog::backdrop {
-        background: rgba(0, 0, 0, 0.3);
-    }
-
-    dialog[open] {
-        animation: zoom 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-
-    @keyframes zoom {
-        from {
-            transform: scale(0.95);
-        }
-        to {
-            transform: scale(1);
-        }
-    }
-
-    @keyframes fade {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-
-    dialog[open]::backdrop {
-        animation: fade 250ms;
-    }
-</style>
