@@ -32,12 +32,10 @@
 </script>
 
 <title>Imagi | Explore</title>
-<div class="flex flex-col box-border items-center m-4 w-full overflow-scroll">
+<div class="flex flex-col box-border items-center p-4">
     <h1 class="text-4xl font-bold md:self-start"><Colored>Explore</Colored></h1>
     <span class="self-start mt-4">New Users</span>
-    <div
-        class="h-12 flex flex-row min-w-[100%] overflow-x-auto gap-4 self-start"
-    >
+    <div class="flex flex-row gap-4 overflow-auto h-12 self-start box-border">
         {#if !users}
             <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
                 <div

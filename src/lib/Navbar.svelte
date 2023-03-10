@@ -16,20 +16,23 @@
         ArrowLeftOnRectangle,
         UserCircle,
         Plus,
-        ChatBubbleOvalLeftEllipsis,
         Cog6Tooth,
         Newspaper,
         GlobeAlt,
+        PencilSquare,
     } from 'svelte-hero-icons'
     import Upload from './views/Upload.svelte'
     import Colored from './misc/Colored.svelte'
+    import CreateCommunity from './views/CreateCommunity.svelte'
 
     interface Menus {
         upload: boolean
+        community: boolean
     }
 
     let views: Menus = {
         upload: false,
+        community: false,
     }
 </script>
 
@@ -82,11 +85,13 @@
                 <Colored><h1 class="text-2xl font-bold">Create</h1></Colored>
                 <MenuItem>
                     <Button class="w-full" onclick={() => (views.upload = true)}
-                        ><Icon src={ChatBubbleOvalLeftEllipsis} width="20" /> Post</Button
+                        ><Icon src={PencilSquare} width="20" /> Post</Button
                     >
                 </MenuItem>
                 <MenuItem>
-                    <Button class="w-full"
+                    <Button
+                        class="w-full"
+                        onclick={() => (views.community = true)}
                         ><Icon src={Newspaper} width="20" /> Community</Button
                     >
                 </MenuItem>
@@ -155,3 +160,4 @@
     {/if}
 </nav>
 <Upload bind:open={views.upload} />
+<CreateCommunity bind:open={views.community} />
