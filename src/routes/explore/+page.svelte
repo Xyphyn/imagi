@@ -48,7 +48,7 @@
         {:else}
             {#each users as user}
                 <div class="flex flex-row items-center gap-2 flex-shrink-0">
-                    <Avatar {user} width={32} />
+                    <Avatar {user} width={32} thumbnail="32x32" />
                     <a href={`/user/${user.username}`}>{user.username}</a>
                 </div>
             {/each}
@@ -68,7 +68,12 @@
                     on:click={() => goto(`/community/${community.name}`)}
                     on:keypress={() => goto(`/community/${community.name}`)}
                 >
-                    <Avatar user={community} type="community" width={48} />
+                    <Avatar
+                        user={community}
+                        type="community"
+                        width={48}
+                        thumbnail="48x48"
+                    />
                     <div class="flex flex-col">
                         <span class="font-bold text-lg"
                             ><Colored>{community.name}</Colored></span

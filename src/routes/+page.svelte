@@ -115,7 +115,12 @@
     {#if communities}
         {#each communities as community}
             <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
-                <Avatar user={community} type="community" width={32} />
+                <Avatar
+                    user={community}
+                    type="community"
+                    width={32}
+                    thumbnail="32x32"
+                />
                 <a href={`/community/${community.name}`}>{community.name}</a>
             </div>
         {/each}
