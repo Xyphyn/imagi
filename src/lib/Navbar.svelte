@@ -58,14 +58,14 @@
             >
         </span>
     </div>
-    <Button major={false} onclick={() => goto('/explore')}
+    <Button major={false} onclick={() => goto('/explore')} label="Explore"
         ><Icon src={GlobeAlt} size="20" /><span class="hidden sm:block"
             >Explore</span
         ></Button
     >
     <Menu class="relative text-left z-20">
         <MenuButton>
-            <Button major={true}
+            <Button major={true} label="Create"
                 ><Icon src={Plus} size="20" /><span class="hidden sm:block"
                     >Create</span
                 >
