@@ -9,20 +9,8 @@
     export let post: PostsResponse<any>
     let prevPost: PostsResponse<any>
 
-    let likes: LikesResponse<any>[] | undefined
+    let likes: number = 0
     let userLike: LikesResponse<any> | undefined
-
-    onMount(async () => {
-        const results = await pb
-            .collection('comments')
-            .getFullList<LikesResponse<any>>({
-                filter: `post.id = "${post.id}"`,
-                expand: 'user',
-            })
-
-        likes = results
-        userLike = likes.find((like) => like.user == $currentUser?.id)
-    })
 
     function like() {
         if (!$currentUser) {
@@ -44,18 +32,15 @@
 
     $: {
         if (post != prevPost) {
-            likes = undefined
             prevPost = post
+            likes = post.expand['postCounts(post)'][0].likes
+            userLike = undefined
+
             pb.collection('likes')
-                .getFullList<LikesResponse<any>>({
-                    filter: `post.id = "${post.id}"`,
+                .getList<LikesResponse<any>>(1, 1, {
+                    filter: `user.id = "${$currentUser?.id}"`,
                 })
-                .then((data) => {
-                    likes = data
-                    userLike = likes.find(
-                        (like) => like.user == $currentUser?.id
-                    )
-                })
+                .then((likes) => (userLike = likes.items[0]))
 
             pb.collection('likes').unsubscribe('*')
 
@@ -64,12 +49,13 @@
                 async ({ record, action }) => {
                     if (record.post != post.id) return
 
-                    if (action == 'create') {
-                        likes = [record, ...likes!]
-                    }
-
-                    if (action == 'delete') {
-                        likes = likes?.filter((like) => like.id != record.id)
+                    switch (action) {
+                        case 'create':
+                            likes++
+                            break
+                        case 'delete':
+                            likes--
+                            break
                     }
                 }
             )
@@ -80,6 +66,6 @@
 <Button major={userLike != undefined} onclick={like}>
     <div class="flex flex-row gap-1 items-center">
         <Icon mini={true} src={Heart} size="20" />
-        {likes?.length ?? 0}
+        {likes}
     </div>
 </Button>

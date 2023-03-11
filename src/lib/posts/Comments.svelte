@@ -30,19 +30,6 @@
     export let commentCount: number = 0
     let newComment = ''
 
-    onMount(async () => {
-        const results = await pb
-            .collection('comments')
-            .getList<CommentsResponse<any>>(1, 50, {
-                filter: `post.id = "${post.id}"`,
-                expand: 'user',
-                sort: '-created',
-            })
-
-        comments = results.items
-        commentCount = comments.length
-    })
-
     function comment() {
         submitting = true
 
@@ -52,8 +39,7 @@
                 content: newComment,
                 post: post.id,
             })
-            .then(() => (submitting = false))
-            .catch(() => (submitting = false))
+            .finally(() => (submitting = false))
 
         newComment = ''
     }
@@ -79,20 +65,23 @@
                 async ({ record, action }) => {
                     if (record.post != post.id) return
 
-                    if (action == 'create') {
-                        const user = await pb
-                            .collection('users')
-                            .getOne(record.user)
+                    switch (action) {
+                        case 'create': {
+                            const user = await pb
+                                .collection('users')
+                                .getOne(record.user)
 
-                        record.expand = { user }
+                            record.expand = { user }
 
-                        comments = [record, ...comments!]
-                    }
-
-                    if (action == 'delete') {
-                        comments = comments?.filter(
-                            (comment) => comment.id != record.id
-                        )
+                            comments = [record, ...comments!]
+                            break
+                        }
+                        case 'delete': {
+                            comments = comments?.filter(
+                                (comment) => comment.id != record.id
+                            )
+                            break
+                        }
                     }
 
                     commentCount = comments!.length
