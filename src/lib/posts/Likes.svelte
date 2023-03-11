@@ -34,7 +34,7 @@
 
         pb.collection('likes')
             .getList<LikesResponse<any>>(1, 1, {
-                filter: `user.id = "${$currentUser?.id}"`,
+                filter: `user.id = "${$currentUser?.id}" && post.id = "${post.id}"`,
             })
             .then((likes) => (userLike = likes.items[0]))
 
