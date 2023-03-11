@@ -10,7 +10,7 @@
     let prevPost: PostsResponse<any>
 
     let likes: number = 0
-    let userLike: LikesResponse<any> | undefined
+    let userLike: LikesResponse<any> | undefined = undefined
 
     function like() {
         if (!$currentUser) {
