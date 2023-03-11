@@ -13,9 +13,15 @@
     $: {
         if ($navigating) {
             nprogress.start()
+            if (typeof document != 'undefined') {
+                document.body.classList.add('cursor-wait')
+            }
         }
         if (!$navigating) {
             nprogress.done()
+            if (typeof document != 'undefined') {
+                document.body.classList.remove('cursor-wait')
+            }
         }
     }
 </script>

@@ -2,12 +2,11 @@
     import { goto } from '$app/navigation'
     import Button from '$lib/Button.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import PostSkeleton from '$lib/skeletons/PostSkeleton.svelte'
     import type { LikesResponse, PostsResponse } from '$lib/types/pb-types'
-    import { onMount } from 'svelte'
     import { Icon, Heart } from 'svelte-hero-icons'
 
     export let post: PostsResponse<any>
-    let prevPost: PostsResponse<any>
 
     let likes: number = 0
     let userLike: LikesResponse<any> | undefined = undefined
@@ -30,37 +29,37 @@
         }
     }
 
-    $: {
-        if (post != prevPost) {
-            prevPost = post
-            likes = post.expand['postCounts(post)'][0].likes
-            userLike = undefined
+    function fetchLikes(post: PostsResponse<any>): number {
+        userLike = undefined
 
-            pb.collection('likes')
-                .getList<LikesResponse<any>>(1, 1, {
-                    filter: `user.id = "${$currentUser?.id}"`,
-                })
-                .then((likes) => (userLike = likes.items[0]))
+        pb.collection('likes')
+            .getList<LikesResponse<any>>(1, 1, {
+                filter: `user.id = "${$currentUser?.id}"`,
+            })
+            .then((likes) => (userLike = likes.items[0]))
 
-            pb.collection('likes').unsubscribe('*')
+        pb.collection('likes').unsubscribe('*')
 
-            pb.collection('likes').subscribe<LikesResponse<any>>(
-                `*`,
-                async ({ record, action }) => {
-                    if (record.post != post.id) return
+        pb.collection('likes').subscribe<LikesResponse<any>>(
+            `*`,
+            async ({ record, action }) => {
+                if (record.post != post.id) return
 
-                    switch (action) {
-                        case 'create':
-                            likes++
-                            break
-                        case 'delete':
-                            likes--
-                            break
-                    }
+                switch (action) {
+                    case 'create':
+                        likes++
+                        break
+                    case 'delete':
+                        likes--
+                        break
                 }
-            )
-        }
+            }
+        )
+
+        return post.expand['postCounts(post)'][0].likes
     }
+
+    $: likes = fetchLikes(post)
 </script>
 
 <Button major={userLike != undefined} onclick={like}>

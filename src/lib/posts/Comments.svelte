@@ -12,7 +12,6 @@
         MenuItems,
         Transition,
     } from '@rgossiaux/svelte-headlessui'
-    import { onMount } from 'svelte'
     import {
         Icon,
         ChatBubbleLeft,
@@ -22,12 +21,10 @@
     } from 'svelte-hero-icons'
 
     export let post: PostsResponse<any>
-    let prevPost: PostsResponse<any>
 
     let submitting = false
 
     let comments: CommentsResponse<any>[] | undefined
-    export let commentCount: number = 0
     let newComment = ''
 
     function comment() {
@@ -44,51 +41,47 @@
         newComment = ''
     }
 
-    $: {
-        if (post != prevPost) {
-            comments = undefined
-            prevPost = post
-            pb.collection('comments')
-                .getList<CommentsResponse<any>>(1, 50, {
-                    filter: `post.id = "${post.id}"`,
-                    expand: 'user',
-                    sort: '-created',
-                })
-                .then((data) => {
-                    comments = data.items
-                })
+    async function fetchComments(post: PostsResponse<any>) {
+        pb.collection('comments').unsubscribe('*')
 
-            pb.collection('comments').unsubscribe('*')
+        pb.collection('comments').subscribe<CommentsResponse<any>>(
+            `*`,
+            async ({ record, action }) => {
+                if (record.post != post.id) return
 
-            pb.collection('comments').subscribe<CommentsResponse<any>>(
-                `*`,
-                async ({ record, action }) => {
-                    if (record.post != post.id) return
+                switch (action) {
+                    case 'create': {
+                        const user = await pb
+                            .collection('users')
+                            .getOne(record.user)
 
-                    switch (action) {
-                        case 'create': {
-                            const user = await pb
-                                .collection('users')
-                                .getOne(record.user)
+                        record.expand = { user }
 
-                            record.expand = { user }
-
-                            comments = [record, ...comments!]
-                            break
-                        }
-                        case 'delete': {
-                            comments = comments?.filter(
-                                (comment) => comment.id != record.id
-                            )
-                            break
-                        }
+                        comments = [record, ...comments!]
+                        break
                     }
-
-                    commentCount = comments!.length
+                    case 'delete': {
+                        comments = comments?.filter(
+                            (comment) => comment.id != record.id
+                        )
+                        break
+                    }
                 }
-            )
-        }
+            }
+        )
+
+        const results = await pb
+            .collection('comments')
+            .getList<CommentsResponse<any>>(1, 50, {
+                filter: `post.id = "${post.id}"`,
+                expand: 'user',
+                sort: '-created',
+            })
+
+        comments = results.items
     }
+
+    $: fetchComments(post)
 
     function deleteComment(comment: CommentsResponse<any>) {
         pb.collection('comments').delete(comment.id)
