@@ -102,11 +102,14 @@
         maxlength="256"
         bind:value={newComment}
     />
-    <Button type="submit" class="w-min" major={true}
-        ><Icon src={ChatBubbleLeft} size="20" /> Comment {#if submitting}<Loader
-                size={14}
-            />{/if}</Button
-    >
+    <Button type="submit" class="w-min" major={true} disabled={submitting}
+        >{#if submitting}<Loader />{:else}<Icon
+                src={ChatBubbleLeft}
+                size="20"
+            />
+        {/if}
+        Comment
+    </Button>
 </form>
 {#if !comments}
     <Loader />

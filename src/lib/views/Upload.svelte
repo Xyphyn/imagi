@@ -115,10 +115,11 @@
                 bind:value={formData.community}
             />
         </div>
-        <Button type="submit" major={true}
-            ><Icon src={PencilSquare} size="20" /> Post {#if formData.loading}<Loader
-                    size={16}
-                />{/if}</Button
-        >
+        <Button type="submit" major={true} disabled={formData.loading}
+            >{#if formData.loading}<Loader />{:else}<Icon
+                    src={PencilSquare}
+                    size="20"
+                />{/if} Post
+        </Button>
     </form>
 </Modal>

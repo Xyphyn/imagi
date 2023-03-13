@@ -5,6 +5,7 @@
     export let major: boolean = false
     export let colorType: 'danger' | 'success' | undefined = undefined
     export let label = 'Button'
+    export let disabled = false
 
     let clazz: string = ''
     export { clazz as class }
@@ -24,5 +25,10 @@ focus:outline-4 bg-transparent flex flex-row gap-2 items-center hover:brightness
             : major
             ? 'bg-gradient-to-br from-primary to-secondary text-black border-transparent dark:border-transparent'
             : 'hover:dark:bg-slate-800 hover:bg-white'
-    } ${clazz}`}><slot /></button
->
+    } ${clazz} ${
+        disabled
+            ? 'opacity-30 pointer-events-none cursor-default border-primary'
+            : ''
+    }`}
+    ><slot />
+</button>

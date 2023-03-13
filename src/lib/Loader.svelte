@@ -1,64 +1,20 @@
-<script lang="ts">
-    import type { SpinnerTypes } from './types/spinner'
-    export let unit: SpinnerTypes['unit'] = 'px'
-    export let duration: SpinnerTypes['duration'] = '0.6s'
-    export let size: SpinnerTypes['size'] = '24'
-    export let pause: SpinnerTypes['pause'] = false
-    let moonSize: number = +size / 7
-    let top: number = +size / 2 - moonSize / 2
-</script>
-
-<div
-    class="wrapper"
-    class:pause-animation={pause}
-    style="--size: {size}{unit}; --color: #000; --moonSize: {top}{unit}; --duration: {duration};"
+<svg
+    class="animate-spin duration-700 h-4 w-4 text-inherit"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
 >
-    <div class="circle-one" class:pause-animation={pause} />
-    <div class="circle-two" class:pause-animation={pause} />
-</div>
-
-<style lang="postcss">
-    @media (prefers-color-scheme: dark) {
-        .wrapper {
-            --color: #fff !important;
-        }
-    }
-    .wrapper {
-        height: var(--size);
-        width: var(--size);
-        border-radius: 100%;
-        animation: moonStretchDelay var(--duration) 0s infinite linear;
-        animation-fill-mode: forwards;
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
-    }
-    .circle-one {
-        top: var(--moonSize);
-        @apply bg-black dark:bg-white;
-        background-color: var(--color);
-        width: calc(var(--size) / 7);
-        height: calc(var(--size) / 7);
-        border-radius: 100%;
-        animation: moonStretchDelay var(--duration) 0s infinite linear;
-        animation-fill-mode: forwards;
-        opacity: 0.8;
-        position: absolute;
-    }
-    .circle-two {
-        opacity: 0.1;
-        @apply border-black dark:border-white;
-        border: calc(var(--size) / 7) solid var(--color);
-        height: var(--size);
-        width: var(--size);
-        border-radius: 100%;
-        box-sizing: border-box;
-    }
-    .pause-animation {
-        animation-play-state: paused;
-    }
-    @keyframes moonStretchDelay {
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
+    <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="2"
+    />
+    <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+    />
+</svg>

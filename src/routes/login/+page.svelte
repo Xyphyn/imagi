@@ -152,11 +152,13 @@
                         placeholder="8-72 characters"
                     />
                 </div>
-                <Button class="mt-4" major={true} type="submit"
-                    >Log In {#if formData.loading}<Loader
-                            size={16}
-                        />{/if}</Button
-                >
+                <Button
+                    class="mt-4"
+                    major={true}
+                    type="submit"
+                    disabled={formData.loading}
+                    >{#if formData.loading}<Loader />{/if} Log In
+                </Button>
             </form>
         </TabPanel>
         <TabPanel>
@@ -207,10 +209,8 @@
                     >
                 </div>
                 <Button class="mt-4" major={true} type="submit"
-                    >Sign Up {#if formData.loading}<Loader
-                            size={16}
-                        />{/if}</Button
-                >
+                    >{#if formData.loading}<Loader />{/if}Sign Up
+                </Button>
             </form>
         </TabPanel>
     </TabPanels>

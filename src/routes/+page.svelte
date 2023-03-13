@@ -4,7 +4,7 @@
         CommunitiesResponse,
         PostsResponse,
     } from '$lib/types/pb-types'
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import PostList from '$lib/posts/PostList.svelte'
     import Button from '$lib/Button.svelte'
@@ -107,6 +107,8 @@
             }
         )
     })
+
+    onDestroy(() => {})
 </script>
 
 <title>Imagi</title>
