@@ -65,17 +65,17 @@
         {#if user.bio}
             <p class="opacity-75">{user.bio}</p>
         {/if}
-        <div class="w-full flex flex-row justify-center gap-4">
+        <div class="flex flex-row gap-4 justify-center w-full">
             {#if counts}
-                <span class="flex flex-row items-center gap-1"
+                <span class="flex flex-row gap-1 items-center"
                     ><Icon src={ChatBubbleLeftEllipsis} size="20" />
                     {counts.comments}</span
                 >
-                <span class="flex flex-row items-center gap-1"
+                <span class="flex flex-row gap-1 items-center"
                     ><Icon src={PencilSquare} size="20" />
                     {counts.posts}</span
                 >
-                <span class="flex flex-row items-center gap-1"
+                <span class="flex flex-row gap-1 items-center"
                     ><Icon src={Calendar} size="20" />
                     {new Date(user.created).toLocaleDateString()}</span
                 >

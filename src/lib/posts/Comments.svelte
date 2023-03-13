@@ -97,7 +97,7 @@
 
 <form on:submit|preventDefault={comment} class="flex flex-row gap-1 w-full">
     <input
-        class="w-full flex-auto"
+        class="flex-auto w-full"
         type="text"
         placeholder="What are you thinking?"
         maxlength="256"
@@ -116,24 +116,24 @@
     <Loader />
 {:else}
     {#each comments as comment}
-        <div class="w-full relative group">
+        <div class="relative w-full group">
             <div
-                class="relative w-full p-4 flex flex-row items-center gap-2 popin box-border bg-slate-100 dark:bg-slate-700 rounded-lg"
+                class="flex relative flex-row gap-2 items-center p-4 w-full rounded-lg popin box-border bg-slate-100 dark:bg-slate-700"
             >
                 <Avatar user={comment.expand?.user} width={48} />
                 <div class="inline-flex flex-col w-full">
                     <a
-                        class="text-slate-400 dark:text-slate-500 w-max"
+                        class="w-max text-slate-400 dark:text-slate-500"
                         href={`/user/${comment.expand?.user.username}`}
                         >@{comment.expand?.user.username}</a
                     >
-                    <span class="break-words border-box">{comment.content}</span
+                    <span class="border-box break-words">{comment.content}</span
                     >
                 </div>
             </div>
-            <Menu class="text-left absolute top-0 right-0 m-2">
+            <Menu class="absolute top-0 right-0 m-2 text-left">
                 <MenuButton
-                    class="opacity-0 group-hover:opacity-100 transition-opacity"
+                    class="opacity-0 transition-opacity group-hover:opacity-100"
                     ><Button class="gap-0 px-1 py-[2px] -z-10"
                         ><Icon size="20" src={EllipsisHorizontal} /></Button
                     ></MenuButton
@@ -147,7 +147,7 @@
                     leaveTo="transform opacity-0 scale-95"
                 >
                     <MenuItems
-                        class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
+                        class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-800"
                     >
                         <Colored
                             ><h1 class="font-bold">Comment Actions</h1></Colored

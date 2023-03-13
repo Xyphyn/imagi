@@ -17,7 +17,7 @@
      shadow-lg bg-slate-50 dark:bg-slate-800 text-inherit scalein`}
 >
     <button
-        class="inline-flex flex-row items-center gap-1 opacity-50 hover:opacity-75 transition-opacity relative top-0 left-0 w-min focus:border-none"
+        class="inline-flex relative top-0 left-0 flex-row gap-1 items-center w-min opacity-50 transition-opacity hover:opacity-75 focus:border-none"
         on:click={() => dialog.close()}
         ><Icon src={ChevronLeft} size="20" /> Back</button
     >

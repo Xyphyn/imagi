@@ -45,7 +45,7 @@
 <Modal bind:open>
     <div class="max-w-[95vw] items-center flex flex-col gap-4 p-4">
         {#if $openPost}
-            <div class="self-start inline-flex justify-between w-full">
+            <div class="inline-flex justify-between self-start w-full">
                 <span class="text-xl font-bold">{$openPost.description}</span>
                 <a
                     href={`/user/${$openPost.expand?.user.username}`}
@@ -68,7 +68,7 @@
             <img
                 src={image}
                 alt={$openPost.description}
-                class="rounded-lg shadow-md w-96"
+                class="w-96 rounded-lg shadow-md"
                 on:load={() => (loading = false)}
             />
             <Likes post={$openPost} />
@@ -76,7 +76,7 @@
         {/if}
     </div>
     {#if $openPost}
-        <Menu class="text-left absolute top-0 right-0 m-4">
+        <Menu class="absolute top-0 right-0 m-4 text-left">
             <MenuButton
                 ><Button class="gap-0 px-[0.25rem] py-[2px] -z-10"
                     ><Icon size="20" src={EllipsisHorizontal} /></Button
@@ -91,7 +91,7 @@
                 leaveTo="transform opacity-0 scale-95"
             >
                 <MenuItems
-                    class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-900 rounded-md shadow-lg"
+                    class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-900"
                 >
                     <Colored><h1 class="font-bold">Post Actions</h1></Colored>
                     <MenuItem>

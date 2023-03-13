@@ -101,9 +101,9 @@
 
 <title>Imagi | Login</title>
 <TabGroup
-    class="flex flex-col w-full justify-center items-center gap-4 overflow-hidden p-4"
+    class="flex overflow-hidden flex-col gap-4 justify-center items-center p-4 w-full"
 >
-    <TabList class="max-w-xl w-full flex flex-row gap-4">
+    <TabList class="flex flex-row gap-4 w-full max-w-xl">
         <Tab
             class={({ selected }) =>
                 `flex-1 rounded-md p-3 bg-white dark:bg-slate-800 shadow-sm ${
@@ -125,7 +125,7 @@
         <TabPanel class="px-4">
             <form
                 on:submit|preventDefault={login}
-                class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
+                class="flex flex-col gap-2 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
             >
                 <Colored><h1 class="text-3xl font-bold">Log In</h1></Colored>
                 <div>
@@ -164,7 +164,7 @@
         <TabPanel>
             <form
                 on:submit|preventDefault={signUp}
-                class="w-screen bg-white dark:bg-slate-800 rounded-lg shadow-xl max-w-xl p-4 py-16 mx-auto my-auto m-4 flex flex-col items-center gap-2 popin"
+                class="flex flex-col gap-2 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
             >
                 <Colored><h1 class="text-3xl font-bold">Sign Up</h1></Colored>
                 <div>

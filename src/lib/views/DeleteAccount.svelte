@@ -26,9 +26,9 @@
 </script>
 
 <Modal bind:open>
-    <div class="flex flex-col items-center gap-4">
+    <div class="flex flex-col gap-4 items-center">
         <h1
-            class="font-bold text-3xl bg-gradient-to-br from-red-400 to-red-500 bg-clip-text text-transparent"
+            class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-red-400 to-red-500"
         >
             Delete Account
         </h1>

@@ -54,7 +54,7 @@
 </script>
 
 <Modal bind:open>
-    <div class="flex flex-col items-center gap-4 p-4">
+    <div class="flex flex-col gap-4 items-center p-4">
         <h1 class="text-3xl font-bold">
             <Colored>Create a Community</Colored>
         </h1>

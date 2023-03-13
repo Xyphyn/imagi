@@ -1,4 +1,4 @@
 <span
-    class="bg-clip-text text-transparent bg-gradient-to-br from-primary to-secondary"
+    class="text-transparent bg-clip-text bg-gradient-to-br from-primary to-secondary"
     ><slot /></span
 >

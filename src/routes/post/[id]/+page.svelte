@@ -24,7 +24,7 @@
 <div
     class="popin w-max mx-auto flex flex-col justify-center items-center p-4 gap-4 bg-white dark:bg-slate-800 rounded-lg shadow-lg outline-none max-w-[95vw] z-10"
 >
-    <div class="self-start inline-flex justify-between w-full">
+    <div class="inline-flex justify-between self-start w-full">
         <span>{post.description}</span><a
             href={`/user/${post.expand?.user.username}`}
             class="opacity-30">@{post.expand?.user.username}</a
@@ -36,7 +36,7 @@
     <img
         src={pb.getFileUrl(post, post.image)}
         alt={post.description}
-        class="rounded-lg shadow-md w-96"
+        class="w-96 rounded-lg shadow-md"
         on:load={() => (loading = false)}
     />
     <Likes {post} />

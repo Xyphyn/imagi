@@ -87,21 +87,21 @@
 
         <h1 class="text-4xl font-bold"><Colored>{community.name}</Colored></h1>
         <p class="italic">{community.description}</p>
-        <div class="w-full flex flex-row justify-center gap-4">
+        <div class="flex flex-row gap-4 justify-center w-full">
             {#if counts}
-                <span class="flex flex-row items-center gap-1"
+                <span class="flex flex-row gap-1 items-center"
                     ><Icon src={UserGroup} size="20" />
                     {counts.members}</span
                 >
-                <span class="flex flex-row items-center gap-1"
+                <span class="flex flex-row gap-1 items-center"
                     ><Icon src={PencilSquare} size="20" />
                     {counts.posts}</span
                 >
-                <span class="flex flex-row items-center gap-1"
+                <span class="flex flex-row gap-1 items-center"
                     ><Icon src={Calendar} size="20" />
                     {new Date(community.created).toLocaleDateString()}</span
                 >
-                <span class="flex flex-row items-center gap-1">
+                <span class="flex flex-row gap-1 items-center">
                     <Icon src={UserCircle} size="20" />
                     <a href={`/user/${community.expand?.owner.username}`}
                         >@{community.expand?.owner.username}</a

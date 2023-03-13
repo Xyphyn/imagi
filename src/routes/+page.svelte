@@ -110,11 +110,11 @@
 </script>
 
 <title>Imagi</title>
-<h1 class="font-bold text-4xl m-4 mt-0"><Colored>Communities</Colored></h1>
-<div class="flex flex-row m-4 gap-4 overflow-auto h-12">
+<h1 class="m-4 mt-0 text-4xl font-bold"><Colored>Communities</Colored></h1>
+<div class="flex overflow-auto flex-row gap-4 m-4 h-12">
     {#if communities}
         {#each communities as community}
-            <div class="flex flex-row items-center gap-2 flex-shrink-0 h-8">
+            <div class="flex flex-row flex-shrink-0 gap-2 items-center h-8">
                 <Avatar
                     user={community}
                     type="community"
@@ -130,7 +130,7 @@
         {/each}
     {/if}
 </div>
-<h1 class="font-bold text-4xl m-4 mt-0">
+<h1 class="m-4 mt-0 text-4xl font-bold">
     <Colored>Posts</Colored>
 </h1>
 <div class="flex flex-row gap-4 mb-4 ml-4">
@@ -154,7 +154,7 @@
 <PostList {posts} />
 {#if posts}
     <div
-        class="w-full flex flex-row mx-auto gap-4 items-center justify-center box-border"
+        class="flex flex-row gap-4 justify-center items-center mx-auto w-full box-border"
     >
         <Button onclick={() => fetchPage(--page)}>Back</Button>
         <span>{page}</span>

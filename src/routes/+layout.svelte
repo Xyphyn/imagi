@@ -31,13 +31,13 @@
 </ToastContainer>
 
 <div
-    class="relative flex flex-col dark:text-white text-slate-800 overflow-x-hidden transition-colors"
+    class="flex overflow-x-hidden relative flex-col transition-colors dark:text-white text-slate-800"
 >
     <Navbar />
     <main class="p-4">
         <slot />
     </main>
-    <div class="absolute overflow-hidden box-border -z-10 pointer-events-none">
+    <div class="overflow-hidden absolute pointer-events-none box-border -z-10">
         <svg
             class="relative box-border w-[64rem] h-auto rotate-[30deg] overflow-hidden -top-96 -left-96 blur-3xl"
             viewBox="0 0 1155 678"

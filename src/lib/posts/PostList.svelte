@@ -18,7 +18,7 @@
 </script>
 
 <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 w-full gap-4 p-4"
+    class="grid grid-cols-1 gap-4 p-4 w-full sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5"
 >
     {#if !posts}
         {#each new Array(50) as items}

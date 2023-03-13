@@ -81,13 +81,13 @@
 </script>
 
 <title>Imagi | Settings</title>
-<h1 class="font-bold text-4xl self-center justify-self-center mx-auto">
+<h1 class="justify-self-center self-center mx-auto text-4xl font-bold">
     <Colored>Settings</Colored>
 </h1>
 <TabGroup
-    class="flex flex-row items-center justify-center mx-auto p-4 rounded-lg w-full h-full gap-4"
+    class="flex flex-row gap-4 justify-center items-center p-4 mx-auto w-full h-full rounded-lg"
 >
-    <TabList class="flex flex-col gap-4 w-64 self-start">
+    <TabList class="flex flex-col gap-4 self-start w-64">
         <Tab
             class={({ selected }) =>
                 `flex-1 rounded-md py-2 bg-white dark:bg-slate-800 shadow-sm ${
@@ -107,11 +107,11 @@
     </TabList>
     <TabPanels class="w-full max-w-lg">
         <TabPanel
-            class="flex flex-col justify-between w-full items-center gap-4 p-4 my-2 dark:bg-slate-800 bg-slate-50 rounded-lg"
+            class="flex flex-col gap-4 justify-between items-center p-4 my-2 w-full rounded-lg dark:bg-slate-800 bg-slate-50"
         >
-            <div class="flex flex-row items-center justify-between gap-2">
+            <div class="flex flex-row gap-2 justify-between items-center">
                 <span class="flex flex-col w-[80%]"
-                    >No-SSR Posts <span class="opacity-50 text-sm"
+                    >No-SSR Posts <span class="text-sm opacity-50"
                         >Loads posts client side, opening posts in a dialog
                         instead of a page.</span
                     >
@@ -136,9 +136,9 @@
                     /></Switch
                 >
             </div>
-            <div class="flex flex-row items-center justify-between gap-2">
+            <div class="flex flex-row gap-2 justify-between items-center">
                 <span class="flex flex-col w-[80%]"
-                    >Thumbnail Size <span class="opacity-50 text-sm"
+                    >Thumbnail Size <span class="text-sm opacity-50"
                         >The image size of post thumbnails. This does not affect
                         expanded view.</span
                     >
@@ -159,10 +159,10 @@
         </TabPanel>
         {#if $currentUser}
             <TabPanel
-                class="flex flex-col justify-between w-full items-center p-4 my-2 dark:bg-slate-800 bg-slate-50 rounded-lg"
+                class="flex flex-col justify-between items-center p-4 my-2 w-full rounded-lg dark:bg-slate-800 bg-slate-50"
             >
                 <div
-                    class="flex flex-row justify-between w-full items-center p-4 my-2 rounded-lg"
+                    class="flex flex-row justify-between items-center p-4 my-2 w-full rounded-lg"
                 >
                     <span>Email</span>
                     <input
@@ -193,7 +193,7 @@
                     >
                 </div>
                 <div
-                    class="flex flex-row justify-between w-full items-center p-4 my-2 rounded-lg"
+                    class="flex flex-row justify-between items-center p-4 my-2 w-full rounded-lg"
                 >
                     <span>Bio</span>
                     <div class="relative">
@@ -204,14 +204,14 @@
                             placeholder="I like to argue with people online"
                             bind:value={accountSettings.bio}
                         /><Button
-                            class="absolute bottom-0 right-0 m-2"
+                            class="absolute right-0 bottom-0 m-2"
                             major={true}
                             onclick={changeBio}>Change</Button
                         >
                     </div>
                 </div>
                 <div
-                    class="flex flex-row justify-between w-full items-center p-4 my-2"
+                    class="flex flex-row justify-between items-center p-4 my-2 w-full"
                 >
                     <span>Change Avatar</span>
                     <div class="flex flex-row gap-2">
@@ -226,7 +226,7 @@
                     </div>
                 </div>
                 <div
-                    class="flex flex-row justify-between w-full items-center p-4 my-2"
+                    class="flex flex-row justify-between items-center p-4 my-2 w-full"
                 >
                     <span>Delete Account</span>
                     <div class="flex flex-row gap-2">

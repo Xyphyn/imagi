@@ -88,12 +88,12 @@
 <Modal bind:open>
     <form
         on:submit|preventDefault={upload}
-        class="flex flex-col items-center gap-4 p-4"
+        class="flex flex-col gap-4 items-center p-4"
     >
-        <Colored><h1 class="font-bold text-2xl">Create a Post</h1></Colored>
+        <Colored><h1 class="text-2xl font-bold">Create a Post</h1></Colored>
         <FilePicker bind:files={formData.files}>Pick a file</FilePicker>
         <div>
-            <label for="upload-description" class="my-1 block"
+            <label for="upload-description" class="block my-1"
                 >Description</label
             >
             <input
@@ -106,7 +106,7 @@
         </div>
 
         <div>
-            <label for="upload-community" class="my-1 block"
+            <label for="upload-community" class="block my-1"
                 >Community (Optional)</label
             >
             <input

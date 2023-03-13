@@ -37,9 +37,9 @@
 </script>
 
 <nav
-    class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center z-10 gap-4"
+    class="flex sticky top-0 z-10 flex-row gap-4 items-center p-4 my-4 w-full h-16"
 >
-    <a class="hover:cursor-pointer flex flex-row items-center mr-auto" href="/">
+    <a class="flex flex-row items-center mr-auto hover:cursor-pointer" href="/">
         <img
             src="/logo.svg"
             alt="Imagi logo"
@@ -47,9 +47,9 @@
             width={48}
             height={48}
         />
-        <span class="font-bold text-2xl hidden md:flex items-center gap-2"
+        <span class="hidden gap-2 items-center text-2xl font-bold md:flex"
             >imagi <span
-                class="bg-gradient-to-br from-primary to-secondary text-base px-2 py-1 rounded-md text-black"
+                class="py-1 px-2 text-base text-black bg-gradient-to-br rounded-md from-primary to-secondary"
                 >BETA</span
             >
         </span>
@@ -102,7 +102,7 @@
                         thumb: '128x128',
                     })}
                     alt="Profile"
-                    class="rounded-full w-12 aspect-square object-cover cursor-pointer"
+                    class="object-cover w-12 rounded-full cursor-pointer aspect-square"
                 /></MenuButton
             >
             <Transition
@@ -115,7 +115,7 @@
             >
                 <MenuItems class="menu-items">
                     <Colored
-                        ><h1 class="font-bold text-2xl">
+                        ><h1 class="text-2xl font-bold">
                             {$currentUser.username}
                         </h1></Colored
                     >
