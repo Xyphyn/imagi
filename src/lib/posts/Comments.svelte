@@ -42,6 +42,7 @@
     }
 
     async function fetchComments(post: PostsResponse<any>) {
+        comments = []
         pb.collection('comments').unsubscribe('*')
 
         pb.collection('comments').subscribe<CommentsResponse<any>>(

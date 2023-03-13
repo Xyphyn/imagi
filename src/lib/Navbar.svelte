@@ -43,7 +43,7 @@
         <img
             src="/logo.svg"
             alt="Imagi logo"
-            class="w-12 mr-2"
+            class="object-cover w-12 h-12"
             width={48}
             height={48}
         />
