@@ -107,8 +107,6 @@
             }
         )
     })
-
-    onDestroy(() => {})
 </script>
 
 <title>Imagi</title>
@@ -127,7 +125,7 @@
             </div>
         {/each}
     {:else}
-        {#each new Array(15) as items}
+        {#each new Array(50) as items}
             <RowSkeleton />
         {/each}
     {/if}

@@ -39,11 +39,7 @@
 <nav
     class="flex flex-row w-full h-16 my-4 top-0 p-4 sticky items-center z-10 gap-4"
 >
-    <div
-        class="hover:cursor-pointer flex flex-row items-center mr-auto"
-        on:click={() => goto('/')}
-        on:keypress={() => goto('/')}
-    >
+    <a class="hover:cursor-pointer flex flex-row items-center mr-auto" href="/">
         <img
             src="/logo.svg"
             alt="Imagi logo"
@@ -57,7 +53,7 @@
                 >BETA</span
             >
         </span>
-    </div>
+    </a>
     <Button major={false} onclick={() => goto('/explore')} label="Explore"
         ><Icon src={GlobeAlt} size="20" /><span class="hidden sm:block"
             >Explore</span
