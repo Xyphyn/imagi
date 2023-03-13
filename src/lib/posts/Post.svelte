@@ -24,7 +24,7 @@
 </script>
 
 <div
-    class="relative rounded-lg shadow-xl transition-transform ease-out cursor-pointer bg-slate-50 dark:bg-slate-900 aspect-square hover:-translate-y-2 duration-250"
+    class="overflow-hidden relative rounded-lg shadow-xl transition-transform ease-out cursor-pointer bg-slate-50 dark:bg-slate-900 aspect-square hover:-translate-y-2 duration-250"
     on:click={() => {
         if (!$userSettings.nossr) goto(`/post/${post.id}`)
         else postView()
@@ -37,11 +37,11 @@
     <img
         src={image.endsWith('webm') || image.endsWith('mp4') ? '' : image}
         alt={post.description}
-        class="object-cover w-full h-full rounded-lg aspect-square"
+        class="object-cover w-full h-full aspect-square"
         loading="lazy"
     />
     <span
-        class="flex absolute bottom-0 left-0 flex-row gap-2 py-2 px-4 w-full text-black bg-white rounded-b-lg dark:bg-slate-800 dark:text-white"
+        class="flex absolute bottom-0 left-0 flex-row gap-2 px-4 py-2 w-full text-black bg-white dark:bg-slate-800 dark:text-white"
     >
         {post.description}
         <span class="mr-auto text-slate-400 dark:text-slate-500">

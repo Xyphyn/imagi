@@ -24,7 +24,7 @@ focus:outline-4 bg-transparent flex flex-row gap-2 items-center hover:brightness
             ? 'bg-gradient-to-br from-green-400 to-green-500 border-transparent dark:border-transparent'
             : major
             ? 'bg-gradient-to-br from-primary to-secondary text-black border-transparent dark:border-transparent'
-            : 'dark:bg-slate-700 bg-slate-100'
+            : 'dark:bg-slate-700 bg-slate-200'
     } ${clazz} ${
         disabled
             ? 'opacity-30 pointer-events-none cursor-default border-primary'
