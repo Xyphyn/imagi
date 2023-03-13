@@ -102,11 +102,14 @@
         maxlength="256"
         bind:value={newComment}
     />
-    <Button type="submit" class="w-min" major={true}
-        ><Icon src={ChatBubbleLeft} size="20" /> Comment {#if submitting}<Loader
-                size={14}
-            />{/if}</Button
-    >
+    <Button type="submit" class="w-min" major={true} disabled={submitting}
+        >{#if submitting}<Loader width={20} />{:else}<Icon
+                src={ChatBubbleLeft}
+                size="20"
+            />
+        {/if}
+        Comment
+    </Button>
 </form>
 {#if !comments}
     <Loader />
@@ -114,7 +117,7 @@
     {#each comments as comment}
         <div class="w-full relative group">
             <div
-                class="relative w-full p-4 flex flex-row items-center gap-2 popin box-border bg-slate-50 dark:bg-slate-700 rounded-lg"
+                class="relative w-full p-4 flex flex-row items-center gap-2 popin box-border bg-slate-100 dark:bg-slate-700 rounded-lg"
             >
                 <Avatar user={comment.expand?.user} width={48} />
                 <div class="inline-flex flex-col w-full">

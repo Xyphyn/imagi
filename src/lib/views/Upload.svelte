@@ -10,6 +10,7 @@
     import { toast } from '../../app'
 
     export let open = false
+    let uploadId: string | undefined
 
     interface FormData {
         files: FileList | null
@@ -29,6 +30,7 @@
         if (!$currentUser) {
             goto('/login')
         }
+
         formData.loading = true
 
         if (formData.files == null || formData.description == '') {
@@ -115,10 +117,11 @@
                 bind:value={formData.community}
             />
         </div>
-        <Button type="submit" major={true}
-            ><Icon src={PencilSquare} size="20" /> Post {#if formData.loading}<Loader
-                    size={16}
-                />{/if}</Button
-        >
+        <Button type="submit" major={true} disabled={formData.loading}
+            >{#if formData.loading}<Loader />{:else}<Icon
+                    src={PencilSquare}
+                    size="20"
+                />{/if} Post
+        </Button>
     </form>
 </Modal>

@@ -11,7 +11,10 @@ export async function load({ params }) {
     try {
         const post = await pb
             .collection('posts')
-            .getOne(params.id, { expand: 'user', $autoCancel: false })
+            .getOne(params.id, {
+                expand: 'user, postCounts(post)',
+                $autoCancel: false,
+            })
             .catch((err) => {
                 throw error(404, 'Not found')
             })
