@@ -10,6 +10,7 @@
     import { toast } from '../../app'
 
     export let open = false
+    let uploadId: string | undefined
 
     interface FormData {
         files: FileList | null
@@ -29,6 +30,7 @@
         if (!$currentUser) {
             goto('/login')
         }
+
         formData.loading = true
 
         if (formData.files == null || formData.description == '') {

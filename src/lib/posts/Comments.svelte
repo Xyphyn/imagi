@@ -103,7 +103,7 @@
         bind:value={newComment}
     />
     <Button type="submit" class="w-min" major={true} disabled={submitting}
-        >{#if submitting}<Loader />{:else}<Icon
+        >{#if submitting}<Loader width={20} />{:else}<Icon
                 src={ChatBubbleLeft}
                 size="20"
             />
