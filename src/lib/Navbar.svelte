@@ -63,7 +63,7 @@
             >Explore</span
         ></Button
     >
-    <Menu class="relative text-left z-20">
+    <Menu class="menu">
         <MenuButton>
             <Button major={true} label="Create"
                 ><Icon src={Plus} size="20" /><span class="hidden sm:block"
@@ -79,18 +79,18 @@
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
         >
-            <MenuItems
-                class="flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
-            >
+            <MenuItems class="menu-items">
                 <Colored><h1 class="text-2xl font-bold">Create</h1></Colored>
                 <MenuItem>
-                    <Button class="w-full" onclick={() => (views.upload = true)}
+                    <Button
+                        class="menu-item"
+                        onclick={() => (views.upload = true)}
                         ><Icon src={PencilSquare} width="20" /> Post</Button
                     >
                 </MenuItem>
                 <MenuItem>
                     <Button
-                        class="w-full"
+                        class="menu-item"
                         onclick={() => (views.community = true)}
                         ><Icon src={Newspaper} width="20" /> Community</Button
                     >
@@ -99,7 +99,7 @@
         </Transition>
     </Menu>
     {#if $currentUser}
-        <Menu class="relative inline-block text-left z-20">
+        <Menu class="menu">
             <MenuButton>
                 <img
                     src={pb.getFileUrl($currentUser, $currentUser.avatar, {
@@ -117,9 +117,7 @@
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <MenuItems
-                    class="flex flex-col gap-2 absolute right-0 p-4 w-56 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg"
-                >
+                <MenuItems class="menu-items">
                     <Colored
                         ><h1 class="font-bold text-2xl">
                             {$currentUser.username}
@@ -127,7 +125,7 @@
                     >
                     <MenuItem>
                         <Button
-                            class="w-full"
+                            class="menu-item"
                             onclick={() =>
                                 goto(`/user/${$currentUser.username}`)}
                         >
@@ -137,7 +135,7 @@
                     </MenuItem>
                     <MenuItem>
                         <Button
-                            class="w-full"
+                            class="menu-item"
                             onclick={() => goto(`/settings`)}
                         >
                             <Icon src={Cog6Tooth} size="20" />
@@ -146,7 +144,7 @@
                     </MenuItem>
                     <MenuItem>
                         <Button
-                            class="w-full"
+                            class="menu-item"
                             onclick={() => pb.authStore.clear()}
                             ><Icon src={ArrowLeftOnRectangle} size="20" />Log
                             Out</Button

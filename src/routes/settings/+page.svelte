@@ -10,6 +10,11 @@
         DisclosureButton,
         DisclosurePanel,
         Switch,
+        Tab,
+        TabGroup,
+        TabList,
+        TabPanel,
+        TabPanels,
     } from '@rgossiaux/svelte-headlessui'
     import { Icon, ChevronRight } from 'svelte-hero-icons'
     import { toast } from '../../app'
@@ -76,92 +81,90 @@
 </script>
 
 <title>Imagi | Settings</title>
-<div
-    class="flex flex-col items-center justify-center max-w-xl mx-auto dark:bg-slate-800 bg-white p-4 rounded-lg w-full shadow-lg gap-4"
+<h1 class="font-bold text-4xl self-center justify-self-center mx-auto">
+    <Colored>Settings</Colored>
+</h1>
+<TabGroup
+    class="flex flex-row items-center justify-center mx-auto p-4 rounded-lg w-full h-full gap-4"
 >
-    <Colored
-        ><h1 class="font-bold text-4xl self-center mx-auto">
-            User Settings
-        </h1></Colored
-    >
-    <Disclosure class="w-full">
-        <DisclosureButton
-            class="flex flex-row self-start justify-between w-full gap-4 p-4 bg-slate-50 dark:bg-slate-700 rounded-lg"
-            let:open={general}
-            ><span>General</span>
-            <Icon
-                src={ChevronRight}
-                size="20"
-                class={`transition-transform ${general ? 'rotate-90' : ''}`}
-            /></DisclosureButton
+    <TabList class="flex flex-col gap-4 w-64 self-start">
+        <Tab
+            class={({ selected }) =>
+                `flex-1 rounded-md py-2 bg-white dark:bg-slate-800 shadow-sm ${
+                    selected
+                        ? 'bg-gradient-to-br from-primary to-secondary text-black'
+                        : ''
+                }`}>General</Tab
         >
-        <DisclosurePanel
-            class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
+        <Tab
+            class={({ selected }) =>
+                `flex-1 rounded-md py-2 bg-white dark:bg-slate-800 shadow-sm ${
+                    selected
+                        ? 'bg-gradient-to-br from-primary to-secondary text-black'
+                        : ''
+                }`}>Account</Tab
         >
-            <span class="flex flex-col w-[80%]"
-                >No-SSR Posts <span class="opacity-50 text-sm"
-                    >Loads posts client side, opening posts in a dialog instead
-                    of a page.</span
+    </TabList>
+    <TabPanels class="w-full max-w-lg">
+        <TabPanel
+            class="flex flex-col justify-between w-full items-center gap-4 p-4 my-2 dark:bg-slate-800 bg-slate-50 rounded-lg"
+        >
+            <div class="flex flex-row items-center justify-between gap-2">
+                <span class="flex flex-col w-[80%]"
+                    >No-SSR Posts <span class="opacity-50 text-sm"
+                        >Loads posts client side, opening posts in a dialog
+                        instead of a page.</span
+                    >
+                </span>
+                <Switch
+                    checked={$userSettings.nossr}
+                    on:change={(e) => {
+                        $userSettings.nossr = e.detail
+                    }}
+                    class={`w-12 h-6 relative inline-flex items-center rounded-full transition-colors ${
+                        $userSettings.nossr ? 'bg-secondary' : 'bg-slate-600'
+                    }`}
                 >
-            </span>
-            <Switch
-                checked={$userSettings.nossr}
-                on:change={(e) => {
-                    $userSettings.nossr = e.detail
-                }}
-                class={`w-12 h-6 relative inline-flex items-center rounded-full transition-colors ${
-                    $userSettings.nossr ? 'bg-secondary' : 'bg-slate-600'
-                }`}
-            >
-                <span
-                    aria-hidden="true"
-                    class={`${
-                        $userSettings.nossr ? 'translate-x-7' : 'translate-x-1'
-                    }
+                    <span
+                        aria-hidden="true"
+                        class={`${
+                            $userSettings.nossr
+                                ? 'translate-x-7'
+                                : 'translate-x-1'
+                        }
                   pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
-                /></Switch
-            >
-        </DisclosurePanel>
-        <DisclosurePanel
-            class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg gap-4"
-        >
-            <span class="flex flex-col w-[80%]"
-                >Thumbnail Size <span class="opacity-50 text-sm"
-                    >The image size of post thumbnails. This does not affect
-                    expanded view.</span
+                    /></Switch
                 >
-            </span>
-            <Button
-                onclick={() => ($userSettings.thumbSize = '64x64')}
-                major={$userSettings.thumbSize == '64x64'}>64x64</Button
-            >
-            <Button
-                onclick={() => ($userSettings.thumbSize = '128x128')}
-                major={$userSettings.thumbSize == '128x128'}>128x128</Button
-            >
-            <Button
-                onclick={() => ($userSettings.thumbSize = '256x256')}
-                major={$userSettings.thumbSize == '256x256'}>256x256</Button
-            >
-        </DisclosurePanel>
-    </Disclosure>
-    <Disclosure class="w-full">
+            </div>
+            <div class="flex flex-row items-center justify-between gap-2">
+                <span class="flex flex-col w-[80%]"
+                    >Thumbnail Size <span class="opacity-50 text-sm"
+                        >The image size of post thumbnails. This does not affect
+                        expanded view.</span
+                    >
+                </span>
+                <Button
+                    onclick={() => ($userSettings.thumbSize = '64x64')}
+                    major={$userSettings.thumbSize == '64x64'}>64x64</Button
+                >
+                <Button
+                    onclick={() => ($userSettings.thumbSize = '128x128')}
+                    major={$userSettings.thumbSize == '128x128'}>128x128</Button
+                >
+                <Button
+                    onclick={() => ($userSettings.thumbSize = '256x256')}
+                    major={$userSettings.thumbSize == '256x256'}>256x256</Button
+                >
+            </div>
+        </TabPanel>
         {#if $currentUser}
-            <DisclosureButton
-                class="flex flex-row self-start justify-between w-full gap-4 p-4 bg-slate-50 dark:bg-slate-700 rounded-lg"
-                let:open={account}
-                ><span>Account</span>
-                <Icon
-                    src={ChevronRight}
-                    size="20"
-                    class={`transition-transform ${account ? 'rotate-90' : ''}`}
-                /></DisclosureButton
+            <TabPanel
+                class="flex flex-col justify-between w-full items-center p-4 my-2 dark:bg-slate-800 bg-slate-50 rounded-lg"
             >
-            <DisclosurePanel
-                class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
-            >
-                <span>Email</span>
-                <div class="flex flex-row gap-2">
+                <div
+                    class="flex flex-row justify-between w-full items-center p-4 my-2 rounded-lg"
+                >
+                    <span>Email</span>
                     <input
                         type="text"
                         placeholder="New Email"
@@ -189,52 +192,54 @@
                         }}>Change</Button
                     >
                 </div>
-            </DisclosurePanel>
-            <DisclosurePanel
-                class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
-            >
-                <span>Bio</span>
-                <div class="relative">
-                    <textarea
-                        cols="30"
-                        rows="5"
-                        maxlength="128"
-                        placeholder="I like to argue with people online"
-                        bind:value={accountSettings.bio}
-                    /><Button
-                        class="absolute bottom-0 right-0 m-2"
-                        major={true}
-                        onclick={changeBio}>Change</Button
-                    >
+                <div
+                    class="flex flex-row justify-between w-full items-center p-4 my-2 rounded-lg"
+                >
+                    <span>Bio</span>
+                    <div class="relative">
+                        <textarea
+                            cols="30"
+                            rows="5"
+                            maxlength="128"
+                            placeholder="I like to argue with people online"
+                            bind:value={accountSettings.bio}
+                        /><Button
+                            class="absolute bottom-0 right-0 m-2"
+                            major={true}
+                            onclick={changeBio}>Change</Button
+                        >
+                    </div>
                 </div>
-            </DisclosurePanel>
-            <DisclosurePanel
-                class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
-            >
-                <span>Change Avatar</span>
-                <div class="flex flex-row gap-2">
-                    <FilePicker
-                        forId="changeAvatar"
-                        bind:files={accountSettings.pfp}
-                        class="w-full">Avatar</FilePicker
-                    >
-                    <Button major={true} onclick={changeAvatar}>Change</Button>
+                <div
+                    class="flex flex-row justify-between w-full items-center p-4 my-2"
+                >
+                    <span>Change Avatar</span>
+                    <div class="flex flex-row gap-2">
+                        <FilePicker
+                            forId="changeAvatar"
+                            bind:files={accountSettings.pfp}
+                            class="w-full">Avatar</FilePicker
+                        >
+                        <Button major={true} onclick={changeAvatar}
+                            >Change</Button
+                        >
+                    </div>
                 </div>
-            </DisclosurePanel>
-            <DisclosurePanel
-                class="flex flex-row justify-between w-full items-center p-4 my-2 dark:bg-slate-700 bg-slate-50 rounded-lg"
+                <div
+                    class="flex flex-row justify-between w-full items-center p-4 my-2"
+                >
+                    <span>Delete Account</span>
+                    <div class="flex flex-row gap-2">
+                        <Button
+                            colorType="danger"
+                            major={true}
+                            onclick={() => (deleting = true)}
+                            >Delete
+                        </Button>
+                    </div>
+                </div></TabPanel
             >
-                <span>Delete Account</span>
-                <div class="flex flex-row gap-2">
-                    <Button
-                        colorType="danger"
-                        major={true}
-                        onclick={() => (deleting = true)}
-                        >Delete
-                    </Button>
-                </div>
-            </DisclosurePanel>
         {/if}
-    </Disclosure>
-</div>
+    </TabPanels>
+</TabGroup>
 <DeleteAccount bind:open={deleting} />

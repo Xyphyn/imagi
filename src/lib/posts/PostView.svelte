@@ -46,7 +46,7 @@
     <div class="max-w-[95vw] items-center flex flex-col gap-4 p-4">
         {#if $openPost}
             <div class="self-start inline-flex justify-between w-full">
-                <span>{$openPost.description}</span>
+                <span class="text-xl font-bold">{$openPost.description}</span>
                 <a
                     href={`/user/${$openPost.expand?.user.username}`}
                     class="text-slate-400 dark:text-slate-500"
@@ -78,7 +78,7 @@
     {#if $openPost}
         <Menu class="text-left absolute top-0 right-0 m-4">
             <MenuButton
-                ><Button class="gap-0 px-1 py-[2px] -z-10"
+                ><Button class="gap-0 px-[0.25rem] py-[2px] -z-10"
                     ><Icon size="20" src={EllipsisHorizontal} /></Button
                 ></MenuButton
             >
@@ -91,7 +91,7 @@
                 leaveTo="transform opacity-0 scale-95"
             >
                 <MenuItems
-                    class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-700 rounded-md shadow-lg"
+                    class="z-20 flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-900 rounded-md shadow-lg"
                 >
                     <Colored><h1 class="font-bold">Post Actions</h1></Colored>
                     <MenuItem>
