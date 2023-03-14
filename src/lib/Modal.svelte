@@ -13,14 +13,15 @@
     bind:this={dialog}
     on:close={() => (open = false)}
     on:click|self={() => dialog.close()}
-    class={`min-h-[30vh] min-w-[30vw] hidden open:flex flex-col open:backdrop:bg-black open:backdrop:bg-opacity-30 backdrop:opacity-100 align-middle rounded-lg
-     shadow-lg bg-slate-50 dark:bg-slate-800 text-inherit scalein`}
+    class={`min-h-[30vh] min-w-[30vw] open:flex flex-col backdrop:bg-black open:backdrop:bg-opacity-30 backdrop:opacity-100 align-middle rounded-lg
+     shadow-lg bg-slate-50 dark:bg-slate-800 text-inherit scalein transition-opacity`}
 >
     <button
         class="inline-flex relative top-0 left-0 flex-row gap-1 items-center w-min opacity-50 transition-opacity hover:opacity-75 focus:border-none"
         on:click={() => dialog.close()}
-        ><Icon src={ChevronLeft} size="20" /> Back</button
     >
+        <Icon src={ChevronLeft} size="20" /> Back
+    </button>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click|stopPropagation>
         <slot />

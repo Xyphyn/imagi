@@ -4,6 +4,7 @@
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import CommentSkeleton from '$lib/skeletons/CommentSkeleton.svelte'
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
     import {
         Menu,
@@ -42,7 +43,7 @@
     }
 
     async function fetchComments(post: PostsResponse<any>) {
-        comments = []
+        comments = undefined
         pb.collection('comments').unsubscribe('*')
 
         pb.collection('comments').subscribe<CommentsResponse<any>>(
@@ -103,8 +104,8 @@
         maxlength="256"
         bind:value={newComment}
     />
-    <Button type="submit" class="w-min" major={true} disabled={submitting}
-        >{#if submitting}<Loader width={20} />{:else}<Icon
+    <Button type="submit" class="w-min" major={true} disabled={submitting}>
+        {#if submitting}<Loader width={20} />{:else}<Icon
                 src={ChatBubbleLeft}
                 size="20"
             />
@@ -113,7 +114,9 @@
     </Button>
 </form>
 {#if !comments}
-    <Loader />
+    {#each new Array(post.expand['postCounts(post)'][0].comments) as items}
+        <CommentSkeleton />
+    {/each}
 {:else}
     {#each comments as comment}
         <div class="relative w-full group">
@@ -125,19 +128,22 @@
                     <a
                         class="w-max text-slate-400 dark:text-slate-500"
                         href={`/user/${comment.expand?.user.username}`}
-                        >@{comment.expand?.user.username}</a
                     >
-                    <span class="border-box break-words">{comment.content}</span
-                    >
+                        @{comment.expand?.user.username}
+                    </a>
+                    <span class="border-box break-words">
+                        {comment.content}
+                    </span>
                 </div>
             </div>
             <Menu class="absolute top-0 right-0 m-2 text-left">
                 <MenuButton
                     class="opacity-0 transition-opacity group-hover:opacity-100"
-                    ><Button class="gap-0 px-1 py-[2px] -z-10"
-                        ><Icon size="20" src={EllipsisHorizontal} /></Button
-                    ></MenuButton
                 >
+                    <Button class="gap-0 px-1 py-[2px] -z-10">
+                        <Icon size="20" src={EllipsisHorizontal} />
+                    </Button>
+                </MenuButton>
                 <Transition
                     enter="transition ease-out duration-100"
                     enterFrom="transform opacity-0 scale-95"
@@ -149,9 +155,9 @@
                     <MenuItems
                         class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-800"
                     >
-                        <Colored
-                            ><h1 class="font-bold">Comment Actions</h1></Colored
-                        >
+                        <Colored>
+                            <h1 class="font-bold">Comment Actions</h1>
+                        </Colored>
                         <MenuItem>
                             <Button
                                 class="w-full"
@@ -159,11 +165,9 @@
                                 onclick={() => {
                                     copyComment(comment)
                                 }}
-                                ><Icon
-                                    src={Square2Stack}
-                                    width="16"
-                                />Copy</Button
                             >
+                                <Icon src={Square2Stack} width="16" />Copy
+                            </Button>
                         </MenuItem>
                         {#if comment.user == $currentUser?.id}
                             <MenuItem>
@@ -172,11 +176,9 @@
                                     major={true}
                                     colorType="danger"
                                     onclick={() => deleteComment(comment)}
-                                    ><Icon
-                                        src={Trash}
-                                        width="16"
-                                    />Delete</Button
                                 >
+                                    <Icon src={Trash} width="16" />Delete
+                                </Button>
                             </MenuItem>
                         {/if}
                     </MenuItems>
