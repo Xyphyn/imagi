@@ -52,7 +52,7 @@
             .getList<PostsResponse<any>>(1, 50, {
                 filter: `community.id = "${community.id}"`,
                 sort: '-created',
-                expand: 'user',
+                expand: 'user, postCounts(post)',
             })
 
         posts = postResults.items
@@ -89,23 +89,23 @@
         <p class="italic">{community.description}</p>
         <div class="flex flex-row gap-4 justify-center w-full">
             {#if counts}
-                <span class="flex flex-row gap-1 items-center"
-                    ><Icon src={UserGroup} size="20" />
-                    {counts.members}</span
-                >
-                <span class="flex flex-row gap-1 items-center"
-                    ><Icon src={PencilSquare} size="20" />
-                    {counts.posts}</span
-                >
-                <span class="flex flex-row gap-1 items-center"
-                    ><Icon src={Calendar} size="20" />
-                    {new Date(community.created).toLocaleDateString()}</span
-                >
+                <span class="flex flex-row gap-1 items-center">
+                    <Icon src={UserGroup} size="20" />
+                    {counts.members}
+                </span>
+                <span class="flex flex-row gap-1 items-center">
+                    <Icon src={PencilSquare} size="20" />
+                    {counts.posts}
+                </span>
+                <span class="flex flex-row gap-1 items-center">
+                    <Icon src={Calendar} size="20" />
+                    {new Date(community.created).toLocaleDateString()}
+                </span>
                 <span class="flex flex-row gap-1 items-center">
                     <Icon src={UserCircle} size="20" />
-                    <a href={`/user/${community.expand?.owner.username}`}
-                        >@{community.expand?.owner.username}</a
-                    >
+                    <a href={`/user/${community.expand?.owner.username}`}>
+                        @{community.expand?.owner.username}
+                    </a>
                 </span>
             {:else}
                 <Loader />
@@ -115,12 +115,13 @@
             <Button
                 major={$currentUser.communities.includes(community.id)}
                 onclick={() => follow(community)}
-                >{#if $currentUser.communities.includes(community.id)}
+            >
+                {#if $currentUser.communities.includes(community.id)}
                     Followed
                 {:else}
                     Follow
-                {/if}</Button
-            >
+                {/if}
+            </Button>
         {/if}
     {:else}
         <Loader />

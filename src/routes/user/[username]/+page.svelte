@@ -46,7 +46,7 @@
             .getList<PostsResponse<any>>(1, 50, {
                 filter: `user.id = "${user.id}"`,
                 sort: '-created',
-                expand: 'user, community',
+                expand: 'user, community, postCounts(post)',
             })
 
         posts = postResults.items
@@ -67,18 +67,18 @@
         {/if}
         <div class="flex flex-row gap-4 justify-center w-full">
             {#if counts}
-                <span class="flex flex-row gap-1 items-center"
-                    ><Icon src={ChatBubbleLeftEllipsis} size="20" />
-                    {counts.comments}</span
-                >
-                <span class="flex flex-row gap-1 items-center"
-                    ><Icon src={PencilSquare} size="20" />
-                    {counts.posts}</span
-                >
-                <span class="flex flex-row gap-1 items-center"
-                    ><Icon src={Calendar} size="20" />
-                    {new Date(user.created).toLocaleDateString()}</span
-                >
+                <span class="flex flex-row gap-1 items-center">
+                    <Icon src={ChatBubbleLeftEllipsis} size="20" />
+                    {counts.comments}
+                </span>
+                <span class="flex flex-row gap-1 items-center">
+                    <Icon src={PencilSquare} size="20" />
+                    {counts.posts}
+                </span>
+                <span class="flex flex-row gap-1 items-center">
+                    <Icon src={Calendar} size="20" />
+                    {new Date(user.created).toLocaleDateString()}
+                </span>
             {:else}
                 <Loader />
             {/if}
