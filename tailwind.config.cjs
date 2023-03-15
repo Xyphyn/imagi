@@ -10,7 +10,16 @@ module.exports = {
       },
       transitionTimingFunction: {
         'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)'
-      }
+      },
+      keyframes: {
+        "fade-in": {
+          '0%': { opacity: '0%' },
+          '100%': { opacity: '100%' },
+        }
+      },
+      animation: {
+        "fade-in": 'fade-in 0.25s linear',
+      } 
     },
   },
   plugins: [],
