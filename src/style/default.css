@@ -12,7 +12,7 @@ textarea {
 }
 
 :root {
-    @apply bg-white dark:bg-slate-900 dark:text-white text-slate-800;
+    @apply bg-slate-50 dark:bg-slate-900 dark:text-white text-slate-800;
 }
 
 body,
