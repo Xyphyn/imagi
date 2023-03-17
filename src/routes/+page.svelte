@@ -2,6 +2,7 @@
     import Live from '$lib/misc/Live.svelte'
     import type {
         CommunitiesResponse,
+        PostCountsResponse,
         PostsResponse,
     } from '$lib/types/pb-types'
     import { onDestroy, onMount } from 'svelte'
@@ -17,7 +18,7 @@
     let posts: PostsResponse<any>[] | undefined
     let communities: CommunitiesResponse<any>[] | undefined
 
-    let sort: 'recent' | 'following' = 'recent'
+    let sort: 'recent' | 'following' | 'popular' = 'recent'
     let page = 1
 
     async function fetchPage(p: number) {
@@ -34,19 +35,33 @@
                 .join(' || ')
         }
 
-        const results = await pb
-            .collection('posts')
-            .getList<PostsResponse<any>>(p, 50, {
-                expand: 'user,postCounts(post),community',
-                sort: '-created',
-                filter: sort == 'following' ? filterString : '',
-            })
+        if (sort == 'recent' || sort == 'following') {
+            const results = await pb
+                .collection('posts')
+                .getList<PostsResponse<any>>(p, 50, {
+                    expand: 'user,postCounts(post),community',
+                    sort: '-created',
+                    filter: sort == 'following' ? filterString : '',
+                })
 
-        if (p > Math.ceil(results.totalItems / 50)) {
-            page--
+            if (p > Math.ceil(results.totalItems / 50)) {
+                page--
+            }
+
+            posts = results.items
+        } else if (sort == 'popular') {
+            const results = await pb
+                .collection('postCounts')
+                .getList<PostCountsResponse<any>>(p, 50, {
+                    expand: 'post.user,post.community,post.postCounts(post)',
+                    sort: '-likes',
+                })
+            if (p > Math.ceil(results.totalItems / 50)) {
+                page--
+            }
+
+            posts = results.items.map((item) => item.expand['post'])
         }
-
-        posts = results.items
 
         nProgress.done()
     }
@@ -65,6 +80,7 @@
         pb.collection('posts').subscribe<PostsResponse<any>>(
             '*',
             async ({ record, action }) => {
+                if (sort == 'popular') return
                 if (action == 'create') {
                     if (sort == 'following') {
                         if (
@@ -139,18 +155,31 @@
         onclick={() => {
             sort = 'recent'
             fetchPage(page)
-        }}>Recent</Button
+        }}
     >
+        Recent
+    </Button>
     <Button
         major={sort == 'following'}
         onclick={() => {
             sort = 'following'
             fetchPage(page)
-        }}>Following</Button
+        }}
     >
+        Following
+    </Button>
+    <Button
+        major={sort == 'popular'}
+        onclick={() => {
+            sort = 'popular'
+            fetchPage(page)
+        }}
+    >
+        Popular
+    </Button>
 </div>
 
-<Live />
+<Live live={sort != 'popular'} />
 <PostList {posts} />
 {#if posts}
     <div
