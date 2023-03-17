@@ -10,6 +10,11 @@
 
     export let data: any
     let post: PostsResponse<any> = data.post
+
+    const image = pb.getFileUrl(post, post.image)
+    const isVideo = (url: string) =>
+        new URL(url).pathname.endsWith('mp4') ||
+        new URL(url).pathname.endsWith('webm')
 </script>
 
 <title>Imagi: {post.description}</title>
@@ -25,20 +30,27 @@
     class="popin w-max mx-auto flex flex-col justify-center items-center p-4 gap-4 bg-white dark:bg-slate-800 rounded-lg shadow-lg outline-none max-w-[95vw] z-10"
 >
     <div class="inline-flex justify-between self-start w-full">
-        <span>{post.description}</span><a
-            href={`/user/${post.expand?.user.username}`}
-            class="opacity-30">@{post.expand?.user.username}</a
-        >
+        <span>{post.description}</span>
+        <a href={`/user/${post.expand?.user.username}`} class="opacity-30">
+            @{post.expand?.user.username}
+        </a>
     </div>
     {#if loading}
         <Loader />
     {/if}
-    <img
-        src={pb.getFileUrl(post, post.image)}
-        alt={post.description}
-        class="w-96 rounded-lg shadow-md"
-        on:load={() => (loading = false)}
-    />
+    {#if isVideo(image)}
+        <!-- svelte-ignore a11y-media-has-caption -->
+        <video class="w-96 rounded-lg shadow-md" controls loop>
+            <source src={image} />
+        </video>
+    {:else}
+        <img
+            src={image}
+            alt={post.description}
+            class="w-96 rounded-lg shadow-md"
+            on:load={() => (loading = false)}
+        />
+    {/if}
     <Likes {post} />
     <Comments {post} />
 </div>
