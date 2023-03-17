@@ -71,10 +71,12 @@
                 <Loader />
             {/if}
             {#if isVideo(image)}
-                <!-- svelte-ignore a11y-media-has-caption -->
-                <video class="w-96 rounded-lg shadow-md" controls loop>
-                    <source src={image} />
-                </video>
+                {#key image && open}
+                    <!-- svelte-ignore a11y-media-has-caption -->
+                    <video class="w-96 rounded-lg shadow-md" controls loop>
+                        <source src={image} />
+                    </video>
+                {/key}
             {:else}
                 <img
                     src={image}
