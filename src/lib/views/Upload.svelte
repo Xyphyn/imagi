@@ -91,11 +91,13 @@
         class="flex flex-col gap-4 items-center p-4"
     >
         <Colored><h1 class="text-2xl font-bold">Create a Post</h1></Colored>
-        <FilePicker bind:files={formData.files}>Pick a file</FilePicker>
+        <FilePicker bind:files={formData.files} accept="image/*,video/*">
+            Pick a file
+        </FilePicker>
         <div>
-            <label for="upload-description" class="block my-1"
-                >Description</label
-            >
+            <label for="upload-description" class="block my-1">
+                Description
+            </label>
             <input
                 id="upload-description"
                 type="text"
@@ -106,9 +108,9 @@
         </div>
 
         <div>
-            <label for="upload-community" class="block my-1"
-                >Community (Optional)</label
-            >
+            <label for="upload-community" class="block my-1">
+                Community (Optional)
+            </label>
             <input
                 id="upload-community"
                 type="text"
@@ -117,8 +119,8 @@
                 bind:value={formData.community}
             />
         </div>
-        <Button type="submit" major={true} disabled={formData.loading}
-            >{#if formData.loading}<Loader />{:else}<Icon
+        <Button type="submit" major={true} disabled={formData.loading}>
+            {#if formData.loading}<Loader />{:else}<Icon
                     src={PencilSquare}
                     size="20"
                 />{/if} Post
