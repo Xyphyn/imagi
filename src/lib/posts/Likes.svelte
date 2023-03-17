@@ -3,7 +3,11 @@
     import Button from '$lib/Button.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import PostSkeleton from '$lib/skeletons/PostSkeleton.svelte'
-    import type { LikesResponse, PostsResponse } from '$lib/types/pb-types'
+    import type {
+        LikesResponse,
+        PostCountsResponse,
+        PostsResponse,
+    } from '$lib/types/pb-types'
     import { Icon, Heart } from 'svelte-hero-icons'
 
     export let post: PostsResponse<any>
@@ -29,7 +33,8 @@
         }
     }
 
-    function fetchLikes(post: PostsResponse<any>): number {
+    async function fetchLikes(post: PostsResponse<any>) {
+        likes = post.expand['postCounts(post)'][0].likes
         userLike = undefined
 
         pb.collection('likes')
@@ -48,18 +53,23 @@
                 switch (action) {
                     case 'create':
                         likes++
+                        post.expand['postCounts(post)'][0].likes++
                         break
                     case 'delete':
                         likes--
+                        post.expand['postCounts(post)'][0].likes--
                         break
                 }
             }
         )
 
-        return post.expand['postCounts(post)'][0].likes
+        const counts = await pb
+            .collection('postCounts')
+            .getOne<PostCountsResponse>(post.id)
+        likes = counts.likes!
     }
 
-    $: likes = fetchLikes(post)
+    $: fetchLikes(post)
 </script>
 
 <Button major={userLike != undefined} onclick={like}>

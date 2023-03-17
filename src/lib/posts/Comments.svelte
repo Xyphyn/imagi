@@ -81,6 +81,7 @@
             })
 
         comments = results.items
+        post.expand['postCounts(post)'][0].comments = results.totalItems
     }
 
     $: fetchComments(post)
