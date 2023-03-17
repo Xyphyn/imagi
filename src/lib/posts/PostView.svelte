@@ -39,6 +39,11 @@
             image = pb.getFileUrl(post, post.image)
         }
     })
+
+    const isVideo = (url: string) =>
+        new URL(url).pathname.endsWith('mp4') ||
+        new URL(url).pathname.endsWith('webm')
+
     export let open: boolean = false
 </script>
 
@@ -62,26 +67,33 @@
                     @{$openPost.expand?.user.username}
                 </a>
             </div>
-            {#if loading}
+            {#if loading && !isVideo(image)}
                 <Loader />
             {/if}
-            <img
-                src={image}
-                alt={$openPost.description}
-                class="w-96 rounded-lg shadow-md"
-                on:load={() => (loading = false)}
-            />
+            {#if isVideo(image)}
+                <!-- svelte-ignore a11y-media-has-caption -->
+                <video class="w-96 rounded-lg shadow-md" controls loop>
+                    <source src={image} />
+                </video>
+            {:else}
+                <img
+                    src={image}
+                    alt={$openPost.description}
+                    class="w-96 rounded-lg shadow-md"
+                    on:load={() => (loading = false)}
+                />
+            {/if}
             <Likes post={$openPost} />
             <Comments post={$openPost} />
         {/if}
     </div>
     {#if $openPost}
         <Menu class="absolute top-0 right-0 m-4 text-left">
-            <MenuButton
-                ><Button class="gap-0 px-[0.25rem] py-[2px] -z-10"
-                    ><Icon size="20" src={EllipsisHorizontal} /></Button
-                ></MenuButton
-            >
+            <MenuButton>
+                <Button class="gap-0 px-[0.25rem] py-[2px] -z-10">
+                    <Icon size="20" src={EllipsisHorizontal} />
+                </Button>
+            </MenuButton>
             <Transition
                 enter="transition ease-out duration-100"
                 enterFrom="transform opacity-0 scale-95"
@@ -105,8 +117,9 @@
                                     )
                                 }
                             }}
-                            ><Icon src={Square2Stack} width="16" />Copy Link</Button
                         >
+                            <Icon src={Square2Stack} width="16" />Copy Link
+                        </Button>
                     </MenuItem>
                     <MenuItem>
                         <Button
@@ -115,11 +128,9 @@
                             onclick={() => {
                                 goto(pb.getFileUrl($openPost, $openPost.image))
                             }}
-                            ><Icon
-                                src={ArrowDownTray}
-                                width="16"
-                            />Download</Button
                         >
+                            <Icon src={ArrowDownTray} width="16" />Download
+                        </Button>
                     </MenuItem>
                     {#if $openPost.user == $currentUser?.id}
                         <MenuItem>
@@ -129,8 +140,10 @@
                                 colorType="danger"
                                 onclick={() => {
                                     pb.collection('posts').delete($openPost.id)
-                                }}><Icon src={Trash} width="16" />Delete</Button
+                                }}
                             >
+                                <Icon src={Trash} width="16" />Delete
+                            </Button>
                         </MenuItem>
                     {/if}
                 </MenuItems>

@@ -21,6 +21,10 @@
 
         open = true
     }
+
+    const isVideo = (url: string) =>
+        new URL(url).pathname.endsWith('mp4') ||
+        new URL(url).pathname.endsWith('webm')
 </script>
 
 <div
@@ -37,12 +41,23 @@
         else postView()
     }}
 >
-    <img
-        src={image.endsWith('webm') || image.endsWith('mp4') ? '' : image}
-        alt={post.description}
-        class="object-cover w-full h-full aspect-square"
-        loading="lazy"
-    />
+    {#if isVideo(image)}
+        <span
+            class="w-full h-full flex flex-col items-center justify-center font-bold text-2xl"
+        >
+            Video
+            <span class="text-sm font-normal">
+                Video thumbnails aren't supported
+            </span>
+        </span>
+    {:else}
+        <img
+            src={image}
+            alt={post.description}
+            class="object-cover w-full h-full aspect-square"
+            loading="lazy"
+        />
+    {/if}
     <span
         class="flex absolute bottom-0 left-0 flex-row
          gap-2 px-4 py-2 w-full text-black bg-white dark:bg-slate-800
