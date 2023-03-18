@@ -1,8 +1,8 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
     import Button from '$lib/Button.svelte'
+    import Loader from '$lib/Loader.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
-    import PostSkeleton from '$lib/skeletons/PostSkeleton.svelte'
     import type {
         LikesResponse,
         PostCountsResponse,
@@ -15,7 +15,10 @@
     let likes: number = 0
     let userLike: LikesResponse<any> | undefined = undefined
 
+    let liking = false
+
     function like() {
+        liking = true
         if (!$currentUser) {
             goto('/login')
         }
@@ -26,9 +29,14 @@
                     user: $currentUser!.id,
                     post: post.id,
                 })
-                .then((like) => (userLike = like))
+                .then((like) => {
+                    userLike = like
+                    liking = false
+                })
         } else {
-            pb.collection('likes').delete(userLike.id)
+            pb.collection('likes')
+                .delete(userLike.id)
+                .then(() => (liking = false))
             userLike = undefined
         }
     }
@@ -72,9 +80,13 @@
     $: fetchLikes(post)
 </script>
 
-<Button major={userLike != undefined} onclick={like}>
+<Button major={userLike != undefined} onclick={like} disabled={liking}>
     <div class="flex flex-row gap-1 items-center">
         <Icon mini={true} src={Heart} size="20" />
-        {likes}
+        {#if !liking}
+            {likes}
+        {:else}
+            <Loader width={14} />
+        {/if}
     </div>
 </Button>
