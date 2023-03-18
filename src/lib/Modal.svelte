@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Icon, ChevronLeft } from 'svelte-hero-icons'
+    import { Icon, ChevronLeft, XMark } from 'svelte-hero-icons'
 
     export let open: boolean = false
 
@@ -17,10 +17,10 @@
      shadow-lg bg-white dark:bg-slate-800 text-inherit scalein`}
 >
     <button
-        class="inline-flex relative top-0 left-0 flex-row gap-1 items-center w-min opacity-50 transition-opacity hover:opacity-75 focus:border-none"
+        class="flex relative top-0 right-0 flex-row gap-1 items-center w-min bg-opacity-0 transition-colors hover:bg-opacity-50 bg-slate-200 p-2 rounded-lg focus:border-none"
         on:click={() => dialog.close()}
     >
-        <Icon src={ChevronLeft} size="20" /> Back
+        <Icon src={XMark} size="24" class="text-slate-400" />
     </button>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click|stopPropagation>

@@ -85,7 +85,7 @@
     <Colored>Settings</Colored>
 </h1>
 <TabGroup
-    class="flex flex-row gap-4 justify-center items-center p-4 mx-auto w-full h-full rounded-lg"
+    class="flex flex-col justify-self-center self-center md:flex-row gap-4 justify-center items-center p-4 w-full h-full rounded-lg"
 >
     <TabList class="flex flex-col gap-4 self-start w-64">
         <Tab
@@ -94,27 +94,31 @@
                     selected
                         ? 'bg-gradient-to-br from-primary to-secondary text-black'
                         : ''
-                }`}>General</Tab
+                }`}
         >
+            General
+        </Tab>
         <Tab
             class={({ selected }) =>
                 `flex-1 rounded-md py-2 bg-white dark:bg-slate-800 shadow-sm ${
                     selected
                         ? 'bg-gradient-to-br from-primary to-secondary text-black'
                         : ''
-                }`}>Account</Tab
+                }`}
         >
+            Account
+        </Tab>
     </TabList>
     <TabPanels class="w-full max-w-lg">
         <TabPanel
             class="flex flex-col gap-4 justify-between items-center p-4 my-2 w-full rounded-lg dark:bg-slate-800 bg-slate-50"
         >
             <div class="flex flex-row gap-2 justify-between items-center">
-                <span class="flex flex-col w-[80%]"
-                    >No-SSR Posts <span class="text-sm opacity-50"
-                        >Loads posts client side, opening posts in a dialog
-                        instead of a page.</span
-                    >
+                <span class="flex flex-col w-[80%]">
+                    No-SSR Posts <span class="text-sm opacity-50">
+                        Loads posts client side, opening posts in a dialog
+                        instead of a page.
+                    </span>
                 </span>
                 <Switch
                     checked={$userSettings.nossr}
@@ -133,28 +137,34 @@
                                 : 'translate-x-1'
                         }
                   pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
-                    /></Switch
-                >
+                    />
+                </Switch>
             </div>
             <div class="flex flex-row gap-2 justify-between items-center">
-                <span class="flex flex-col w-[80%]"
-                    >Thumbnail Size <span class="text-sm opacity-50"
-                        >The image size of post thumbnails. This does not affect
-                        expanded view.</span
-                    >
+                <span class="flex flex-col w-[80%]">
+                    Thumbnail Size <span class="text-sm opacity-50">
+                        The image size of post thumbnails. This does not affect
+                        expanded view.
+                    </span>
                 </span>
                 <Button
                     onclick={() => ($userSettings.thumbSize = '64x64')}
-                    major={$userSettings.thumbSize == '64x64'}>64x64</Button
+                    major={$userSettings.thumbSize == '64x64'}
                 >
+                    64x64
+                </Button>
                 <Button
                     onclick={() => ($userSettings.thumbSize = '128x128')}
-                    major={$userSettings.thumbSize == '128x128'}>128x128</Button
+                    major={$userSettings.thumbSize == '128x128'}
                 >
+                    128x128
+                </Button>
                 <Button
                     onclick={() => ($userSettings.thumbSize = '256x256')}
-                    major={$userSettings.thumbSize == '256x256'}>256x256</Button
+                    major={$userSettings.thumbSize == '256x256'}
                 >
+                    256x256
+                </Button>
             </div>
         </TabPanel>
         {#if $currentUser}
@@ -189,8 +199,10 @@
                                         'error'
                                     )
                                 })
-                        }}>Change</Button
+                        }}
                     >
+                        Change
+                    </Button>
                 </div>
                 <div
                     class="flex flex-row justify-between items-center p-4 my-2 w-full rounded-lg"
@@ -203,11 +215,14 @@
                             maxlength="128"
                             placeholder="I like to argue with people online"
                             bind:value={accountSettings.bio}
-                        /><Button
+                        />
+                        <Button
                             class="absolute right-0 bottom-0 m-2"
                             major={true}
-                            onclick={changeBio}>Change</Button
+                            onclick={changeBio}
                         >
+                            Change
+                        </Button>
                     </div>
                 </div>
                 <div
@@ -218,11 +233,13 @@
                         <FilePicker
                             forId="changeAvatar"
                             bind:files={accountSettings.pfp}
-                            class="w-full">Avatar</FilePicker
+                            class="w-full"
                         >
-                        <Button major={true} onclick={changeAvatar}
-                            >Change</Button
-                        >
+                            Avatar
+                        </FilePicker>
+                        <Button major={true} onclick={changeAvatar}>
+                            Change
+                        </Button>
                     </div>
                 </div>
                 <div
@@ -234,11 +251,12 @@
                             colorType="danger"
                             major={true}
                             onclick={() => (deleting = true)}
-                            >Delete
+                        >
+                            Delete
                         </Button>
                     </div>
-                </div></TabPanel
-            >
+                </div>
+            </TabPanel>
         {/if}
     </TabPanels>
 </TabGroup>

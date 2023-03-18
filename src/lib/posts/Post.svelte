@@ -47,7 +47,7 @@
         >
             Video
             <span class="text-sm font-normal">
-                Video thumbnails aren't supported
+                Video thumbnails aren't supported (yet)
             </span>
         </span>
     {:else}
@@ -69,11 +69,11 @@
         </span>
         {#if post.expand['postCounts(post)']}
             <span class="flex flex-row items-center">
-                <Icon src={ChatBubbleOvalLeftEllipsis} mini={true} size="18" />
+                <Icon src={ChatBubbleOvalLeftEllipsis} mini size="18" />
                 {post.expand['postCounts(post)'][0].comments}
             </span>
             <span class="flex flex-row items-center">
-                <Icon src={Heart} mini={true} size="18" />
+                <Icon src={Heart} mini size="18" />
                 {post.expand['postCounts(post)'][0].likes}
             </span>
         {/if}

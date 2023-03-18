@@ -16,7 +16,7 @@
     on:click={onclick}
     {type}
     class={`active:scale-95 px-3 py-2 rounded-md text-sm
-focus:outline-4 flex flex-row gap-2 items-center hover:brightness-95 transition-all ease-out-expo ${
+focus:outline-4 flex flex-row gap-2 items-center hover:brightness-[103%] transition-all ease-out-expo ${
         // Please forgive me for this
         colorType == 'danger'
             ? 'bg-gradient-to-br from-red-400 to-red-500 text-white border-transparent dark:border-transparent'
@@ -30,5 +30,6 @@ focus:outline-4 flex flex-row gap-2 items-center hover:brightness-95 transition-
             ? 'opacity-30 pointer-events-none cursor-default border-primary'
             : ''
     }`}
-    ><slot />
+>
+    <slot />
 </button>
