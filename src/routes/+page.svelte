@@ -14,6 +14,7 @@
     import Loader from '$lib/Loader.svelte'
     import Avatar from '$lib/Avatar.svelte'
     import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
+    import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
 
     let posts: PostsResponse<any>[] | undefined
     let communities: CommunitiesResponse<any>[] | undefined
@@ -183,10 +184,14 @@
 <PostList {posts} />
 {#if posts}
     <div
-        class="flex flex-row gap-4 justify-center items-center mx-auto w-full box-border"
+        class="flex flex-row gap-4 justify-center items-center mx-auto w-min rounded-lg box-border bg-slate-200 dark:bg-slate-700"
     >
-        <Button onclick={() => fetchPage(--page)}>Back</Button>
+        <Button onclick={() => fetchPage(--page)}>
+            <Icon src={ChevronLeft} mini size="20" />
+        </Button>
         <span>{page}</span>
-        <Button onclick={() => fetchPage(++page)}>Next</Button>
+        <Button onclick={() => fetchPage(++page)}>
+            <Icon src={ChevronRight} mini size="20" />
+        </Button>
     </div>
 {/if}

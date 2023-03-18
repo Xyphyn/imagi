@@ -17,7 +17,8 @@
      shadow-lg bg-white dark:bg-slate-800 text-inherit scalein`}
 >
     <button
-        class="flex relative top-0 right-0 flex-row gap-1 items-center w-min bg-opacity-0 transition-colors hover:bg-opacity-50 bg-slate-200 p-2 rounded-lg focus:border-none"
+        class="flex relative top-0 right-0 flex-row gap-1 items-center w-min bg-opacity-0 dark:bg-opacity-0 transition-colors
+         hover:bg-opacity-50 dark:hover:bg-opacity-50 bg-slate-200 dark:bg-slate-700 p-2 rounded-lg focus:border-none"
         on:click={() => dialog.close()}
     >
         <Icon src={XMark} size="24" class="text-slate-400" />
