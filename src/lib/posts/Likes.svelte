@@ -19,8 +19,10 @@
 
     function like() {
         liking = true
+
         if (!$currentUser) {
             goto('/login')
+            return
         }
 
         if (!userLike) {

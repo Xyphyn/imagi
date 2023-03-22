@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
     import Navbar from '../lib/Navbar.svelte'
     import '../style/default.css'
     import nprogress from 'nprogress'
     import 'nprogress/nprogress.css'
     import { navigating } from '$app/stores'
     import { ToastContainer, FlatToast } from 'svelte-toasts'
+    import { onMount } from 'svelte'
 
     nprogress.configure({
         showSpinner: false,

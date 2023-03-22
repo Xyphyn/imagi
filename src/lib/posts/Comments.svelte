@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
     import Avatar from '$lib/Avatar.svelte'
     import Button from '$lib/Button.svelte'
     import Loader from '$lib/Loader.svelte'
@@ -29,6 +30,12 @@
     let newComment = ''
 
     function comment() {
+        if (newComment == '') return
+        if (!$currentUser) {
+            goto('/login')
+            return
+        }
+
         submitting = true
 
         pb.collection('comments')

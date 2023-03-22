@@ -7,6 +7,7 @@ specifiers:
   '@types/eventsource': ^1.1.11
   '@types/nprogress': ^0.2.0
   autoprefixer: ^10.4.13
+  boids-canvas: ^1.1.1
   eventsource: ^2.0.2
   nprogress: ^0.2.0
   pocketbase: ^0.12.0
@@ -23,6 +24,7 @@ specifiers:
 
 dependencies:
   '@types/eventsource': 1.1.11
+  boids-canvas: 1.1.1
   eventsource: 2.0.2
   pocketbase: 0.12.0
   svelte-toasts: 1.1.2
@@ -443,6 +445,10 @@ packages:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
     dev: true
+
+  /boids-canvas/1.1.1:
+    resolution: {integrity: sha512-jXNbMyXSqlLWWuyqWoXrM7wWWfkC/PZ3/Q8hM2RpFOaR4PKfCy6zwRtrBFJ8c5pQdZpyuyAhW+jyENXTCWlFAA==}
+    dev: false
 
   /brace-expansion/1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}

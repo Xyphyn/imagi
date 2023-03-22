@@ -90,9 +90,9 @@
         {/if}
     </div>
     {#if $openPost}
-        <Menu class="absolute top-0 right-0 m-4 text-left">
+        <Menu class="absolute top-0 left-0 m-4 text-left">
             <MenuButton>
-                <Button class="gap-0 px-[0.2rem] py-[0.25rem] -z-10">
+                <Button class="gap-0 px-[0.2rem] py-[0.20rem] -z-10">
                     <Icon size="20" src={EllipsisHorizontal} />
                 </Button>
             </MenuButton>
@@ -105,7 +105,7 @@
                 leaveTo="transform opacity-0 scale-95"
             >
                 <MenuItems
-                    class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-900"
+                    class="flex absolute left-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-left dark:bg-slate-900"
                 >
                     <Colored><h1 class="font-bold">Post Actions</h1></Colored>
                     <MenuItem>
