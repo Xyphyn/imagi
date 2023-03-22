@@ -47,11 +47,13 @@
         likes = post.expand['postCounts(post)'][0].likes
         userLike = undefined
 
-        pb.collection('likes')
-            .getList<LikesResponse<any>>(1, 1, {
-                filter: `user.id = "${$currentUser?.id}" && post.id = "${post.id}"`,
-            })
-            .then((likes) => (userLike = likes.items[0]))
+        if ($currentUser) {
+            pb.collection('likes')
+                .getList<LikesResponse<any>>(1, 1, {
+                    filter: `user.id = "${$currentUser?.id}" && post.id = "${post.id}"`,
+                })
+                .then((likes) => (userLike = likes.items[0]))
+        }
 
         pb.collection('likes').unsubscribe('*')
 
