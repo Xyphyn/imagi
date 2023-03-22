@@ -36,9 +36,7 @@
 >
     {#if isVideo(image)}
         <!-- svelte-ignore a11y-media-has-caption -->
-        <video
-            class="w-full h-full flex flex-col items-center justify-center font-bold text-2xl"
-        >
+        <video class="object-cover w-full h-full aspect-square">
             <source src={image} />
         </video>
     {:else}
@@ -54,7 +52,7 @@
          gap-2 px-4 py-2 w-full text-black bg-white dark:bg-slate-800
           dark:text-white"
     >
-        <span class="break-words flex-shrink max-w-[80%] flex-grow">
+        <span class="break-words flex-shrink max-w-[80%] w-max">
             {post.description}
         </span>
         <span class="mr-auto text-slate-400 dark:text-slate-500">
