@@ -80,11 +80,16 @@ export type PostsRecord = {
 	community?: RecordIdString
 }
 
+export enum UsersRoleOptions {
+	"owner" = "owner",
+	"admin" = "admin",
+}
 export type UsersRecord = {
 	name?: string
 	avatar?: string
 	communities?: RecordIdString[]
 	bio?: string
+	role?: UsersRoleOptions
 }
 
 // Response types include system fields and match responses from the PocketBase API

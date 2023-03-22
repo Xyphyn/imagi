@@ -15,7 +15,9 @@
         Calendar,
         ChatBubbleLeftEllipsis,
         Icon,
+        Identification,
         PencilSquare,
+        RocketLaunch,
     } from 'svelte-hero-icons'
 
     const userParam = $page.params.username
@@ -83,6 +85,16 @@
                 <Loader />
             {/if}
         </div>
+        {#if user.role}
+            <div class="flex flex-row gap-4 items-center justify-center w-full">
+                <span
+                    class="bg-gradient-to-r py-2 px-4 font-bold rounded-md from-primary to-secondary text-black capitalize inline-flex flex-row items-center gap-2"
+                >
+                    <Icon src={Identification} size="20" mini />
+                    {user.role}
+                </span>
+            </div>
+        {/if}
     {:else}
         <Loader />
     {/if}
