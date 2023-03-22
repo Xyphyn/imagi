@@ -24,6 +24,7 @@
     import Colored from '$lib/misc/Colored.svelte'
     import { goto } from '$app/navigation'
     import { page } from '$app/stores'
+    import { isVideo } from '$lib/util'
 
     let loading = true
 
@@ -39,10 +40,6 @@
             image = pb.getFileUrl(post, post.image)
         }
     })
-
-    const isVideo = (url: string) =>
-        new URL(url).pathname.endsWith('mp4') ||
-        new URL(url).pathname.endsWith('webm')
 
     export let open: boolean = false
 </script>

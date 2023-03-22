@@ -5,6 +5,7 @@
     import { pb } from '$lib/pocketbase'
     import type { PostsResponse } from '$lib/types/pb-types'
     import Likes from '$lib/posts/Likes.svelte'
+    import { isVideo } from '$lib/util'
 
     let loading = true
 
@@ -12,9 +13,6 @@
     let post: PostsResponse<any> = data.post
 
     const image = pb.getFileUrl(post, post.image)
-    const isVideo = (url: string) =>
-        new URL(url).pathname.endsWith('mp4') ||
-        new URL(url).pathname.endsWith('webm')
 </script>
 
 <title>Imagi: {post.description}</title>

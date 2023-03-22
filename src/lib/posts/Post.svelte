@@ -1,13 +1,10 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
     import { pb } from '$lib/pocketbase'
-    import type {
-        PostsResponse,
-        UsersRecord,
-        UsersResponse,
-    } from '../types/pb-types'
+    import type { PostsResponse } from '../types/pb-types'
     import { openPost, userSettings } from '../../stores'
     import { ChatBubbleOvalLeftEllipsis, Heart, Icon } from 'svelte-hero-icons'
+    import { isVideo } from '$lib/util'
 
     export let post: PostsResponse<any>
     export let open = false
@@ -21,10 +18,6 @@
 
         open = true
     }
-
-    const isVideo = (url: string) =>
-        new URL(url).pathname.endsWith('mp4') ||
-        new URL(url).pathname.endsWith('webm')
 </script>
 
 <div
@@ -42,14 +35,12 @@
     }}
 >
     {#if isVideo(image)}
-        <span
+        <!-- svelte-ignore a11y-media-has-caption -->
+        <video
             class="w-full h-full flex flex-col items-center justify-center font-bold text-2xl"
         >
-            Video
-            <span class="text-sm font-normal">
-                Video thumbnails aren't supported (yet)
-            </span>
-        </span>
+            <source src={image} />
+        </video>
     {:else}
         <img
             src={image}
