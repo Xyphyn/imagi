@@ -50,7 +50,7 @@
 <Modal bind:open>
     <div class="max-w-[95vw] items-center flex flex-col gap-4 p-4">
         {#if $openPost}
-            <div class="inline-flex justify-between self-start w-full">
+            <div class="inline-flex justify-between self-start w-full gap-8">
                 <span class="text-xl font-bold">{$openPost.description}</span>
                 <a
                     href={`/user/${$openPost.expand?.user.username}`}
