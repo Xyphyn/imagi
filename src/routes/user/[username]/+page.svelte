@@ -12,9 +12,17 @@
         PostsResponse,
         UsersResponse,
     } from '$lib/types/pb-types'
+    import {
+        Tab,
+        TabGroup,
+        TabList,
+        TabPanel,
+        TabPanels,
+    } from '@rgossiaux/svelte-headlessui'
     import { onMount } from 'svelte'
     import {
         Calendar,
+        ChatBubbleLeft,
         ChatBubbleLeftEllipsis,
         Icon,
         Identification,
@@ -110,23 +118,47 @@
         <Loader width={24} />
     {/if}
 </div>
-<div class="flex flex-row">
-    <div class="flex-[2] @container">
-        <PostList containerQuery {posts} />
-    </div>
-    <div class="flex flex-col gap-4 flex-1">
-        {#if comments}
-            {#each comments as comment (comment.id)}
-                <div>
-                    <a
-                        href={`/post/${comment.expand?.post.id}`}
-                        class="font-bold text-xl"
-                    >
-                        {comment.expand?.post.description}
-                    </a>
-                    <Comment {comment} />
-                </div>
-            {/each}
-        {/if}
-    </div>
-</div>
+<TabGroup>
+    <TabList class="flex flex-row gap-4 w-full max-w-xl mx-auto m-4 mb-0">
+        <Tab
+            class={({ selected }) =>
+                `flex-1 flex flex-row items-center justify-center gap-2 rounded-md p-3 bg-white dark:bg-slate-800 shadow-sm ${
+                    selected
+                        ? 'bg-gradient-to-br from-primary to-secondary text-black'
+                        : ''
+                }`}
+        >
+            <Icon src={PencilSquare} size="24" class="float-left" />Posts
+        </Tab>
+        <Tab
+            class={({ selected }) =>
+                `flex-1 flex flex-row items-center justify-center gap-2 rounded-md p-3 bg-white dark:bg-slate-800 shadow-sm ${
+                    selected
+                        ? 'bg-gradient-to-br from-primary to-secondary text-black'
+                        : ''
+                }`}
+        >
+            <Icon src={ChatBubbleLeft} size="24" /> Comments
+        </Tab>
+    </TabList>
+    <TabPanels>
+        <TabPanel>
+            <PostList {posts} />
+        </TabPanel>
+        <TabPanel class="flex flex-col gap-4 flex-1 max-w-xl mx-auto">
+            {#if comments}
+                {#each comments as comment (comment.id)}
+                    <div>
+                        <a
+                            href={`/post/${comment.expand?.post.id}`}
+                            class="font-bold text-xl"
+                        >
+                            {comment.expand?.post.description}
+                        </a>
+                        <Comment {comment} />
+                    </div>
+                {/each}
+            {/if}
+        </TabPanel>
+    </TabPanels>
+</TabGroup>
