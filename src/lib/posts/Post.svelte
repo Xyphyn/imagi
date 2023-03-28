@@ -56,7 +56,9 @@
             class="break-words flex-shrink max-w-[80%] w-max font-bold mr-auto"
         >
             {post.description}
-            <span class="text-slate-400 dark:text-slate-500 font-normal">
+            <span
+                class="text-slate-700 dark:text-slate-400 contrast-more:dark:text-white contrast-more:text-black font-normal"
+            >
                 • {post.expand?.user.username}
             </span>
         </span>
