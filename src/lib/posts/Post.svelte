@@ -52,11 +52,13 @@
          gap-2 px-4 py-2 w-full text-black bg-white dark:bg-slate-800
           dark:text-white"
     >
-        <span class="break-words flex-shrink max-w-[80%] w-max font-bold">
+        <span
+            class="break-words flex-shrink max-w-[80%] w-max font-bold mr-auto"
+        >
             {post.description}
-        </span>
-        <span class="mr-auto text-slate-400 dark:text-slate-500">
-            @{post.expand?.user.username}
+            <span class="text-slate-400 dark:text-slate-500 font-normal">
+                • {post.expand?.user.username}
+            </span>
         </span>
         {#if post.expand['postCounts(post)']}
             <span class="flex flex-row items-center">

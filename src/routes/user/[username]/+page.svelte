@@ -145,7 +145,7 @@
         <TabPanel>
             <PostList {posts} />
         </TabPanel>
-        <TabPanel class="flex flex-col gap-4 flex-1 max-w-xl mx-auto">
+        <TabPanel class="flex flex-col gap-4 flex-1 max-w-xl mx-auto mt-2">
             {#if comments}
                 {#each comments as comment (comment.id)}
                     <div>
