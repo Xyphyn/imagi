@@ -32,7 +32,7 @@
 </ToastContainer>
 
 <div
-    class="flex overflow-x-hidden relative flex-col transition-colors dark:text-white text-slate-800 font-normal"
+    class="flex overflow-hidden relative flex-col transition-colors dark:text-white text-slate-800 font-normal"
 >
     <Navbar />
     <main class="p-4">
@@ -40,7 +40,7 @@
     </main>
     <div class="overflow-hidden absolute pointer-events-none box-border -z-10">
         <svg
-            class="relative box-border w-[64rem] h-auto rotate-[30deg] overflow-hidden -top-96 -left-96 blur-3xl"
+            class="relative box-border w-[64rem] h-auto rotate-[30deg] overflow-hidden -top-96 -left-96 blur-3xl isolate"
             viewBox="0 0 1155 678"
             xmlns="http://www.w3.org/2000/svg"
         >
