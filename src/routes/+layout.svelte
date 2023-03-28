@@ -32,7 +32,7 @@
 </ToastContainer>
 
 <div
-    class="flex overflow-x-hidden relative flex-col transition-colors dark:text-white text-slate-800"
+    class="flex overflow-x-hidden relative flex-col transition-colors dark:text-white text-slate-800 font-normal"
 >
     <Navbar />
     <main class="p-4">
@@ -71,7 +71,7 @@
         font-family: 'Inter';
         src: url('/font/Inter.woff2') format('woff2');
         font-display: swap;
-        font-weight: normal;
+        font-weight: 400;
     }
 
     @font-face {
@@ -85,7 +85,7 @@
         font-family: 'Inter';
         src: url('/font/Inter-Medium.woff2') format('woff2');
         font-display: swap;
-        font-weight: medium;
+        font-weight: 500;
     }
 
     :root {
