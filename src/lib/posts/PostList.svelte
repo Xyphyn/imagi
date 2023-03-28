@@ -1,9 +1,6 @@
 <script lang="ts">
-    import { pb } from '$lib/pocketbase'
     import PostSkeleton from '$lib/skeletons/PostSkeleton.svelte'
-    import { onMount } from 'svelte'
     import { flip } from 'svelte/animate'
-    import Loader from '../Loader.svelte'
     import type {
         PostsResponse,
         UsersRecord,
@@ -13,12 +10,15 @@
     import PostView from './PostView.svelte'
 
     export let posts: PostsResponse<UsersResponse>[] | undefined
+    export let containerQuery = false
 
     let open = false
 </script>
 
 <div
-    class="grid grid-cols-1 gap-4 p-4 w-full sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5"
+    class="grid grid-cols-1 gap-4 p-4 w-full {containerQuery
+        ? '@md:grid-cols-2 @2xl:grid-cols-3 @6xl:grid-cols-4'
+        : 'sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5'}"
 >
     {#if !posts}
         {#each new Array(50) as items}

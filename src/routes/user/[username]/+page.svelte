@@ -4,8 +4,10 @@
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
+    import Comment from '$lib/posts/Comment.svelte'
     import PostList from '$lib/posts/PostList.svelte'
     import type {
+        CommentsResponse,
         CountsResponse,
         PostsResponse,
         UsersResponse,
@@ -25,6 +27,7 @@
     let err: any
 
     let user: UsersResponse<any> | undefined
+    let comments: CommentsResponse<any>[] | undefined
     let posts: PostsResponse<any>[] | undefined
     let counts: CountsResponse | undefined
 
@@ -43,15 +46,23 @@
         user = results.items[0]
         counts = user.expand['counts(user)'][0]
 
-        const postResults = await pb
-            .collection('posts')
+        pb.collection('posts')
             .getList<PostsResponse<any>>(1, 50, {
                 filter: `user.id = "${user.id}"`,
                 sort: '-created',
                 expand: 'user, community, postCounts(post)',
             })
+            .then((results) => {
+                posts = results.items
+            })
 
-        posts = postResults.items
+        pb.collection('comments')
+            .getList<CommentsResponse<any>>(1, 50, {
+                filter: `user.id = "${user.id}"`,
+                sort: '-created',
+                expand: 'user,post',
+            })
+            .then((results) => (comments = results.items))
     })
 </script>
 
@@ -96,7 +107,26 @@
             </div>
         {/if}
     {:else}
-        <Loader />
+        <Loader width={24} />
     {/if}
 </div>
-<PostList {posts} />
+<div class="flex flex-row">
+    <div class="flex-[2] @container">
+        <PostList containerQuery {posts} />
+    </div>
+    <div class="flex flex-col gap-4 flex-1">
+        {#if comments}
+            {#each comments as comment (comment.id)}
+                <div>
+                    <a
+                        href={`/post/${comment.expand?.post.id}`}
+                        class="font-bold text-xl"
+                    >
+                        {comment.expand?.post.description}
+                    </a>
+                    <Comment {comment} />
+                </div>
+            {/each}
+        {/if}
+    </div>
+</div>

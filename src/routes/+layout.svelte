@@ -81,6 +81,13 @@
         font-weight: bold;
     }
 
+    @font-face {
+        font-family: 'Inter';
+        src: url('/font/Inter-Medium.woff2') format('woff2');
+        font-display: swap;
+        font-weight: medium;
+    }
+
     :root {
         font-family: 'Inter', sans-serif;
     }
