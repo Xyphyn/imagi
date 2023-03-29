@@ -15,6 +15,7 @@
     import Avatar from '$lib/Avatar.svelte'
     import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
     import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
+    import InfiniteScroll from 'svelte-infinite-scroll'
 
     let posts: PostsResponse<any>[] | undefined
     let communities: CommunitiesResponse<any>[] | undefined
@@ -47,9 +48,11 @@
 
             if (p > Math.ceil(results.totalItems / 50)) {
                 page--
+                hasMore = false
             }
 
-            posts = results.items
+            if (!posts) posts = results.items
+            else posts = [...posts, ...results.items]
         } else if (sort == 'popular') {
             const results = await pb
                 .collection('postCounts')
@@ -59,9 +62,14 @@
                 })
             if (p > Math.ceil(results.totalItems / 50)) {
                 page--
+                hasMore = false
             }
 
-            posts = results.items.map((item) => item.expand['post'])
+            const mapped = results.items.map((item) => item.expand['post'])
+
+            //@ts-ignore i hate typescript
+            if (!posts) posts = mapped
+            else posts = [...posts, ...mapped]
         }
 
         nProgress.done()
@@ -124,6 +132,10 @@
             }
         )
     })
+
+    // infinite scroll
+    let listing: any
+    let hasMore = true
 </script>
 
 <title>Imagi</title>
@@ -181,17 +193,20 @@
 </div>
 
 <Live live={sort != 'popular'} />
-<PostList {posts} />
-{#if posts}
-    <div
-        class="flex flex-row gap-4 justify-center items-center mx-auto w-min rounded-lg box-border bg-slate-200 dark:bg-slate-700"
+<PostList {posts} bind:this={listing} />
+<InfiniteScroll
+    threshold={50}
+    on:loadMore={() => {
+        fetchPage(++page)
+        console.log('hi')
+    }}
+    window={true}
+    {hasMore}
+/>
+{#if !hasMore}
+    <span
+        class="text-xl font-bold w-full flex flex-row justify-center items-center"
     >
-        <Button onclick={() => fetchPage(--page)}>
-            <Icon src={ChevronLeft} mini size="20" />
-        </Button>
-        <span>{page}</span>
-        <Button onclick={() => fetchPage(++page)}>
-            <Icon src={ChevronRight} mini size="20" />
-        </Button>
-    </div>
+        🎉 Congrats, you reached the end!
+    </span>
 {/if}
