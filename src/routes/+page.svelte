@@ -195,11 +195,8 @@
 <Live live={sort != 'popular'} />
 <PostList {posts} bind:this={listing} />
 <InfiniteScroll
-    threshold={50}
-    on:loadMore={() => {
-        fetchPage(++page)
-        console.log('hi')
-    }}
+    threshold={400}
+    on:loadMore={() => fetchPage(++page)}
     window={true}
     {hasMore}
 />
