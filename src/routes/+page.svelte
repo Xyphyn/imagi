@@ -23,8 +23,10 @@
     let sort: 'recent' | 'following' | 'popular' = 'recent'
     let page = 1
 
-    async function fetchPage(p: number) {
+    async function fetchPage(p: number, newSort: boolean) {
+        if (newSort) hasMore = true
         if (!hasMore) return
+
         nProgress.start()
 
         if (p < 1) {
@@ -39,6 +41,7 @@
         }
 
         if (sort == 'recent' || sort == 'following') {
+            console.log(sort)
             const results = await pb
                 .collection('posts')
                 .getList<PostsResponse<any>>(p, 50, {
@@ -49,14 +52,14 @@
 
             if (posts?.length == results.totalItems) hasMore = false
 
-            if (p > Math.ceil(results.totalItems / 50)) {
+            if (p > Math.ceil(results.totalItems / 50) && !newSort) {
                 page--
                 hasMore = false
                 nProgress.done()
                 return
             }
 
-            if (!posts) posts = results.items
+            if (!posts || newSort) posts = results.items
             else posts = [...posts, ...results.items]
         } else if (sort == 'popular') {
             const results = await pb
@@ -78,7 +81,7 @@
             const mapped = results.items.map((item) => item.expand['post'])
 
             //@ts-ignore i hate typescript
-            if (!posts) posts = mapped
+            if (!posts || newSort) posts = mapped
             else posts = [...posts, ...mapped]
         }
 
@@ -86,7 +89,7 @@
     }
 
     onMount(async () => {
-        fetchPage(page)
+        fetchPage(page, false)
 
         pb.collection('communities')
             .getList<CommunitiesResponse>(1, 50, {
@@ -177,7 +180,7 @@
         major={sort == 'recent'}
         onclick={() => {
             sort = 'recent'
-            fetchPage(page)
+            fetchPage(page, true)
         }}
     >
         Recent
@@ -186,7 +189,7 @@
         major={sort == 'following'}
         onclick={() => {
             sort = 'following'
-            fetchPage(page)
+            fetchPage(page, true)
         }}
     >
         Following
@@ -195,7 +198,7 @@
         major={sort == 'popular'}
         onclick={() => {
             sort = 'popular'
-            fetchPage(page)
+            fetchPage(page, true)
         }}
     >
         Popular
@@ -206,7 +209,7 @@
 <PostList {posts} bind:this={listing} />
 <InfiniteScroll
     threshold={400}
-    on:loadMore={() => fetchPage(++page)}
+    on:loadMore={() => fetchPage(++page, false)}
     window={true}
     {hasMore}
 />
