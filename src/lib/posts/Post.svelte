@@ -5,6 +5,7 @@
     import { openPost, userSettings } from '../../stores'
     import { ChatBubbleOvalLeftEllipsis, Heart, Icon } from 'svelte-hero-icons'
     import { isVideo } from '$lib/util'
+    import RelativeDate from '$lib/RelativeDate.svelte'
 
     export let post: PostsResponse<any>
     export let open = false
@@ -68,11 +69,14 @@
                 </span>
             {/if}
         </div>
-        <div class="flex flex-row justify-between">
-            <span
-                class="text-slate-700 dark:text-slate-400 contrast-more:dark:text-white contrast-more:text-black font-normal"
-            >
+        <div
+            class="flex flex-row justify-between text-slate-700 dark:text-slate-400 contrast-more:dark:text-white contrast-more:text-black text-sm"
+        >
+            <span>
                 {post.expand?.user.username}
+            </span>
+            <span>
+                <RelativeDate date={post.created} />
             </span>
         </div>
     </span>

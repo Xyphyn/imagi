@@ -24,6 +24,7 @@
     let page = 1
 
     async function fetchPage(p: number) {
+        if (!hasMore) return
         nProgress.start()
 
         if (p < 1) {
@@ -51,6 +52,8 @@
             if (p > Math.ceil(results.totalItems / 50)) {
                 page--
                 hasMore = false
+                nProgress.done()
+                return
             }
 
             if (!posts) posts = results.items
@@ -68,6 +71,8 @@
             if (p > Math.ceil(results.totalItems / 50)) {
                 page--
                 hasMore = false
+                nProgress.done()
+                return
             }
 
             const mapped = results.items.map((item) => item.expand['post'])
