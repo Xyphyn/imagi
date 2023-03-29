@@ -70,7 +70,11 @@
             {#if isVideo(image)}
                 {#key image && open}
                     <!-- svelte-ignore a11y-media-has-caption -->
-                    <video class="w-96 rounded-lg shadow-md" controls loop>
+                    <video
+                        class="w-full max-w-xl rounded-lg shadow-md"
+                        controls
+                        loop
+                    >
                         <source src={image} />
                     </video>
                 {/key}
@@ -78,7 +82,7 @@
                 <img
                     src={image}
                     alt={$openPost.description}
-                    class="w-96 rounded-lg shadow-md"
+                    class="w-full max-w-xl rounded-lg shadow-md"
                     on:load={() => (loading = false)}
                 />
             {/if}

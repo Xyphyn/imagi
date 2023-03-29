@@ -52,9 +52,7 @@
          gap-2 px-4 py-2 w-full text-black bg-white dark:bg-slate-800
           dark:text-white"
     >
-        <span
-            class="break-words flex-shrink max-w-[80%] w-max font-bold mr-auto"
-        >
+        <span class="break-words flex-shrink max-w-[80%] w-max mr-auto">
             {post.description}
             <span
                 class="text-slate-700 dark:text-slate-400 contrast-more:dark:text-white contrast-more:text-black font-normal"
