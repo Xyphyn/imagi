@@ -46,6 +46,8 @@
                     filter: sort == 'following' ? filterString : '',
                 })
 
+            if (posts?.length == results.totalItems) hasMore = false
+
             if (p > Math.ceil(results.totalItems / 50)) {
                 page--
                 hasMore = false
@@ -60,6 +62,9 @@
                     expand: 'post.user,post.community,post.postCounts(post)',
                     sort: '-likes',
                 })
+
+            if (posts?.length == results.totalItems) hasMore = false
+
             if (p > Math.ceil(results.totalItems / 50)) {
                 page--
                 hasMore = false

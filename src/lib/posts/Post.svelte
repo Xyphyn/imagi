@@ -48,27 +48,32 @@
         />
     {/if}
     <span
-        class="flex absolute bottom-0 left-0 flex-row
-         gap-2 px-4 py-2 w-full text-black bg-white dark:bg-slate-800
+        class="flex absolute bottom-0 left-0 flex-col
+         px-4 py-2 w-full text-black bg-white dark:bg-slate-800
           dark:text-white"
     >
-        <span class="break-words flex-shrink max-w-[80%] w-max mr-auto">
-            {post.description}
+        <div class="flex flex-row gap-2">
+            <span class="break-words flex-shrink max-w-[80%] w-max mr-auto">
+                {post.description}
+            </span>
+
+            {#if post.expand['postCounts(post)']}
+                <span class="flex flex-row items-center">
+                    <Icon src={ChatBubbleOvalLeftEllipsis} mini size="18" />
+                    {post.expand['postCounts(post)'][0].comments}
+                </span>
+                <span class="flex flex-row items-center">
+                    <Icon src={Heart} mini size="18" />
+                    {post.expand['postCounts(post)'][0].likes}
+                </span>
+            {/if}
+        </div>
+        <div class="flex flex-row justify-between">
             <span
                 class="text-slate-700 dark:text-slate-400 contrast-more:dark:text-white contrast-more:text-black font-normal"
             >
-                • {post.expand?.user.username}
+                {post.expand?.user.username}
             </span>
-        </span>
-        {#if post.expand['postCounts(post)']}
-            <span class="flex flex-row items-center">
-                <Icon src={ChatBubbleOvalLeftEllipsis} mini size="18" />
-                {post.expand['postCounts(post)'][0].comments}
-            </span>
-            <span class="flex flex-row items-center">
-                <Icon src={Heart} mini size="18" />
-                {post.expand['postCounts(post)'][0].likes}
-            </span>
-        {/if}
+        </div>
     </span>
 </div>
