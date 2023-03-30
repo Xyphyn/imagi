@@ -41,7 +41,6 @@
         }
 
         if (sort == 'recent' || sort == 'following') {
-            console.log(sort)
             const results = await pb
                 .collection('posts')
                 .getList<PostsResponse<any>>(p, 50, {
