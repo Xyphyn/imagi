@@ -23,8 +23,8 @@
 
 <div
     class="overflow-hidden relative rounded-lg shadow-xl 
-    transition-transform ease-out cursor-pointer bg-slate-50 dark:bg-slate-900 aspect-square hover:-translate-y-2 duration-250
-    group hover:text-black
+    transition-transform ease-out cursor-pointer bg-white dark:bg-slate-800 aspect-square hover:-translate-y-2 duration-250
+    group
     "
     on:click={() => {
         if (!$userSettings.nossr) goto(`/post/${post.id}`)
@@ -36,10 +36,22 @@
     }}
 >
     {#if isVideo(image)}
-        <!-- svelte-ignore a11y-media-has-caption -->
-        <video class="object-cover w-full h-full aspect-square">
-            <source src={image} />
-        </video>
+        {#if $userSettings.thumbSize != '64x64'}
+            <!-- svelte-ignore a11y-media-has-caption -->
+            <video class="object-cover w-full h-full aspect-square">
+                <source src={image} />
+            </video>
+        {:else}
+            <div
+                class="flex flex-col justify-center items-center p-4 w-full h-full text-center"
+            >
+                <h1 class="font-bold text-xl">Video</h1>
+                <p class="font-normal text-base">
+                    Video thumbnails are disabled because thumbnail size is set
+                    to 64x64 (check settings)
+                </p>
+            </div>
+        {/if}
     {:else}
         <img
             src={image}

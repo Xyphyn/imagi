@@ -143,8 +143,8 @@
             <div class="flex flex-row gap-2 justify-between items-center">
                 <span class="flex flex-col w-[80%]">
                     Thumbnail Size <span class="text-sm opacity-50">
-                        The image size of post thumbnails. This does not affect
-                        expanded view.
+                        The image size of post thumbnails. If set to 64x64 video
+                        thumbnails will be disabled.
                     </span>
                 </span>
                 <Button
