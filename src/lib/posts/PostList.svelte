@@ -11,6 +11,7 @@
 
     export let posts: PostsResponse<UsersResponse>[] | undefined
     export let containerQuery = false
+    export let placeholders = 50
 
     let open = false
 </script>
@@ -21,7 +22,7 @@
         : 'sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5'}"
 >
     {#if !posts}
-        {#each new Array(50) as items}
+        {#each new Array(placeholders) as items}
             <PostSkeleton />
         {/each}
     {:else}

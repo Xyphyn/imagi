@@ -43,7 +43,7 @@
         if (sort == 'recent' || sort == 'following') {
             const results = await pb
                 .collection('posts')
-                .getList<PostsResponse<any>>(p, 50, {
+                .getList<PostsResponse<any>>(p, 20, {
                     expand: 'user,postCounts(post),community',
                     sort: '-created',
                     filter: sort == 'following' ? filterString : '',
@@ -51,7 +51,7 @@
 
             if (posts?.length == results.totalItems) hasMore = false
 
-            if (p > Math.ceil(results.totalItems / 50) && !newSort) {
+            if (p > Math.ceil(results.totalItems / 20) && !newSort) {
                 page--
                 hasMore = false
                 nProgress.done()
@@ -63,14 +63,14 @@
         } else if (sort == 'popular') {
             const results = await pb
                 .collection('postCounts')
-                .getList<PostCountsResponse<any>>(p, 50, {
+                .getList<PostCountsResponse<any>>(p, 20, {
                     expand: 'post.user,post.community,post.postCounts(post)',
                     sort: '-likes',
                 })
 
             if (posts?.length == results.totalItems) hasMore = false
 
-            if (p > Math.ceil(results.totalItems / 50)) {
+            if (p > Math.ceil(results.totalItems / 20)) {
                 page--
                 hasMore = false
                 nProgress.done()
