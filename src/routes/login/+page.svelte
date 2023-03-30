@@ -4,6 +4,7 @@
     import FilePicker from '$lib/FilePicker.svelte'
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
+    import Modal from '$lib/Modal.svelte'
     import { pb } from '$lib/pocketbase'
     import {
         Tab,
@@ -12,6 +13,7 @@
         TabPanel,
         TabPanels,
     } from '@rgossiaux/svelte-headlessui'
+    import { Check, Icon } from 'svelte-hero-icons'
     import { toast } from '../../app'
 
     interface FormData {
@@ -39,6 +41,9 @@
         },
         loading: false,
     }
+
+    let forgotDialog = false
+    let forgotEmail = ''
 
     async function signUp() {
         formData.loading = true
@@ -97,6 +102,23 @@
             })
         formData.loading = false
     }
+
+    function resetPassword() {
+        if (forgotEmail == '') return
+
+        pb.collection('users')
+            .requestPasswordReset(forgotEmail)
+            .then(() => {
+                toast(
+                    'Sent',
+                    'A password reset email was sent to your inbox.',
+                    'info'
+                )
+            })
+            .catch(() => {
+                toast('Error', 'That email address is likely invalid.', 'error')
+            })
+    }
 </script>
 
 <title>Imagi | Login</title>
@@ -110,16 +132,20 @@
                     selected
                         ? 'bg-gradient-to-br from-primary to-secondary text-black'
                         : ''
-                }`}>Log In</Tab
+                }`}
         >
+            Log In
+        </Tab>
         <Tab
             class={({ selected }) =>
                 `flex-1 rounded-md p-3 bg-white dark:bg-slate-800 shadow-sm ${
                     selected
                         ? 'bg-gradient-to-br from-primary to-secondary text-black'
                         : ''
-                }`}>Sign Up</Tab
+                }`}
         >
+            Sign Up
+        </Tab>
     </TabList>
     <TabPanels>
         <TabPanel class="px-4">
@@ -129,9 +155,9 @@
             >
                 <Colored><h1 class="text-3xl font-bold">Log In</h1></Colored>
                 <div>
-                    <label for="login-username" class="block my-1"
-                        >Username/Email</label
-                    >
+                    <label for="login-username" class="block my-1">
+                        Username/Email
+                    </label>
                     <input
                         id="login-username"
                         type="text"
@@ -141,9 +167,9 @@
                     />
                 </div>
                 <div>
-                    <label for="login-password" class="block my-1"
-                        >Password</label
-                    >
+                    <label for="login-password" class="block my-1">
+                        Password
+                    </label>
                     <input
                         id="login-password"
                         type="password"
@@ -152,12 +178,20 @@
                         placeholder="8-72 characters"
                     />
                 </div>
+                <button
+                    on:click={() => (forgotDialog = true)}
+                    class="text-xs text-left block text-sky-300"
+                    type="button"
+                >
+                    Forgot Password?
+                </button>
                 <Button
                     class="mt-4"
                     major={true}
                     type="submit"
                     disabled={formData.loading}
-                    >{#if formData.loading}<Loader />{/if} Log In
+                >
+                    {#if formData.loading}<Loader />{/if} Log In
                 </Button>
             </form>
         </TabPanel>
@@ -178,9 +212,9 @@
                     />
                 </div>
                 <div>
-                    <label for="signup-username" class="block my-1"
-                        >Username</label
-                    >
+                    <label for="signup-username" class="block my-1">
+                        Username
+                    </label>
                     <input
                         id="signup-username"
                         type="text"
@@ -190,9 +224,9 @@
                     />
                 </div>
                 <div>
-                    <label for="signup-password" class="block my-1"
-                        >Password</label
-                    >
+                    <label for="signup-password" class="block my-1">
+                        Password
+                    </label>
                     <input
                         id="signup-password"
                         type="password"
@@ -205,13 +239,34 @@
                     <label for="signup-avatar" class="block my-1">Avatar</label>
                     <FilePicker
                         forId="signup-avatar"
-                        bind:files={formData.images}>Pick an image</FilePicker
+                        bind:files={formData.images}
                     >
+                        Pick an image
+                    </FilePicker>
                 </div>
-                <Button class="mt-4" major={true} type="submit"
-                    >{#if formData.loading}<Loader />{/if}Sign Up
+                <Button class="mt-4" major={true} type="submit">
+                    {#if formData.loading}<Loader />{/if}Sign Up
                 </Button>
             </form>
         </TabPanel>
     </TabPanels>
 </TabGroup>
+
+<Modal bind:open={forgotDialog}>
+    <div class="flex flex-col w-full justify-center items-center gap-4">
+        <h1 class="text-2xl font-bold"><Colored>Forgot Password</Colored></h1>
+        <div>
+            <label for="forgot-email" class="block my-1">Email</label>
+            <input
+                id="forgot-email"
+                type="email"
+                placeholder="you@example.com"
+                bind:value={forgotEmail}
+            />
+        </div>
+        <p class="text-sm opacity-80">
+            We'll send a password reset link to your email.
+        </p>
+        <Button onclick={resetPassword} major>Submit</Button>
+    </div>
+</Modal>
