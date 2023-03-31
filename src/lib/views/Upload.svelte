@@ -60,6 +60,8 @@
         formData.description = ''
         formData.community = ''
 
+        formData.files = null
+
         pb.collection('posts')
             .create(data)
             .catch((err) => {

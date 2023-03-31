@@ -23,6 +23,6 @@ export async function load({ params }) {
 
         throw error(404, 'Not found')
     } catch (err) {
-        throw error(500, 'Something went wrong.')
+        throw error(500, 'Post ID not found.')
     }
 }
