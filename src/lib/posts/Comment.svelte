@@ -33,7 +33,7 @@
 
 <div class="relative w-full group">
     <div
-        class="flex relative flex-row gap-2 items-center p-4 w-full rounded-lg popin box-border bg-slate-100 dark:bg-slate-700"
+        class="flex relative flex-row gap-2 items-center p-4 w-full rounded-lg overshoot box-border bg-slate-100 dark:bg-slate-700"
     >
         <Avatar user={comment.expand?.user} width={48} />
         <div class="inline-flex flex-col w-full">

@@ -146,7 +146,6 @@
     })
 
     // infinite scroll
-    let listing: any
     let hasMore = true
 </script>
 
@@ -205,7 +204,7 @@
 </div>
 
 <Live live={sort != 'popular'} />
-<PostList {posts} bind:this={listing} />
+<PostList {posts} />
 <InfiniteScroll
     threshold={400}
     on:loadMore={() => fetchPage(++page, false)}

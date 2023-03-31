@@ -7,22 +7,11 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import CommentSkeleton from '$lib/skeletons/CommentSkeleton.svelte'
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
-    import {
-        Menu,
-        MenuButton,
-        MenuItem,
-        MenuItems,
-        Transition,
-    } from '@rgossiaux/svelte-headlessui'
-    import {
-        Icon,
-        ChatBubbleLeft,
-        EllipsisHorizontal,
-        Trash,
-        Square2Stack,
-    } from 'svelte-hero-icons'
+    import { Icon, ChatBubbleLeft } from 'svelte-hero-icons'
+    import { flip } from 'svelte/animate'
     import { toast } from '../../app'
     import Comment from './Comment.svelte'
+    import { expoOut } from 'svelte/easing'
 
     export let post: PostsResponse<any>
 
@@ -133,5 +122,10 @@
         <CommentSkeleton />
     {/each}
 {:else}
-    {#each comments as comment}<Comment {comment} />{/each}
+    {#each comments as comment (comment.id)}<div
+            class="w-full"
+            animate:flip={{ duration: 1000, easing: expoOut }}
+        >
+            <Comment {comment} />
+        </div>{/each}
 {/if}

@@ -1,6 +1,7 @@
 <script lang="ts">
     import PostSkeleton from '$lib/skeletons/PostSkeleton.svelte'
     import { flip } from 'svelte/animate'
+    import { expoInOut, expoOut } from 'svelte/easing'
     import type {
         PostsResponse,
         UsersRecord,
@@ -27,7 +28,10 @@
         {/each}
     {:else}
         {#each posts as post (post.id)}
-            <div animate:flip={{ duration: 500 }} class="w-full h-full">
+            <div
+                animate:flip={{ duration: 1000, easing: expoInOut }}
+                class="w-full h-full"
+            >
                 <div class="w-full h-full popin">
                     <Post {post} bind:open />
                 </div>
