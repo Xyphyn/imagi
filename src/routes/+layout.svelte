@@ -6,6 +6,8 @@
     import { navigating } from '$app/stores'
     import { ToastContainer, FlatToast } from 'svelte-toasts'
     import { onMount } from 'svelte'
+    import { currentUser, pb } from '$lib/pocketbase'
+    import { toast } from '../app'
 
     nprogress.configure({
         showSpinner: false,
@@ -24,6 +26,10 @@
                 document.body.classList.remove('cursor-wait')
             }
         }
+    }
+
+    if (!pb.authStore.isValid && $currentUser) {
+        toast('Info', 'Your session has expired, please relog in.', 'info')
     }
 </script>
 

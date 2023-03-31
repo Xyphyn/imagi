@@ -21,6 +21,7 @@
         Trash,
         Square2Stack,
     } from 'svelte-hero-icons'
+    import { toast } from '../../app'
     import Comment from './Comment.svelte'
 
     export let post: PostsResponse<any>
@@ -44,6 +45,21 @@
                 user: $currentUser!.id,
                 content: newComment,
                 post: post.id,
+            })
+            .catch(() => {
+                if (pb.authStore.isValid) {
+                    toast(
+                        'Error',
+                        "Could not comment. Check if you're verified.",
+                        'error'
+                    )
+                } else {
+                    toast(
+                        'Error',
+                        'Your session has expired. Please log in again',
+                        'error'
+                    )
+                }
             })
             .finally(() => (submitting = false))
 

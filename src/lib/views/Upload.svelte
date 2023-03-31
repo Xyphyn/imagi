@@ -65,11 +65,19 @@
             .catch((err) => {
                 switch (err.status) {
                     case 400:
-                        toast(
-                            'Error',
-                            'Could not create post. Check that the filesize is under 8MB, and if given, the community exists. Check if you are verified.',
-                            'error'
-                        )
+                        if (pb.authStore.isValid) {
+                            toast(
+                                'Error',
+                                'Could not create post. Check that the filesize is under 8MB, and if given, the community exists. Check if you are verified.',
+                                'error'
+                            )
+                        } else {
+                            toast(
+                                'Error',
+                                'Your session has expired, log back in again.',
+                                'error'
+                            )
+                        }
                         break
                     case 429:
                         toast('Error', 'You are being rate limited.', 'error')
