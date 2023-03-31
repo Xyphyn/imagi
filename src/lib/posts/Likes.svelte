@@ -9,7 +9,6 @@
         PostsResponse,
     } from '$lib/types/pb-types'
     import { Icon, Heart } from 'svelte-hero-icons'
-    import { Confetti } from 'svelte-confetti'
 
     export let post: PostsResponse<any>
 
@@ -86,9 +85,6 @@
 </script>
 
 <Button major={userLike != undefined} onclick={like} disabled={liking}>
-    {#if liking}
-        <Confetti />
-    {/if}
     <div class="flex flex-row gap-1 items-center">
         <Icon mini={true} src={Heart} size="20" />
         {#if !liking}
