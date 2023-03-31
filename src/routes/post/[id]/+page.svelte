@@ -6,6 +6,8 @@
     import type { PostsResponse } from '$lib/types/pb-types'
     import Likes from '$lib/posts/Likes.svelte'
     import { isVideo } from '$lib/util'
+    import Tooltip from '$lib/Tooltip.svelte'
+    import { Icon, InformationCircle } from 'svelte-hero-icons'
 
     let loading = true
 
@@ -25,27 +27,36 @@
 <meta content={`#72efdd`} data-react-helmet="true" name="theme-color" />
 <meta name="twitter:card" content="summary_large_image" />
 <div
-    class="popin w-max mx-auto flex flex-col justify-center items-center p-4 gap-4 bg-white dark:bg-slate-800 rounded-lg shadow-lg outline-none max-w-[95vw] z-10"
+    class="popin w-max mx-auto flex flex-col justify-center items-center p-8 gap-4 bg-white dark:bg-slate-800 rounded-lg shadow-lg outline-none max-w-[95vw] z-10"
 >
-    <div class="inline-flex justify-between self-start w-full">
-        <span>{post.description}</span>
-        <a href={`/user/${post.expand?.user.username}`} class="opacity-30">
+    <div
+        class="inline-flex justify-between self-start w-full font-bold text-xl"
+    >
+        <span>
+            {post.description}
+            <Tooltip
+                text="This is a server rendered post. Go back to the main menu to enjoy the full Imagi."
+            >
+                <Icon src={InformationCircle} size="20" />
+            </Tooltip>
+        </span>
+        <a
+            href={`/user/${post.expand?.user.username}`}
+            class="opacity-30 font-normal text-base ml-8"
+        >
             @{post.expand?.user.username}
         </a>
     </div>
-    {#if loading}
-        <Loader />
-    {/if}
     {#if isVideo(image)}
         <!-- svelte-ignore a11y-media-has-caption -->
-        <video class="w-96 rounded-lg shadow-md" controls loop>
+        <video class="w-full max-w-xl rounded-lg shadow-md" controls loop>
             <source src={image} />
         </video>
     {:else}
         <img
             src={image}
             alt={post.description}
-            class="w-96 rounded-lg shadow-md"
+            class="w-full max-w-xl rounded-lg shadow-md"
             on:load={() => (loading = false)}
         />
     {/if}

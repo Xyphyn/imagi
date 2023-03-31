@@ -98,7 +98,7 @@
                                                 'undefined'
                                             ) {
                                                 navigator.clipboard.writeText(
-                                                    `${$page.url.host}/post/${$openPost.id}`
+                                                    `https://${$page.url.host}/post/${$openPost.id}`
                                                 )
                                             }
                                         }}

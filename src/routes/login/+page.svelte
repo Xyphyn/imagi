@@ -6,6 +6,7 @@
     import Colored from '$lib/misc/Colored.svelte'
     import Modal from '$lib/Modal.svelte'
     import { pb } from '$lib/pocketbase'
+    import Tooltip from '$lib/Tooltip.svelte'
     import {
         Tab,
         TabGroup,
@@ -13,7 +14,7 @@
         TabPanel,
         TabPanels,
     } from '@rgossiaux/svelte-headlessui'
-    import { Check, Icon } from 'svelte-hero-icons'
+    import { Check, Icon, InformationCircle } from 'svelte-hero-icons'
     import { toast } from '../../app'
 
     interface FormData {
@@ -202,7 +203,17 @@
             >
                 <Colored><h1 class="text-3xl font-bold">Sign Up</h1></Colored>
                 <div>
-                    <label for="signup-email" class="block my-1">Email</label>
+                    <label
+                        for="signup-email"
+                        class="flex flex-row items-center my-1 w-full"
+                    >
+                        Email
+                        <Tooltip
+                            text="Outlook emails are having issues. Email imagi@xylight.us to manually be verified."
+                        >
+                            <Icon src={InformationCircle} size="16" mini />
+                        </Tooltip>
+                    </label>
                     <input
                         id="signup-email"
                         type="text"
