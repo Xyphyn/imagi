@@ -112,7 +112,7 @@
                             <a class="font-bold" href={`/blog/${post.id}`}>
                                 {post.title}
                             </a>
-                            <span class="opacity-80">
+                            <span class="opacity-80 text-sm">
                                 <RelativeDate date={post.created} />
                             </span>
                         </div>
