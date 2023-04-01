@@ -114,3 +114,7 @@ html {
 .menu-item:hover {
     @apply border-primary !important;
 }
+
+a:not([role]) {
+    @apply hover:text-secondary hover:fill-secondary transition-all duration-200;
+}
