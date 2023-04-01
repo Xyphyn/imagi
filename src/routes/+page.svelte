@@ -16,6 +16,7 @@
     import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
     import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
     import InfiniteScroll from 'svelte-infinite-scroll'
+    import PostFetch from '$lib/posts/PostFetch.svelte'
 
     let posts: PostsResponse<any>[] | undefined
     let communities: CommunitiesResponse<any>[] | undefined
@@ -88,8 +89,6 @@
     }
 
     onMount(async () => {
-        fetchPage(page, false)
-
         pb.collection('communities')
             .getList<CommunitiesResponse>(1, 50, {
                 sort: '-created',
@@ -97,52 +96,6 @@
             .then((data) => {
                 communities = data.items
             })
-
-        pb.collection('posts').subscribe<PostsResponse<any>>(
-            '*',
-            async ({ record, action }) => {
-                if (sort == 'popular') return
-                if (action == 'create') {
-                    if (sort == 'following') {
-                        if (
-                            !$currentUser?.communities.includes(
-                                record.community
-                            )
-                        ) {
-                            return
-                        }
-                    }
-
-                    const user = await pb
-                        .collection('users')
-                        .getOne(record.user)
-
-                    let stats = await pb
-                        .collection('postCounts')
-                        .getOne(record.id)
-
-                    if (record.community) {
-                        const community = await pb
-                            .collection('communities')
-                            .getOne(record.community)
-
-                        record.expand = {
-                            user,
-                            community,
-                            'postCounts(post)': [stats],
-                        }
-                    } else {
-                        record.expand = { user, 'postCounts(post)': [stats] }
-                    }
-
-                    posts = [record, ...posts!]
-                }
-
-                if (action == 'delete') {
-                    posts = posts?.filter((post) => post.id != record.id)
-                }
-            }
-        )
     })
 
     // infinite scroll
@@ -204,17 +157,19 @@
 </div>
 
 <Live live={sort != 'popular'} />
-<PostList {posts} />
-<InfiniteScroll
-    threshold={400}
-    on:loadMore={() => fetchPage(++page, false)}
-    window={true}
-    {hasMore}
-/>
-{#if !hasMore}
-    <span
-        class="text-xl font-bold w-full flex flex-row justify-center items-center"
-    >
-        🎉 Congrats, you reached the end!
-    </span>
-{/if}
+<PostFetch let:posts let:fetchPosts let:hasMore let:addPosts>
+    <PostList {posts} />
+    <InfiniteScroll
+        threshold={400}
+        on:loadMore={async () => addPosts(await fetchPosts(true), false)}
+        window={true}
+        {hasMore}
+    />
+    {#if !hasMore}
+        <span
+            class="text-xl font-bold w-full flex flex-row justify-center items-center"
+        >
+            🎉 Congrats, you reached the end!
+        </span>
+    {/if}
+</PostFetch>
