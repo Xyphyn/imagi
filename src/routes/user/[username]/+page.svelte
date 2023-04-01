@@ -140,7 +140,7 @@
                     let:fetchPosts
                     let:hasMore
                     let:addPosts
-                    filter={(record) => record.expand?.user.id == user?.id}
+                    filter={(record) => record.user == user?.id}
                     filterString={`user.id = "${user.id}"`}
                 >
                     <PostList {posts} />

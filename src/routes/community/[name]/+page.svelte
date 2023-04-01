@@ -8,6 +8,7 @@
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import PostFetch from '$lib/posts/PostFetch.svelte'
     import PostList from '$lib/posts/PostList.svelte'
     import type {
         CommunitiesResponse,
@@ -22,13 +23,13 @@
         UserCircle,
         UserGroup,
     } from 'svelte-hero-icons'
+    import InfiniteScroll from 'svelte-infinite-scroll'
 
     const communityParam = $page.params.name
 
     let err: any
 
     let community: CommunitiesResponse<any> | undefined
-    let posts: PostsResponse<any>[] | undefined
     let counts: CommunityCountsResponse | undefined
 
     onMount(async () => {
@@ -46,16 +47,6 @@
         community = results.items[0]
 
         counts = community.expand['communityCounts(community)'][0]
-
-        const postResults = await pb
-            .collection('posts')
-            .getList<PostsResponse<any>>(1, 50, {
-                filter: `community.id = "${community.id}"`,
-                sort: '-created',
-                expand: 'user, postCounts(post)',
-            })
-
-        posts = postResults.items
     })
 
     function follow(community: CommunitiesResponse) {
@@ -127,4 +118,29 @@
         <Loader />
     {/if}
 </div>
-<PostList {posts} />
+{#if community}
+    <PostFetch
+        let:posts
+        let:fetchPosts
+        let:hasMore
+        let:addPosts
+        filter={(record) => record.community == community?.id}
+        filterString={`community.id = "${community.id}"`}
+    >
+        <PostList {posts} />
+        <InfiniteScroll
+            threshold={400}
+            on:loadMore={async () =>
+                addPosts(
+                    await fetchPosts(
+                        true,
+                        false,
+                        `community.id = "${community?.id}"`
+                    ),
+                    false
+                )}
+            window={true}
+            {hasMore}
+        />
+    </PostFetch>
+{/if}

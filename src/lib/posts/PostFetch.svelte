@@ -95,6 +95,12 @@
                         }
 
                         posts = [record, ...posts!]
+
+                        break
+                    }
+
+                    case 'delete': {
+                        posts = posts?.filter((post) => post.id != record.id)
                     }
                 }
             })
