@@ -12,7 +12,7 @@
 
     export let posts: PostsResponse<UsersResponse>[] | undefined
     export let containerQuery = false
-    export let placeholders = 50
+    export let placeholders = 20
 
     let open = false
 </script>

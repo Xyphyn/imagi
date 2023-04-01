@@ -21,7 +21,13 @@
 
     let hasMore: boolean = true
 
-    const fetchPosts = async (increment: boolean | undefined) => {
+    const fetchPosts = async (
+        increment: boolean | undefined,
+        reset: boolean,
+        filterString?: string
+    ) => {
+        if (reset) page = 1
+        hasMore = true
         if (!hasMore) return
 
         if (increment == true) page++
@@ -30,7 +36,7 @@
         const data = await pb
             .collection(Collections.Posts)
             .getList<PostsResponse<any>>(page, batchSize, {
-                filter: filterString,
+                filter: filterString ?? '',
                 expand: 'community,user,postCounts(post)',
                 sort: '-created',
             })
@@ -54,7 +60,7 @@
     let unsubscribe: () => void
 
     onMount(async () => {
-        posts = await fetchPosts(undefined)
+        posts = await fetchPosts(undefined, false, filterString)
 
         unsubscribe = await pb
             .collection(Collections.Posts)

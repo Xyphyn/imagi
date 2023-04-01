@@ -18,75 +18,24 @@
     import InfiniteScroll from 'svelte-infinite-scroll'
     import PostFetch from '$lib/posts/PostFetch.svelte'
 
-    let posts: PostsResponse<any>[] | undefined
     let communities: CommunitiesResponse<any>[] | undefined
 
-    let sort: 'recent' | 'following' | 'popular' = 'recent'
-    let page = 1
-
-    async function fetchPage(p: number, newSort: boolean) {
-        if (newSort) hasMore = true
-        if (!hasMore) return
-
-        nProgress.start()
-
-        if (p < 1) {
-            page = 1
-        }
-
-        let filterString = ''
-        if ($currentUser?.communities) {
-            filterString = $currentUser?.communities
-                .map((community: string) => `community.id = "${community}"`)
-                .join(' || ')
-        }
-
-        if (sort == 'recent' || sort == 'following') {
-            const results = await pb
-                .collection('posts')
-                .getList<PostsResponse<any>>(p, 20, {
-                    expand: 'user,postCounts(post),community',
-                    sort: '-created',
-                    filter: sort == 'following' ? filterString : '',
-                })
-
-            if (posts?.length == results.totalItems) hasMore = false
-
-            if (p > Math.ceil(results.totalItems / 20) && !newSort) {
-                page--
-                hasMore = false
-                nProgress.done()
-                return
-            }
-
-            if (!posts || newSort) posts = results.items
-            else posts = [...posts, ...results.items]
-        } else if (sort == 'popular') {
-            const results = await pb
-                .collection('postCounts')
-                .getList<PostCountsResponse<any>>(p, 20, {
-                    expand: 'post.user,post.community,post.postCounts(post)',
-                    sort: '-likes',
-                })
-
-            if (posts?.length == results.totalItems) hasMore = false
-
-            if (p > Math.ceil(results.totalItems / 20)) {
-                page--
-                hasMore = false
-                nProgress.done()
-                return
-            }
-
-            const mapped = results.items.map((item) => item.expand['post'])
-
-            //@ts-ignore i hate typescript
-            if (!posts || newSort) posts = mapped
-            else posts = [...posts, ...mapped]
-        }
-
-        nProgress.done()
+    const sortStrings = {
+        recent: {
+            string: '',
+            filter: (record: any) => true,
+        },
+        following: {
+            string:
+                $currentUser?.communities
+                    .map((community: string) => `community.id = "${community}"`)
+                    .join(' || ') ?? '',
+            filter: (record: any) =>
+                $currentUser?.communities.includes(record.community),
+        },
     }
+
+    let sort = sortStrings.recent
 
     onMount(async () => {
         pb.collection('communities')
@@ -97,9 +46,6 @@
                 communities = data.items
             })
     })
-
-    // infinite scroll
-    let hasMore = true
 </script>
 
 <title>Imagi</title>
@@ -126,42 +72,40 @@
 <h1 class="m-4 mt-0 text-4xl font-bold">
     <Colored>Posts</Colored>
 </h1>
-<div class="flex flex-row gap-4 mb-4 ml-4">
-    <Button
-        major={sort == 'recent'}
-        onclick={() => {
-            sort = 'recent'
-            fetchPage(page, true)
-        }}
-    >
-        Recent
-    </Button>
-    <Button
-        major={sort == 'following'}
-        onclick={() => {
-            sort = 'following'
-            fetchPage(page, true)
-        }}
-    >
-        Following
-    </Button>
-    <Button
-        major={sort == 'popular'}
-        onclick={() => {
-            sort = 'popular'
-            fetchPage(page, true)
-        }}
-    >
-        Popular
-    </Button>
-</div>
 
-<Live live={sort != 'popular'} />
-<PostFetch let:posts let:fetchPosts let:hasMore let:addPosts>
+<PostFetch
+    let:posts
+    let:fetchPosts
+    let:hasMore
+    let:addPosts
+    filter={sort.filter}
+>
+    <div class="flex flex-row gap-4 mb-4 ml-4">
+        <Button
+            major={sort == sortStrings.recent}
+            onclick={async () => {
+                sort = sortStrings.recent
+                addPosts(await fetchPosts(undefined, true, sort.string), true)
+            }}
+        >
+            Recent
+        </Button>
+        <Button
+            major={sort == sortStrings.following}
+            onclick={async () => {
+                sort = sortStrings.following
+                addPosts(await fetchPosts(undefined, true, sort.string), true)
+            }}
+        >
+            Following
+        </Button>
+    </div>
+    <Live live={true} />
     <PostList {posts} />
     <InfiniteScroll
         threshold={400}
-        on:loadMore={async () => addPosts(await fetchPosts(true), false)}
+        on:loadMore={async () =>
+            addPosts(await fetchPosts(true, false, sort.string), false)}
         window={true}
         {hasMore}
     />

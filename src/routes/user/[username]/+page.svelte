@@ -5,6 +5,7 @@
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
     import Comment from '$lib/posts/Comment.svelte'
+    import PostFetch from '$lib/posts/PostFetch.svelte'
     import PostList from '$lib/posts/PostList.svelte'
     import type {
         CommentsResponse,
@@ -29,6 +30,7 @@
         PencilSquare,
         RocketLaunch,
     } from 'svelte-hero-icons'
+    import InfiniteScroll from 'svelte-infinite-scroll'
 
     const userParam = $page.params.username
 
@@ -36,7 +38,6 @@
 
     let user: UsersResponse<any> | undefined
     let comments: CommentsResponse<any>[] | undefined
-    let posts: PostsResponse<any>[] | undefined
     let counts: CountsResponse | undefined
 
     onMount(async () => {
@@ -53,16 +54,6 @@
         }
         user = results.items[0]
         counts = user.expand['counts(user)'][0]
-
-        pb.collection('posts')
-            .getList<PostsResponse<any>>(1, 50, {
-                filter: `user.id = "${user.id}"`,
-                sort: '-created',
-                expand: 'user, community, postCounts(post)',
-            })
-            .then((results) => {
-                posts = results.items
-            })
 
         pb.collection('comments')
             .getList<CommentsResponse<any>>(1, 50, {
@@ -143,7 +134,34 @@
     </TabList>
     <TabPanels>
         <TabPanel>
-            <PostList {posts} />
+            {#if user}
+                <PostFetch
+                    let:posts
+                    let:fetchPosts
+                    let:hasMore
+                    let:addPosts
+                    filter={(record) => record.expand?.user.id == user?.id}
+                    filterString={`user.id = "${user.id}"`}
+                >
+                    <PostList {posts} />
+                    <InfiniteScroll
+                        threshold={400}
+                        on:loadMore={async () =>
+                            addPosts(
+                                await fetchPosts(
+                                    true,
+                                    false,
+                                    `user.id = "${user?.id}"`
+                                ),
+                                false
+                            )}
+                        window={true}
+                        {hasMore}
+                    />
+                </PostFetch>
+            {:else}
+                <Loader width={24} />
+            {/if}
         </TabPanel>
         <TabPanel class="flex flex-col gap-4 flex-1 max-w-xl mx-auto mt-2">
             {#if comments}
