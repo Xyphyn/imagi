@@ -114,3 +114,7 @@ html {
 .menu-item:hover {
     @apply border-primary !important;
 }
+
+a {
+    @apply hover:text-secondary hover:fill-secondary transition-all duration-200;
+}

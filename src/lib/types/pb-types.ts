@@ -3,6 +3,7 @@
 */
 
 export enum Collections {
+	Blog = "blog",
 	Comments = "comments",
 	Communities = "communities",
 	CommunityCounts = "communityCounts",
@@ -10,6 +11,7 @@ export enum Collections {
 	Likes = "likes",
 	PostCounts = "postCounts",
 	Posts = "posts",
+	Reports = "reports",
 	Users = "users",
 }
 
@@ -36,6 +38,13 @@ export type AuthSystemFields<T = never> = {
 } & BaseSystemFields<T>
 
 // Record types for each collection
+
+export type BlogRecord = {
+	title: string
+	content: HTMLString
+	author: RecordIdString
+	description?: string
+}
 
 export type CommentsRecord = {
 	content: string
@@ -80,6 +89,14 @@ export type PostsRecord = {
 	community?: RecordIdString
 }
 
+export type ReportsRecord = {
+	post?: RecordIdString
+	user?: RecordIdString
+	comment?: RecordIdString
+	reason?: string
+	author: RecordIdString
+}
+
 export enum UsersRoleOptions {
 	"owner" = "owner",
 	"admin" = "admin",
@@ -93,6 +110,7 @@ export type UsersRecord = {
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type BlogResponse<Texpand = unknown> = BlogRecord & BaseSystemFields<Texpand>
 export type CommentsResponse<Texpand = unknown> = CommentsRecord & BaseSystemFields<Texpand>
 export type CommunitiesResponse<Texpand = unknown> = CommunitiesRecord & BaseSystemFields<Texpand>
 export type CommunityCountsResponse<Texpand = unknown> = CommunityCountsRecord & BaseSystemFields<Texpand>
@@ -100,11 +118,13 @@ export type CountsResponse<Texpand = unknown> = CountsRecord & BaseSystemFields<
 export type LikesResponse<Texpand = unknown> = LikesRecord & BaseSystemFields<Texpand>
 export type PostCountsResponse<Texpand = unknown> = PostCountsRecord & BaseSystemFields<Texpand>
 export type PostsResponse<Texpand = unknown> = PostsRecord & BaseSystemFields<Texpand>
+export type ReportsResponse<Texpand = unknown> = ReportsRecord & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = UsersRecord & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
+	blog: BlogRecord
 	comments: CommentsRecord
 	communities: CommunitiesRecord
 	communityCounts: CommunityCountsRecord
@@ -112,10 +132,12 @@ export type CollectionRecords = {
 	likes: LikesRecord
 	postCounts: PostCountsRecord
 	posts: PostsRecord
+	reports: ReportsRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
+	blog: BlogResponse
 	comments: CommentsResponse
 	communities: CommunitiesResponse
 	communityCounts: CommunityCountsResponse
@@ -123,5 +145,6 @@ export type CollectionResponses = {
 	likes: LikesResponse
 	postCounts: PostCountsResponse
 	posts: PostsResponse
+	reports: ReportsResponse
 	users: UsersResponse
 }

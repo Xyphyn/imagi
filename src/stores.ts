@@ -4,11 +4,13 @@ import { writable } from 'svelte/store'
 interface UserSettings {
     nossr: boolean
     thumbSize: '64x64' | '128x128' | '256x256'
+    readUntil: Date
 }
 
 const defaultSettings: UserSettings = {
     nossr: true,
     thumbSize: '128x128',
+    readUntil: new Date()
 }
 
 export const userSettings = writable(defaultSettings)
