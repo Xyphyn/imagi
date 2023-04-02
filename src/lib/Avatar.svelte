@@ -10,10 +10,10 @@
 
     function getAvatar() {
         if (type == 'community' && (user.image == '' || !user.image))
-            return `https://avatars.dicebear.com/api/identicon/${user.name}.svg`
+            return `https://avatars.dicebear.com/api/initials/${user.name}.svg`
 
         if (type == 'user' && (user.avatar == '' || !user.avatar))
-            return `https://avatars.dicebear.com/api/identicon/${user.username}.svg`
+            return `https://avatars.dicebear.com/api/initials/${user.username}.svg`
 
         return pb.getFileUrl(
             user,
