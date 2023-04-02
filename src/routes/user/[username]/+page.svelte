@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { afterNavigate } from '$app/navigation'
     import { page } from '$app/stores'
     import Avatar from '$lib/Avatar.svelte'
     import Loader from '$lib/Loader.svelte'
@@ -37,6 +38,17 @@
     export let data
 
     let comments: CommentsResponse<any>[] | undefined = undefined
+
+    afterNavigate(async () => {
+        comments = await pb
+            .collection('comments')
+            .getList<CommentsResponse<any>>(1, 50, {
+                sort: '-created',
+                expand: 'user',
+                filter: `user.id = "${data.user.id}"`,
+            })
+            .then((data) => data.items)
+    })
 </script>
 
 <title>Imagi | User</title>
