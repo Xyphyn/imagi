@@ -4,6 +4,7 @@
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
     import { Collections, type PostsResponse } from '$lib/types/pb-types'
+    import nProgress from 'nprogress'
     import { onDestroy, onMount } from 'svelte'
 
     /**
@@ -33,6 +34,7 @@
         if (increment == true) page++
         else if (increment == false) page--
 
+        nProgress.start()
         const data = await pb
             .collection(Collections.Posts)
             .getList<PostsResponse<any>>(page, batchSize, {
@@ -44,6 +46,7 @@
         if (posts)
             if (posts?.length + batchSize >= data.totalItems) hasMore = false
 
+        nProgress.done()
         return data.items!
     }
 
