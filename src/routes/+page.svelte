@@ -27,11 +27,11 @@
         },
         following: {
             string:
-                $currentUser?.communities
+                ($currentUser?.communities ?? [])
                     .map((community: string) => `community.id = "${community}"`)
                     .join(' || ') ?? '',
             filter: (record: any): boolean => {
-                if ($currentUser) {
+                if ($currentUser && $currentUser.communities) {
                     return $currentUser?.communities.includes(record.community)
                 } else {
                     return true
