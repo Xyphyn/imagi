@@ -30,8 +30,13 @@
                 $currentUser?.communities
                     .map((community: string) => `community.id = "${community}"`)
                     .join(' || ') ?? '',
-            filter: (record: any) =>
-                $currentUser?.communities.includes(record.community),
+            filter: (record: any): boolean => {
+                if ($currentUser) {
+                    return $currentUser?.communities.includes(record.community)
+                } else {
+                    return true
+                }
+            },
         },
     }
 
