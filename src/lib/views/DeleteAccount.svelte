@@ -26,18 +26,20 @@
 </script>
 
 <Modal bind:open>
-    <div class="flex flex-col gap-4 items-center">
+    <div class="flex flex-col gap-4 items-center p-8">
         <h1
             class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-red-400 to-red-500"
         >
             Delete Account
         </h1>
         <p>
-            This action is <b>permanent.</b> All of your comments and posts will
-            be deleted.
+            This action is <b>permanent.</b>
+            All of your comments and posts will be deleted.
         </p>
         <p>
-            To confirm, type "<b>Yes, delete my account!</b>" (case sensitive)
+            To confirm, type "
+            <b>Yes, delete my account!</b>
+            " (case sensitive)
         </p>
         <input
             type="text"
@@ -54,7 +56,7 @@
                     : 'opacity-50 cursor-not-allowed'
             }`}
         >
-            Goodbye... :(
+            Delete my account
         </Button>
     </div>
 </Modal>

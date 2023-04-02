@@ -16,7 +16,12 @@
         TabPanel,
         TabPanels,
     } from '@rgossiaux/svelte-headlessui'
-    import { Icon, ChevronRight } from 'svelte-hero-icons'
+    import {
+        Icon,
+        ChevronRight,
+        Cog6Tooth,
+        UserCircle,
+    } from 'svelte-hero-icons'
     import { toast } from '../../app'
     import { userSettings } from '../../stores'
 
@@ -81,13 +86,17 @@
 </script>
 
 <title>Imagi | Settings</title>
-<h1 class="justify-self-center self-center mx-auto text-4xl font-bold">
+<h1
+    class="justify-self-center self-center mx-auto w-full text-center text-4xl font-bold"
+>
     <Colored>Settings</Colored>
 </h1>
 <TabGroup
-    class="flex flex-col justify-self-center self-center md:flex-row gap-4 justify-center items-center p-4 w-full h-full rounded-lg"
+    class="flex flex-col gap-4 justify-center items-center p-4 w-full h-full rounded-lg"
 >
-    <TabList class="flex flex-col gap-4 self-start w-64">
+    <TabList
+        class="flex flex-col sm:flex-row gap-4 self-center w-full max-w-xl mx-auto"
+    >
         <Tab
             class={({ selected }) =>
                 `flex-1 rounded-md py-2 bg-white dark:bg-slate-800 shadow-sm ${
@@ -96,7 +105,7 @@
                         : ''
                 }`}
         >
-            General
+            <Icon src={Cog6Tooth} size="20" class="inline align-top my-auto" /> General
         </Tab>
         <Tab
             class={({ selected }) =>
@@ -106,14 +115,17 @@
                         : ''
                 }`}
         >
+            <Icon src={UserCircle} size="20" class="inline align-top my-auto" />
             Account
         </Tab>
     </TabList>
-    <TabPanels class="w-full max-w-lg">
+    <TabPanels class="w-full max-w-xl">
         <TabPanel
-            class="flex flex-col gap-4 justify-between items-center p-4 my-2 w-full rounded-lg dark:bg-slate-800 bg-slate-50"
+            class="flex flex-col gap-4 justify-between items-center p-4 w-full rounded-lg dark:bg-slate-800 bg-white shadow-lg popin"
         >
-            <div class="flex flex-row gap-2 justify-between items-center">
+            <div
+                class="flex flex-row  gap-2 justify-between items-center w-full"
+            >
                 <span class="flex flex-col w-[80%]">
                     No-SSR Posts <span class="text-sm opacity-50">
                         Loads posts client side, opening posts in a dialog
@@ -140,36 +152,40 @@
                     />
                 </Switch>
             </div>
-            <div class="flex flex-row gap-2 justify-between items-center">
-                <span class="flex flex-col w-[80%]">
+            <div
+                class="flex flex-col sm:flex-row gap-2 justify-between items-center w-full"
+            >
+                <span class="flex flex-col w-full sm:w-[80%]">
                     Thumbnail Size <span class="text-sm opacity-50">
-                        The image size of post thumbnails. If set to 64x64 video
-                        thumbnails will be disabled.
+                        The image size of post thumbnails. This does not affect
+                        expanded view.
                     </span>
                 </span>
-                <Button
-                    onclick={() => ($userSettings.thumbSize = '64x64')}
-                    major={$userSettings.thumbSize == '64x64'}
-                >
-                    64x64
-                </Button>
-                <Button
-                    onclick={() => ($userSettings.thumbSize = '128x128')}
-                    major={$userSettings.thumbSize == '128x128'}
-                >
-                    128x128
-                </Button>
-                <Button
-                    onclick={() => ($userSettings.thumbSize = '256x256')}
-                    major={$userSettings.thumbSize == '256x256'}
-                >
-                    256x256
-                </Button>
+                <div class="flex flex-row gap-2">
+                    <Button
+                        onclick={() => ($userSettings.thumbSize = '64x64')}
+                        major={$userSettings.thumbSize == '64x64'}
+                    >
+                        64x64
+                    </Button>
+                    <Button
+                        onclick={() => ($userSettings.thumbSize = '128x128')}
+                        major={$userSettings.thumbSize == '128x128'}
+                    >
+                        128x128
+                    </Button>
+                    <Button
+                        onclick={() => ($userSettings.thumbSize = '256x256')}
+                        major={$userSettings.thumbSize == '256x256'}
+                    >
+                        256x256
+                    </Button>
+                </div>
             </div>
         </TabPanel>
         {#if $currentUser}
             <TabPanel
-                class="flex flex-col justify-between items-center p-4 my-2 w-full rounded-lg dark:bg-slate-800 bg-slate-50"
+                class="flex flex-col justify-between items-center p-4 my-2 w-full rounded-lg dark:bg-slate-800 bg-white shadow-lg popin"
             >
                 <div
                     class="flex flex-row justify-between items-center p-4 my-2 w-full rounded-lg"

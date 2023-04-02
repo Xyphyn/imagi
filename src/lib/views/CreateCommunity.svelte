@@ -54,14 +54,15 @@
 </script>
 
 <Modal bind:open>
-    <div class="flex flex-col gap-4 items-center p-4">
+    <div class="flex flex-col gap-4 items-center p-8">
         <h1 class="text-3xl font-bold">
             <Colored>Create a Community</Colored>
         </h1>
         <p>
-            Communities are a place where you can post <b
-                ><Colored>organized</Colored></b
-            > content.
+            Communities are a place where you can post <b>
+                <Colored>organized</Colored>
+            </b>
+            content.
         </p>
         <div>
             <label for="community-name" class="block my-1">Name</label>
@@ -74,9 +75,9 @@
             />
         </div>
         <div>
-            <label for="community-description" class="block my-1"
-                >Description</label
-            >
+            <label for="community-description" class="block my-1">
+                Description
+            </label>
             <input
                 id="community-description"
                 type="text"
@@ -88,15 +89,13 @@
 
         <div>
             <label for="community-image" class="block my-1">Image</label>
-            <FilePicker forId="community-image" bind:files={formData.files}
-                >Pick an Image</FilePicker
-            >
+            <FilePicker forId="community-image" bind:files={formData.files}>
+                Pick an Image
+            </FilePicker>
         </div>
 
-        <Button onclick={create} major={true} class="my-1"
-            >Let there be {formData.name == ''
-                ? 'posts'
-                : formData.name}!</Button
-        >
+        <Button onclick={create} major={true} class="my-1">
+            Let there be {formData.name == '' ? 'posts' : formData.name}!
+        </Button>
     </div>
 </Modal>

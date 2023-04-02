@@ -264,7 +264,7 @@
 </TabGroup>
 
 <Modal bind:open={forgotDialog}>
-    <div class="flex flex-col w-full justify-center items-center gap-4">
+    <div class="flex flex-col w-full justify-center items-center gap-4 p-8">
         <h1 class="text-2xl font-bold"><Colored>Forgot Password</Colored></h1>
         <div>
             <label for="forgot-email" class="block my-1">Email</label>
