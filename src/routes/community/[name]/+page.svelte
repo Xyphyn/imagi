@@ -1,6 +1,6 @@
 <script lang="ts">
     // @ts-nocheck
-    import { goto } from '$app/navigation'
+    import { afterNavigate, goto } from '$app/navigation'
 
     import { page } from '$app/stores'
     import Avatar from '$lib/Avatar.svelte'
@@ -32,7 +32,7 @@
     let community: CommunitiesResponse<any> | undefined
     let counts: CommunityCountsResponse | undefined
 
-    onMount(async () => {
+    afterNavigate(async () => {
         const results = await pb
             .collection('communities')
             .getList<CommunitiesResponse<any>>(1, 1, {
@@ -118,29 +118,31 @@
         <Loader />
     {/if}
 </div>
-{#if community}
-    <PostFetch
-        let:posts
-        let:fetchPosts
-        let:hasMore
-        let:addPosts
-        filter={(record) => record.community == community?.id}
-        filterString={`community.id = "${community.id}"`}
-    >
-        <PostList {posts} />
-        <InfiniteScroll
-            threshold={400}
-            on:loadMore={async () =>
-                addPosts(
-                    await fetchPosts(
-                        true,
-                        false,
-                        `community.id = "${community?.id}"`
-                    ),
-                    false
-                )}
-            window={true}
-            {hasMore}
-        />
-    </PostFetch>
-{/if}
+{#key community}
+    {#if community}
+        <PostFetch
+            let:posts
+            let:fetchPosts
+            let:hasMore
+            let:addPosts
+            filter={(record) => record.community == community?.id}
+            filterString={`community.id = "${community.id}"`}
+        >
+            <PostList {posts} />
+            <InfiniteScroll
+                threshold={400}
+                on:loadMore={async () =>
+                    addPosts(
+                        await fetchPosts(
+                            true,
+                            false,
+                            `community.id = "${community?.id}"`
+                        ),
+                        false
+                    )}
+                window={true}
+                {hasMore}
+            />
+        </PostFetch>
+    {/if}
+{/key}
