@@ -107,16 +107,18 @@
                     <Colored>
                         <a class="text-xl font-bold" href="/blog">Blog</a>
                     </Colored>
-                    {#each blogposts as post}
-                        <div class="flex flex-row justify-between">
-                            <a class="font-bold" href={`/blog/${post.id}`}>
-                                {post.title}
-                            </a>
-                            <span class="opacity-80 text-sm">
-                                <RelativeDate date={post.created} />
-                            </span>
-                        </div>
-                    {/each}
+                    {#if blogposts}
+                        {#each blogposts as post}
+                            <div class="flex flex-row justify-between">
+                                <a class="font-bold" href={`/blog/${post.id}`}>
+                                    {post.title}
+                                </a>
+                                <span class="opacity-80 text-sm">
+                                    <RelativeDate date={post.created} />
+                                </span>
+                            </div>
+                        {/each}
+                    {/if}
                 </div>
                 <Colored>
                     <h1 class="text-xl font-bold">Links</h1>
