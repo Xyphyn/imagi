@@ -130,7 +130,8 @@
                 <input
                     id="community-description"
                     type="text"
-                    placeholder="3-24 characters"
+                    placeholder="4-64 characters"
+                    maxlength="64"
                     bind:value={communitySettings.description}
                 />
             </div>
