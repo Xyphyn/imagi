@@ -7,17 +7,16 @@ export async function load({ params }) {
         const post = await pb
             .collection('blog')
             .getList<BlogResponse>(1, 20, {
-                sort: '-created'
+                sort: '-created',
             })
             .catch((err) => {
                 throw error(404, 'Not found')
             })
-    
-        if (post) return { post: JSON.parse(JSON.stringify(post)) }
-    
+
+        if (post) return { posts: JSON.parse(JSON.stringify(post.items)) }
+
         throw error(404, 'Not found')
     } catch (err) {
         throw error(500, 'Post ID not found.')
     }
 }
-
