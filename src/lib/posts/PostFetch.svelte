@@ -27,8 +27,10 @@
         reset: boolean,
         filterString?: string
     ) => {
-        if (reset) page = 1
-        hasMore = true
+        if (reset) {
+            page = 1
+            hasMore = true
+        }
         if (!hasMore) return
 
         if (increment == true) page++
