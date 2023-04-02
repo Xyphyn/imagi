@@ -15,7 +15,7 @@
     aria-label={label}
     on:click={onclick}
     {type}
-    class={`active:scale-95 px-3 py-2 rounded-md text-sm hover:text-inherit
+    class={`active:scale-95 px-3 py-2 rounded-md text-sm
 focus:outline-4 flex flex-row gap-2 items-center font-medium hover:brightness-[103%] transition-all ease-out-expo ${
         // Please forgive me for this
         colorType == 'danger'

@@ -38,10 +38,10 @@
         <Avatar user={comment.expand?.user} width={48} />
         <div class="inline-flex flex-col w-full">
             <a
-                class="w-max text-slate-400 dark:text-slate-500"
+                class="w-max opacity-70 link text-sm"
                 href={`/user/${comment.expand?.user.username}`}
             >
-                @{comment.expand?.user.username}
+                {comment.expand?.user.username}
             </a>
             <span class="border-box break-words">
                 {comment.content}
@@ -57,12 +57,12 @@
             </Button>
         </MenuButton>
         <Transition
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
+            enter="transition ease-out duration-100 z-20"
+            enterFrom="transform opacity-0 scale-95 z-20"
+            enterTo="transform opacity-100 scale-100 z-20"
+            leave="transition ease-in duration-75 z-20"
+            leaveFrom="transform opacity-100 scale-100 z-20"
+            leaveTo="transform opacity-0 scale-95 z-20"
         >
             <MenuItems
                 class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-800"
@@ -81,7 +81,7 @@
                         <Icon src={Square2Stack} width="16" />Copy
                     </Button>
                 </MenuItem>
-                {#if comment.user == $currentUser?.id}
+                {#if comment.user == $currentUser?.id || $currentUser?.role == 'admin'}
                     <MenuItem>
                         <Button
                             class="w-full"

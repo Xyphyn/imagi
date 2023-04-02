@@ -2,18 +2,13 @@
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
     import RelativeDate from '$lib/RelativeDate.svelte'
-    import { Collections, type BlogResponse } from '$lib/types/pb-types'
+    import type { BlogResponse } from '$lib/types/pb-types'
     import { Collection } from 'pocketbase'
     import { onMount } from 'svelte'
 
-    let posts: BlogResponse[] | undefined
+    export let data
 
-    onMount(async () => {
-        posts = await pb
-            .collection(Collections.Blog)
-            .getList<BlogResponse>(1, 20, { sort: '-created' })
-            .then((data) => data.items)
-    })
+    let posts: BlogResponse[] | undefined = data.post
 </script>
 
 <div class="flex flex-col items-center justify-center gap-4">

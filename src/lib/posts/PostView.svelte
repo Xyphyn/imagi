@@ -48,109 +48,103 @@
 <Modal bind:open>
     <div class="max-w-[95vw] items-center flex flex-col gap-4 p-4">
         {#if $openPost}
-            <div class="inline-flex justify-between self-start w-full gap-8">
-                <span class="text-xl font-bold">{$openPost.description}</span>
+            <div class="inline-flex flex-col self-start w-full relative">
+                <span class="text-xl font-bold w-[90%] break-words">
+                    {$openPost.description}
+                </span>
                 <div class="flex flex-row gap-2">
                     <a
                         href={`/user/${$openPost.expand?.user.username}`}
-                        class="text-slate-400 dark:text-slate-500"
+                        class="text-base opacity-80 link"
                     >
+                        {$openPost.expand?.user.username}
+
                         {#if $openPost.expand?.community}
                             <a
                                 href={`/community/${$openPost.expand?.community.name}`}
                             >
-                                {$openPost.expand?.community.name} •
+                                • {$openPost.expand?.community.name}
                             </a>
                         {/if}
-
-                        @{$openPost.expand?.user.username}
                     </a>
-
-                    <Menu class="relative top-0 left-0 text-left">
-                        <MenuButton>
-                            <Button
-                                class="gap-0 px-[0.2rem] py-[0.20rem] -z-10"
-                            >
-                                <Icon size="20" src={EllipsisVertical} />
-                            </Button>
-                        </MenuButton>
-                        <Transition
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
+                </div>
+                <Menu class="absolute top-0 right-0 text-left">
+                    <MenuButton>
+                        <Button class="gap-0 px-[0.2rem] py-[0.20rem] -z-10">
+                            <Icon size="20" src={EllipsisVertical} />
+                        </Button>
+                    </MenuButton>
+                    <Transition
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                    >
+                        <MenuItems
+                            class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-900"
                         >
-                            <MenuItems
-                                class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-900"
-                            >
-                                <Colored>
-                                    <h1 class="font-bold">Post Actions</h1>
-                                </Colored>
+                            <Colored>
+                                <h1 class="font-bold">Post Actions</h1>
+                            </Colored>
+                            <MenuItem>
+                                <Button
+                                    class="w-full"
+                                    major={false}
+                                    onclick={() => {
+                                        if (
+                                            typeof navigator.clipboard !=
+                                            'undefined'
+                                        ) {
+                                            navigator.clipboard.writeText(
+                                                `https://${$page.url.host}/post/${$openPost.id}`
+                                            )
+                                        }
+                                    }}
+                                >
+                                    <Icon src={Square2Stack} width="16" />Copy
+                                    Link
+                                </Button>
+                            </MenuItem>
+                            <MenuItem>
+                                <Button
+                                    class="w-full"
+                                    major={false}
+                                    onclick={() => {
+                                        goto(
+                                            pb.getFileUrl(
+                                                $openPost,
+                                                $openPost.image
+                                            )
+                                        )
+                                    }}
+                                >
+                                    <Icon
+                                        src={ArrowDownTray}
+                                        width="16"
+                                    />Download
+                                </Button>
+                            </MenuItem>
+                            {#if $openPost.user == $currentUser?.id || $currentUser?.role == 'admin'}
                                 <MenuItem>
                                     <Button
                                         class="w-full"
-                                        major={false}
+                                        major={true}
+                                        colorType="danger"
                                         onclick={() => {
-                                            if (
-                                                typeof navigator.clipboard !=
-                                                'undefined'
-                                            ) {
-                                                navigator.clipboard.writeText(
-                                                    `https://${$page.url.host}/post/${$openPost.id}`
-                                                )
-                                            }
-                                        }}
-                                    >
-                                        <Icon
-                                            src={Square2Stack}
-                                            width="16"
-                                        />Copy Link
-                                    </Button>
-                                </MenuItem>
-                                <MenuItem>
-                                    <Button
-                                        class="w-full"
-                                        major={false}
-                                        onclick={() => {
-                                            goto(
-                                                pb.getFileUrl(
-                                                    $openPost,
-                                                    $openPost.image
-                                                )
+                                            pb.collection('posts').delete(
+                                                $openPost.id
                                             )
                                         }}
                                     >
-                                        <Icon
-                                            src={ArrowDownTray}
-                                            width="16"
-                                        />Download
+                                        <Icon src={Trash} width="16" />Delete
                                     </Button>
                                 </MenuItem>
-                                {#if $openPost.user == $currentUser?.id}
-                                    <MenuItem>
-                                        <Button
-                                            class="w-full"
-                                            major={true}
-                                            colorType="danger"
-                                            onclick={() => {
-                                                pb.collection('posts').delete(
-                                                    $openPost.id
-                                                )
-                                            }}
-                                        >
-                                            <Icon
-                                                src={Trash}
-                                                width="16"
-                                            />Delete
-                                        </Button>
-                                    </MenuItem>
-                                {/if}
-                            </MenuItems>
-                        </Transition>
-                    </Menu>
-                </div>
+                            {/if}
+                        </MenuItems>
+                    </Transition>
+                </Menu>
             </div>
             {#if loading && !isVideo(image)}
                 <Loader />

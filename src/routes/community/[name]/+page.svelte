@@ -69,7 +69,7 @@
 
 <title>Imagi | Community</title>
 <div
-    class="dark:bg-slate-800 bg-white max-w-xl min-h-[24rem] mx-auto flex flex-col items-center justify-center gap-4 p-4 rounded-lg shadow-lg"
+    class="dark:bg-slate-800 bg-white max-w-xl min-h-[24rem] mx-auto flex flex-col items-center justify-center gap-4 p-4 rounded-lg shadow-lg popin"
 >
     {#if err}
         <span>404 - Not found</span>

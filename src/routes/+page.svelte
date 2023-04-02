@@ -60,7 +60,9 @@
                     width={32}
                     thumbnail="32x32"
                 />
-                <a href={`/community/${community.name}`}>{community.name}</a>
+                <a href={`/community/${community.name}`} class="link">
+                    {community.name}
+                </a>
             </div>
         {/each}
     {:else}

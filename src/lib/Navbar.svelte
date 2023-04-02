@@ -110,7 +110,10 @@
                     {#if blogposts}
                         {#each blogposts as post}
                             <div class="flex flex-row justify-between">
-                                <a class="font-bold" href={`/blog/${post.id}`}>
+                                <a
+                                    class="font-bold link"
+                                    href={`/blog/${post.id}`}
+                                >
                                     {post.title}
                                 </a>
                                 <span class="opacity-80 text-sm">
@@ -126,7 +129,7 @@
                 <div class="flex flex-row gap-2">
                     <a
                         href="https://github.com/Xyphyn/Imagi"
-                        class="active:scale-95 px-3 py-2 rounded-md text-sm
+                        class="active:scale-95 px-3 py-2 rounded-md text-sm link dark:fill-white
                     focus:outline-4 flex flex-row gap-2 items-center font-medium hover:brightness-[103%] transition-all ease-out-expo dark:bg-slate-700 bg-slate-200"
                     >
                         <svg

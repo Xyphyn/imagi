@@ -12,9 +12,10 @@
         UsersResponse,
     } from '$lib/types/pb-types'
     import { onMount } from 'svelte'
+    import { Icon, PencilSquare, UserGroup } from 'svelte-hero-icons'
 
     let users: UsersResponse[] | undefined
-    let communities: CommunitiesResponse[] | undefined
+    let communities: CommunitiesResponse<any>[] | undefined
 
     onMount(async () => {
         pb.collection('users')
@@ -24,9 +25,13 @@
             })
 
         pb.collection('communities')
-            .getList<CommunitiesResponse>(1, 40, { sort: '-created' })
+            .getList<CommunitiesResponse<any>>(1, 40, {
+                sort: '-created',
+                expand: 'communityCounts(community)',
+            })
             .then((data) => {
                 communities = data.items
+                console.log(communities[0])
             })
     })
 </script>
@@ -34,7 +39,7 @@
 <title>Imagi | Explore</title>
 <div class="flex flex-col items-center p-4 box-border">
     <h1 class="text-4xl font-bold md:self-start"><Colored>Explore</Colored></h1>
-    <span class="self-start mt-4">New Users</span>
+    <span class="self-start mt-4 font-bold text-xl">New Users</span>
     <div class="flex overflow-auto flex-row gap-4 self-start h-12 box-border">
         {#if !users}
             <div class="flex flex-row flex-shrink-0 gap-2 items-center h-8">
@@ -47,14 +52,16 @@
             </div>
         {:else}
             {#each users as user}
-                <div class="flex flex-row flex-shrink-0 gap-2 items-center">
+                <div
+                    class="flex flex-row flex-shrink-0 gap-2 items-center link"
+                >
                     <Avatar {user} width={32} thumbnail="32x32" />
                     <a href={`/user/${user.username}`}>{user.username}</a>
                 </div>
             {/each}
         {/if}
     </div>
-    <span class="self-start mt-4">New Communities</span>
+    <span class="self-start mt-4 font-bold text-xl">New Communities</span>
     <div
         class="grid grid-cols-1 gap-4 mt-4 w-full md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
     >
@@ -63,7 +70,7 @@
         {:else}
             {#each communities as community}
                 <div
-                    class="flex gap-4 justify-center items-center p-6 w-full bg-white rounded-lg shadow-lg transition-transform transform-gpu cursor-pointer dark:bg-slate-800 flex-row
+                    class="flex flex-col gap-4 justify-center items-center p-6 w-full bg-white rounded-lg shadow-lg transition-transform transform-gpu cursor-pointer dark:bg-slate-800
   hover:-translate-y-1"
                     on:click={() => goto(`/community/${community.name}`)}
                     on:keypress={() => goto(`/community/${community.name}`)}
@@ -71,16 +78,36 @@
                     <Avatar
                         user={community}
                         type="community"
-                        width={48}
+                        width={64}
                         thumbnail="48x48"
                     />
-                    <div class="flex flex-col">
-                        <span class="text-lg font-bold"
-                            ><Colored>{community.name}</Colored></span
-                        >
-                        <span class="text-sm opacity-70"
-                            >{community.description}</span
-                        >
+                    <div class="flex flex-col items-center">
+                        <span class="text-lg font-bold">
+                            <Colored>{community.name}</Colored>
+                        </span>
+                        <span class="text-sm opacity-70">
+                            {community.description}
+                        </span>
+                    </div>
+                    <div class="flex flex-row gap-4">
+                        <div class="inline-block">
+                            <Icon
+                                src={UserGroup}
+                                size="20"
+                                class="inline-block align-top"
+                            />
+                            {community.expand['communityCounts(community)'][0]
+                                .members}
+                        </div>
+                        <div class="inline-block">
+                            <Icon
+                                src={PencilSquare}
+                                size="20"
+                                class="inline-block align-top"
+                            />
+                            {community.expand['communityCounts(community)'][0]
+                                .posts}
+                        </div>
                     </div>
                 </div>
             {/each}

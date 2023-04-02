@@ -115,6 +115,6 @@ html {
     @apply border-primary !important;
 }
 
-a:not([role]) {
+.link {
     @apply hover:text-secondary hover:fill-secondary transition-all duration-200;
 }
