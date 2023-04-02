@@ -32,37 +32,11 @@
     } from 'svelte-hero-icons'
     import InfiniteScroll from 'svelte-infinite-scroll'
 
-    const userParam = $page.params.username
-
     let err: any
 
-    let user: UsersResponse<any> | undefined
-    let comments: CommentsResponse<any>[] | undefined
-    let counts: CountsResponse | undefined
+    export let data
 
-    onMount(async () => {
-        const results = await pb
-            .collection('users')
-            .getList<UsersResponse<any>>(1, 1, {
-                filter: `username = "${userParam}"`,
-                expand: `counts(user)`,
-            })
-
-        if (results.items.length == 0) {
-            err = 'No user found'
-            return
-        }
-        user = results.items[0]
-        counts = user.expand['counts(user)'][0]
-
-        pb.collection('comments')
-            .getList<CommentsResponse<any>>(1, 50, {
-                filter: `user.id = "${user.id}"`,
-                sort: '-created',
-                expand: 'user,post',
-            })
-            .then((results) => (comments = results.items))
-    })
+    let comments: CommentsResponse<any>[] | undefined = undefined
 </script>
 
 <title>Imagi | User</title>
@@ -71,37 +45,39 @@
 >
     {#if err}
         <span>404 - Not found</span>
-    {:else if user}
-        <Avatar {user} width={128} />
-        <h1 class="text-4xl font-bold"><Colored>{user.username}</Colored></h1>
-        {#if user.bio}
-            <p class="opacity-75">{user.bio}</p>
+    {:else if data.user}
+        <Avatar user={data.user} width={128} />
+        <h1 class="text-4xl font-bold">
+            <Colored>{data.user.username}</Colored>
+        </h1>
+        {#if data.user.bio}
+            <p class="opacity-75">{data.user.bio}</p>
         {/if}
         <div class="flex flex-row gap-4 justify-center w-full">
-            {#if counts}
+            {#if data.user}
                 <span class="flex flex-row gap-1 items-center">
                     <Icon src={ChatBubbleLeftEllipsis} size="20" />
-                    {counts.comments}
+                    {data.user?.expand['counts(user)'][0].comments}
                 </span>
                 <span class="flex flex-row gap-1 items-center">
                     <Icon src={PencilSquare} size="20" />
-                    {counts.posts}
+                    {data.user?.expand['counts(user)'][0].posts}
                 </span>
                 <span class="flex flex-row gap-1 items-center">
                     <Icon src={Calendar} size="20" />
-                    {new Date(user.created).toLocaleDateString()}
+                    {new Date(data.user.created).toLocaleDateString()}
                 </span>
             {:else}
                 <Loader />
             {/if}
         </div>
-        {#if user.role}
+        {#if data.user.role}
             <div class="flex flex-row gap-4 items-center justify-center w-full">
                 <span
                     class="bg-gradient-to-r py-2 px-4 font-bold rounded-md from-primary to-secondary text-black capitalize inline-flex flex-row items-center gap-2"
                 >
                     <Icon src={Identification} size="20" mini />
-                    {user.role}
+                    {data.user.role}
                 </span>
             </div>
         {/if}
@@ -134,14 +110,14 @@
     </TabList>
     <TabPanels>
         <TabPanel>
-            {#if user}
+            {#key data.user}
                 <PostFetch
                     let:posts
                     let:fetchPosts
                     let:hasMore
                     let:addPosts
-                    filter={(record) => record.user == user?.id}
-                    filterString={`user.id = "${user.id}"`}
+                    filter={(record) => record.user == data.user?.id}
+                    filterString={`user.id = "${data.user.id}"`}
                 >
                     <PostList {posts} />
                     <InfiniteScroll
@@ -151,7 +127,7 @@
                                 await fetchPosts(
                                     true,
                                     false,
-                                    `user.id = "${user?.id}"`
+                                    `user.id = "${data.user?.id}"`
                                 ),
                                 false
                             )}
@@ -159,9 +135,7 @@
                         {hasMore}
                     />
                 </PostFetch>
-            {:else}
-                <Loader width={24} />
-            {/if}
+            {/key}
         </TabPanel>
         <TabPanel class="flex flex-col gap-4 flex-1 max-w-xl mx-auto mt-2">
             {#if comments}

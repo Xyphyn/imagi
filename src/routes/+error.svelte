@@ -17,7 +17,7 @@
         </span>
         did something wrong.
     </p>
-    <code class="bg-slate-200 px-4 py-2 rounded-md">
+    <code class="bg-slate-200 dark:bg-slate-800 px-4 py-2 rounded-md">
         {$page.error?.message}
     </code>
     <Button onclick={() => goto('/')} major>Back to home</Button>

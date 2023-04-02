@@ -31,7 +31,6 @@
             })
             .then((data) => {
                 communities = data.items
-                console.log(communities[0])
             })
     })
 </script>

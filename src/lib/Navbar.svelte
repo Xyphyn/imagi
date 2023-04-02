@@ -232,14 +232,14 @@
                         </h1>
                     </Colored>
                     <MenuItem>
-                        <Button
-                            class="menu-item"
-                            onclick={() =>
-                                goto(`/user/${$currentUser.username}`)}
+                        <a
+                            class="menu-item active:scale-95 px-3 py-2 rounded-md text-sm
+                            focus:outline-4 flex flex-row gap-2 items-center font-medium hover:brightness-[103%] transition-all ease-out-expo dark:bg-slate-700 bg-slate-200"
+                            href={`/user/${$currentUser.username}`}
                         >
                             <Icon src={UserCircle} size="20" />
                             Profile
-                        </Button>
+                        </a>
                     </MenuItem>
                     <MenuItem>
                         <Button
