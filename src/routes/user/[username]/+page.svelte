@@ -44,7 +44,7 @@
             .collection('comments')
             .getList<CommentsResponse<any>>(1, 50, {
                 sort: '-created',
-                expand: 'user',
+                expand: 'user, post',
                 filter: `user.id = "${data.user.id}"`,
             })
             .then((data) => data.items)
