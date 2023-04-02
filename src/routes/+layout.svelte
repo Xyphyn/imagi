@@ -11,6 +11,9 @@
 
     nprogress.configure({
         showSpinner: false,
+        minimum: 0.4,
+        trickle: true,
+        trickleSpeed: 50,
     })
 
     $: {

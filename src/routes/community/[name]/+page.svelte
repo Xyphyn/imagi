@@ -25,29 +25,7 @@
     } from 'svelte-hero-icons'
     import InfiniteScroll from 'svelte-infinite-scroll'
 
-    const communityParam = $page.params.name
-
-    let err: any
-
-    let community: CommunitiesResponse<any> | undefined
-    let counts: CommunityCountsResponse | undefined
-
-    afterNavigate(async () => {
-        const results = await pb
-            .collection('communities')
-            .getList<CommunitiesResponse<any>>(1, 1, {
-                filter: `name = "${communityParam}"`,
-                expand: 'owner,communityCounts(community)',
-            })
-
-        if (results.items.length == 0) {
-            err = 'No user found'
-            return
-        }
-        community = results.items[0]
-
-        counts = community.expand['communityCounts(community)'][0]
-    })
+    export let data
 
     function follow(community: CommunitiesResponse) {
         if (!$currentUser) {
@@ -71,43 +49,39 @@
 <div
     class="dark:bg-slate-800 bg-white max-w-xl min-h-[24rem] mx-auto flex flex-col items-center justify-center gap-4 p-4 rounded-lg shadow-lg popin"
 >
-    {#if err}
-        <span>404 - Not found</span>
-    {:else if community}
-        <Avatar user={community} type="community" width={128} />
+    {#if data.community}
+        <Avatar user={data.community} type="community" width={128} />
 
-        <h1 class="text-4xl font-bold"><Colored>{community.name}</Colored></h1>
-        <p class="italic">{community.description}</p>
+        <h1 class="text-4xl font-bold">
+            <Colored>{data.community.name}</Colored>
+        </h1>
+        <p class="italic">{data.community.description}</p>
         <div class="flex flex-row gap-4 justify-center w-full">
-            {#if counts}
-                <span class="flex flex-row gap-1 items-center">
-                    <Icon src={UserGroup} size="20" />
-                    {counts.members}
-                </span>
-                <span class="flex flex-row gap-1 items-center">
-                    <Icon src={PencilSquare} size="20" />
-                    {counts.posts}
-                </span>
-                <span class="flex flex-row gap-1 items-center">
-                    <Icon src={Calendar} size="20" />
-                    {new Date(community.created).toLocaleDateString()}
-                </span>
-                <span class="flex flex-row gap-1 items-center">
-                    <Icon src={UserCircle} size="20" />
-                    <a href={`/user/${community.expand?.owner.username}`}>
-                        @{community.expand?.owner.username}
-                    </a>
-                </span>
-            {:else}
-                <Loader />
-            {/if}
+            <span class="flex flex-row gap-1 items-center">
+                <Icon src={UserGroup} size="20" />
+                {data.community.expand['communityCounts(community)'][0].members}
+            </span>
+            <span class="flex flex-row gap-1 items-center">
+                <Icon src={PencilSquare} size="20" />
+                {data.community.expand['communityCounts(community)'][0].posts}
+            </span>
+            <span class="flex flex-row gap-1 items-center">
+                <Icon src={Calendar} size="20" />
+                {new Date(data.community.created).toLocaleDateString()}
+            </span>
+            <span class="flex flex-row gap-1 items-center">
+                <Icon src={UserCircle} size="20" />
+                <a href={`/user/${data.community.expand?.owner.username}`}>
+                    @{data.community.expand?.owner.username}
+                </a>
+            </span>
         </div>
         {#if $currentUser}
             <Button
-                major={$currentUser.communities.includes(community.id)}
-                onclick={() => follow(community)}
+                major={$currentUser.communities.includes(data.community.id)}
+                onclick={() => follow(data.community)}
             >
-                {#if $currentUser.communities.includes(community.id)}
+                {#if $currentUser.communities.includes(data.community.id)}
                     Followed
                 {:else}
                     Follow
@@ -115,18 +89,18 @@
             </Button>
         {/if}
     {:else}
-        <Loader />
+        <Loader width={24} />
     {/if}
 </div>
-{#key community}
-    {#if community}
+{#if data.community}
+    {#key data.community}
         <PostFetch
             let:posts
             let:fetchPosts
             let:hasMore
             let:addPosts
-            filter={(record) => record.community == community?.id}
-            filterString={`community.id = "${community.id}"`}
+            filter={(record) => record.community == data.community?.id}
+            filterString={`community.id = "${data.community.id}"`}
         >
             <PostList {posts} />
             <InfiniteScroll
@@ -136,7 +110,7 @@
                         await fetchPosts(
                             true,
                             false,
-                            `community.id = "${community?.id}"`
+                            `community.id = "${data.community?.id}"`
                         ),
                         false
                     )}
@@ -144,5 +118,5 @@
                 {hasMore}
             />
         </PostFetch>
-    {/if}
-{/key}
+    {/key}
+{/if}
