@@ -86,11 +86,13 @@
 
 <Button major={userLike != undefined} onclick={like} disabled={liking}>
     <div class="flex flex-row gap-1 items-center">
-        <Icon mini={true} src={Heart} size="20" />
         {#if !liking}
-            {likes}
+            <Icon mini={true} src={Heart} size="20" />
         {:else}
-            <Loader width={14} />
+            <div class="px-[2px]">
+                <Loader width={16} />
+            </div>
         {/if}
+        {likes}
     </div>
 </Button>

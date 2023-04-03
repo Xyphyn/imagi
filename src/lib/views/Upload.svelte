@@ -130,10 +130,9 @@
             />
         </div>
         <Button type="submit" major={true} disabled={formData.loading}>
-            {#if formData.loading}<Loader />{:else}<Icon
-                    src={PencilSquare}
-                    size="20"
-                />{/if} Post
+            {#if formData.loading}<div class="px-[2px]">
+                    <Loader width={16} />
+                </div>{:else}<Icon src={PencilSquare} size="20" />{/if} Post
         </Button>
     </form>
 </Modal>
