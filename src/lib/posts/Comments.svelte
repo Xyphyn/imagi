@@ -126,6 +126,6 @@
             class="w-full"
             animate:flip={{ duration: 1000, easing: expoOut }}
         >
-            <Comment {comment} />
+            <Comment {comment} {post} />
         </div>{/each}
 {/if}

@@ -3,7 +3,7 @@
     import Button from '$lib/Button.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
-    import type { CommentsResponse } from '$lib/types/pb-types'
+    import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
     import {
         Menu,
         MenuButton,
@@ -19,6 +19,7 @@
     } from 'svelte-hero-icons'
 
     export let comment: CommentsResponse<any>
+    export let post: PostsResponse<any>
 
     function deleteComment(comment: CommentsResponse<any>) {
         pb.collection('comments').delete(comment.id)
@@ -37,12 +38,28 @@
     >
         <Avatar user={comment.expand?.user} width={48} />
         <div class="inline-flex flex-col w-full">
-            <a
-                class="w-max opacity-70 link text-sm"
-                href={`/user/${comment.expand?.user.username}`}
-            >
-                {comment.expand?.user.username}
-            </a>
+            <div>
+                <a
+                    class="w-max opacity-70 link text-sm"
+                    href={`/user/${comment.expand?.user.username}`}
+                >
+                    {comment.expand?.user.username}
+                </a>
+                {#if comment.expand?.user.role}
+                    <span
+                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100"
+                    >
+                        {comment.expand?.user.role}
+                    </span>
+                {/if}
+                {#if post.user == comment.user}
+                    <span
+                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100"
+                    >
+                        OP
+                    </span>
+                {/if}
+            </div>
             <span class="border-box break-words">
                 {comment.content}
             </span>
