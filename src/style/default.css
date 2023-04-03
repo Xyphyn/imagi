@@ -120,5 +120,5 @@ html {
 }
 
 * {
-    @apply outline-primary outline-0 focus:outline-4 transition-all outline-offset-2
+    @apply focus:outline-primary outline-0 focus:outline-4 outline-offset-2
 }
