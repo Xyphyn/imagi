@@ -20,8 +20,6 @@
         Newspaper,
         GlobeAlt,
         PencilSquare,
-        Bell,
-        BellAlert,
         Envelope,
         EllipsisHorizontal,
     } from 'svelte-hero-icons'
@@ -64,10 +62,14 @@
             height={48}
         />
         <span class="hidden gap-2 items-center text-2xl font-bold md:flex">
-            imagi <span
+            Imagi <span
                 class="py-1 px-2 text-base text-black bg-gradient-to-br rounded-md from-primary to-secondary"
             >
-                BETA
+                {#if import.meta.env.VITE_VERSION}
+                    {import.meta.env.VITE_VERSION}
+                {:else}
+                    BETA
+                {/if}
             </span>
         </span>
     </a>
@@ -166,10 +168,15 @@
             </MenuItems>
         </Transition>
     </Menu>
-    <Button major={false} onclick={() => goto('/explore')} label="Explore">
+    <a
+        href="/explore"
+        aria-label="Explore"
+        class="active:scale-95 px-3 py-2 rounded-md text-sm
+    focus:outline-4 flex flex-row gap-2 items-center font-medium hover:brightness-[103%] transition-all ease-out-expo dark:bg-slate-700 bg-slate-200"
+    >
         <Icon src={GlobeAlt} size="20" />
         <span class="hidden sm:block">Explore</span>
-    </Button>
+    </a>
     <Menu class="menu">
         <MenuButton>
             <Button major={true} label="Create">

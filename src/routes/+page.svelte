@@ -46,6 +46,10 @@
         pb.collection('communities')
             .getList<CommunitiesResponse>(1, 50, {
                 sort: '-created',
+                filter:
+                    ($currentUser?.communities ?? [])
+                        .map((community: string) => `id = "${community}"`)
+                        .join(' || ') ?? '',
             })
             .then((data) => {
                 communities = data.items
@@ -71,7 +75,7 @@
             </div>
         {/each}
     {:else}
-        {#each new Array(15) as items}
+        {#each new Array(6) as items}
             <RowSkeleton />
         {/each}
     {/if}

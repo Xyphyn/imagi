@@ -5,6 +5,7 @@
     export let data
 </script>
 
+<title>{data.post.title}</title>
 <h1
     class="text-4xl font-bold w-full mx-auto flex flex-row items-center justify-center mb-4"
 >

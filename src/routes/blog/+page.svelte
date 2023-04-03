@@ -7,6 +7,7 @@
     // extra comment because vscode syntax highlighting is goofy
 </script>
 
+<title>Imagi Blog</title>
 <div class="flex flex-col items-center justify-center gap-4">
     <h1 class="text-4xl font-bold"><Colored>Blog</Colored></h1>
     <div

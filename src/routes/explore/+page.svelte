@@ -39,20 +39,22 @@
 <div class="flex flex-col items-center p-4 box-border">
     <h1 class="text-4xl font-bold md:self-start"><Colored>Explore</Colored></h1>
     <span class="self-start mt-4 font-bold text-xl">New Users</span>
-    <div class="flex overflow-auto flex-row gap-4 self-start h-12 box-border">
+    <div class="flex overflow-auto flex-row gap-4 my-4 h-12 self-start">
         {#if !users}
-            <div class="flex flex-row flex-shrink-0 gap-2 items-center h-8">
-                <div
-                    class="w-8 h-8 bg-white rounded-full animate-pulse dark:bg-slate-700"
-                />
-                <div
-                    class="w-24 h-8 bg-white rounded-full animate-pulse dark:bg-slate-700"
-                />
-            </div>
+            {#each new Array(10) as items}
+                <div class="flex flex-row flex-shrink-0 gap-2 items-center h-8">
+                    <div
+                        class="w-8 h-8 bg-white rounded-full animate-pulse dark:bg-slate-700"
+                    />
+                    <div
+                        class="w-24 h-8 bg-white rounded-full animate-pulse dark:bg-slate-700"
+                    />
+                </div>
+            {/each}
         {:else}
             {#each users as user}
                 <div
-                    class="flex flex-row flex-shrink-0 gap-2 items-center link"
+                    class="flex flex-row flex-shrink-0 gap-2 items-center h-8 link"
                 >
                     <Avatar {user} width={32} thumbnail="32x32" />
                     <a href={`/user/${user.username}`}>{user.username}</a>
@@ -65,7 +67,18 @@
         class="grid grid-cols-1 gap-4 mt-4 w-full md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
     >
         {#if !communities}
-            <RowSkeleton />
+            {#each new Array(8) as items}
+                <div
+                    class="w-full flex flex-col h-[13.5rem] shadow-lg p-6 rounded-lg gap-4 items-center bg-white dark:bg-slate-800"
+                >
+                    <div
+                        class="w-16 h-16 animate-pulse bg-slate-200 dark:bg-slate-700 rounded-full p-2"
+                    />
+                    <div
+                        class="w-[70%] animate-pulse bg-slate-200 dark:bg-slate-700 rounded-lg p-2 mt-4"
+                    />
+                </div>
+            {/each}
         {:else}
             {#each communities as community}
                 <div
