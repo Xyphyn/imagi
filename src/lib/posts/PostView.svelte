@@ -35,7 +35,6 @@
 
     openPost.subscribe((post) => {
         if (prevPost != post && post != undefined) {
-            image = ''
             loading = true
             prevPost = post
             image = pb.getFileUrl(post, post.image)
@@ -161,12 +160,17 @@
                     </video>
                 {/key}
             {:else}
-                <img
-                    src={image}
-                    alt={$openPost.description}
-                    class="w-full max-w-xl rounded-lg shadow-md"
-                    on:load={() => (loading = false)}
-                />
+                {#key image}
+                    <img
+                        src={image}
+                        alt={$openPost.description}
+                        width={700}
+                        height={500}
+                        class="w-full max-w-xl bg-white rounded-lg shadow-md"
+                        on:load={() => (loading = false)}
+                        on:loadstart={() => console.log('load start')}
+                    />
+                {/key}
             {/if}
             <Likes post={$openPost} />
             <Comments post={$openPost} />

@@ -118,3 +118,7 @@ html {
 .link {
     @apply hover:text-secondary hover:fill-secondary transition-all duration-200;
 }
+
+* {
+    @apply outline-primary outline-0 focus:outline-4 transition-all outline-offset-2
+}

@@ -54,7 +54,7 @@
         {:else}
             {#each users as user}
                 <div
-                    class="flex flex-row flex-shrink-0 gap-2 items-center h-8 link"
+                    class="flex flex-row flex-shrink-0 gap-2 items-center h-8 link popin"
                 >
                     <Avatar {user} width={32} thumbnail="32x32" />
                     <a href={`/user/${user.username}`}>{user.username}</a>
@@ -69,7 +69,7 @@
         {#if !communities}
             {#each new Array(8) as items}
                 <div
-                    class="w-full flex flex-col h-[13.5rem] shadow-lg p-6 rounded-lg gap-4 items-center bg-white dark:bg-slate-800"
+                    class="w-full flex flex-col h-[13.5rem] shadow-lg p-6 rounded-lg gap-4 items-center bg-white dark:bg-slate-800 popin"
                 >
                     <div
                         class="w-16 h-16 animate-pulse bg-slate-200 dark:bg-slate-700 rounded-full p-2"
@@ -82,7 +82,7 @@
         {:else}
             {#each communities as community}
                 <div
-                    class="flex flex-col gap-4 justify-center items-center p-6 w-full bg-white rounded-lg shadow-lg transition-transform transform-gpu cursor-pointer dark:bg-slate-800
+                    class="popin flex flex-col gap-4 justify-center items-center p-6 w-full bg-white rounded-lg shadow-lg transition-transform transform-gpu cursor-pointer dark:bg-slate-800
   hover:-translate-y-1"
                     on:click={() => goto(`/community/${community.name}`)}
                     on:keypress={() => goto(`/community/${community.name}`)}

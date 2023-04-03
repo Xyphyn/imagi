@@ -1,12 +1,8 @@
 <script lang="ts">
     import PostSkeleton from '$lib/skeletons/PostSkeleton.svelte'
     import { flip } from 'svelte/animate'
-    import { expoInOut, expoOut } from 'svelte/easing'
-    import type {
-        PostsResponse,
-        UsersRecord,
-        UsersResponse,
-    } from '../types/pb-types'
+    import { expoInOut } from 'svelte/easing'
+    import type { PostsResponse, UsersResponse } from '../types/pb-types'
     import Post from './Post.svelte'
     import PostView from './PostView.svelte'
 
