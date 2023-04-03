@@ -159,7 +159,7 @@
                         >
                             {comment.expand?.post.description}
                         </a>
-                        <Comment {comment} />
+                        <Comment {comment} post={comment.expand?.post} />
                     </div>
                 {/each}
             {/if}
