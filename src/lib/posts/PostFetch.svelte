@@ -6,6 +6,7 @@
     import { Collections, type PostsResponse } from '$lib/types/pb-types'
     import nProgress from 'nprogress'
     import { onDestroy, onMount } from 'svelte'
+    import { userSettings } from '../../stores'
 
     /**
      * The filter for new items (from subscriptions) to be filtered by.
@@ -14,7 +15,7 @@
 
     export let filterString: string = ''
 
-    export let batchSize: number = 20
+    export let batchSize: number = $userSettings.batchSize || 20
 
     let posts: PostsResponse<any>[] | undefined
 

@@ -5,12 +5,14 @@ interface UserSettings {
     nossr: boolean
     thumbSize: '64x64' | '128x128' | '256x256'
     readUntil: Date
+    batchSize: number
 }
 
 const defaultSettings: UserSettings = {
     nossr: true,
     thumbSize: '128x128',
-    readUntil: new Date()
+    readUntil: new Date(),
+    batchSize: 20,
 }
 
 export const userSettings = writable(defaultSettings)
@@ -18,7 +20,7 @@ export const openPost = writable<PostsResponse<any>>()
 
 function mergeObjects<T>(obj1: any, obj2: any): T {
     for (let prop in obj2) {
-        if (!(prop in obj1)) {
+        if (!(prop in obj1) || obj1[prop] == null || obj2[prop] == '') {
             obj1[prop] = obj2[prop]
         }
     }

@@ -182,6 +182,30 @@
                     </Button>
                 </div>
             </div>
+            <div
+                class="flex flex-row  gap-2 justify-between items-center w-full"
+            >
+                <span class="flex flex-col w-[80%]">
+                    Batch Size <span class="text-sm opacity-50">
+                        How many posts to load at a time.
+                    </span>
+                </span>
+                <input
+                    bind:value={$userSettings.batchSize}
+                    type="number"
+                    placeholder="Batch Size"
+                    on:input={(event) => {
+                        const value = event.currentTarget.value
+                        if (
+                            !Number.isInteger(Number(value)) ||
+                            value.length > 2
+                        ) {
+                            event.preventDefault()
+                        }
+                    }}
+                    maxlength={2}
+                />
+            </div>
         </TabPanel>
         {#if $currentUser}
             <TabPanel
