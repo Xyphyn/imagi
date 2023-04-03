@@ -17,6 +17,8 @@
 
     export let batchSize: number = $userSettings.batchSize || 20
 
+    export let realtime = true
+
     let posts: PostsResponse<any>[] | undefined
 
     let page: number = 1
@@ -60,7 +62,10 @@
         if (!newPosts) return
 
         if (replace) posts = newPosts
-        else posts = [...posts!, ...newPosts]
+        else {
+            if (posts) posts = [...posts!, ...newPosts]
+            else posts = newPosts
+        }
     }
 
     let unsubscribe: () => void
@@ -71,6 +76,7 @@
         unsubscribe = await pb
             .collection(Collections.Posts)
             .subscribe<PostsResponse<any>>('*', async ({ record, action }) => {
+                if (!realtime) return
                 if (!filter(record)) return
 
                 switch (action) {

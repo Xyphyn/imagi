@@ -127,9 +127,10 @@
                 class="flex flex-row  gap-2 justify-between items-center w-full"
             >
                 <span class="flex flex-col w-[80%]">
-                    No-SSR Posts <span class="text-sm opacity-50">
+                    Post Dialogs
+                    <span class="text-sm opacity-50">
                         Loads posts client side, opening posts in a dialog
-                        instead of a page.
+                        instead of a page. (Recommended)
                     </span>
                 </span>
                 <Switch
