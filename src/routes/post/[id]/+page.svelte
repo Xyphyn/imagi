@@ -44,7 +44,7 @@
 <meta content={`#72efdd`} data-react-helmet="true" name="theme-color" />
 <meta name="twitter:card" content="summary_large_image" />
 <div
-    class="w-max mx-auto items-center flex flex-col gap-4 p-8 rounded-lg bg-white shadow-lg popin"
+    class="w-max mx-auto items-center flex flex-col gap-4 p-8 rounded-lg bg-white dark:bg-slate-800 shadow-lg popin"
 >
     <div class="inline-flex flex-col self-start w-full relative">
         <span class="text-xl font-bold w-[90%] break-words">

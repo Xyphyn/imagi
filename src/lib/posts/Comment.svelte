@@ -47,14 +47,14 @@
                 </a>
                 {#if comment.expand?.user.role}
                     <span
-                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100"
+                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100 text-black"
                     >
                         {comment.expand?.user.role}
                     </span>
                 {/if}
                 {#if post.user == comment.user}
                     <span
-                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100"
+                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100 text-black"
                     >
                         OP
                     </span>
