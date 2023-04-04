@@ -94,12 +94,16 @@
                 </span>
                 <span class="flex flex-row gap-1 items-center">
                     <Icon src={UserCircle} size="20" />
-                    <a
-                        href={`/user/${data.community.expand?.owner.username}`}
-                        class="link"
-                    >
-                        @{data.community.expand?.owner.username}
-                    </a>
+                    {#if data.community.expand?.owner}
+                        <a
+                            href={`/user/${data.community.expand?.owner.username}`}
+                            class="link"
+                        >
+                            @{data.community.expand?.owner.username}
+                        </a>
+                    {:else}
+                        <span>[deleted]</span>
+                    {/if}
                 </span>
             </div>
             {#if $currentUser}
