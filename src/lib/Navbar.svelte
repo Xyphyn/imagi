@@ -85,7 +85,7 @@
                 {#if blogposts}
                     {#if blogposts.find((post) => new Date(post.created).getTime() > new Date($userSettings.readUntil).getTime())}
                         <div
-                            class="bg-red-400 absolute left-[14px] top-2 w-2 h-2 rounded-full"
+                            class="bg-red-400 absolute -top-[.20rem] -left-[.20rem] w-2 h-2 rounded-full"
                         />
                     {/if}
                 {/if}
