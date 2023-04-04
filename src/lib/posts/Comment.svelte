@@ -3,6 +3,7 @@
     import Button from '$lib/Button.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import RelativeDate from '$lib/RelativeDate.svelte'
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
     import {
         Menu,
@@ -32,13 +33,13 @@
     }
 </script>
 
-<div class="relative w-full group">
+<div class="relative w-full group flex-grow-0">
     <div
-        class="flex relative flex-row gap-2 items-center p-4 w-full rounded-lg overshoot box-border bg-slate-100 dark:bg-slate-700"
+        class="flex relative flex-row gap-2 items-start p-4 w-full rounded-lg popin box-border bg-slate-100 dark:bg-slate-700 flex-grow-0"
     >
-        <Avatar user={comment.expand?.user} width={48} />
+        <Avatar user={comment.expand?.user} width={32} thumbnail="32x32" />
         <div class="inline-flex flex-col w-full">
-            <div>
+            <div class="inline">
                 <a
                     class="w-max opacity-70 link text-sm"
                     href={`/user/${comment.expand?.user.username}`}
@@ -47,20 +48,27 @@
                 </a>
                 {#if comment.expand?.user.role}
                     <span
-                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100 text-black"
+                        class="bg-gradient-to-r from-primary to-secondary px-[0.25rem] py-[0.1rem] capitalize font-bold rounded-md text-xs opacity-100 text-black"
                     >
                         {comment.expand?.user.role}
                     </span>
                 {/if}
                 {#if post.user == comment.user}
                     <span
-                        class="bg-gradient-to-r from-primary to-secondary px-2 py-1 capitalize font-bold rounded-md text-xs opacity-100 text-black"
+                        class="bg-gradient-to-r from-primary to-secondary  px-[0.25rem] py-[0.1rem] capitalize font-bold rounded-md text-xs opacity-100 text-black"
                     >
                         OP
                     </span>
                 {/if}
+                <div class="inline text-xs opacity-60">
+                    •
+                    <RelativeDate
+                        date={comment.created}
+                        class="inline text-xs"
+                    />
+                </div>
             </div>
-            <span class="border-box break-words">
+            <span class="border-box break-words flex-grow-0 text-sm">
                 {comment.content}
             </span>
         </div>
@@ -69,7 +77,7 @@
         <MenuButton
             class="opacity-0 transition-opacity group-hover:opacity-100"
         >
-            <Button class="gap-0 px-1 py-[2px] -z-10">
+            <Button class="gap-0 px-[2px] py-[2px] -z-10">
                 <Icon size="20" src={EllipsisHorizontal} />
             </Button>
         </MenuButton>

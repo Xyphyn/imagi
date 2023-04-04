@@ -36,10 +36,10 @@
 </script>
 
 <title>Imagi | Explore</title>
-<div class="flex flex-col items-center p-4 box-border">
+<div class="flex flex-col items-center p-4 box-border w-full">
     <h1 class="text-4xl font-bold md:self-start"><Colored>Explore</Colored></h1>
     <span class="self-start mt-4 font-bold text-xl">New Users</span>
-    <div class="flex overflow-auto flex-row gap-4 my-4 h-12 self-start">
+    <div class="flex overflow-auto flex-row gap-4 my-4 h-12 self-start w-full">
         {#if !users}
             {#each new Array(10) as items}
                 <div class="flex flex-row flex-shrink-0 gap-2 items-center h-8">

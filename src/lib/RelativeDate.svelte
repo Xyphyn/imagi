@@ -17,6 +17,9 @@
             return `${days} day${days === 1 ? '' : 's'} ago`
         }
     }
+
+    let clazz = ''
+    export { clazz as class }
 </script>
 
-<p>{getDateDiff(date)}</p>
+<p class={clazz}>{getDateDiff(date)}</p>
