@@ -1,12 +1,9 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
 
-    // @ts-ignore
     import Avatar from '$lib/Avatar.svelte'
-    import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
-    import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
     import type {
         CommunitiesResponse,
         UsersResponse,

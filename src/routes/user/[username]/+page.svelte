@@ -63,20 +63,24 @@
             <Colored>{data.user.username}</Colored>
         </h1>
         {#if data.user.bio}
-            <p class="opacity-75">{data.user.bio}</p>
+            <p class="opacity-75 text-center">{data.user.bio}</p>
         {/if}
-        <div class="flex flex-row gap-4 justify-center w-full">
+        <div class="flex flex-row gap-4 justify-center w-full flex-wrap">
             {#if data.user}
-                <span class="flex flex-row gap-1 items-center">
-                    <Icon src={ChatBubbleLeftEllipsis} size="20" />
+                <span class="inline">
+                    <Icon
+                        src={ChatBubbleLeftEllipsis}
+                        size="20"
+                        class="inline"
+                    />
                     {data.user?.expand['counts(user)'][0].comments}
                 </span>
-                <span class="flex flex-row gap-1 items-center">
-                    <Icon src={PencilSquare} size="20" />
+                <span class="inline">
+                    <Icon src={PencilSquare} size="20" class="inline" />
                     {data.user?.expand['counts(user)'][0].posts}
                 </span>
-                <span class="flex flex-row gap-1 items-center">
-                    <Icon src={Calendar} size="20" />
+                <span class="inline">
+                    <Icon src={Calendar} size="20" class="inline" />
                     {new Date(data.user.created).toLocaleDateString()}
                 </span>
             {:else}
