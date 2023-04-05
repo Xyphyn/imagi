@@ -9,11 +9,7 @@
      */
     export let threshold = 300
 
-    onMount(() => {
-        window.addEventListener('scroll', (event) => {
-            open = window.scrollY > threshold
-        })
-    })
+    let scroll = 0
 
     function popIn(node: Node, { duration }: { duration: number }) {
         return {
@@ -27,8 +23,11 @@
             },
         }
     }
+
+    $: open = scroll > threshold
 </script>
 
+<svelte:window bind:scrollY={scroll} />
 {#if open}
     <div
         class="fixed top-0 w-full backdrop-blur-2xl bg-white dark:bg-slate-800 bg-opacity-90 dark:bg-opacity-80 h-16 p-4 flex flex-row items-center z-20 m-0 left-0"
