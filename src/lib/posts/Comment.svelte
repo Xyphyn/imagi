@@ -97,7 +97,7 @@
                         type="text"
                         bind:value={newComment}
                         placeholder="Edited comment"
-                        class="bg-slate-200 dark:bg-slate-800 w-full"
+                        class="bg-slate-200 dark:bg-slate-600 w-full"
                         maxlength="256"
                     />
                     <Button
@@ -105,7 +105,7 @@
                             editing = false
                             newComment = prevContent
                         }}
-                        class="px-2 py-2"
+                        class="px-2 py-2 dark:bg-slate-600"
                     >
                         <Icon src={XMark} size="20" />
                     </Button>

@@ -77,7 +77,7 @@
                             type="text"
                             bind:value={newTitle}
                             placeholder="Edited title"
-                            class="bg-slate-200 dark:bg-slate-800 w-full"
+                            class="bg-slate-200 dark:bg-slate-700 w-full"
                             minlength="1"
                             maxlength="64"
                         />
