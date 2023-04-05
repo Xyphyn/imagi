@@ -38,6 +38,6 @@
         <div class="mr-auto rounded-full w-12 h-12">
             <slot name="image" />
         </div>
-        <slot name="button" />
+        <slot name="buttons" />
     </div>
 {/if}

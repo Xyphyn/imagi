@@ -48,8 +48,13 @@
                 sort: '-created',
             })
 
-        if (posts)
-            if (posts?.length + batchSize >= data.totalItems) hasMore = false
+        if (posts) {
+            if (posts?.length + batchSize >= data.totalItems) {
+                hasMore = false
+            }
+        }
+
+        if (data.items.length >= data.totalItems) hasMore = false
 
         nProgress.done()
         return data.items!

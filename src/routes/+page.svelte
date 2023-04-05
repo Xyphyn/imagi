@@ -61,7 +61,7 @@
 <title>Imagi</title>
 <Actionbar>
     <img src="/logo.svg" alt="Imagi logo" slot="image" />
-    <Button onclick={() => window.scrollTo(0, 0)} major slot="button">
+    <Button onclick={() => window.scrollTo(0, 0)} major slot="buttons">
         <Icon src={ArrowUp} size="20" />
     </Button>
 </Actionbar>
