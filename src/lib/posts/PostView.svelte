@@ -13,6 +13,10 @@
         Trash,
         Square2Stack,
         EllipsisVertical,
+        Pencil,
+        XMark,
+        Check,
+        PencilSquare,
     } from 'svelte-hero-icons'
     import {
         Menu,
@@ -32,25 +36,88 @@
     let prevPost: PostsResponse<any>
 
     let image: string = ''
+    let editing = false
+    let editLoad = false
+
+    let newTitle = ''
 
     openPost.subscribe((post) => {
         if (prevPost != post && post != undefined) {
+            editing = false
             loading = true
             prevPost = post
+            newTitle = post.description
             image = pb.getFileUrl(post, post.image)
         }
     })
+
+    async function updatePost(title: string) {
+        if (!$openPost || title == '' || !title) {
+            return
+        }
+        return await pb
+            .collection('posts')
+            .update($openPost.id, { description: title })
+    }
 
     export let open: boolean = false
 </script>
 
 <Modal bind:open>
-    <div class="max-w-[95vw] items-center flex flex-col gap-4 p-4">
+    <div class="max-w-[95vw] items-center flex flex-col gap-4 p-2 md:p-4">
         {#if $openPost}
             <div class="inline-flex flex-col self-start w-full relative">
-                <span class="text-xl font-bold w-[90%] break-words">
-                    {$openPost.description}
-                </span>
+                {#if !editing}
+                    <span class="text-xl font-bold w-[90%] break-words">
+                        {$openPost.description}
+                    </span>
+                {:else}
+                    <div class="mt-1 w-[90%] flex-col md:flex-row flex gap-2">
+                        <input
+                            type="text"
+                            bind:value={newTitle}
+                            placeholder="Edited title"
+                            class="bg-slate-200 dark:bg-slate-700 w-full"
+                            minlength="1"
+                            maxlength="64"
+                        />
+                        <div class="flex flex-row gap-2">
+                            <Button
+                                onclick={() => {
+                                    editing = false
+                                    newTitle = $openPost.description
+                                }}
+                                class="px-2 py-2 w-full md:w-min mx-auto"
+                            >
+                                <Icon src={XMark} size="20" class="mx-auto" />
+                            </Button>
+                            <Button
+                                onclick={() => {
+                                    editLoad = true
+                                    updatePost(newTitle).finally(() => {
+                                        editLoad = false
+                                        editing = false
+                                        $openPost.description = newTitle
+                                    })
+                                }}
+                                class="px-2 py-2  md:w-min w-full"
+                                major
+                            >
+                                {#if editLoad}
+                                    <div class="mx-auto">
+                                        <Loader width={20} />
+                                    </div>
+                                {:else}
+                                    <Icon
+                                        src={Check}
+                                        size="20"
+                                        class="mx-auto"
+                                    />
+                                {/if}
+                            </Button>
+                        </div>
+                    </div>
+                {/if}
                 <div class="flex flex-row gap-2">
                     <a
                         href={`/user/${$openPost.expand?.user.username}`}
@@ -87,6 +154,22 @@
                             <Colored>
                                 <h1 class="font-bold">Post Actions</h1>
                             </Colored>
+                            {#if $openPost.user == $currentUser?.id}
+                                <MenuItem>
+                                    <Button
+                                        class="w-full"
+                                        major={false}
+                                        onclick={() => {
+                                            editing = true
+                                        }}
+                                    >
+                                        <Icon
+                                            src={PencilSquare}
+                                            width="16"
+                                        />Edit
+                                    </Button>
+                                </MenuItem>
+                            {/if}
                             <MenuItem>
                                 <Button
                                     class="w-full"
