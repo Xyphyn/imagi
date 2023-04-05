@@ -149,17 +149,19 @@
                 <Colored>
                     <h1 class="font-bold">Comment Actions</h1>
                 </Colored>
-                <MenuItem>
-                    <Button
-                        class="w-full"
-                        major={false}
-                        onclick={() => {
-                            editing = true
-                        }}
-                    >
-                        <Icon src={PencilSquare} width="16" />Edit
-                    </Button>
-                </MenuItem>
+                {#if comment.user == $currentUser?.id}
+                    <MenuItem>
+                        <Button
+                            class="w-full"
+                            major={false}
+                            onclick={() => {
+                                editing = true
+                            }}
+                        >
+                            <Icon src={PencilSquare} width="16" />Edit
+                        </Button>
+                    </MenuItem>
+                {/if}
                 <MenuItem>
                     <Button
                         class="w-full"
