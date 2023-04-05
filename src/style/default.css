@@ -122,3 +122,11 @@ html {
 * {
     @apply focus:outline-primary outline-0 focus:outline-4 outline-offset-2
 }
+
+ul {
+    @apply list-disc;
+}
+
+ol {
+    @apply list-decimal;
+}
