@@ -14,9 +14,10 @@
     import Loader from '$lib/Loader.svelte'
     import Avatar from '$lib/Avatar.svelte'
     import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
-    import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
+    import { ArrowUp, ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
     import InfiniteScroll from 'svelte-infinite-scroll'
     import PostFetch from '$lib/posts/PostFetch.svelte'
+    import Actionbar from '$lib/Actionbar.svelte'
 
     let communities: CommunitiesResponse<any>[] | undefined
 
@@ -58,6 +59,15 @@
 </script>
 
 <title>Imagi</title>
+<Actionbar>
+    <div slot="image" class="flex flex-row items-center gap-2">
+        <img src="/logo.svg" alt="Imagi logo" class="inline" />
+        <span class="text-lg font-bold">Imagi</span>
+    </div>
+    <Button onclick={() => window.scrollTo(0, 0)} major slot="buttons">
+        <Icon src={ArrowUp} size="20" />
+    </Button>
+</Actionbar>
 <h1 class="m-4 mt-0 text-4xl font-bold"><Colored>Communities</Colored></h1>
 <div class="flex overflow-auto flex-row gap-4 m-4 h-12">
     {#if communities}

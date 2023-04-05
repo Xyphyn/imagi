@@ -1,7 +1,9 @@
 <script lang="ts">
     import { afterNavigate } from '$app/navigation'
     import { page } from '$app/stores'
+    import Actionbar from '$lib/Actionbar.svelte'
     import Avatar from '$lib/Avatar.svelte'
+    import Button from '$lib/Button.svelte'
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { pb } from '$lib/pocketbase'
@@ -23,6 +25,7 @@
     } from '@rgossiaux/svelte-headlessui'
     import { onMount } from 'svelte'
     import {
+        ArrowUp,
         Calendar,
         ChatBubbleLeft,
         ChatBubbleLeftEllipsis,
@@ -52,6 +55,17 @@
 </script>
 
 <title>Imagi | User</title>
+<Actionbar>
+    <div slot="image" class="flex flex-row items-center gap-2 h-full">
+        <Avatar user={data.user} type="user" width={36} thumbnail="32x32" />
+        <span class="font-bold text-lg">{data.user.username}</span>
+    </div>
+    <div class="flex flex-row gap-2" slot="buttons">
+        <Button major onclick={() => window.scrollTo(0, 0)}>
+            <Icon src={ArrowUp} size="20" />
+        </Button>
+    </div>
+</Actionbar>
 <div
     class="dark:bg-slate-800 bg-white max-w-xl min-h-[24rem] mx-auto flex flex-col items-center justify-center gap-4 p-4 rounded-lg shadow-lg popin"
 >
@@ -137,7 +151,7 @@
                 >
                     <PostList {posts} />
                     <InfiniteScroll
-                        threshold={400}
+                        threshold={800}
                         on:loadMore={async () =>
                             addPosts(
                                 await fetchPosts(

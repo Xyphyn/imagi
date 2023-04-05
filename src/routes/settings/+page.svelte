@@ -124,7 +124,7 @@
             class="flex flex-col gap-4 justify-between items-center p-4 w-full rounded-lg dark:bg-slate-800 bg-white shadow-lg popin"
         >
             <div
-                class="flex flex-row  gap-2 justify-between items-center w-full"
+                class="flex flex-row gap-2 justify-between items-center w-full"
             >
                 <span class="flex flex-col w-[80%]">
                     Post Dialogs
@@ -184,7 +184,7 @@
                 </div>
             </div>
             <div
-                class="flex flex-row  gap-2 justify-between items-center w-full"
+                class="flex flex-row gap-2 justify-between items-center w-full"
             >
                 <span class="flex flex-col w-[80%]">
                     Batch Size <span class="text-sm opacity-50">
@@ -213,9 +213,9 @@
                 class="flex flex-col justify-between items-center p-4 my-2 w-full rounded-lg dark:bg-slate-800 bg-white shadow-lg popin"
             >
                 <div
-                    class="flex flex-row justify-between items-center p-4 my-2 w-full rounded-lg"
+                    class="flex flex-row items-center p-4 my-2 gap-2 w-full rounded-lg"
                 >
-                    <span>Email</span>
+                    <span class="mr-auto">Email</span>
                     <input
                         type="text"
                         placeholder="New Email"
@@ -252,13 +252,13 @@
                     <div class="relative">
                         <textarea
                             cols="30"
-                            rows="5"
+                            rows="4"
                             maxlength="128"
                             placeholder="I like to argue with people online"
                             bind:value={accountSettings.bio}
                         />
                         <Button
-                            class="absolute right-0 bottom-0 m-2"
+                            class="absolute right-0 bottom-2 m-1"
                             major={true}
                             onclick={changeBio}
                         >

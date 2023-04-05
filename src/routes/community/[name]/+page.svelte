@@ -11,6 +11,7 @@
     import PostList from '$lib/posts/PostList.svelte'
     import type { CommunitiesResponse } from '$lib/types/pb-types'
     import {
+        ArrowUp,
         Calendar,
         Icon,
         PencilSquare,
@@ -19,6 +20,7 @@
     } from 'svelte-hero-icons'
     import InfiniteScroll from 'svelte-infinite-scroll'
     import { toast } from '../../../app'
+    import Actionbar from '$lib/Actionbar.svelte'
 
     export let data: { community: CommunitiesResponse<any> }
 
@@ -62,6 +64,34 @@
 </script>
 
 <title>Imagi | Community</title>
+<Actionbar>
+    <div slot="image" class="flex flex-row items-center gap-2 h-full">
+        <Avatar
+            user={data.community}
+            type="community"
+            width={36}
+            thumbnail="32x32"
+        />
+        <span class="font-bold text-lg">{data.community.name}</span>
+    </div>
+    <div class="flex flex-row gap-2" slot="buttons">
+        {#if $currentUser}
+            <Button
+                major={$currentUser.communities.includes(data.community.id)}
+                onclick={() => follow(data.community)}
+            >
+                {#if $currentUser.communities.includes(data.community.id)}
+                    Followed
+                {:else}
+                    Follow
+                {/if}
+            </Button>
+        {/if}
+        <Button major onclick={() => window.scrollTo(0, 0)}>
+            <Icon src={ArrowUp} size="20" />
+        </Button>
+    </div>
+</Actionbar>
 <div
     class="flex md:flex-row flex-col w-full gap-4 justify-center items-center mx-auto"
 >
@@ -177,7 +207,7 @@
         >
             <PostList {posts} />
             <InfiniteScroll
-                threshold={400}
+                threshold={800}
                 on:loadMore={async () =>
                     addPosts(
                         await fetchPosts(
