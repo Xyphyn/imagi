@@ -5,6 +5,7 @@
     import type { PostsResponse, UsersResponse } from '../types/pb-types'
     import Post from './Post.svelte'
     import PostView from './PostView.svelte'
+    import { scale } from 'svelte/transition'
 
     export let posts: PostsResponse<UsersResponse>[] | undefined
     export let containerQuery = false
@@ -26,6 +27,11 @@
         {#each posts as post (post.id)}
             <div
                 animate:flip={{ duration: 1000, easing: expoInOut }}
+                out:scale|local={{
+                    duration: 500,
+                    start: 0.8,
+                    easing: expoInOut,
+                }}
                 class="w-full h-full"
             >
                 <div class="w-full h-full popin">
