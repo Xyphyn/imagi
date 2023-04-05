@@ -115,15 +115,23 @@
     $: fetchComments(post)
 </script>
 
-<form on:submit|preventDefault={comment} class="flex flex-row gap-1 w-full">
-    <input
-        class="flex-auto w-full"
-        type="text"
+<form
+    on:submit|preventDefault={comment}
+    class="flex flex-col md:flex-row gap-1 w-full"
+>
+    <textarea
+        class="flex-auto w-full md:h-min"
+        rows="1"
         placeholder="What are you thinking?"
         maxlength="256"
         bind:value={newComment}
     />
-    <Button type="submit" class="w-min" major={true} disabled={submitting}>
+    <Button
+        type="submit"
+        class="w-full md:w-min mx-auto items-center justify-center"
+        major={true}
+        disabled={submitting}
+    >
         {#if submitting}<Loader width={20} />{:else}<Icon
                 src={ChatBubbleLeft}
                 size="20"

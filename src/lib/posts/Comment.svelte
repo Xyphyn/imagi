@@ -92,7 +92,7 @@
                     {comment.content}
                 </span>
             {:else}
-                <div class="mt-1 w-full flex-row flex gap-2">
+                <div class="mt-1 w-full flex flex-col md:flex-row gap-2">
                     <input
                         type="text"
                         bind:value={newComment}
@@ -100,33 +100,39 @@
                         class="bg-slate-200 dark:bg-slate-600 w-full"
                         maxlength="256"
                     />
-                    <Button
-                        onclick={() => {
-                            editing = false
-                            newComment = prevContent
-                        }}
-                        class="px-2 py-2 dark:bg-slate-600"
+                    <div
+                        class="flex flex-row gap-2 items-center justify-center"
                     >
-                        <Icon src={XMark} size="20" />
-                    </Button>
-                    <Button
-                        onclick={() => {
-                            editLoad = true
-                            updateComment(newComment).finally(() => {
-                                editLoad = false
+                        <Button
+                            onclick={() => {
                                 editing = false
-                                comment.content = newComment
-                            })
-                        }}
-                        class="px-2 py-2"
-                        major
-                    >
-                        {#if editLoad}
-                            <Loader width={20} />
-                        {:else}
-                            <Icon src={Check} size="20" />
-                        {/if}
-                    </Button>
+                                newComment = prevContent
+                            }}
+                            class="px-2 py-2 dark:bg-slate-600 w-full"
+                        >
+                            <Icon src={XMark} size="20" class="mx-auto" />
+                        </Button>
+                        <Button
+                            onclick={() => {
+                                editLoad = true
+                                updateComment(newComment).finally(() => {
+                                    editLoad = false
+                                    editing = false
+                                    comment.content = newComment
+                                })
+                            }}
+                            class="px-2 py-2 w-full"
+                            major
+                        >
+                            {#if editLoad}
+                                <div class="mx-auto">
+                                    <Loader width={20} />
+                                </div>
+                            {:else}
+                                <Icon src={Check} size="20" class="mx-auto" />
+                            {/if}
+                        </Button>
+                    </div>
                 </div>
             {/if}
         </div>
