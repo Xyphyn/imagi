@@ -52,7 +52,9 @@
     })
 
     async function updatePost(title: string) {
-        if (!$openPost) return
+        if (!$openPost || title == '' || !title) {
+            return
+        }
         return await pb
             .collection('posts')
             .update($openPost.id, { description: title })
@@ -76,6 +78,8 @@
                             bind:value={newTitle}
                             placeholder="Edited title"
                             class="bg-slate-200 dark:bg-slate-800 w-full"
+                            minlength="1"
+                            maxlength="64"
                         />
                         <Button
                             onclick={() => {

@@ -37,6 +37,9 @@
     }
 
     async function updateComment(content: string) {
+        if (!content || content == '') {
+            return
+        }
         return await pb
             .collection('comments')
             .update(comment.id, { content: content })
@@ -95,6 +98,7 @@
                         bind:value={newComment}
                         placeholder="Edited comment"
                         class="bg-slate-200 dark:bg-slate-800 w-full"
+                        maxlength="256"
                     />
                     <Button
                         onclick={() => {
