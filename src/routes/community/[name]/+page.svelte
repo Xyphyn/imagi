@@ -71,10 +71,14 @@
         {#if data.community}
             <Avatar user={data.community} type="community" width={128} />
 
-            <h1 class="text-4xl font-bold">
+            <h1
+                class="text-3xl md:text-4xl font-bold break-words max-w-full text-center"
+            >
                 <Colored>{data.community.name}</Colored>
             </h1>
-            <p class="italic">{data.community.description}</p>
+            <p class="italic break-words max-w-full text-center">
+                {data.community.description}
+            </p>
             <div
                 class="flex flex-row flex-wrap items-center gap-4 justify-center w-full mx-4"
             >
