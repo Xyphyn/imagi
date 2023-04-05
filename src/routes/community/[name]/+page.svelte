@@ -64,15 +64,15 @@
 </script>
 
 <title>Imagi | Community</title>
-<Actionbar threshold={200}>
-    <div slot="image" class=" flex flex-row items-center gap-2">
+<Actionbar>
+    <div slot="image" class="flex flex-row items-center gap-2 h-full">
         <Avatar
             user={data.community}
             type="community"
-            width={48}
-            thumbnail="48x48"
+            width={36}
+            thumbnail="32x32"
         />
-        {data.community.name}
+        <span class="font-bold text-lg">{data.community.name}</span>
     </div>
     <div class="flex flex-row gap-2" slot="buttons">
         {#if $currentUser}

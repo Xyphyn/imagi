@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
     import { expoInOut } from 'svelte/easing'
 
     let open = false
@@ -15,8 +15,7 @@
         })
     })
 
-    // @ts-ignore
-    function popIn(node: Node, { duration }) {
+    function popIn(node: Node, { duration }: { duration: number }) {
         return {
             duration,
             css: (t: number) => {
