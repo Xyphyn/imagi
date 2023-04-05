@@ -118,21 +118,26 @@
                         </div>
                     </div>
                 {/if}
-                <div class="flex flex-row gap-2">
-                    <a
-                        href={`/user/${$openPost.expand?.user.username}`}
+                <div class="flex flex-row gap-1">
+                    <button
+                        on:click={() =>
+                            goto(`/user/${$openPost.expand?.user.username}`)}
                         class="text-base opacity-80 link"
                     >
                         {$openPost.expand?.user.username}
-
-                        {#if $openPost.expand?.community}
-                            <a
-                                href={`/community/${$openPost.expand?.community.name}`}
-                            >
-                                • {$openPost.expand?.community.name}
-                            </a>
-                        {/if}
-                    </a>
+                    </button>
+                    {#if $openPost.expand?.community}
+                        •
+                        <button
+                            on:click={() =>
+                                goto(
+                                    `/community/${$openPost.expand?.community.name}`
+                                )}
+                            class="text-base opacity-80 link"
+                        >
+                            {$openPost.expand?.community.name}
+                        </button>
+                    {/if}
                 </div>
                 <Menu class="absolute top-0 right-0 text-left">
                     <MenuButton>
