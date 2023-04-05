@@ -8,6 +8,7 @@
     import { currentUser, pb } from '$lib/pocketbase'
     import { Icon, PencilSquare } from 'svelte-hero-icons'
     import { toast } from '../../app'
+    import { isVideo } from '$lib/util'
 
     export let open = false
     let uploadId: string | undefined
@@ -93,17 +94,39 @@
                 formData.loading = false
             })
     }
+
+    let previewURL: string | null = null
+
+    $: {
+        if (formData.files && formData.files[0]) {
+            previewURL = URL.createObjectURL(formData.files[0])
+        }
+    }
 </script>
 
 <Modal bind:open>
     <form
         on:submit|preventDefault={upload}
-        class="flex flex-col gap-4 items-center p-4"
+        class="flex flex-col gap-4 items-center p-4 mx-8"
     >
-        <Colored><h1 class="text-2xl font-bold">Create a Post</h1></Colored>
+        <Colored><h1 class="text-3xl font-bold">Create a Post</h1></Colored>
         <FilePicker bind:files={formData.files} accept="image/*,video/*">
             Pick a file
         </FilePicker>
+        {#if formData.files && previewURL}
+            {#if !isVideo(previewURL)}
+                <img
+                    src={previewURL}
+                    alt={formData.description}
+                    class="max-w-xs rounded-lg popin shadow-lg"
+                    on:load={() => {
+                        if (previewURL) {
+                            URL.revokeObjectURL(previewURL)
+                        }
+                    }}
+                />
+            {/if}
+        {/if}
         <div>
             <label for="upload-description" class="block my-1">
                 Description

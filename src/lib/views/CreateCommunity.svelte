@@ -55,10 +55,10 @@
 
 <Modal bind:open>
     <div class="flex flex-col gap-4 items-center p-8">
-        <h1 class="text-3xl font-bold">
+        <h1 class="text-3xl font-bold text-center">
             <Colored>Create a Community</Colored>
         </h1>
-        <p>
+        <p class="text-center">
             Communities are a place where you can post <b>
                 <Colored>organized</Colored>
             </b>
