@@ -119,9 +119,9 @@
     on:submit|preventDefault={comment}
     class="flex flex-col md:flex-row gap-1 w-full"
 >
-    <textarea
+    <input
+        type="text"
         class="flex-auto w-full md:h-min"
-        rows="1"
         placeholder="What are you thinking?"
         maxlength="256"
         bind:value={newComment}

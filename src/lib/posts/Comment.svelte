@@ -123,6 +123,7 @@
                             }}
                             class="px-2 py-2 w-full"
                             major
+                            type="submit"
                         >
                             {#if editLoad}
                                 <div class="mx-auto">
