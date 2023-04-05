@@ -114,7 +114,7 @@
     <Live live={true} />
     <PostList {posts} />
     <InfiniteScroll
-        threshold={400}
+        threshold={800}
         on:loadMore={async () =>
             addPosts(await fetchPosts(true, false, sort.string), false)}
         window={true}
