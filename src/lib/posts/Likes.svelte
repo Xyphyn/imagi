@@ -93,6 +93,8 @@
                 <Loader width={16} />
             </div>
         {/if}
-        {likes}
+        {#key likes}
+            <span class="popin">{likes}</span>
+        {/key}
     </div>
 </Button>

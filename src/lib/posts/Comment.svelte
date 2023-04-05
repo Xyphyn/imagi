@@ -1,6 +1,7 @@
 <script lang="ts">
     import Avatar from '$lib/Avatar.svelte'
     import Button from '$lib/Button.svelte'
+    import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import RelativeDate from '$lib/RelativeDate.svelte'
@@ -13,10 +14,13 @@
         Transition,
     } from '@rgossiaux/svelte-headlessui'
     import {
+        Check,
         EllipsisHorizontal,
         Icon,
+        PencilSquare,
         Square2Stack,
         Trash,
+        XMark,
     } from 'svelte-hero-icons'
 
     export let comment: CommentsResponse<any>
@@ -31,6 +35,18 @@
             navigator.clipboard.writeText(comment.content)
         }
     }
+
+    async function updateComment(content: string) {
+        return await pb
+            .collection('comments')
+            .update(comment.id, { content: content })
+    }
+
+    let editing = false
+    let editLoad = false
+
+    let newComment = comment.content
+    let prevContent = comment.content
 </script>
 
 <div class="relative w-full group flex-grow-0">
@@ -55,7 +71,7 @@
                 {/if}
                 {#if post.user == comment.user}
                     <span
-                        class="bg-gradient-to-r from-primary to-secondary  px-[0.25rem] py-[0.1rem] capitalize font-bold rounded-md text-xs opacity-100 text-black"
+                        class="bg-gradient-to-r from-primary to-secondary px-[0.25rem] py-[0.1rem] capitalize font-bold rounded-md text-xs opacity-100 text-black"
                     >
                         OP
                     </span>
@@ -68,12 +84,50 @@
                     />
                 </div>
             </div>
-            <span class="border-box break-words flex-grow-0 text-sm">
-                {comment.content}
-            </span>
+            {#if !editing}
+                <span class="border-box break-words flex-grow-0 text-sm">
+                    {comment.content}
+                </span>
+            {:else}
+                <div class="mt-1 w-full flex-row flex gap-2">
+                    <input
+                        type="text"
+                        bind:value={newComment}
+                        placeholder="Edited comment"
+                        class="bg-slate-200 dark:bg-slate-800 w-full"
+                    />
+                    <Button
+                        onclick={() => {
+                            editing = false
+                            newComment = prevContent
+                        }}
+                        class="px-2 py-2"
+                    >
+                        <Icon src={XMark} size="20" />
+                    </Button>
+                    <Button
+                        onclick={() => {
+                            editLoad = true
+                            updateComment(newComment).finally(() => {
+                                editLoad = false
+                                editing = false
+                                comment.content = newComment
+                            })
+                        }}
+                        class="px-2 py-2"
+                        major
+                    >
+                        {#if editLoad}
+                            <Loader width={20} />
+                        {:else}
+                            <Icon src={Check} size="20" />
+                        {/if}
+                    </Button>
+                </div>
+            {/if}
         </div>
     </div>
-    <Menu class="absolute top-0 right-0 m-2 text-left">
+    <Menu class="absolute top-0 right-0 m-2 text-left overflow-visible">
         <MenuButton
             class="opacity-0 transition-opacity group-hover:opacity-100"
         >
@@ -90,11 +144,22 @@
             leaveTo="transform opacity-0 scale-95 z-20"
         >
             <MenuItems
-                class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-800"
+                class="flex absolute right-0 z-40 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-800"
             >
                 <Colored>
                     <h1 class="font-bold">Comment Actions</h1>
                 </Colored>
+                <MenuItem>
+                    <Button
+                        class="w-full"
+                        major={false}
+                        onclick={() => {
+                            editing = true
+                        }}
+                    >
+                        <Icon src={PencilSquare} width="16" />Edit
+                    </Button>
+                </MenuItem>
                 <MenuItem>
                     <Button
                         class="w-full"

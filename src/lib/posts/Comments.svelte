@@ -75,11 +75,26 @@
                         comments = [record, ...comments!]
                         break
                     }
+
                     case 'delete': {
                         comments = comments?.filter(
                             (comment) => comment.id != record.id
                         )
                         break
+                    }
+
+                    case 'update': {
+                        if (!comments) {
+                            return
+                        }
+                        const index = comments?.findIndex(
+                            (comment) => comment.id == record.id
+                        )
+
+                        const comment = comments[index]
+                        comment.content = record.content
+
+                        comments[index] = comment
                     }
                 }
             }
