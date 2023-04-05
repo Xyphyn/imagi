@@ -138,7 +138,7 @@
             {/if}
         </div>
     </div>
-    <Menu class="absolute top-0 right-0 m-2 text-left overflow-visible">
+    <Menu class="absolute top-0 right-0 m-2 text-left overflow-visible z-20">
         <MenuButton
             class="opacity-0 transition-opacity group-hover:opacity-100"
         >
@@ -155,7 +155,7 @@
             leaveTo="transform opacity-0 scale-95 z-20"
         >
             <MenuItems
-                class="flex absolute right-0 z-40 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-800"
+                class="flex absolute right-0 z-40 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-900"
             >
                 <Colored>
                     <h1 class="font-bold">Comment Actions</h1>
