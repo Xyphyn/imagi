@@ -48,7 +48,7 @@
         on:click={() => {
             toasts.update((toasts) => toasts.filter((t) => t.id != toast.id))
         }}
-        class="absolute top-0 right-0 m-4"
+        class="absolute top-0 right-0 p-2 m-2 hover:bg-slate-100 hover:dark:bg-slate-700 transition-colors rounded-lg"
     >
         <Icon src={XMark} size="20" />
     </button>
