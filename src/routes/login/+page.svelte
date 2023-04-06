@@ -9,6 +9,7 @@
     import { addToast, ToastType } from '$lib/toasts/toasts'
     import Tooltip from '$lib/Tooltip.svelte'
     import {
+        Switch,
         Tab,
         TabGroup,
         TabList,
@@ -28,7 +29,6 @@
 
     interface FormChecks {
         rules: boolean
-        notice: boolean
     }
 
     let formData: FormData = {
@@ -38,7 +38,6 @@
         images: null,
         checks: {
             rules: false,
-            notice: false,
         },
         loading: false,
     }
@@ -128,7 +127,7 @@
 
 <title>Imagi | Login</title>
 <TabGroup
-    class="flex overflow-hidden flex-col gap-4 justify-center items-center p-4 w-full"
+    class="flex overflow-hidden flex-col gap-4 justify-center items-center p-8 w-full"
 >
     <TabList class="flex flex-row gap-4 w-full max-w-xl">
         <Tab
@@ -213,7 +212,7 @@
                     >
                         Email
                         <Tooltip
-                            text="Outlook emails are having issues. Email imagi@xylight.us to manually be verified."
+                            text="Having issues verifying? Email imagi@xylight.us to manually be verified."
                         >
                             <Icon src={InformationCircle} size="16" mini />
                         </Tooltip>
@@ -259,7 +258,39 @@
                         Pick an image
                     </FilePicker>
                 </div>
-                <Button class="mt-4" major={true} type="submit">
+                <div>
+                    <div
+                        class="flex flex-row justify-between items-center bg-slate-100 dark:bg-slate-700 p-1 px-2 rounded-md gap-4 mt-4"
+                    >
+                        <span class="text-sm">
+                            I agree to the <a href="/guidelines" class="link">
+                                guidelines
+                            </a>
+                        </span>
+                        <Switch
+                            let:checked
+                            checked={formData.checks.rules}
+                            on:change={(e) =>
+                                (formData.checks.rules = e.detail)}
+                        >
+                            <div
+                                class="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-md transition-all active:scale-90 ease-out-expo grid place-items-center {checked
+                                    ? 'bg-gradient-to-br from-primary to-secondary'
+                                    : ''}"
+                            >
+                                {#if checked}
+                                    <Icon src={Check} size="16" />
+                                {/if}
+                            </div>
+                        </Switch>
+                    </div>
+                </div>
+                <Button
+                    class="mt-4"
+                    major={true}
+                    disabled={!formData.checks.rules || formData.loading}
+                    type="submit"
+                >
                     {#if formData.loading}<Loader />{/if}Sign Up
                 </Button>
             </form>
