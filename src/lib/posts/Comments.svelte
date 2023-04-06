@@ -9,9 +9,9 @@
     import type { CommentsResponse, PostsResponse } from '$lib/types/pb-types'
     import { Icon, ChatBubbleLeft } from 'svelte-hero-icons'
     import { flip } from 'svelte/animate'
-    import { toast } from '../../app'
     import Comment from './Comment.svelte'
     import { expoOut } from 'svelte/easing'
+    import { ToastType, addToast } from '$lib/toasts/toasts'
 
     export let post: PostsResponse<any>
 
@@ -37,16 +37,16 @@
             })
             .catch(() => {
                 if (pb.authStore.isValid) {
-                    toast(
+                    addToast(
                         'Error',
                         "Could not comment. Check if you're verified.",
-                        'error'
+                        ToastType.error
                     )
                 } else {
-                    toast(
+                    addToast(
                         'Error',
                         'Your session has expired. Please log in again',
-                        'error'
+                        ToastType.error
                     )
                 }
             })

@@ -4,10 +4,10 @@
     import nprogress from 'nprogress'
     import 'nprogress/nprogress.css'
     import { navigating } from '$app/stores'
-    import { ToastContainer, FlatToast } from 'svelte-toasts'
     import { onMount } from 'svelte'
     import { currentUser, pb } from '$lib/pocketbase'
-    import { toast } from '../app'
+    import ToastContainer from '$lib/toasts/ToastContainer.svelte'
+    import { ToastType, addToast } from '$lib/toasts/toasts'
 
     nprogress.configure({
         showSpinner: false,
@@ -32,13 +32,15 @@
     }
 
     if (!pb.authStore.isValid && $currentUser) {
-        toast('Info', 'Your session has expired, please relog in.', 'info')
+        addToast(
+            'Info',
+            'Your session has expired, please relog in.',
+            ToastType.info
+        )
     }
 </script>
 
-<ToastContainer placement="top-right" let:data>
-    <FlatToast {data} />
-</ToastContainer>
+<ToastContainer />
 
 <div
     class="flex overflow-hidden relative flex-col transition-colors dark:text-white text-slate-800 font-normal"

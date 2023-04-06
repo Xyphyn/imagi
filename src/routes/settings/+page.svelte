@@ -22,8 +22,8 @@
         Cog6Tooth,
         UserCircle,
     } from 'svelte-hero-icons'
-    import { toast } from '../../app'
     import { userSettings } from '../../stores'
+    import { ToastType, addToast } from '$lib/toasts/toasts'
 
     interface AccountSettings {
         email: string
@@ -49,13 +49,17 @@
                 bio: accountSettings.bio,
             })
             .then(() => {
-                toast('Success', 'Successfully changed bio.', 'success')
+                addToast(
+                    'Success',
+                    'Successfully changed bio.',
+                    ToastType.success
+                )
             })
             .catch(() => {
-                toast(
+                addToast(
                     'Error',
                     'Failed to change bio. Try refreshing your login.',
-                    'error'
+                    ToastType.error
                 )
             })
     }
@@ -69,17 +73,17 @@
         pb.collection('users')
             .update($currentUser!.id, data)
             .then(() => {
-                toast(
+                addToast(
                     'Success',
                     'Success! You may need to refresh to see changes.',
-                    'success'
+                    ToastType.success
                 )
             })
             .catch(() => {
-                toast(
+                addToast(
                     'Error',
                     "Could not change avatar. Check the image's file size.",
-                    'error'
+                    ToastType.error
                 )
             })
     }
@@ -227,17 +231,17 @@
                             pb.collection('users')
                                 .requestEmailChange(accountSettings.email)
                                 .then(() => {
-                                    toast(
+                                    addToast(
                                         'Confirmation',
                                         'Confirm your new email, a verification link was sent to your inbox.',
-                                        'info'
+                                        ToastType.info
                                     )
                                 })
                                 .catch(() => {
-                                    toast(
+                                    addToast(
                                         'Error',
                                         'Could not change email. The email may be invalid or already taken.',
-                                        'error'
+                                        ToastType.error
                                     )
                                 })
                         }}

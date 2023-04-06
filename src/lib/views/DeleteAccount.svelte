@@ -3,7 +3,7 @@
     import Button from '$lib/Button.svelte'
     import Modal from '$lib/Modal.svelte'
     import { pb, currentUser } from '$lib/pocketbase'
-    import { toast } from '../../app'
+    import { ToastType, addToast } from '$lib/toasts/toasts'
 
     export let open = false
 
@@ -15,10 +15,10 @@
         pb.collection('users')
             .delete($currentUser!.id)
             .then(() => {
-                toast(
+                addToast(
                     'Deletion',
                     'Your account has been deleted. Goodbye!',
-                    'info'
+                    ToastType.info
                 )
                 goto('/')
             })
