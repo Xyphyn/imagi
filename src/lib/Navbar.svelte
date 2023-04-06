@@ -220,6 +220,7 @@
                 <MenuItem>
                     <Button
                         class="menu-item"
+                        major
                         onclick={() => (views.upload = true)}
                     >
                         <Icon src={PencilSquare} width="20" /> Post
@@ -283,6 +284,7 @@
                     <MenuItem>
                         <Button
                             class="menu-item"
+                            colorType="danger"
                             onclick={() => pb.authStore.clear()}
                         >
                             <Icon src={ArrowLeftOnRectangle} size="20" />Log Out
