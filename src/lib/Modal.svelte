@@ -12,7 +12,7 @@
                 const eased = expoOut(t)
 
                 return `
-					transform: scale(calc(95% + ${eased * 5}%));
+					transform: scale(calc(85% + ${eased * 15}%));
                     opacity: ${eased * 100}%;
                 `
             },
