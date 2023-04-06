@@ -54,9 +54,9 @@
         data.append('password', formData.password)
         data.append('passwordConfirm', formData.password)
         if (
-            formData.username == undefined ||
-            formData.password == undefined ||
-            formData.email == undefined
+            formData.username == '' ||
+            formData.password == '' ||
+            formData.email == ''
         ) {
             formData.loading = false
             return
@@ -74,6 +74,10 @@
                     'Successfully signed up. Check your email for a verification link.',
                     ToastType.success
                 )
+
+                login()
+                pb.collection('users').requestVerification(formData.email)
+                formData.loading = false
             })
             .catch((err) => {
                 addToast(
@@ -82,10 +86,6 @@
                     ToastType.error
                 )
             })
-
-        await login()
-        pb.collection('users').requestVerification(formData.email)
-        formData.loading = false
     }
 
     async function login() {
