@@ -1,23 +1,10 @@
 <script lang="ts">
-    import { Icon, ChevronLeft, XMark } from 'svelte-hero-icons'
-    import { fade, scale } from 'svelte/transition'
-    import { cubicInOut, cubicOut, expoOut } from 'svelte/easing'
+    import { Icon, XMark } from 'svelte-hero-icons'
+    import { fade } from 'svelte/transition'
+    import { scaleIn } from '$lib/easing'
+    import { cubicOut } from 'svelte/easing'
 
     export let open: boolean = false
-
-    function scaleIn(node: Node, { duration }: { duration: number }) {
-        return {
-            duration,
-            css: (t: number) => {
-                const eased = expoOut(t)
-
-                return `
-					transform: scale(calc(85% + ${eased * 15}%));
-                    opacity: ${eased * 100}%;
-                `
-            },
-        }
-    }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -28,7 +15,8 @@
         transition:fade={{ duration: 100 }}
     >
         <div
-            transition:scaleIn={{ duration: 300 }}
+            in:scaleIn={{ duration: 300 }}
+            out:scaleIn={{ duration: 100, easing: cubicOut }}
             class={`min-h-[30vh] min-w-[30vw] open:flex flex-col backdrop:bg-black backdrop:bg-opacity-30 open:backdrop:animate-fade-in align-middle rounded-lg
      shadow-lg bg-white dark:bg-slate-800 text-inherit p-4 m-4 overflow-auto`}
         >
