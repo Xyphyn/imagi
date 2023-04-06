@@ -30,6 +30,7 @@
     import { Collections, type BlogResponse } from './types/pb-types'
     import { userSettings } from '../stores'
     import RelativeDate from './RelativeDate.svelte'
+    import { ToastType, addToast } from './toasts/toasts'
 
     interface Menus {
         upload: boolean
@@ -285,7 +286,14 @@
                         <Button
                             class="menu-item"
                             colorType="danger"
-                            onclick={() => pb.authStore.clear()}
+                            onclick={() => {
+                                pb.authStore.clear()
+                                addToast(
+                                    'Logged out',
+                                    'You have been logged out.',
+                                    ToastType.info
+                                )
+                            }}
                         >
                             <Icon src={ArrowLeftOnRectangle} size="20" />Log Out
                         </Button>

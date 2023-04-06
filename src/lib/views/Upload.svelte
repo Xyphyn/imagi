@@ -67,7 +67,8 @@
 
         formData.files = null
 
-        pb.collection('posts')
+        await pb
+            .collection('posts')
             .create(data)
             .catch((err) => {
                 switch (err.status) {
@@ -88,9 +89,9 @@
                         break
                     case 429:
                         addToast(
-                            'Error',
+                            'Warning',
                             'You are being rate limited.',
-                            ToastType.error
+                            ToastType.warning
                         )
                         break
                     default:
@@ -102,9 +103,16 @@
                         break
                 }
             })
-            .finally(() => {
-                formData.loading = false
+            .then(() => {
+                open = false
+                addToast(
+                    'Success',
+                    'Your post was uploaded successfully',
+                    ToastType.success
+                )
             })
+
+        formData.loading = false
     }
 
     let previewURL: string | null = null
