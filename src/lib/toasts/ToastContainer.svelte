@@ -7,7 +7,7 @@
 </script>
 
 <div
-    class="absolute right-0 top-0 flex flex-col gap-4 z-50 p-4 overflow-hidden h-screen pointer-events-none"
+    class="absolute right-0 top-0 flex flex-col gap-4 z-50 p-4 overflow-hidden h-screen min-w-[24rem] items-end pointer-events-none"
 >
     {#each $toasts as toast (toast.id)}
         <div

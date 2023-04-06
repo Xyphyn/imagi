@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { onDestroy, onMount } from 'svelte'
-    import { expoInOut } from 'svelte/easing'
+    import { popIn } from '$lib/easing'
 
     let open = false
 
@@ -10,19 +9,6 @@
     export let threshold = 300
 
     let scroll = 0
-
-    function popIn(node: Node, { duration }: { duration: number }) {
-        return {
-            duration,
-            css: (t: number) => {
-                const eased = expoInOut(t)
-
-                return `
-					transform: translateY(calc(-4rem + ${eased * 4}rem));
-                `
-            },
-        }
-    }
 
     $: open = scroll > threshold
 </script>

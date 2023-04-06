@@ -23,13 +23,13 @@ export function addToast(title: string, content: string, type: ToastType) {
         id = Math.floor(Math.random() * 10000)
 
         return [
-            ...toasts,
             {
                 id: id,
                 content: content,
                 title: title,
                 type: type,
             },
+            ...toasts,
         ]
     })
 
