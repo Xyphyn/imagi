@@ -30,6 +30,7 @@
     import { Collections, type BlogResponse } from './types/pb-types'
     import { userSettings } from '../stores'
     import RelativeDate from './RelativeDate.svelte'
+    import { ToastType, addToast } from './toasts/toasts'
 
     interface Menus {
         upload: boolean
@@ -73,7 +74,7 @@
             </span>
         </span>
     </a>
-    <Menu class="menu">
+    <Menu class="menu w-max">
         <MenuButton>
             <Button
                 major={false}
@@ -100,7 +101,7 @@
             leaveTo="transform opacity-0 scale-95"
         >
             <MenuItems
-                class="menu-items origin-top-left left-0 w-96 sm:origin-top-right sm:right-0"
+                class="menu-items origin-top-center left-0 w-64 sm:right-0"
             >
                 <Colored>
                     <h1 class="text-2xl font-bold">Other</h1>
@@ -220,6 +221,7 @@
                 <MenuItem>
                     <Button
                         class="menu-item"
+                        major
                         onclick={() => (views.upload = true)}
                     >
                         <Icon src={PencilSquare} width="20" /> Post
@@ -283,7 +285,15 @@
                     <MenuItem>
                         <Button
                             class="menu-item"
-                            onclick={() => pb.authStore.clear()}
+                            colorType="danger"
+                            onclick={() => {
+                                pb.authStore.clear()
+                                addToast(
+                                    'Logged out',
+                                    'You have been logged out.',
+                                    ToastType.info
+                                )
+                            }}
                         >
                             <Icon src={ArrowLeftOnRectangle} size="20" />Log Out
                         </Button>

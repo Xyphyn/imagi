@@ -19,8 +19,8 @@
         UserGroup,
     } from 'svelte-hero-icons'
     import InfiniteScroll from 'svelte-infinite-scroll'
-    import { toast } from '../../../app'
     import Actionbar from '$lib/Actionbar.svelte'
+    import { ToastType, addToast } from '$lib/toasts/toasts'
 
     export let data: { community: CommunitiesResponse<any> }
 
@@ -57,7 +57,11 @@
         pb.collection('communities')
             .update(data.community.id, formData)
             .then(() => {
-                toast('Success', 'Successfully updated community', 'success')
+                addToast(
+                    'Success',
+                    'Successfully updated community',
+                    ToastType.success
+                )
             })
             .finally(() => (communitySettings.updating = false))
     }

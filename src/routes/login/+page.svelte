@@ -6,6 +6,7 @@
     import Colored from '$lib/misc/Colored.svelte'
     import Modal from '$lib/Modal.svelte'
     import { pb } from '$lib/pocketbase'
+    import { addToast, ToastType } from '$lib/toasts/toasts'
     import Tooltip from '$lib/Tooltip.svelte'
     import {
         Tab,
@@ -15,7 +16,6 @@
         TabPanels,
     } from '@rgossiaux/svelte-headlessui'
     import { Check, Icon, InformationCircle } from 'svelte-hero-icons'
-    import { toast } from '../../app'
 
     interface FormData {
         email: string
@@ -54,9 +54,9 @@
         data.append('password', formData.password)
         data.append('passwordConfirm', formData.password)
         if (
-            formData.username == undefined ||
-            formData.password == undefined ||
-            formData.email == undefined
+            formData.username == '' ||
+            formData.password == '' ||
+            formData.email == ''
         ) {
             formData.loading = false
             return
@@ -69,23 +69,23 @@
             .collection('users')
             .create(data)
             .then(() => {
-                toast(
+                addToast(
                     'Success',
                     'Successfully signed up. Check your email for a verification link.',
-                    'success'
+                    ToastType.success
                 )
+
+                login()
+                pb.collection('users').requestVerification(formData.email)
+                formData.loading = false
             })
             .catch((err) => {
-                toast(
+                addToast(
                     'Error',
                     'Could not sign up. Your username must be alphanumeric, and password 8-72 characters.',
-                    'error'
+                    ToastType.error
                 )
             })
-
-        await login()
-        pb.collection('users').requestVerification(formData.email)
-        formData.loading = false
     }
 
     async function login() {
@@ -99,7 +99,7 @@
             .catch((err) => {
                 formData.loading = false
 
-                toast('Error', 'Invalid credentials.', 'error')
+                addToast('Error', 'Invalid credentials.', ToastType.error)
             })
         formData.loading = false
     }
@@ -110,14 +110,18 @@
         pb.collection('users')
             .requestPasswordReset(forgotEmail)
             .then(() => {
-                toast(
+                addToast(
                     'Sent',
                     'A password reset email was sent to your inbox.',
-                    'info'
+                    ToastType.info
                 )
             })
             .catch(() => {
-                toast('Error', 'That email address is likely invalid.', 'error')
+                addToast(
+                    'Error',
+                    'That email address is likely invalid.',
+                    ToastType.error
+                )
             })
     }
 </script>

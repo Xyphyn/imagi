@@ -5,8 +5,8 @@
     import Colored from '$lib/misc/Colored.svelte'
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
+    import { addToast, ToastType } from '$lib/toasts/toasts'
     import { Collections, type CommunitiesRecord } from '$lib/types/pb-types'
-    import { toast } from '../../app'
 
     export let open = false
 
@@ -40,14 +40,18 @@
         pb.collection(Collections.Communities)
             .create<CommunitiesRecord>(data)
             .then((data) => {
-                toast('Success!', 'Your new community was created.', 'success')
+                addToast(
+                    'Success',
+                    'Your new community was created.',
+                    ToastType.success
+                )
                 goto(`/community/${data.name}`)
             })
             .catch((err) => {
-                toast(
+                addToast(
                     'Error',
                     'Check if the name is lowercase and alphanumeric, and that you are verified.',
-                    'error'
+                    ToastType.error
                 )
             })
     }

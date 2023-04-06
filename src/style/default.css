@@ -104,7 +104,7 @@ html {
 }
 
 .menu-items {
-    @apply flex flex-col gap-2 absolute right-0 p-4 w-56 mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg;
+    @apply flex flex-col gap-2 absolute right-0 p-4 min-w-[14rem] mt-2 origin-top-right bg-white dark:bg-slate-800 rounded-md shadow-lg;
 }
 
 .menu-item {

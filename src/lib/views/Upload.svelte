@@ -7,8 +7,8 @@
     import Modal from '$lib/Modal.svelte'
     import { currentUser, pb } from '$lib/pocketbase'
     import { Icon, PencilSquare } from 'svelte-hero-icons'
-    import { toast } from '../../app'
     import { isVideo } from '$lib/util'
+    import { ToastType, addToast } from '$lib/toasts/toasts'
 
     export let open = false
     let uploadId: string | undefined
@@ -50,7 +50,11 @@
                 .getList(1, 1, { filter: `name = "${formData.community}"` })
 
             if (community.items.length == 0) {
-                toast('Error', "The given community doesn't exist.", 'error')
+                addToast(
+                    'Error',
+                    "The given community doesn't exist.",
+                    ToastType.error
+                )
                 formData.loading = false
                 return
             }
@@ -63,36 +67,52 @@
 
         formData.files = null
 
-        pb.collection('posts')
+        await pb
+            .collection('posts')
             .create(data)
             .catch((err) => {
                 switch (err.status) {
                     case 400:
                         if (pb.authStore.isValid) {
-                            toast(
+                            addToast(
                                 'Error',
                                 'Could not create post. Check that the filesize is under 8MB, and if given, the community exists. Check if you are verified.',
-                                'error'
+                                ToastType.error
                             )
                         } else {
-                            toast(
+                            addToast(
                                 'Error',
                                 'Your session has expired, log back in again.',
-                                'error'
+                                ToastType.error
                             )
                         }
                         break
                     case 429:
-                        toast('Error', 'You are being rate limited.', 'error')
+                        addToast(
+                            'Warning',
+                            'You are being rate limited.',
+                            ToastType.warning
+                        )
                         break
                     default:
-                        toast('Error', 'Could not create post.', 'error')
+                        addToast(
+                            'Error',
+                            'Could not create post.',
+                            ToastType.error
+                        )
                         break
                 }
             })
-            .finally(() => {
-                formData.loading = false
+            .then(() => {
+                open = false
+                addToast(
+                    'Success',
+                    'Your post was uploaded successfully',
+                    ToastType.success
+                )
             })
+
+        formData.loading = false
     }
 
     let previewURL: string | null = null

@@ -90,11 +90,15 @@
                         width={64}
                         thumbnail="48x48"
                     />
-                    <div class="flex flex-col items-center">
-                        <span class="text-lg font-bold">
+                    <div class="flex flex-col items-center max-w-full">
+                        <span
+                            class="text-lg font-bold text-center break-words max-w-full"
+                        >
                             <Colored>{community.name}</Colored>
                         </span>
-                        <span class="text-sm opacity-70">
+                        <span
+                            class="text-sm opacity-70 text-center break-words max-w-full"
+                        >
                             {community.description}
                         </span>
                     </div>
