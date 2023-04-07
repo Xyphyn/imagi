@@ -274,8 +274,8 @@
                                 (formData.checks.rules = e.detail)}
                         >
                             <div
-                                class="w-6 h-6 bg-slate-200 dark:bg-slate-700 rounded-md transition-all active:scale-90 ease-out-expo grid place-items-center {checked
-                                    ? 'bg-gradient-to-br from-primary to-secondary'
+                                class="w-6 h-6 bg-slate-200 dark:bg-slate-600 rounded-md transition-all active:scale-90 ease-out-expo grid place-items-center {checked
+                                    ? 'bg-gradient-to-br from-primary to-secondary text-black'
                                     : ''}"
                             >
                                 {#if checked}
