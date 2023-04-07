@@ -134,7 +134,7 @@
 <Modal bind:open>
     <form
         on:submit|preventDefault={upload}
-        class="flex flex-col gap-4 items-center px-12"
+        class="flex flex-col gap-4 items-center px-12 py-6"
     >
         <Colored><h1 class="text-3xl font-bold">Create a Post</h1></Colored>
         <FilePicker bind:files={formData.files} accept="image/*,video/*">
