@@ -22,7 +22,7 @@
 </script>
 
 <div
-    class="overflow-hidden relative rounded-lg shadow-xl 
+    class="overflow-hidden relative rounded-lg shadow-xl
     transition-transform ease-out cursor-pointer bg-white dark:bg-slate-800 aspect-square hover:-translate-y-2 duration-250
     group
     "
@@ -38,7 +38,10 @@
     {#if isVideo(image)}
         {#if $userSettings.thumbSize != '64x64'}
             <!-- svelte-ignore a11y-media-has-caption -->
-            <video class="object-cover w-full h-full aspect-square">
+            <video
+                class="object-cover w-full h-full aspect-square"
+                preload="metadata"
+            >
                 <source src={image} />
             </video>
         {:else}
