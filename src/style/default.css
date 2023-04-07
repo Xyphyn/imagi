@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 input {
-    @apply w-52 border-none bg-slate-100 dark:bg-slate-700 px-3 py-2 rounded-md shadow-none text-sm;
+    @apply w-52 border-none bg-slate-100 dark:bg-slate-700 px-3 py-2 rounded-md shadow-none text-sm focus:outline-primary focus:outline-none;
 }
 
 textarea {
     @apply border-none bg-slate-100 dark:bg-slate-700 px-3 py-2 rounded-md text-sm
-     focus:border-none;
+    focus:outline-primary focus:outline-none;
 }
 
 :root {
@@ -119,8 +119,8 @@ html {
     @apply hover:text-secondary hover:fill-secondary transition-all duration-200;
 }
 
-* {
-    @apply focus:outline-primary outline-0 focus:outline-4 outline-offset-2
+*:focus {
+    @apply outline-primary outline-4 outline-offset-2 border-none;
 }
 
 ul {

@@ -9,6 +9,7 @@
     import { Icon, PencilSquare } from 'svelte-hero-icons'
     import { isVideo } from '$lib/util'
     import { ToastType, addToast } from '$lib/toasts/toasts'
+    import type { CommunitiesResponse } from '$lib/types/pb-types'
 
     export let open = false
     let uploadId: string | undefined
@@ -45,21 +46,26 @@
         data.append('description', formData.description)
         data.append('user', $currentUser!.id)
         if (formData.community != '') {
+            let err: any
+
             const community = await pb
                 .collection('communities')
-                .getList(1, 1, { filter: `name = "${formData.community}"` })
-
-            if (community.items.length == 0) {
-                addToast(
-                    'Error',
-                    "The given community doesn't exist.",
-                    ToastType.error
+                .getFirstListItem<CommunitiesResponse<any>>(
+                    `name = "${formData.community.toLowerCase()}"`
                 )
-                formData.loading = false
-                return
-            }
+                .catch((error) => {
+                    addToast(
+                        'Error',
+                        "The given community doesn't exist.",
+                        ToastType.error
+                    )
+                    formData.loading = false
+                    err = error
+                })
 
-            data.append('community', community.items[0].id)
+            if (err) return
+
+            if (community) data.append('community', community.id)
         }
 
         formData.description = ''
