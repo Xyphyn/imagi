@@ -21,6 +21,7 @@
     import InfiniteScroll from 'svelte-infinite-scroll'
     import Actionbar from '$lib/Actionbar.svelte'
     import { ToastType, addToast } from '$lib/toasts/toasts'
+    import TextInput from '$lib/custom/TextInput.svelte'
 
     export let data: { community: CommunitiesResponse<any> }
 
@@ -165,18 +166,13 @@
             class="dark:bg-slate-800 bg-white max-w-xl w-full min-h-[24rem] flex flex-col items-center justify-center gap-4 p-4 rounded-lg shadow-lg popin"
         >
             <Colored><h1 class="font-bold text-4xl">Settings</h1></Colored>
-            <div>
-                <label for="community-description" class="block my-1">
-                    Description
-                </label>
-                <input
-                    id="community-description"
-                    type="text"
-                    placeholder="4-64 characters"
-                    maxlength="64"
-                    bind:value={communitySettings.description}
-                />
-            </div>
+            <TextInput
+                label="Description"
+                type="text"
+                placeholder="4-64 characters"
+                maxlength={64}
+                bind:value={communitySettings.description}
+            />
             <div>
                 <label for="community-image-update" class="block my-1">
                     Image

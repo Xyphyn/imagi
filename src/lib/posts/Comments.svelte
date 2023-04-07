@@ -12,10 +12,12 @@
     import Comment from './Comment.svelte'
     import { expoOut } from 'svelte/easing'
     import { ToastType, addToast } from '$lib/toasts/toasts'
+    import TextInput from '$lib/custom/TextInput.svelte'
 
     export let post: PostsResponse<any>
 
     let submitting = false
+    let err: any
 
     let comments: CommentsResponse<any>[] | undefined
     let newComment = ''
@@ -28,6 +30,8 @@
         }
 
         submitting = true
+
+        err = null
 
         pb.collection('comments')
             .create({
@@ -49,6 +53,7 @@
                         ToastType.error
                     )
                 }
+                err = true
             })
             .finally(() => (submitting = false))
 
@@ -119,12 +124,13 @@
     on:submit|preventDefault={comment}
     class="flex flex-col md:flex-row gap-1 w-full"
 >
-    <input
+    <TextInput
         type="text"
-        class="flex-auto w-full md:h-min"
+        class="flex-auto w-full max-w-none m-0 justify-end md:h-min"
         placeholder="What are you thinking?"
-        maxlength="256"
+        maxlength={256}
         bind:value={newComment}
+        {err}
     />
     <Button
         type="submit"

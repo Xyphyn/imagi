@@ -10,6 +10,7 @@
     import { isVideo } from '$lib/util'
     import { ToastType, addToast } from '$lib/toasts/toasts'
     import type { CommunitiesResponse } from '$lib/types/pb-types'
+    import TextInput from '$lib/custom/TextInput.svelte'
 
     export let open = false
     let uploadId: string | undefined
@@ -133,7 +134,7 @@
 <Modal bind:open>
     <form
         on:submit|preventDefault={upload}
-        class="flex flex-col gap-4 items-center p-4 mx-8"
+        class="flex flex-col gap-4 items-center px-12"
     >
         <Colored><h1 class="text-3xl font-bold">Create a Post</h1></Colored>
         <FilePicker bind:files={formData.files} accept="image/*,video/*">
@@ -153,31 +154,21 @@
                 />
             {/if}
         {/if}
-        <div>
-            <label for="upload-description" class="block my-1">
-                Description
-            </label>
-            <input
-                id="upload-description"
-                type="text"
-                maxlength="64"
-                placeholder="A cool image"
-                bind:value={formData.description}
-            />
-        </div>
+        <TextInput
+            label="Title"
+            type="text"
+            maxlength={64}
+            placeholder="A cool image"
+            bind:value={formData.description}
+        />
 
-        <div>
-            <label for="upload-community" class="block my-1">
-                Community (Optional)
-            </label>
-            <input
-                id="upload-community"
-                type="text"
-                maxlength="64"
-                placeholder="cats"
-                bind:value={formData.community}
-            />
-        </div>
+        <TextInput
+            label="Community (optional)"
+            type="text"
+            maxlength={24}
+            placeholder="cats"
+            bind:value={formData.community}
+        />
         <Button type="submit" major={true} disabled={formData.loading}>
             {#if formData.loading}<div class="px-[2px]">
                     <Loader width={16} />

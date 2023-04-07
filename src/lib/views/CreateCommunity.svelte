@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
     import Button from '$lib/Button.svelte'
+    import TextInput from '$lib/custom/TextInput.svelte'
     import FilePicker from '$lib/FilePicker.svelte'
     import Colored from '$lib/misc/Colored.svelte'
     import Modal from '$lib/Modal.svelte'
@@ -68,28 +69,19 @@
             </b>
             content.
         </p>
-        <div>
-            <label for="community-name" class="block my-1">Name</label>
-            <input
-                id="community-name"
-                type="text"
-                maxlength="24"
-                placeholder="3-24 lowercase characters"
-                bind:value={formData.name}
-            />
-        </div>
-        <div>
-            <label for="community-description" class="block my-1">
-                Description
-            </label>
-            <input
-                id="community-description"
-                type="text"
-                maxlength="64"
-                placeholder="4-64 characters"
-                bind:value={formData.description}
-            />
-        </div>
+        <TextInput
+            placeholder="3-24 lowercase characters"
+            bind:value={formData.name}
+            type="text"
+            label="Name"
+            maxlength={24}
+        /><TextInput
+            placeholder="4-64 characters"
+            bind:value={formData.description}
+            type="text"
+            label="Description"
+            maxlength={64}
+        />
 
         <div>
             <label for="community-image" class="block my-1">Image</label>
