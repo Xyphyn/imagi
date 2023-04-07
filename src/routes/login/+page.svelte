@@ -179,7 +179,9 @@
                 >
                     {#if formData.loading}<Loader />{/if} Log In
                 </Button>
-                <div class="border-b border-black/10 w-96" />
+                <div
+                    class="border-b border-black/10 dark:border-white/10 w-96"
+                />
 
                 <button
                     on:click={() => (forgotDialog = true)}
@@ -224,7 +226,9 @@
                 >
                     {#if formData.loading}<Loader />{/if}Sign Up
                 </Button>
-                <div class="border-b border-black/10 w-96" />
+                <div
+                    class="border-b border-black/10 dark:border-white/10 w-96"
+                />
                 <p
                     class="text-xs text-slate-400 dark:text-slate-500 text-center"
                 >
