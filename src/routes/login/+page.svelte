@@ -177,9 +177,7 @@
                     type="submit"
                     disabled={formData.loading}
                 >
-                    {#if formData.loading}<Loader
-                            class=" self-end justify-self-end"
-                        />{/if} Log In
+                    {#if formData.loading}<Loader />{/if} Log In
                 </Button>
                 <div class="border-b border-black/10 w-96" />
 
