@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 input {
-    @apply w-52 border-none bg-slate-100 dark:bg-slate-700 px-3 py-2 rounded-md shadow-none text-sm focus:outline-primary focus:outline-none;
+    @apply max-w-[24rem] w-full px-3 py-2.5 rounded-md shadow-none text-sm border border-black/25 dark:border-white/25 focus:outline-none focus:outline-primary/50 focus:outline-offset-0 focus:border-primary transition-colors bg-transparent;
 }
 
 textarea {
-    @apply border-none bg-slate-100 dark:bg-slate-700 px-3 py-2 rounded-md text-sm
+    @apply border-none bg-slate-100 dark:bg-slate-700 px-4 py-3 rounded-md text-sm
     focus:outline-primary focus:outline-none;
 }
 
@@ -120,7 +120,7 @@ html {
 }
 
 *:focus {
-    @apply outline-primary outline-4 outline-offset-2 border-none;
+    @apply outline-primary/30 outline-2 outline-offset-2;
 }
 
 ul {

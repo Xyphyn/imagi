@@ -1,9 +1,12 @@
 <script lang="ts">
     export let width: number = 16
+
+    let clazz = ''
+    export { clazz as class }
 </script>
 
 <svg
-    class={`animate-spin text-inherit spin-duration`}
+    class={`animate-spin text-inherit spin-duration ${clazz}`}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"

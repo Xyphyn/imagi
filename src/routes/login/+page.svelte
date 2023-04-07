@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
     import Button from '$lib/Button.svelte'
+    import TextInput from '$lib/custom/TextInput.svelte'
     import FilePicker from '$lib/FilePicker.svelte'
     import Loader from '$lib/Loader.svelte'
     import Colored from '$lib/misc/Colored.svelte'
@@ -126,10 +127,8 @@
 </script>
 
 <title>Imagi | Login</title>
-<TabGroup
-    class="flex overflow-hidden flex-col gap-4 justify-center items-center p-8 w-full"
->
-    <TabList class="flex flex-row gap-4 w-full max-w-xl">
+<TabGroup class="flex flex-col gap-4 justify-center items-center pt-8">
+    <TabList class="flex flex-row gap-4 w-full max-w-xl p-0">
         <Tab
             class={({ selected }) =>
                 `flex-1 rounded-md p-3 bg-white dark:bg-slate-800 shadow-sm ${
@@ -151,37 +150,39 @@
             Sign Up
         </Tab>
     </TabList>
-    <TabPanels>
+    <TabPanels class="px-8 pb-8">
         <TabPanel class="px-4">
             <form
                 on:submit|preventDefault={login}
-                class="flex flex-col gap-2 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
+                class="flex flex-col gap-4 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
             >
-                <Colored><h1 class="text-3xl font-bold">Log In</h1></Colored>
-                <div>
-                    <label for="login-username" class="block my-1">
-                        Username/Email
-                    </label>
-                    <input
-                        id="login-username"
-                        type="text"
-                        bind:value={formData.username}
-                        maxlength="128"
-                        placeholder="Example"
-                    />
-                </div>
-                <div>
-                    <label for="login-password" class="block my-1">
-                        Password
-                    </label>
-                    <input
-                        id="login-password"
-                        type="password"
-                        bind:value={formData.password}
-                        maxlength="128"
-                        placeholder="8-72 characters"
-                    />
-                </div>
+                <h1 class="text-3xl font-bold">
+                    <Colored>Log In</Colored>
+                </h1>
+
+                <TextInput
+                    placeholder="you@example.com"
+                    bind:value={formData.username}
+                    type="text"
+                    label="Email or username"
+                />
+                <TextInput
+                    bind:value={formData.password}
+                    type="password"
+                    label="Password"
+                />
+                <Button
+                    class="mt-4 max-w-[24rem] w-full items-center justify-center py-2.5"
+                    major={true}
+                    type="submit"
+                    disabled={formData.loading}
+                >
+                    {#if formData.loading}<Loader />{/if} Log In
+                </Button>
+                <div
+                    class="border-b border-black/10 dark:border-white/10 w-96"
+                />
+
                 <button
                     on:click={() => (forgotDialog = true)}
                     class="text-xs text-left block text-sky-300"
@@ -189,110 +190,55 @@
                 >
                     Forgot Password?
                 </button>
-                <Button
-                    class="mt-4"
-                    major={true}
-                    type="submit"
-                    disabled={formData.loading}
-                >
-                    {#if formData.loading}<Loader />{/if} Log In
-                </Button>
             </form>
         </TabPanel>
         <TabPanel>
             <form
                 on:submit|preventDefault={signUp}
-                class="flex flex-col gap-2 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
+                class="flex flex-col gap-4 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
             >
                 <Colored><h1 class="text-3xl font-bold">Sign Up</h1></Colored>
-                <div>
-                    <label
-                        for="signup-email"
-                        class="flex flex-row items-center my-1 w-full"
-                    >
-                        Email
-                        <Tooltip
-                            text="Having issues verifying? Email imagi@xylight.us to manually be verified."
-                        >
-                            <Icon src={InformationCircle} size="16" mini />
-                        </Tooltip>
-                    </label>
-                    <input
-                        id="signup-email"
-                        type="text"
-                        bind:value={formData.email}
-                        maxlength="128"
-                        placeholder="you@example.com"
-                    />
-                </div>
-                <div>
-                    <label for="signup-username" class="block my-1">
-                        Username
-                    </label>
-                    <input
-                        id="signup-username"
-                        type="text"
-                        bind:value={formData.username}
-                        maxlength="128"
-                        placeholder="Example"
-                    />
-                </div>
-                <div>
-                    <label for="signup-password" class="block my-1">
-                        Password
-                    </label>
-                    <input
-                        id="signup-password"
-                        type="password"
-                        bind:value={formData.password}
-                        maxlength="128"
-                        placeholder="8-72 characters"
-                    />
-                </div>
-                <div>
-                    <label for="signup-avatar" class="block my-1">Avatar</label>
-                    <FilePicker
-                        forId="signup-avatar"
-                        bind:files={formData.images}
-                    >
-                        Pick an image
-                    </FilePicker>
-                </div>
-                <div>
-                    <div
-                        class="flex flex-row justify-between items-center bg-slate-100 dark:bg-slate-700 p-1 px-2 rounded-md gap-4 mt-4"
-                    >
-                        <span class="text-sm">
-                            I agree to the <a href="/guidelines" class="link">
-                                guidelines
-                            </a>
-                        </span>
-                        <Switch
-                            let:checked
-                            checked={formData.checks.rules}
-                            on:change={(e) =>
-                                (formData.checks.rules = e.detail)}
-                        >
-                            <div
-                                class="w-6 h-6 bg-slate-200 dark:bg-slate-600 rounded-md transition-all active:scale-90 ease-out-expo grid place-items-center {checked
-                                    ? 'bg-gradient-to-br from-primary to-secondary text-black'
-                                    : ''}"
-                            >
-                                {#if checked}
-                                    <Icon src={Check} size="16" />
-                                {/if}
-                            </div>
-                        </Switch>
-                    </div>
-                </div>
+                <TextInput
+                    type="email"
+                    bind:value={formData.email}
+                    placeholder="you@example.com"
+                    label="Email"
+                />
+                <TextInput
+                    type="text"
+                    bind:value={formData.username}
+                    placeholder="Example"
+                    maxlength={128}
+                    label="Username"
+                />
+                <TextInput
+                    type="text"
+                    bind:value={formData.password}
+                    placeholder="8-72 characters"
+                    maxlength={128}
+                    label="Password"
+                />
                 <Button
-                    class="mt-4"
+                    class="mt-4 max-w-[24rem] w-full items-center justify-center py-2.5"
                     major={true}
                     disabled={!formData.checks.rules || formData.loading}
                     type="submit"
                 >
                     {#if formData.loading}<Loader />{/if}Sign Up
                 </Button>
+                <div
+                    class="border-b border-black/10 dark:border-white/10 w-96"
+                />
+                <p
+                    class="text-xs text-slate-400 dark:text-slate-500 text-center"
+                >
+                    By creating an Imagi account, you agree to the <a
+                        href="/guidelines"
+                        class="text-primary underline"
+                    >
+                        community guidelines.
+                    </a>
+                </p>
             </form>
         </TabPanel>
     </TabPanels>

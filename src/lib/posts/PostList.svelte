@@ -17,7 +17,7 @@
 <div
     class="grid grid-cols-1 gap-4 p-4 w-full {containerQuery
         ? '@md:grid-cols-2 @2xl:grid-cols-3 @6xl:grid-cols-4'
-        : 'sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5'}"
+        : 'sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5'}"
 >
     {#if !posts}
         {#each new Array(placeholders) as items}
