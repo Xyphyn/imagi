@@ -103,17 +103,18 @@
     >
         <Tab
             class={({ selected }) =>
-                `flex-1 rounded-md py-2 bg-white dark:bg-slate-800 shadow-sm ${
+                `flex-1 rounded-md py-3 bg-white dark:bg-slate-800 shadow-sm inline-block leading-[20px] ${
                     selected
                         ? 'bg-gradient-to-br from-primary to-secondary text-black'
                         : ''
                 }`}
         >
-            <Icon src={Cog6Tooth} size="20" class="inline align-top my-auto" /> General
+            <Icon src={Cog6Tooth} size="20" class="inline align-top my-auto" />
+            <span class="">General</span>
         </Tab>
         <Tab
             class={({ selected }) =>
-                `flex-1 rounded-md py-2 bg-white dark:bg-slate-800 shadow-sm ${
+                `flex-1 rounded-md py-3 bg-white dark:bg-slate-800 shadow-sm inline-block leading-[20px] ${
                     selected
                         ? 'bg-gradient-to-br from-primary to-secondary text-black'
                         : ''

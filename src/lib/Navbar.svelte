@@ -31,6 +31,7 @@
     import { userSettings } from '../stores'
     import RelativeDate from './RelativeDate.svelte'
     import { ToastType, addToast } from './toasts/toasts'
+    import Avatar from './Avatar.svelte'
 
     interface Menus {
         upload: boolean
@@ -241,13 +242,7 @@
     {#if $currentUser}
         <Menu class="menu">
             <MenuButton>
-                <img
-                    src={pb.getFileUrl($currentUser, $currentUser.avatar, {
-                        thumb: '128x128',
-                    })}
-                    alt="Profile"
-                    class="object-cover w-12 rounded-full cursor-pointer aspect-square"
-                />
+                <Avatar user={$currentUser} type="user" alt="Profile" />
             </MenuButton>
             <Transition
                 enter="transition ease-out duration-100"
