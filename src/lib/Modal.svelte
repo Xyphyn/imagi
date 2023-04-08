@@ -18,7 +18,7 @@
             in:scaleIn={{ duration: 300 }}
             out:scaleIn={{ duration: 100, easing: cubicOut }}
             class={`min-h-[30vh] min-w-[30vw] open:flex flex-col max-w-full backdrop:bg-black backdrop:bg-opacity-30 open:backdrop:animate-fade-in align-middle rounded-lg
-     shadow-lg bg-white dark:bg-slate-800 text-inherit p-4 m-4 overflow-y-auto`}
+     shadow-lg bg-white dark:bg-slate-800 text-inherit p-4 m-2 md:m-4 overflow-y-auto`}
         >
             <button
                 class="flex w-min relative self-end ml-auto top-0 right-0 flex-row gap-1 items-center bg-opacity-0 dark:bg-opacity-0 transition-colors

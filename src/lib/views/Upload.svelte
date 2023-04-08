@@ -91,7 +91,7 @@
                         if (pb.authStore.isValid) {
                             addToast(
                                 'Error',
-                                'Could not create post. Check that the filesize is under 8MB, and if given, the community exists. Check if you are verified.',
+                                'Could not create post. Check that the filesize is under 8MB. Check if you are verified.',
                                 ToastType.error
                             )
                         } else {
