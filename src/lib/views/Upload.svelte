@@ -77,6 +77,14 @@
         await pb
             .collection('posts')
             .create(data)
+            .then(() => {
+                open = false
+                addToast(
+                    'Success',
+                    'Your post was uploaded successfully',
+                    ToastType.success
+                )
+            })
             .catch((err) => {
                 switch (err.status) {
                     case 400:
@@ -109,14 +117,6 @@
                         )
                         break
                 }
-            })
-            .then(() => {
-                open = false
-                addToast(
-                    'Success',
-                    'Your post was uploaded successfully',
-                    ToastType.success
-                )
             })
 
         formData.loading = false

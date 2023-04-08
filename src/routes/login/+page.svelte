@@ -221,7 +221,6 @@
                 <Button
                     class="mt-4 max-w-[24rem] w-full items-center justify-center py-2.5"
                     major={true}
-                    disabled={!formData.checks.rules || formData.loading}
                     type="submit"
                 >
                     {#if formData.loading}<Loader />{/if}Sign Up
