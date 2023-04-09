@@ -190,6 +190,16 @@
                         </svg>
                     </a>
                 </div>
+                <div class="flex flex-row gap-1 mt-4">
+                    Made by
+                    <img
+                        src="/xylo.svg"
+                        width={24}
+                        height={24}
+                        alt="Xylo logo"
+                    />
+                    <span class="font-bold">Xylo</span>
+                </div>
             </MenuItems>
         </Transition>
     </Menu>
