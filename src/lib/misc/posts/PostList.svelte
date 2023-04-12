@@ -11,6 +11,7 @@
     import { expoInOut } from 'svelte/easing'
     import RelativeDate from '../RelativeDate.svelte'
     import PostView from './PostView.svelte'
+    import { isVideo } from './util'
 
     export let posts:
         | PostsResponse<{
@@ -41,11 +42,11 @@
     {#if posts}
         {#each posts as post (post.id)}
             <div
-                class="flex overflow-hidden flex-col gap-4 p-8 w-full bg-white rounded-lg shadow-lg
+                class="flex overflow-hidden flex-col gap-4 w-full bg-white rounded-lg shadow-lg
                 transition-transform duration-200 transform-gpu cursor-pointer
                 dark:bg-zinc-800 hover:-translate-y-1 {grid
                     ? 'aspect-square flex-col-reverse'
-                    : ''}"
+                    : 'p-8'}"
                 animate:flip={{ duration: 750, easing: expoInOut }}
                 on:click={() => {
                     openPost = post
@@ -57,9 +58,9 @@
                 }}
             >
                 <div
-                    class="flex flex-row gap-2 items-center w-full h-max {grid
+                    class="flex items-center w-full h-max {grid
                         ? 'absolute bottom-0 left-0 flex-col gap-0 px-4 py-2 w-full text-black bg-white dark:bg-zinc-800 dark:text-white'
-                        : ''}"
+                        : 'flex-row gap-2'}"
                 >
                     {#if grid}
                         <div class="flex flex-row gap-2 items-center w-full">
@@ -95,12 +96,24 @@
                         </a>
                     {/if}
                 </div>
-                <img
-                    src={pb.getFileUrl(post, post.image, { thumb: '256x0' })}
-                    alt={post.alt_text || post.description}
-                    class="w-full rounded-lg"
-                    loading="lazy"
-                />
+                {#if isVideo(pb.getFileUrl( post, post.image, { thumb: grid ? '256x256' : '256x0' } ))}
+                    <!-- svelte-ignore a11y-media-has-caption -->
+                    <video
+                        preload="metadata"
+                        class="object-cover w-full h-full aspect-square"
+                    >
+                        <source src={pb.getFileUrl(post, post.image)} />
+                    </video>
+                {:else}
+                    <img
+                        src={pb.getFileUrl(post, post.image, {
+                            thumb: grid ? '256x256' : '256x0',
+                        })}
+                        alt={post.alt_text || post.description}
+                        class="object-cover w-full h-full rounded-lg aspect-square"
+                        loading="lazy"
+                    />
+                {/if}
             </div>
         {/each}
     {/if}

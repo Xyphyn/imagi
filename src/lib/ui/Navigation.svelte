@@ -63,7 +63,11 @@
                 <Avatar user={$user} />
             </div>
             <h1 class="font-bold" slot="title">{$user.username}</h1>
-            <Button link class="w-full dark:bg-white/10" href="/">
+            <Button
+                link
+                class="w-full dark:bg-white/10"
+                href="/user/{$user.username}"
+            >
                 <Icon src={UserCircle} size="18" />
                 Profile
             </Button>
