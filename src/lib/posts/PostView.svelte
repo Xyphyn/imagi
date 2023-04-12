@@ -251,13 +251,20 @@
                 {#key image}
                     <img
                         src={image}
-                        alt={$openPost.description}
+                        alt={$openPost.alt_text || $openPost.description}
                         width={700}
                         height={500}
                         class="w-full max-w-xl bg-white rounded-lg shadow-md"
                         on:load={() => (loading = false)}
                         on:loadstart={() => console.log('load start')}
                     />
+                    {#if $openPost.alt_text}
+                        <p
+                            class="text-sm bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-md text-left self-start flex-grow-0"
+                        >
+                            {$openPost.alt_text}
+                        </p>
+                    {/if}
                 {/key}
             {/if}
             <Likes post={$openPost} />

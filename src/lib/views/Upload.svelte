@@ -20,6 +20,7 @@
         description: string
         community: string
         loading: boolean
+        alt_text: string
     }
 
     let formData: FormData = {
@@ -27,6 +28,7 @@
         description: '',
         community: '',
         loading: false,
+        alt_text: '',
     }
 
     async function upload() {
@@ -46,6 +48,8 @@
         data.append('image', formData.files![0])
         data.append('description', formData.description)
         data.append('user', $currentUser!.id)
+        if (formData.alt_text) data.append('alt_text', formData.alt_text)
+
         if (formData.community != '') {
             let err: any
 
@@ -71,6 +75,7 @@
 
         formData.description = ''
         formData.community = ''
+        formData.alt_text = ''
 
         formData.files = null
 
@@ -160,6 +165,14 @@
             maxlength={64}
             placeholder="A cool image"
             bind:value={formData.description}
+        />
+
+        <TextInput
+            label="Description (optional)"
+            type="text"
+            maxlength={256}
+            placeholder="This photo i took on my phone"
+            bind:value={formData.alt_text}
         />
 
         <TextInput
