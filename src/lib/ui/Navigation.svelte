@@ -8,6 +8,9 @@
         GlobeAlt,
         PencilSquare,
         Newspaper,
+        UserCircle,
+        Cog6Tooth,
+        ArrowLeftOnRectangle,
     } from 'svelte-hero-icons'
     import Menu from './menus/Menu.svelte'
     import PostUpload from '$lib/misc/posts/PostUpload.svelte'
@@ -19,7 +22,7 @@
 </script>
 
 <nav class="w-full h-16 flex flex-row items-center mb-4 gap-4">
-    <a href="/" class="mr-auto">
+    <a href="/" class="">
         <img
             src="/img/logo.svg"
             width={48}
@@ -29,7 +32,7 @@
         />
     </a>
     <div
-        class="flex flex-row items-center rounded-full bg-white dark:bg-white/5 px-4 py-2 shadow-lg gap-2"
+        class="flex flex-row items-center rounded-full bg-white dark:bg-white/5 px-4 py-2 shadow-lg gap-2 mx-auto sm:ml-auto sm:mr-0"
     >
         <Button link href="/">
             <Icon src={GlobeAlt} size="16" />
@@ -52,11 +55,31 @@
         </Menu>
     </div>
     {#if $user}
-        <img
-            src={pb.getFileUrl($user, $user.avatar, { thumb: '32x32' })}
-            alt={$user.username}
-            class="rounded-full w-8 h-8"
-        />
+        <Menu>
+            <img
+                src={pb.getFileUrl($user, $user.avatar, { thumb: '48x48' })}
+                alt={$user.username}
+                class="rounded-full w-12 h-12 cursor-pointer"
+                slot="button"
+            />
+            <h1 class="font-bold" slot="title">{$user.username}</h1>
+            <Button link class="w-full" href="/">
+                <Icon src={UserCircle} size="18" />
+                Profile
+            </Button>
+            <Button link class="w-full" href="/">
+                <Icon src={Cog6Tooth} size="18" />
+                Settings
+            </Button>
+            <Button
+                class="w-full"
+                onclick={() => pb.authStore.clear()}
+                color={Color.danger}
+            >
+                <Icon src={ArrowLeftOnRectangle} mini size="18" />
+                Log Out
+            </Button>
+        </Menu>
     {:else}
         <Button color={Color.accent} link href="/login">Log In</Button>
     {/if}
