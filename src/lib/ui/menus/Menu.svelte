@@ -6,7 +6,7 @@
 </script>
 
 <button
-    class="relative overflow-visible cursor-auto z-20"
+    class="overflow-visible relative z-20 cursor-auto"
     on:click={() => (open = !open)}
 >
     <slot name="button" />
@@ -17,9 +17,9 @@
                 start: 0.95,
                 easing: expoOut,
             }}
-            class="absolute origin-top-right top-[100%] right-0 bg-white dark:bg-slate-700 rounded-md p-4 min-w-[16rem] my-4 gap-2 flex flex-col shadow-lg"
+            class="absolute origin-top-right top-[100%] right-0 bg-white dark:bg-zinc-800 rounded-md p-4 min-w-[16rem] my-4 gap-2 flex flex-col shadow-lg"
         >
-            <div class="text-left text-xl mb-1">
+            <div class="mb-1 text-xl text-left">
                 <slot name="title" />
             </div>
             {#if open}

@@ -1,5 +1,4 @@
 <script lang="ts">
-    // @ts-nocheck
     import { Color } from '$lib/ui/colors'
     import Button from './Button.svelte'
     import {
@@ -15,13 +14,14 @@
     import Menu from './menus/Menu.svelte'
     import PostUpload from '$lib/misc/posts/PostUpload.svelte'
     import { pb, user } from '$lib/backend/pocketbase'
+    import Avatar from './profile/Avatar.svelte'
 
     let modals = {
         uploading: false,
     }
 </script>
 
-<nav class="w-full h-16 flex flex-row items-center mb-4 gap-4">
+<nav class="flex flex-row gap-4 items-center mb-4 w-full h-16">
     <a href="/" class="">
         <img
             src="/img/logo.svg"
@@ -32,7 +32,7 @@
         />
     </a>
     <div
-        class="flex flex-row items-center rounded-full bg-white dark:bg-white/5 px-4 py-2 shadow-lg gap-2 mx-auto sm:ml-auto sm:mr-0"
+        class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-white/5 sm:ml-auto sm:mr-0"
     >
         <Button link href="/">
             <Icon src={GlobeAlt} size="16" />
@@ -44,11 +44,14 @@
                 Create
             </Button>
             <h1 slot="title" class="font-bold">Create</h1>
-            <Button class="w-full" onclick={() => (modals.uploading = true)}>
+            <Button
+                class="w-full dark:bg-white/10"
+                onclick={() => (modals.uploading = true)}
+            >
                 <Icon src={PencilSquare} mini size="18" />
                 Post
             </Button>
-            <Button class="w-full">
+            <Button class="w-full dark:bg-white/10">
                 <Icon src={Newspaper} mini size="18" />
                 Community
             </Button>
@@ -56,18 +59,15 @@
     </div>
     {#if $user}
         <Menu>
-            <img
-                src={pb.getFileUrl($user, $user.avatar, { thumb: '48x48' })}
-                alt={$user.username}
-                class="rounded-full w-12 h-12 cursor-pointer"
-                slot="button"
-            />
+            <div class="w-max cursor-pointer h-max" slot="button">
+                <Avatar user={$user} />
+            </div>
             <h1 class="font-bold" slot="title">{$user.username}</h1>
-            <Button link class="w-full" href="/">
+            <Button link class="w-full dark:bg-white/10" href="/">
                 <Icon src={UserCircle} size="18" />
                 Profile
             </Button>
-            <Button link class="w-full" href="/">
+            <Button link class="w-full dark:bg-white/10" href="/">
                 <Icon src={Cog6Tooth} size="18" />
                 Settings
             </Button>

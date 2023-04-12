@@ -8,6 +8,6 @@
 
 <div class="flex flex-col items-center">
     <PostFetch let:posts>
-        <PostList {posts} />
+        <PostList grid {posts} />
     </PostFetch>
 </div>

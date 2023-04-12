@@ -32,9 +32,9 @@
     on:submit|preventDefault={logIn}
 >
     <div>
-        <h1 class="font-bold text-3xl">Log In</h1>
+        <h1 class="text-3xl font-bold">Log In</h1>
 
-        <p class="opacity-50 mt-2">Enter your account details.</p>
+        <p class="mt-2 opacity-50">Enter your account details.</p>
     </div>
 
     <TextInput
@@ -56,6 +56,7 @@
         class="justify-center h-10"
         color={Color.accent}
         loading={submitting}
+        disabled={submitting}
     >
         Log In
     </Button>
