@@ -5,3 +5,11 @@
 body {
     @apply bg-slate-50 dark:bg-slate-900 dark:text-white m-4;
 }
+
+#nprogress .bar {
+    @apply bg-black dark:bg-white !important;
+}
+
+#nprogress .peg {
+    @apply hidden !important;
+}

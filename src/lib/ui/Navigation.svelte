@@ -1,4 +1,5 @@
 <script lang="ts">
+    // @ts-nocheck
     import { Color } from '$lib/ui/colors'
     import Button from './Button.svelte'
     import {
@@ -9,9 +10,15 @@
         Newspaper,
     } from 'svelte-hero-icons'
     import Menu from './menus/Menu.svelte'
+    import PostUpload from '$lib/misc/posts/PostUpload.svelte'
+    import { pb, user } from '$lib/backend/pocketbase'
+
+    let modals = {
+        uploading: false,
+    }
 </script>
 
-<nav class="w-full h-16 flex flex-row items-center mb-4">
+<nav class="w-full h-16 flex flex-row items-center mb-4 gap-4">
     <a href="/" class="mr-auto">
         <img
             src="/img/logo.svg"
@@ -34,7 +41,7 @@
                 Create
             </Button>
             <h1 slot="title" class="font-bold">Create</h1>
-            <Button class="w-full" onclick={() => console.log('hi')}>
+            <Button class="w-full" onclick={() => (modals.uploading = true)}>
                 <Icon src={PencilSquare} mini size="18" />
                 Post
             </Button>
@@ -44,4 +51,14 @@
             </Button>
         </Menu>
     </div>
+    {#if $user}
+        <img
+            src={pb.getFileUrl($user, $user.avatar, { thumb: '32x32' })}
+            alt={$user.username}
+            class="rounded-full w-8 h-8"
+        />
+    {:else}
+        <Button color={Color.accent} link href="/login">Log In</Button>
+    {/if}
 </nav>
+<PostUpload bind:open={modals.uploading} />
