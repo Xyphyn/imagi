@@ -7,7 +7,12 @@
     import { Color } from '$lib/ui/colors'
     import FileInput from '$lib/ui/input/FileInput.svelte'
     import TextInput from '$lib/ui/input/TextInput.svelte'
-    import { Icon, PencilSquare, XMark } from 'svelte-hero-icons'
+    import {
+        ArrowUpOnSquare,
+        Icon,
+        PencilSquare,
+        XMark,
+    } from 'svelte-hero-icons'
 
     export let open = false
 
@@ -59,7 +64,13 @@
         await pb
             .collection(Collections.Posts)
             .create(data)
-            .then(() => (open = false))
+            .then(() => {
+                open = false
+                formData.files = null
+                formData.community = ''
+                formData.title = ''
+                formData.description = ''
+            })
             .catch(() => (err = 'upload'))
 
         submitting = false
@@ -95,7 +106,7 @@
             loading={submitting}
             disabled={submitting}
         >
-            <Icon src={err == 'upload' ? XMark : PencilSquare} size="18" mini />
+            <Icon src={err == 'upload' ? XMark : ArrowUpOnSquare} size="18" />
             Upload
         </Button>
     </form>

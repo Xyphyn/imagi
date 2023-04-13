@@ -3,10 +3,11 @@
 
     export let accept = 'image/*,video/*'
     export let multiple = false
-    export let files: FileList | null = null
+    export let files: FileList | null | undefined = null
     export let image = false
 
     let previewURL = ''
+    let dragover = false
 
     $: if (files) {
         previewURL = URL.createObjectURL(files[0])
@@ -14,7 +15,17 @@
 </script>
 
 <label
-    class="flex flex-col items-center px-8 py-4 mx-auto w-full rounded-lg border border-black border-dashed cursor-pointer min-h-36 dark:border-white"
+    class="flex flex-col items-center px-8 py-4 mx-auto w-full rounded-lg border border-black border-dashed cursor-pointer min-h-36 transition-colors dark:border-white {dragover
+        ? 'border-sky-500 text-sky-500'
+        : ''}"
+    on:drop|preventDefault={(event) => (files = event.dataTransfer?.files)}
+    on:dragover|preventDefault={(event) => {
+        if (event.dataTransfer) {
+            event.dataTransfer.dropEffect = 'copy'
+            dragover = true
+        }
+    }}
+    on:dragleave|preventDefault={() => (dragover = false)}
 >
     {#if image && files}
         <!-- svelte-ignore a11y-missing-attribute -->
