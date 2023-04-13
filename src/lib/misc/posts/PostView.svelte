@@ -7,6 +7,7 @@
         UsersResponse,
     } from '$lib/backend/schema'
     import AdvancedModal from '$lib/ui/AdvancedModal.svelte'
+    import Comments from '../comments/Comments.svelte'
     import { isVideo } from './util'
 
     export let open = false
@@ -39,9 +40,10 @@
                 <img
                     src={pb.getFileUrl(post, post?.image)}
                     alt={post.alt_text || post.description}
-                    class="max-w-xl"
+                    class="max-w-xl rounded-lg"
                 />
             {/if}
+            <Comments {post} />
         </div>
     </AdvancedModal>
 {/if}

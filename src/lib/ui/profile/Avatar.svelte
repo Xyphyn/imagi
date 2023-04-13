@@ -4,6 +4,7 @@
 
     export let user: any
     export let thumb: '32x32' | '48x48' | '128x128' = '48x48'
+    export let width: number = 48
 
     function fetchAvatar() {
         if (!user.avatar)
@@ -15,4 +16,9 @@
     //
 </script>
 
-<img src={fetchAvatar()} alt={user.username} class="w-12 h-12 rounded-full" />
+<img
+    src={fetchAvatar()}
+    alt={user.username}
+    class="overflow-hidden rounded-full"
+    {width}
+/>
