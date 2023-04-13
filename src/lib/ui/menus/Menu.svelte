@@ -17,7 +17,7 @@
                 start: 0.95,
                 easing: expoOut,
             }}
-            class="absolute origin-top-right top-[100%] right-0 bg-white dark:bg-zinc-800 rounded-md p-4 min-w-[16rem] my-4 gap-2 flex flex-col shadow-lg"
+            class="absolute origin-top-right top-[100%] right-0 bg-white dark:bg-gray-800 rounded-md p-4 min-w-[16rem] my-4 gap-2 flex flex-col shadow-lg"
         >
             <div class="mb-1 text-xl text-left">
                 <slot name="title" />

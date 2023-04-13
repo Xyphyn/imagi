@@ -18,7 +18,7 @@
             in:scale={{ duration: 300, start: 0.95 }}
             out:scale={{ duration: 100, easing: cubicOut, start: 0.95 }}
             class={`min-h-[30vh] min-w-[max(20rem,30vw)] open:flex flex-col max-w-full backdrop:bg-black backdrop:bg-opacity-30 open:backdrop:animate-fade-in align-middle rounded-lg
-     shadow-lg bg-white dark:bg-zinc-800 text-inherit p-6 m-2 md:m-4 overflow-y-auto`}
+     shadow-lg bg-white dark:bg-gray-800 text-inherit p-6 m-2 md:m-4 overflow-y-auto`}
         >
             <div class="flex flex-row items-center">
                 <h1 class="mr-auto ml-2 text-xl"><slot name="title" /></h1>

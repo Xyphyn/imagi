@@ -44,7 +44,7 @@
             <div
                 class="flex overflow-hidden flex-col gap-4 w-full bg-white rounded-lg shadow-lg
                 transition-transform duration-200 transform-gpu cursor-pointer
-                dark:bg-zinc-800 hover:-translate-y-1 {grid
+                dark:bg-gray-800 hover:-translate-y-1 {grid
                     ? 'aspect-square flex-col-reverse'
                     : 'p-8'}"
                 animate:flip={{ duration: 750, easing: expoInOut }}
@@ -59,7 +59,7 @@
             >
                 <div
                     class="flex items-center w-full h-max {grid
-                        ? 'absolute bottom-0 left-0 flex-col gap-0 px-4 py-2 w-full text-black bg-white dark:bg-zinc-800 dark:text-white'
+                        ? 'absolute bottom-0 left-0 flex-col gap-0 px-4 py-2 w-full text-black bg-white dark:bg-gray-800 dark:text-white'
                         : 'flex-row gap-2'}"
                 >
                     {#if grid}
