@@ -33,7 +33,7 @@
             {:else}
                 {#each new Array(10) as item}
                     <div
-                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu hover:-translate-y-1"
+                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu dark:bg-slate-800 hover:-translate-y-1"
                     >
                         <div
                             class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 animatepulse"
