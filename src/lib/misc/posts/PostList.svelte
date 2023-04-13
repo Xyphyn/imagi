@@ -12,6 +12,7 @@
     import RelativeDate from '../RelativeDate.svelte'
     import PostView from './PostView.svelte'
     import { isVideo } from './util'
+    import { fly } from 'svelte/transition'
 
     export let posts:
         | PostsResponse<{
@@ -41,7 +42,9 @@
 >
     {#if posts}
         {#each posts as post (post.id)}
-            <div
+            <button
+                in:fly={{ y: 5, duration: 250 }}
+                out:fly|local={{ y: 5, duration: 250 }}
                 class="flex overflow-hidden flex-col gap-4 w-full bg-white rounded-lg shadow-lg
                 transition-transform duration-200 transform-gpu cursor-pointer
                 dark:bg-gray-800 hover:-translate-y-1 {grid
@@ -49,10 +52,6 @@
                     : 'p-8'}"
                 animate:flip={{ duration: 750, easing: expoInOut }}
                 on:click={() => {
-                    openPost = post
-                    modalOpen = true
-                }}
-                on:keypress={() => {
                     openPost = post
                     modalOpen = true
                 }}
@@ -100,7 +99,9 @@
                     <!-- svelte-ignore a11y-media-has-caption -->
                     <video
                         preload="metadata"
-                        class="object-cover w-full h-full aspect-square"
+                        class="{grid
+                            ? 'object-cover aspect-square'
+                            : ''} w-full h-full"
                     >
                         <source src={pb.getFileUrl(post, post.image)} />
                     </video>
@@ -110,11 +111,13 @@
                             thumb: grid ? '256x256' : '256x0',
                         })}
                         alt={post.alt_text || post.description}
-                        class="object-cover w-full h-full rounded-lg aspect-square"
+                        class="{grid
+                            ? 'object-cover aspect-square'
+                            : ''} w-full h-full rounded-lg"
                         loading="lazy"
                     />
                 {/if}
-            </div>
+            </button>
         {/each}
     {/if}
 </div>

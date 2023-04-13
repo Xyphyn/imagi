@@ -46,7 +46,7 @@
 
 {#if !signingUp}
     <form
-        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
+        class="bg-white animate-popIn dark:bg-gray-800 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
         on:submit|preventDefault={logIn}
     >
         <div>
@@ -91,7 +91,7 @@
     </form>
 {:else}
     <form
-        class="bg-white dark:bg-gray-800 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
+        class="bg-white animate-popIn dark:bg-gray-800 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
         on:submit|preventDefault={signUp}
     >
         <div>

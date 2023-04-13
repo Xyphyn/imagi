@@ -2,6 +2,7 @@
     import { pb, user } from '$lib/backend/pocketbase'
     import {
         Collections,
+        type CommentsRecord,
         type CommentsResponse,
         type CommunitiesResponse,
         type PostCountsResponse,
@@ -11,8 +12,20 @@
     import Button from '$lib/ui/Button.svelte'
     import { Color } from '$lib/ui/colors'
     import TextInput from '$lib/ui/input/TextInput.svelte'
+    import Menu from '$lib/ui/menus/Menu.svelte'
+    import MenuButton from '$lib/ui/menus/MenuButton.svelte'
     import Avatar from '$lib/ui/profile/Avatar.svelte'
-    import { onDestroy } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
+    import {
+        EllipsisHorizontal,
+        Icon,
+        Square2Stack,
+        Trash,
+    } from 'svelte-hero-icons'
+    import { flip } from 'svelte/animate'
+    import { expoInOut, expoOut } from 'svelte/easing'
+    import { compute_rest_props } from 'svelte/internal'
+    import RelativeDate from '../RelativeDate.svelte'
 
     export let post:
         | PostsResponse<{
@@ -27,6 +40,8 @@
     let unsubscribe: () => any
 
     async function fetchComments() {
+        console.log('fetching')
+        err = null
         if (!post) return
 
         const results = await pb
@@ -39,6 +54,12 @@
 
         comments = results.items
 
+        if (!post.expand) return
+
+        post.expand['postCounts(post)'][0].comments = results.totalItems
+    }
+
+    onMount(async () => {
         unsubscribe = await pb
             .collection(Collections.Comments)
             .subscribe<CommentsResponse>('*', async ({ record, action }) => {
@@ -55,34 +76,56 @@
                                 }
                             )
 
-                        if (comments) comments = [expanded, ...comments]
+                        comments = [expanded, ...comments!]
+                        break
                     }
 
                     case 'delete': {
                         comments = comments?.filter(
                             (comment) => comment.id != record.id
                         )
+                        break
                     }
                 }
             })
-
-        if (!post.expand) return
-
-        post.expand['postCounts(post)'][0].comments = results.totalItems
-    }
-
-    $: if (post) fetchComments()
-
-    let newComment = ''
-    let submitting = false
-
-    async function comment() {
-        submitting = true
-    }
+    })
 
     onDestroy(() => {
         unsubscribe?.()
     })
+
+    let prevId: string
+
+    $: {
+        if (post?.id != prevId) {
+            prevId = post!.id
+            fetchComments()
+        }
+    }
+
+    let newComment = ''
+    let submitting = false
+    let err: any
+
+    async function comment() {
+        err = null
+        if (!$user || !post || newComment == '' || submitting) return
+        submitting = true
+
+        try {
+            await pb.collection(Collections.Comments).create<CommentsRecord>({
+                user: $user!.id,
+                content: newComment,
+                post: post!.id,
+            })
+
+            newComment = ''
+        } catch (error) {
+            err = error
+        }
+
+        submitting = false
+    }
 </script>
 
 {#if $user}
@@ -107,7 +150,7 @@
                     Cancel
                 </Button>
                 <Button
-                    color={Color.accent}
+                    color={err ? Color.danger : Color.accent}
                     class="justify-center self-end w-24 h-9"
                     loading={submitting}
                     disabled={submitting}
@@ -121,14 +164,40 @@
 {/if}
 <div class="flex flex-col gap-2 w-full">
     {#if comments}
-        {#each comments as comment}
-            <div class="flex flex-row gap-2 items-start px-2 py-4">
+        {#each comments as comment (comment.id)}
+            <div
+                class="flex relative flex-row gap-2 items-start p-4 rounded-md dark:bg-gray-700 bg-slate-100"
+                animate:flip={{ duration: 750, easing: expoInOut }}
+            >
+                <Menu class="absolute top-0 right-0 z-40 m-2" absolute>
+                    <Button slot="button" class="relative z-0">
+                        <Icon src={EllipsisHorizontal} size="16" mini />
+                    </Button>
+                    <MenuButton
+                        onclick={() =>
+                            navigator.clipboard.writeText(comment.content)}
+                    >
+                        <Icon src={Square2Stack} size="16" mini />
+                        Copy Text
+                    </MenuButton>
+                    <MenuButton
+                        onclick={() =>
+                            pb
+                                .collection(Collections.Comments)
+                                .delete(comment.id)}
+                        color={Color.dangerSecondary}
+                    >
+                        <Icon src={Trash} size="16" mini />
+                        Delete
+                    </MenuButton>
+                </Menu>
                 <Avatar width={36} user={comment.expand?.user} thumb="32x32" />
                 <div class="flex flex-col items-start">
-                    <span class="text-sm opacity-75">
-                        {comment.expand?.user.username}
+                    <span class="flex flex-row gap-1 text-xs opacity-75">
+                        <span>{comment.expand?.user.username}</span>
+                        • <RelativeDate date={comment.created} />
                     </span>
-                    <span class="text-sm opacity-75">
+                    <span class="text-sm">
                         {comment.content}
                     </span>
                 </div>

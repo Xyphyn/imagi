@@ -7,7 +7,7 @@
 {#if open}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-        class="fixed top-0 left-0 bg-black/30 w-screen h-screen overflow-hidden flex-col flex justify-center items-center z-20"
+        class="flex overflow-hidden fixed top-0 left-0 z-20 flex-col justify-center items-center w-screen h-screen bg-black/30"
         transition:fade={{ duration: 200 }}
         on:click={() => (open = false)}
     >
@@ -15,14 +15,14 @@
             class="bg-white dark:bg-slate-800 z-30 rounded-lg flex flex-col min-w-[30vw] gap-4 overflow-hidden"
             transition:scale={{ duration: 200, start: 0.9 }}
         >
-            <div class="p-8 flex flex-col gap-2">
-                <h1 class="font-bold text-lg"><slot name="title" /></h1>
-                <p class="opacity-70 text-sm">
+            <div class="flex flex-col gap-2 p-8">
+                <h1 class="text-lg font-bold"><slot name="title" /></h1>
+                <p class="text-sm opacity-70">
                     <slot name="content" />
                 </p>
             </div>
             <div
-                class="bg-slate-50 dark:bg-slate-800 flex flex-row w-full px-4 py-2"
+                class="flex flex-row px-4 py-2 w-full bg-slate-50 dark:bg-slate-800"
             >
                 <button on:click={() => (open = false)} class="ml-auto">
                     <slot name="button" />

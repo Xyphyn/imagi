@@ -3,10 +3,17 @@
     import { scale } from 'svelte/transition'
 
     export let open = false
+
+    let clazz = ''
+    export { clazz as class }
+
+    export let absolute = false
 </script>
 
 <button
-    class="overflow-visible relative z-20 cursor-auto"
+    class="overflow-visible z-20 {absolute
+        ? 'absolute'
+        : 'relative'} cursor-auto {clazz}"
     on:click={() => (open = !open)}
 >
     <slot name="button" />

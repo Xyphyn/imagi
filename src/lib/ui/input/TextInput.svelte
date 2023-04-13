@@ -36,7 +36,7 @@
         {placeholder}
         {maxlength}
         class="w-full px-3 text-sm py-2.5 bg-transparent border border-black/20
-        dark:border-white/20 dark:focus:border-white focus:outline-none focus:border-black transition-colors rounded-lg {clazz}
+        dark:border-white/20 dark:focus:border-white focus:outline-none focus:border-black transition-colors rounded-md {clazz}
         {err
             ? 'border-red-500 focus:border-red-500 focus:dark:border-red-500 dark:border-red-500'
             : ''}"
