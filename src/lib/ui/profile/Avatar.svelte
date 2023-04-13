@@ -21,4 +21,5 @@
     alt={user.username}
     class="overflow-hidden rounded-full"
     {width}
+    height={width}
 />

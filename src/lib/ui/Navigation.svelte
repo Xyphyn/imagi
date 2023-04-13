@@ -67,7 +67,7 @@
     {#if $user}
         <Menu>
             <div class="w-max cursor-pointer h-max" slot="button">
-                <Avatar user={$user} />
+                <Avatar width={48} thumb="48x48" user={$user} />
             </div>
             <MenuButton onclick={() => goto(`/user/${$user?.username}`)}>
                 <Icon src={UserCircle} size="18" />

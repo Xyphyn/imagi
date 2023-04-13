@@ -21,4 +21,5 @@
     alt={community.name}
     class="overflow-hidden rounded-full"
     {width}
+    height={width}
 />
