@@ -12,6 +12,7 @@
     import { Color } from '$lib/ui/colors'
     import TextInput from '$lib/ui/input/TextInput.svelte'
     import Avatar from '$lib/ui/profile/Avatar.svelte'
+    import { onDestroy } from 'svelte'
 
     export let post:
         | PostsResponse<{
@@ -22,6 +23,8 @@
         | undefined
 
     let comments: CommentsResponse<{ user: UsersResponse }>[] | undefined
+
+    let unsubscribe: () => any
 
     async function fetchComments() {
         if (!post) return
@@ -34,6 +37,34 @@
             })
 
         comments = results.items
+
+        unsubscribe = await pb
+            .collection(Collections.Comments)
+            .subscribe<CommentsResponse>('*', async ({ record, action }) => {
+                if (record.post != post?.id) return
+
+                switch (action) {
+                    case 'create': {
+                        const expanded = await pb
+                            .collection(Collections.Comments)
+                            .getOne<CommentsResponse<{ user: UsersResponse }>>(
+                                record.id,
+                                {
+                                    expand: 'user',
+                                }
+                            )
+
+                        if (comments) comments = [expanded, ...comments]
+                    }
+
+                    case 'delete': {
+                        comments = comments?.filter(
+                            (comment) => comment.id != record.id
+                        )
+                    }
+                }
+            })
+
         if (!post.expand) return
 
         post.expand['postCounts(post)'][0].comments = results.totalItems
@@ -47,6 +78,10 @@
     async function comment() {
         submitting = true
     }
+
+    onDestroy(() => {
+        unsubscribe?.()
+    })
 </script>
 
 {#if $user}

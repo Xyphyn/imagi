@@ -2,8 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Cantarell';
+    src: url('/font/cantarell.woff2') format('woff2');
+    font-display: swap;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Cantarell';
+    src: url('/font/cantarell-bold.woff2') format('woff2');
+    font-display: swap;
+    font-weight: bold;
+}
+
 body {
     @apply m-4 bg-slate-50 dark:bg-gray-900 dark:text-white;
+    font-family: 'Cantarell', sans-serif;
 }
 
 #nprogress .bar {

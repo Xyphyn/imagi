@@ -15,6 +15,7 @@
     import PostUpload from '$lib/misc/posts/PostUpload.svelte'
     import { pb, user } from '$lib/backend/pocketbase'
     import Avatar from './profile/Avatar.svelte'
+    import MenuButton from './menus/MenuButton.svelte'
 
     let modals = {
         uploading: false,
@@ -39,22 +40,18 @@
             Explore
         </Button>
         <Menu>
-            <Button color={Color.accent} slot="button">
+            <Button color={Color.accent} slot="button" class="rounded-full">
                 <Icon src={Plus} mini size="16" />
                 Create
             </Button>
-            <h1 slot="title" class="font-bold">Create</h1>
-            <Button
-                class="w-full dark:bg-white/10"
-                onclick={() => (modals.uploading = true)}
-            >
+            <MenuButton onclick={() => (modals.uploading = true)}>
                 <Icon src={PencilSquare} mini size="18" />
                 Post
-            </Button>
-            <Button class="w-full dark:bg-white/10">
+            </MenuButton>
+            <MenuButton>
                 <Icon src={Newspaper} mini size="18" />
                 Community
-            </Button>
+            </MenuButton>
         </Menu>
     </div>
     {#if $user}
@@ -62,27 +59,21 @@
             <div class="w-max cursor-pointer h-max" slot="button">
                 <Avatar user={$user} />
             </div>
-            <h1 class="font-bold" slot="title">{$user.username}</h1>
-            <Button
-                link
-                class="w-full dark:bg-white/10"
-                href="/user/{$user.username}"
-            >
+            <MenuButton>
                 <Icon src={UserCircle} size="18" />
                 Profile
-            </Button>
-            <Button link class="w-full dark:bg-white/10" href="/">
+            </MenuButton>
+            <MenuButton>
                 <Icon src={Cog6Tooth} size="18" />
                 Settings
-            </Button>
-            <Button
-                class="w-full"
+            </MenuButton>
+            <MenuButton
                 onclick={() => pb.authStore.clear()}
-                color={Color.danger}
+                color={Color.dangerSecondary}
             >
                 <Icon src={ArrowLeftOnRectangle} mini size="18" />
                 Log Out
-            </Button>
+            </MenuButton>
         </Menu>
     {:else}
         <Button color={Color.accent} link href="/login">Log In</Button>
