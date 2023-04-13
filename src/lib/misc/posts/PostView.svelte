@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
     import { pb } from '$lib/backend/pocketbase'
     import type {
         CommunitiesResponse,
@@ -25,9 +26,23 @@
         <div class="flex flex-col" slot="title">
             <h1 class="text-xl font-bold">{post?.description}</h1>
             <span class="text-base opacity-80">
-                {post?.expand?.user.username}
-                {#if post?.expand?.community}• {post?.expand?.community
-                        .name}{/if}
+                <button
+                    on:click={() =>
+                        goto(`/user/${post?.expand?.user.username}`)}
+                    class="transition-colors hover:text-sky-500"
+                >
+                    {post?.expand?.user.username}
+                </button>
+
+                {#if post?.expand?.community}
+                    <button
+                        on:click={() =>
+                            goto(`/community/${post?.expand?.community.name}`)}
+                        class="transition-colors hover:text-sky-500"
+                    >
+                        • {post?.expand?.community.name}
+                    </button>
+                {/if}
             </span>
         </div>
         <div class="flex flex-col gap-4 items-center mt-4 w-full">
@@ -45,6 +60,8 @@
                     src={pb.getFileUrl(post, post?.image)}
                     alt={post.alt_text || post.description}
                     class="w-full max-w-xl rounded-lg"
+                    width={400}
+                    height={200}
                 />
             {/if}
             <Comments {post} />

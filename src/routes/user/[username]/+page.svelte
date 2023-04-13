@@ -56,25 +56,31 @@
 </div>
 
 <div class="pt-4" />
-<PostFetch
-    let:posts
-    let:fetchPosts
-    let:hasMore
-    let:addPosts
-    filter={(record) => record.user == data.user?.id}
-    filterString={`user.id = "${data.user.id}"`}
->
-    <div class="flex flex-col items-center">
-        <PostList grid={$userSettings.grid} {posts} />
-    </div>
-    <InfiniteScroll
-        threshold={800}
-        on:loadMore={async () =>
-            addPosts(
-                await fetchPosts(true, false, `user.id = "${data.user?.id}"`),
-                false
-            )}
-        window={true}
-        {hasMore}
-    />
-</PostFetch>
+{#key data.user.id}
+    <PostFetch
+        let:posts
+        let:fetchPosts
+        let:hasMore
+        let:addPosts
+        filter={(record) => record.user == data.user?.id}
+        filterString={`user.id = "${data.user.id}"`}
+    >
+        <div class="flex flex-col items-center">
+            <PostList grid={$userSettings.grid} {posts} />
+        </div>
+        <InfiniteScroll
+            threshold={800}
+            on:loadMore={async () =>
+                addPosts(
+                    await fetchPosts(
+                        true,
+                        false,
+                        `user.id = "${data.user?.id}"`
+                    ),
+                    false
+                )}
+            window={true}
+            {hasMore}
+        />
+    </PostFetch>
+{/key}

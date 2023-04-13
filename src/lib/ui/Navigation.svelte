@@ -69,12 +69,6 @@
             <div class="w-max cursor-pointer h-max" slot="button">
                 <Avatar user={$user} />
             </div>
-            <MenuButton
-                onclick={() => ($userSettings.grid = !$userSettings.grid)}
-            >
-                <Icon src={Beaker} size="18" />
-                Toggle Grid
-            </MenuButton>
             <MenuButton onclick={() => goto(`/user/${$user?.username}`)}>
                 <Icon src={UserCircle} size="18" />
                 Profile

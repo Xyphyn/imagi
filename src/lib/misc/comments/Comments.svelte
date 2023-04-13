@@ -23,8 +23,7 @@
         Trash,
     } from 'svelte-hero-icons'
     import { flip } from 'svelte/animate'
-    import { expoInOut, expoOut } from 'svelte/easing'
-    import { compute_rest_props } from 'svelte/internal'
+    import { expoInOut } from 'svelte/easing'
     import RelativeDate from '../RelativeDate.svelte'
 
     export let post:
@@ -180,16 +179,18 @@
                         <Icon src={Square2Stack} size="16" mini />
                         Copy Text
                     </MenuButton>
-                    <MenuButton
-                        onclick={() =>
-                            pb
-                                .collection(Collections.Comments)
-                                .delete(comment.id)}
-                        color={Color.dangerSecondary}
-                    >
-                        <Icon src={Trash} size="16" mini />
-                        Delete
-                    </MenuButton>
+                    {#if comment.user == $user?.id}
+                        <MenuButton
+                            onclick={() =>
+                                pb
+                                    .collection(Collections.Comments)
+                                    .delete(comment.id)}
+                            color={Color.dangerSecondary}
+                        >
+                            <Icon src={Trash} size="16" mini />
+                            Delete
+                        </MenuButton>
+                    {/if}
                 </Menu>
                 <Avatar width={36} user={comment.expand?.user} thumb="32x32" />
                 <div class="flex flex-col items-start">

@@ -62,7 +62,9 @@
                         : 'flex-row gap-2'}"
                 >
                     {#if grid}
-                        <div class="flex flex-row gap-2 items-center w-full">
+                        <div
+                            class="flex flex-row gap-2 self-start w-full text-left"
+                        >
                             <span class="mr-auto">{post.description}</span>
                             <span class="flex flex-row items-center">
                                 <Icon
@@ -118,6 +120,16 @@
                     />
                 {/if}
             </button>
+        {/each}
+    {:else}
+        {#each new Array(20) as items}
+            <div
+                class="flex overflow-hidden flex-col gap-4 w-full bg-white rounded-lg shadow-lg
+            transition-transform duration-200 transform-gpu cursor-pointer
+            dark:bg-gray-800 hover:-translate-y-1 {grid
+                    ? 'aspect-square flex-col-reverse'
+                    : 'p-8'}"
+            />
         {/each}
     {/if}
 </div>

@@ -28,3 +28,16 @@ body {
 #nprogress .peg {
     @apply hidden !important;
 }
+
+::-webkit-scrollbar {
+    position: absolute;
+    right: 0;
+    width: 4px;
+    height: 4px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgb(71 85 105);
+}
