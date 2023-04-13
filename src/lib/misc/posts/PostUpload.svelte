@@ -105,6 +105,7 @@
             class="justify-center h-10"
             loading={submitting}
             disabled={submitting}
+            submit
         >
             <Icon src={err == 'upload' ? XMark : ArrowUpOnSquare} size="18" />
             Upload

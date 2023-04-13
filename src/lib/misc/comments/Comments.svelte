@@ -34,6 +34,7 @@
             .getList<CommentsResponse<{ user: UsersResponse }>>(1, 50, {
                 sort: '-created',
                 filter: `post.id = "${post.id}"`,
+                expand: 'user',
             })
 
         comments = results.items
@@ -107,9 +108,10 @@
                 </Button>
                 <Button
                     color={Color.accent}
-                    class="justify-center self-end w-24 h-10"
+                    class="justify-center self-end w-24 h-9"
                     loading={submitting}
                     disabled={submitting}
+                    submit
                 >
                     Comment
                 </Button>
@@ -117,10 +119,20 @@
         </div>
     </form>
 {/if}
-<div class="flex flex-col w-full">
+<div class="flex flex-col gap-2 w-full">
     {#if comments}
         {#each comments as comment}
-            <div>{comment.content}</div>
+            <div class="flex flex-row gap-2 items-start px-2 py-4">
+                <Avatar width={36} user={comment.expand?.user} thumb="32x32" />
+                <div class="flex flex-col items-start">
+                    <span class="text-sm opacity-75">
+                        {comment.expand?.user.username}
+                    </span>
+                    <span class="text-sm opacity-75">
+                        {comment.content}
+                    </span>
+                </div>
+            </div>
         {/each}
     {/if}
 </div>

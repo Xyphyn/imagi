@@ -40,7 +40,7 @@
             Explore
         </Button>
         <Menu>
-            <Button color={Color.accent} slot="button" class="rounded-full">
+            <Button color={Color.accent} slot="button">
                 <Icon src={Plus} mini size="16" />
                 Create
             </Button>

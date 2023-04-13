@@ -75,6 +75,7 @@
             color={Color.accent}
             loading={submitting}
             disabled={submitting}
+            submit
         >
             Log in
         </Button>
@@ -132,6 +133,7 @@
             loading={submitting}
             disabled={submitting ||
                 formData.password != formData.passwordConfirm}
+            submit
         >
             Sign up
         </Button>

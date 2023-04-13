@@ -33,14 +33,18 @@
         <div class="flex flex-col gap-4 items-center mt-4 w-full">
             {#if isVideo(pb.getFileUrl(post, post?.image))}
                 <!-- svelte-ignore a11y-media-has-caption -->
-                <video controls loop class="max-w-xl max-h-[80vh] rounded-lg">
+                <video
+                    controls
+                    loop
+                    class="max-w-xl max-h-[80vh] rounded-lg w-full"
+                >
                     <source src={pb.getFileUrl(post, post?.image)} />
                 </video>
             {:else}
                 <img
                     src={pb.getFileUrl(post, post?.image)}
                     alt={post.alt_text || post.description}
-                    class="max-w-xl rounded-lg"
+                    class="w-full max-w-xl rounded-lg"
                 />
             {/if}
             <Comments {post} />
