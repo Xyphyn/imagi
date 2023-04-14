@@ -87,7 +87,7 @@
                     {post.expand?.['postCounts(post)'][0].comments}
                 </div>
                 <LikeButton {post} />
-                <Menu>
+                <Menu itemsClass="bg-slate-100 dark:bg-zinc-800">
                     <Button color={Color.ghost} slot="button" class="h-9">
                         <Icon src={EllipsisHorizontal} size="18" mini />
                     </Button>

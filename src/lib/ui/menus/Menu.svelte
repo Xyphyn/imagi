@@ -7,6 +7,8 @@
     let clazz = ''
     export { clazz as class }
 
+    export let itemsClass = ''
+
     export let absolute = false
 </script>
 
@@ -24,7 +26,10 @@
                 start: 0.95,
                 easing: expoOut,
             }}
-            class="absolute origin-top-right top-[100%] right-0 bg-white dark:bg-zinc-900 rounded-md py-2 min-w-[16rem] my-4 flex flex-col shadow-lg"
+            class="absolute origin-top-right top-[100%] right-0
+            rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-lg {itemsClass
+                ? itemsClass
+                : 'bg-white dark:bg-zinc-900'}"
         >
             {#if open}
                 <slot />

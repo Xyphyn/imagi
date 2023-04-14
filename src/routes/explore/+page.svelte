@@ -4,5 +4,8 @@
 </script>
 
 <RecordList collection={Collections.Users} let:items>
-    {#if items}{/if}
+    {#if items}
+        {#each items as user}
+        {/each}
+    {/if}
 </RecordList>
