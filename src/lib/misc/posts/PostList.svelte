@@ -109,7 +109,7 @@
                     <!-- svelte-ignore a11y-media-has-caption -->
                     {#if $userSettings.thumbSize == '64x64'}
                         <div
-                            class="flex flex-col justify-center p-4 w-full h-full itesm-center"
+                            class="flex flex-col justify-center items-center p-4 w-full h-full"
                         >
                             <h1 class="text-xl font-bold">Video</h1>
                             <p>

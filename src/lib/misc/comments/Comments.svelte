@@ -194,7 +194,12 @@
                 <Avatar width={36} user={comment.expand?.user} thumb="32x32" />
                 <div class="flex flex-col items-start">
                     <span class="flex flex-row gap-1 text-xs opacity-75">
-                        <span>{comment.expand?.user.username}</span>
+                        <a
+                            href={`/user/${comment.expand?.user.username}`}
+                            class="transition-colors hover:text-sky-400"
+                        >
+                            {comment.expand?.user.username}
+                        </a>
                         • <RelativeDate date={comment.created} />
                     </span>
                     <span class="text-sm">
