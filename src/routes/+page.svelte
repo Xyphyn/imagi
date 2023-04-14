@@ -14,7 +14,11 @@
     <h1 class="self-start text-3xl font-bold">Communities</h1>
 
     <div class="flex overflow-x-auto flex-row gap-4 pb-4 w-full">
-        <RecordList collection={Collections.Communities} let:items>
+        <RecordList
+            collection={Collections.Communities}
+            let:items
+            query={{ sort: '-created' }}
+        >
             {#if items}
                 {#each items as item}
                     <a
