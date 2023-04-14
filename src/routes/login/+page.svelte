@@ -44,9 +44,26 @@
     let signingUp = false
 </script>
 
+<div class="flex flex-row gap-2 items-center m-4 mx-auto w-max">
+    <img
+        src="/img/logo.svg"
+        alt="Xylo logo"
+        class="dark:hidden"
+        width="48"
+        height="48"
+    />
+    <img
+        src="/img/logo-dark.svg"
+        alt="Xylo logo"
+        class="hidden dark:block"
+        width="48"
+        height="48"
+    />
+    <span class="text-3xl font-bold">Imagi</span>
+</div>
 {#if !signingUp}
     <form
-        class="bg-white animate-popIn dark:bg-gray-800 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
+        class="bg-white animate-popIn dark:bg-zinc-900 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
         on:submit|preventDefault={logIn}
     >
         <div>
@@ -91,7 +108,7 @@
     </form>
 {:else}
     <form
-        class="bg-white animate-popIn dark:bg-gray-800 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
+        class="bg-white animate-popIn dark:bg-zinc-900 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
         on:submit|preventDefault={signUp}
     >
         <div>

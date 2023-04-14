@@ -22,7 +22,7 @@
 
 <title>{data.user.username}</title>
 <div
-    class="flex flex-col gap-4 justify-center items-center p-8 mx-auto max-w-xl max-h-48 bg-white rounded-lg shadow-lg dark:bg-slate-800"
+    class="flex flex-col gap-4 justify-center items-center p-8 mx-auto max-w-xl max-h-48 bg-white rounded-lg shadow-lg dark:bg-zinc-800"
 >
     <div class="flex flex-row gap-4 items-center self-start">
         <Avatar user={data.user} width={64} thumb="128x128" />

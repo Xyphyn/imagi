@@ -12,7 +12,7 @@
         on:click={() => (open = false)}
     >
         <div
-            class="bg-white dark:bg-slate-800 z-30 rounded-lg flex flex-col min-w-[30vw] gap-4 overflow-hidden"
+            class="bg-white dark:bg-zinc-800 z-30 rounded-lg flex flex-col min-w-[30vw] gap-4 overflow-hidden"
             transition:scale={{ duration: 200, start: 0.9 }}
         >
             <div class="flex flex-col gap-2 p-8">
@@ -22,7 +22,7 @@
                 </p>
             </div>
             <div
-                class="flex flex-row px-4 py-2 w-full bg-slate-50 dark:bg-slate-800"
+                class="flex flex-row px-4 py-2 w-full bg-zinc-50 dark:bg-zinc-800"
             >
                 <button on:click={() => (open = false)} class="ml-auto">
                     <slot name="button" />

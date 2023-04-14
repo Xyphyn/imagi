@@ -165,7 +165,7 @@
     {#if comments}
         {#each comments as comment (comment.id)}
             <div
-                class="flex relative flex-row gap-2 items-start p-4 rounded-md dark:bg-gray-700 bg-slate-100"
+                class="flex relative flex-row gap-2 items-start p-4 rounded-md dark:bg-gray-700 bg-zinc-100"
                 animate:flip={{ duration: 750, easing: expoInOut }}
             >
                 <Menu class="absolute top-0 right-0 z-40 m-2" absolute>

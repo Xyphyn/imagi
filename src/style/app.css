@@ -16,8 +16,18 @@
     font-weight: bold;
 }
 
+:root {
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
 body {
-    @apply m-4 bg-slate-50 dark:bg-gray-900 dark:text-white;
+    @apply m-4 bg-zinc-50 dark:bg-zinc-950 dark:text-white;
     font-family: 'Cantarell', sans-serif;
 }
 

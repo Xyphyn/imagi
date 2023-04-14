@@ -8,8 +8,17 @@
         UsersResponse,
     } from '$lib/backend/schema'
     import AdvancedModal from '$lib/ui/AdvancedModal.svelte'
+    import Button from '$lib/ui/Button.svelte'
+    import Menu from '$lib/ui/menus/Menu.svelte'
+    import {
+        ChatBubbleLeftEllipsis,
+        ChatBubbleOvalLeftEllipsis,
+        EllipsisHorizontal,
+        Icon,
+    } from 'svelte-hero-icons'
     import Comments from '../comments/Comments.svelte'
     import { isVideo } from './util'
+    import LikeButton from '../likes/LikeButton.svelte'
 
     export let open = false
     export let post:

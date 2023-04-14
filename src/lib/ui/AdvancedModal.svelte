@@ -18,12 +18,12 @@
             in:scale={{ duration: 300, start: 0.95 }}
             out:scale={{ duration: 100, easing: cubicOut, start: 0.95 }}
             class={`min-h-[30vh] min-w-[max(20rem,30vw)] open:flex flex-col max-w-full backdrop:bg-black backdrop:bg-opacity-30 open:backdrop:animate-fade-in align-middle rounded-lg
-     shadow-lg bg-white dark:bg-gray-800 text-inherit p-6 m-2 md:m-4 overflow-y-auto`}
+     shadow-lg bg-white dark:bg-zinc-900 text-inherit p-6 m-2 md:m-4 overflow-y-auto`}
         >
             <div class="flex flex-row items-center">
-                <h1 class="mr-auto ml-2 text-xl"><slot name="title" /></h1>
+                <h1 class="mr-auto text-xl"><slot name="title" /></h1>
                 <button
-                    class="flex relative top-0 right-0 flex-row gap-1 items-center self-start p-2 ml-auto w-min bg-opacity-0 rounded-lg transition-colors dark:bg-opacity-0 hover:bg-opacity-50 dark:hover:bg-opacity-50 bg-slate-200 dark:bg-slate-700 focus:border-none"
+                    class="flex relative top-0 right-0 flex-row gap-1 items-center self-start p-2 ml-auto w-min bg-opacity-0 rounded-lg transition-colors dark:bg-opacity-0 hover:bg-opacity-50 dark:hover:bg-opacity-50 bg-zinc-200 dark:bg-zinc-700 focus:border-none"
                     on:click={() => (open = false)}
                 >
                     <Icon src={XMark} size="24" class="text-slate-400" />

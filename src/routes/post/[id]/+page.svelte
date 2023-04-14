@@ -7,7 +7,7 @@
 </script>
 
 <div
-    class="flex flex-col gap-4 p-6 mx-auto w-max bg-white rounded-lg shadow-lg dark:bg-slate-800"
+    class="flex flex-col gap-4 p-6 mx-auto w-max bg-white rounded-lg shadow-lg dark:bg-zinc-800"
 >
     <div class="flex flex-col">
         <h1 class="text-xl font-bold">{data.post?.description}</h1>
