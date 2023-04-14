@@ -27,7 +27,7 @@
 </script>
 
 <nav
-    class="flex sticky top-0 z-20 flex-row gap-4 items-center p-4 mt-4 w-full h-16 backdrop-blur-xl bg-slate-50/80 dark:bg-zinc-950/80"
+    class="flex sticky top-0 z-20 flex-row gap-4 items-center p-4 mt-2 w-full h-16 backdrop-blur-xl bg-slate-50/80 dark:bg-zinc-950/80"
 >
     <a href="/">
         <img
