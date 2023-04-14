@@ -11,7 +11,7 @@
 </script>
 
 <button
-    class="overflow-visible z-20 {absolute
+    class="overflow-visible z-30 {absolute
         ? 'absolute'
         : 'relative'} cursor-auto {clazz}"
     on:click={() => (open = !open)}

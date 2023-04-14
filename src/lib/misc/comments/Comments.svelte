@@ -164,11 +164,11 @@
     {#if comments}
         {#each comments as comment (comment.id)}
             <div
-                class="flex relative flex-row gap-2 items-start p-4 rounded-md dark:bg-zinc-800 bg-zinc-100 animate-popIn"
+                class="flex relative flex-row gap-2 items-start p-4 rounded-md dark:bg-zinc-800 bg-zinc-100"
                 animate:flip={{ duration: 750, easing: expoInOut }}
             >
-                <Menu class="absolute top-0 right-0 z-40 m-2" absolute>
-                    <Button slot="button" class="relative z-0">
+                <Menu class="absolute top-0 right-0 z-20 m-2" absolute>
+                    <Button slot="button" class="-z-10">
                         <Icon src={EllipsisHorizontal} size="16" mini />
                     </Button>
                     <MenuButton
