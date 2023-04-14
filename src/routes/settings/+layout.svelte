@@ -12,7 +12,7 @@
         User Settings
     </h1>
     <div class="flex flex-col gap-8 md:flex-row">
-        <nav class="flex sticky top-0 right-0 flex-col gap-2 w-full md:w-48">
+        <nav class="flex sticky top-0 right-0 flex-col gap-2 w-full md:w-64">
             <Button link href="/settings/general">General</Button>
             {#if $user}
                 <Button link href="/settings/account">Account</Button>
