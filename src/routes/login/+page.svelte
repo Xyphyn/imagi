@@ -44,6 +44,7 @@
     let signingUp = false
 </script>
 
+<title>Login</title>
 <div class="flex flex-row gap-2 items-center m-4 mx-auto w-max">
     <img
         src="/img/logo.svg"

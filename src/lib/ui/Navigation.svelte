@@ -80,7 +80,7 @@
                 <Icon src={UserCircle} size="18" />
                 Profile
             </MenuButton>
-            <MenuButton>
+            <MenuButton onclick={() => goto(`/settings`)}>
                 <Icon src={Cog6Tooth} size="18" />
                 Settings
             </MenuButton>
