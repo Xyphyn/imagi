@@ -11,6 +11,7 @@
         Cog6Tooth,
         ArrowLeftOnRectangle,
         Beaker,
+        Squares2x2,
     } from 'svelte-hero-icons'
     import Menu from './menus/Menu.svelte'
     import PostUpload from '$lib/misc/posts/PostUpload.svelte'
@@ -54,6 +55,7 @@
                 <Icon src={Plus} mini size="16" />
                 Create
             </Button>
+            <span class="mx-4 my-2 text-xs text-left opacity-50">Create</span>
             <MenuButton onclick={() => (modals.uploading = true)}>
                 <Icon src={PencilSquare} mini size="18" />
                 Post
@@ -69,6 +71,9 @@
             <div class="w-max cursor-pointer h-max" slot="button">
                 <Avatar width={48} thumb="48x48" user={$user} />
             </div>
+            <span class="mx-4 my-2 text-xs text-left opacity-50">
+                {$user.username}
+            </span>
             <MenuButton onclick={() => goto(`/user/${$user?.username}`)}>
                 <Icon src={UserCircle} size="18" />
                 Profile
@@ -83,6 +88,18 @@
             >
                 <Icon src={ArrowLeftOnRectangle} mini size="18" />
                 Log Out
+            </MenuButton>
+            <div
+                class="border-t border-black/10 dark:border-white/10 w-[90%] mx-auto my-2"
+            />
+            <span class="mx-4 mb-2 text-xs text-left opacity-50">
+                Experiments
+            </span>
+            <MenuButton
+                onclick={() => ($userSettings.grid = !$userSettings.grid)}
+            >
+                <Icon src={Squares2x2} mini size="18" />
+                Toggle Grid
             </MenuButton>
         </Menu>
     {:else}

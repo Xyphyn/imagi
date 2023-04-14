@@ -33,6 +33,7 @@
     let err: any
 
     async function post() {
+        err = null
         if (!$user) goto('/login')
         if (formData.files == null || formData.title == '') return
 

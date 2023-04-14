@@ -47,7 +47,7 @@
                 out:fly|local={{ y: 5, duration: 250 }}
                 class="flex overflow-hidden flex-col gap-4 w-full bg-white rounded-lg shadow-lg
                 transition-transform duration-200 transform-gpu cursor-pointer
-                dark:bg-zinc-800 hover:-translate-y-1 {grid
+                dark:bg-zinc-900 hover:-translate-y-1 {grid
                     ? 'aspect-square flex-col-reverse'
                     : 'p-8'}"
                 animate:flip={{ duration: 750, easing: expoInOut }}
@@ -92,9 +92,16 @@
                             {post.description}
                         </span>
                         •
-                        <a href="/">
+                        <a
+                            href={`/user/${post.expand?.user.username}`}
+                            class="text-base"
+                        >
                             {post.expand?.user.username}
                         </a>
+
+                        <span class="ml-auto text-sm opacity-70">
+                            <RelativeDate date={post.created} />
+                        </span>
                     {/if}
                 </div>
                 {#if isVideo(pb.getFileUrl( post, post.image, { thumb: grid ? '256x256' : '256x0' } ))}
@@ -103,7 +110,7 @@
                         preload="metadata"
                         class="{grid
                             ? 'object-cover aspect-square'
-                            : ''} w-full h-full"
+                            : ''} w-full h-full rounded-lg"
                     >
                         <source src={pb.getFileUrl(post, post.image)} />
                     </video>

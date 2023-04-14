@@ -23,10 +23,10 @@
             <div class="flex flex-row items-center">
                 <h1 class="mr-auto text-xl"><slot name="title" /></h1>
                 <button
-                    class="flex relative top-0 right-0 flex-row gap-1 items-center self-start p-2 ml-auto w-min bg-opacity-0 rounded-lg transition-colors dark:bg-opacity-0 hover:bg-opacity-50 dark:hover:bg-opacity-50 bg-zinc-200 dark:bg-zinc-700 focus:border-none"
+                    class="flex relative top-0 right-0 flex-row gap-1 items-center self-start p-2 ml-auto w-min bg-opacity-0 rounded-lg transition-colors dark:bg-opacity-0 hover:bg-opacity-50 dark:hover:bg-opacity-50 bg-zinc-200 dark:bg-zinc-800 focus:border-none"
                     on:click={() => (open = false)}
                 >
-                    <Icon src={XMark} size="24" class="text-slate-400" />
+                    <Icon src={XMark} size="24" class="text-zinc-400" />
                 </button>
             </div>
             <!-- svelte-ignore a11y-click-events-have-key-events -->
