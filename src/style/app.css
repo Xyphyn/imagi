@@ -27,7 +27,7 @@
 }
 
 body {
-    @apply m-4 bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50 text-zinc-900;
+    @apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50 text-zinc-900;
     font-family: 'Cantarell', sans-serif;
 }
 

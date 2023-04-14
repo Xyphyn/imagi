@@ -6,6 +6,7 @@
     import RecordList from '$lib/backend/RecordList.svelte'
     import { Collections, type CollectionResponses } from '$lib/backend/schema'
     import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
+    import Live from '$lib/misc/Live.svelte'
 </script>
 
 <title>Imagi</title>
@@ -46,7 +47,9 @@
             {/if}
         </RecordList>
     </div>
-    <h1 class="self-start text-3xl font-bold">Posts</h1>
+    <h1 class="flex flex-row gap-2 items-center self-start text-3xl font-bold">
+        Posts
+    </h1>
     <PostFetch let:posts let:fetchPosts let:hasMore let:addPosts>
         <PostList grid={$userSettings.grid} {posts} />
         <InfiniteScroll

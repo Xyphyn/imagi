@@ -26,7 +26,9 @@
     }
 </script>
 
-<nav class="flex flex-row gap-4 items-center mb-4 w-full h-16">
+<nav
+    class="flex sticky top-0 z-20 flex-row gap-4 items-center p-4 mt-4 w-full h-16 backdrop-blur-xl bg-slate-50/80 dark:bg-zinc-950/80"
+>
     <a href="/">
         <img
             src="/img/logo.svg"
@@ -44,7 +46,7 @@
         />
     </a>
     <div
-        class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-white/5 sm:ml-auto sm:mr-0"
+        class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-zinc-900 sm:ml-auto sm:mr-0"
     >
         <Button link href="/">
             <Icon src={GlobeAlt} size="16" />
