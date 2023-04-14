@@ -3,6 +3,7 @@
     import { userSettings } from '$lib/settings'
 </script>
 
+<title>Settings | General</title>
 <div
     class="flex overflow-hidden flex-col gap-2 bg-white rounded-lg shadow-lg dark:bg-zinc-900"
 >
@@ -13,7 +14,7 @@
         </p>
     </div>
     <div
-        class="flex flex-row gap-2 items-center px-8 py-4 w-full dark:bg-zinc-800 bg-slate-100"
+        class="flex flex-row gap-2 items-center px-8 py-4 w-full dark:bg-zinc-800 bg-slate-50"
     >
         <SwitchInput bind:enabled={$userSettings.grid} />
         <span class="text-sm">
