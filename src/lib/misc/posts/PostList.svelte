@@ -12,7 +12,7 @@
     import RelativeDate from '../RelativeDate.svelte'
     import PostView from './PostView.svelte'
     import { isVideo } from './util'
-    import { fly } from 'svelte/transition'
+    import { fade, fly, scale } from 'svelte/transition'
     import { userSettings } from '$lib/settings'
 
     export let posts:
@@ -45,7 +45,6 @@
         {#each posts as post (post.id)}
             <button
                 in:fly={{ y: 5, duration: 250 }}
-                out:fly|local={{ y: 5, duration: 250 }}
                 class="flex overflow-hidden flex-col gap-4 w-full bg-white rounded-lg shadow-lg
                 transition-transform duration-200 transform-gpu cursor-pointer
                 dark:bg-zinc-900 hover:-translate-y-1 {grid

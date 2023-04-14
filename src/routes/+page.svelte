@@ -4,9 +4,50 @@
     import InfiniteScroll from 'svelte-infinite-scroll'
     import { userSettings } from '$lib/settings'
     import RecordList from '$lib/backend/RecordList.svelte'
-    import { Collections, type CollectionResponses } from '$lib/backend/schema'
+    import {
+        Collections,
+        type CommunitiesResponse,
+        type PostsResponse,
+    } from '$lib/backend/schema'
     import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
-    import Live from '$lib/misc/Live.svelte'
+    import { user } from '$lib/backend/pocketbase'
+    import MultiSelect from '$lib/ui/input/MultiSelect.svelte'
+
+    interface Sort {
+        filterFunction: (
+            t: PostsResponse<{ community: CommunitiesResponse }>
+        ) => boolean
+        filterString: string
+    }
+
+    const sorts: Map<string, Sort> = new Map([
+        [
+            'recent',
+            {
+                filterFunction: (t) => true,
+                filterString: '',
+            },
+        ],
+        [
+            'followed',
+            {
+                filterFunction: (t) => {
+                    if (!$user) return true
+                    else
+                        return $user.communities.includes(
+                            t.expand?.community.id
+                        )
+                },
+                filterString: `${($user?.communities || [])
+                    .map((c: string) => `community.id = "${c}"`)
+                    .join(' || ')}`,
+            },
+        ],
+    ])
+
+    let sort: Sort = sorts.get('recent')!
+
+    let selectedSort = 'recent'
 </script>
 
 <title>Imagi</title>
@@ -54,7 +95,34 @@
     <h1 class="flex flex-row gap-2 items-center self-start text-3xl font-bold">
         Posts
     </h1>
-    <PostFetch let:posts let:fetchPosts let:hasMore let:addPosts>
+    <PostFetch
+        let:posts
+        let:fetchPosts
+        let:hasMore
+        let:addPosts
+        filter={sort.filterFunction}
+        filterString={sort.filterString}
+    >
+        <div class="self-start">
+            <MultiSelect
+                class="capitalize"
+                options={Array.from(sorts.keys())}
+                bind:selected={selectedSort}
+                on:select={async (selected) => {
+                    const sel = sorts.get(selected.detail)
+
+                    if (!sel) return
+                    sort = sel
+
+                    console.log(sort.filterString)
+
+                    addPosts(
+                        await fetchPosts(false, true, sort.filterString),
+                        true
+                    )
+                }}
+            />
+        </div>
         <PostList grid={$userSettings.grid} {posts} />
         <InfiniteScroll
             threshold={800}

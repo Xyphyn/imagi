@@ -59,6 +59,7 @@
     ) => {
         if (!newPosts) return
 
+        if (replace) page = 1
         if (replace) posts = newPosts
         else {
             if (posts) posts = [...posts!, ...newPosts]
