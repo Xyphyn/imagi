@@ -114,8 +114,6 @@
                     if (!sel) return
                     sort = sel
 
-                    console.log(sort.filterString)
-
                     addPosts(
                         await fetchPosts(false, true, sort.filterString),
                         true
@@ -126,8 +124,12 @@
         <PostList grid={$userSettings.grid} {posts} />
         <InfiniteScroll
             threshold={800}
-            on:loadMore={async () =>
-                addPosts(await fetchPosts(true, false), false)}
+            on:loadMore={async () => {
+                addPosts(
+                    await fetchPosts(true, false, sort.filterString),
+                    false
+                )
+            }}
             window={true}
             {hasMore}
         />

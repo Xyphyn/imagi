@@ -28,6 +28,7 @@
 
 body {
     @apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50 text-zinc-800;
+    scrollbar-gutter: both-edges;
     font-family: 'Cantarell', sans-serif;
 }
 
@@ -44,7 +45,6 @@ body {
     right: 0;
     width: 4px;
     height: 4px;
-    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {

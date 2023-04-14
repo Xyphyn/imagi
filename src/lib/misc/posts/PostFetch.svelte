@@ -29,10 +29,11 @@
             page = 1
             hasMore = true
         }
+
         if (!hasMore) return
 
         if (increment == true) page++
-        else if (increment == false) page--
+        else if (increment == false && !reset) page--
 
         const data = await pb
             .collection(Collections.Posts)
@@ -42,13 +43,15 @@
                 sort: '-created',
             })
 
-        if (posts) {
+        if (posts && !reset) {
             if (posts?.length + batchSize >= data.totalItems) {
                 hasMore = false
             }
         }
 
-        if (data.items.length >= data.totalItems) hasMore = false
+        if (data.items.length >= data.totalItems) {
+            hasMore = false
+        }
 
         return data.items!
     }
@@ -59,7 +62,6 @@
     ) => {
         if (!newPosts) return
 
-        if (replace) page = 1
         if (replace) posts = newPosts
         else {
             if (posts) posts = [...posts!, ...newPosts]

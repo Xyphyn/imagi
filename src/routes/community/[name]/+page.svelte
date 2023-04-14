@@ -1,12 +1,17 @@
 <script lang="ts">
-    import type {
-        CommunitiesResponse,
-        CommunityCountsResponse,
-        UsersResponse,
+    import { goto } from '$app/navigation'
+    import { pb, user } from '$lib/backend/pocketbase'
+    import {
+        Collections,
+        type CommunitiesResponse,
+        type CommunityCountsResponse,
+        type UsersResponse,
     } from '$lib/backend/schema'
     import PostFetch from '$lib/misc/posts/PostFetch.svelte'
     import PostList from '$lib/misc/posts/PostList.svelte'
     import { userSettings } from '$lib/settings'
+    import Button from '$lib/ui/Button.svelte'
+    import { Color } from '$lib/ui/colors'
     import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
     import { Calendar, Icon, PencilSquare, UserGroup } from 'svelte-hero-icons'
     import InfiniteScroll from 'svelte-infinite-scroll'
@@ -16,6 +21,40 @@
             'communityCounts(community)': CommunityCountsResponse[]
             owner: UsersResponse
         }>
+    }
+
+    let submitting = false
+
+    const following: (communities: string[]) => boolean = (c) =>
+        c.includes(data.community.id)
+
+    async function follow() {
+        if (!$user) {
+            goto('/login')
+            return
+        }
+
+        submitting = true
+
+        if (following($user?.communities || [])) {
+            await pb.collection(Collections.Users).update($user.id, {
+                communities: $user?.communities.filter(
+                    (c: string) => c != data.community.id
+                ),
+            })
+
+            $user.communities = $user?.communities.filter(
+                (c: string) => c != data.community.id
+            )
+        } else {
+            await pb.collection(Collections.Users).update($user.id, {
+                communities: [data.community.id, ...$user?.communities],
+            })
+
+            $user.communities = [data.community.id, ...$user.communities]
+        }
+
+        submitting = false
     }
     //
 </script>
@@ -37,7 +76,7 @@
             {/if}
         </div>
     </div>
-    <div class="flex flex-row gap-4 self-start opacity-90">
+    <div class="flex flex-row gap-4 self-start w-full opacity-90">
         <div class="flex flex-row gap-1 items-center">
             <Icon src={Calendar} mini size="18" />
             {new Date(data.community.created).toLocaleDateString()}
@@ -50,6 +89,17 @@
             <Icon src={UserGroup} size="18" />
             {data.community.expand?.['communityCounts(community)'][0].members}
         </div>
+        <Button
+            class="justify-self-end ml-auto h-9 w-[6rem] justify-center"
+            loading={submitting}
+            disabled={submitting}
+            color={following($user?.communities || []) || submitting
+                ? Color.accent
+                : Color.ghost}
+            onclick={follow}
+        >
+            {following($user?.communities || []) ? 'Following' : 'Follow'}
+        </Button>
     </div>
 </div>
 
