@@ -13,6 +13,7 @@
     import PostView from './PostView.svelte'
     import { isVideo } from './util'
     import { fly } from 'svelte/transition'
+    import { userSettings } from '$lib/settings'
 
     export let posts:
         | PostsResponse<{
@@ -106,18 +107,32 @@
                 </div>
                 {#if isVideo(pb.getFileUrl( post, post.image, { thumb: grid ? '256x256' : '256x0' } ))}
                     <!-- svelte-ignore a11y-media-has-caption -->
-                    <video
-                        preload="metadata"
-                        class="{grid
-                            ? 'object-cover aspect-square'
-                            : ''} w-full h-full rounded-lg"
-                    >
-                        <source src={pb.getFileUrl(post, post.image)} />
-                    </video>
+                    {#if $userSettings.thumbSize == '64x64'}
+                        <div
+                            class="flex flex-col justify-center p-4 w-full h-full itesm-center"
+                        >
+                            <h1 class="text-xl font-bold">Video</h1>
+                            <p>
+                                Video thumbnails are disabled because you have
+                                thumbnail size set to 64x64.
+                            </p>
+                        </div>
+                    {:else}
+                        <video
+                            preload="metadata"
+                            class="{grid
+                                ? 'object-cover aspect-square'
+                                : ''} w-full h-full rounded-lg"
+                        >
+                            <source src={pb.getFileUrl(post, post.image)} />
+                        </video>
+                    {/if}
                 {:else}
                     <img
                         src={pb.getFileUrl(post, post.image, {
-                            thumb: grid ? '256x256' : '256x0',
+                            thumb: grid
+                                ? $userSettings.thumbSize
+                                : $userSettings.thumbSize.split('x')[0] + 'x0',
                         })}
                         alt={post.alt_text || post.description}
                         class="{grid

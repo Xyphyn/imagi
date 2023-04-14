@@ -4,9 +4,10 @@
 
 <label>
     <div
-        class="relative w-10 border-2 h-6 transition-colors cursor-pointer rounded-full flex flex-row items-center shadow-lg {enabled
+        class="relative w-10 border-2 h-6 transition-colors cursor-pointer
+        rounded-full flex flex-row items-center shadow-lg {enabled
             ? 'bg-blue-500 border-blue-500'
-            : 'bg-slate-200 dark:bg-zinc-800'}"
+            : 'bg-slate-200 dark:bg-zinc-900 border-slate-200 dark:border-zinc-900'}"
     >
         <div
             class="w-5 h-5 rounded-full transition-transform
