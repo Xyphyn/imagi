@@ -111,16 +111,15 @@
 </script>
 
 <Button
-    class="h-9 items-center justify-center w-[3rem] gap-2 {submitting
+    class="h-9 min-w-[3rem] items-center justify-center gap-2 px-2 py-1 box-border {submitting
         ? 'border-black dark:border-white border'
         : ''}"
-    color={userLike ? Color.accent : Color.secondary}
-    loading={submitting}
+    color={userLike ? Color.accent : Color.ghost}
     disabled={submitting}
     onclick={() => like()}
 >
     <div class="flex flex-row justify-self-center self-center">
         <Icon src={Heart} mini size="18" class="mx-1 align-bottom" />
-        <span class="leading-[18px] text-sm">{likes}</span>
+        <span class="leading-[18px] text-sm mr-[2px]">{likes}</span>
     </div>
 </Button>

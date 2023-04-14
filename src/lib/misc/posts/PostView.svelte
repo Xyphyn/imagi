@@ -1,11 +1,12 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
-    import { pb } from '$lib/backend/pocketbase'
-    import type {
-        CommunitiesResponse,
-        PostCountsResponse,
-        PostsResponse,
-        UsersResponse,
+    import { pb, user } from '$lib/backend/pocketbase'
+    import {
+        Collections,
+        type CommunitiesResponse,
+        type PostCountsResponse,
+        type PostsResponse,
+        type UsersResponse,
     } from '$lib/backend/schema'
     import AdvancedModal from '$lib/ui/AdvancedModal.svelte'
     import Button from '$lib/ui/Button.svelte'
@@ -15,10 +16,15 @@
         ChatBubbleOvalLeftEllipsis,
         EllipsisHorizontal,
         Icon,
+        Square2Stack,
+        Trash,
     } from 'svelte-hero-icons'
     import Comments from '../comments/Comments.svelte'
     import { isVideo } from './util'
     import LikeButton from '../likes/LikeButton.svelte'
+    import { Color } from '$lib/ui/colors'
+    import MenuButton from '$lib/ui/menus/MenuButton.svelte'
+    import { page } from '$app/stores'
 
     export let open = false
     export let post:
@@ -28,6 +34,8 @@
               'postCounts(post)': PostCountsResponse[]
           }>
         | undefined = undefined
+
+    let deleting = false
 </script>
 
 {#if post}
@@ -73,6 +81,43 @@
                     height={200}
                 />
             {/if}
+            <div class="flex flex-row gap-2 ml-auto">
+                <div class="flex flex-row gap-1 items-center">
+                    <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
+                    {post.expand?.['postCounts(post)'][0].comments}
+                </div>
+                <LikeButton {post} />
+                <Menu>
+                    <Button color={Color.ghost} slot="button" class="h-9">
+                        <Icon src={EllipsisHorizontal} size="18" mini />
+                    </Button>
+                    <MenuButton
+                        onclick={() =>
+                            navigator.clipboard.writeText(
+                                `${$page.url.protocol}//${$page.url.hostname}/post/${post?.id}`
+                            )}
+                    >
+                        <Icon src={Square2Stack} size="18" />
+                        Copy Link
+                    </MenuButton>
+                    {#if post && post.user == $user?.id}
+                        <MenuButton
+                            onclick={async () => {
+                                if (!post) return
+                                deleting = true
+                                await pb
+                                    .collection(Collections.Posts)
+                                    .delete(post.id)
+                                deleting = false
+                            }}
+                            color={Color.dangerSecondary}
+                        >
+                            <Icon src={Trash} mini size="18" />
+                            Delete
+                        </MenuButton>
+                    {/if}
+                </Menu>
+            </div>
             <Comments {post} />
         </div>
     </AdvancedModal>
