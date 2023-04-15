@@ -50,7 +50,7 @@
     <div
         class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-zinc-900 sm:ml-auto sm:mr-0"
     >
-        <Button link href="/">
+        <Button link href="/explore">
             <Icon src={GlobeAlt} size="16" />
             Explore
         </Button>

@@ -1,9 +1,7 @@
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
+import { sveltekit } from '@sveltejs/kit/vite'
+import { defineConfig, type PluginOption } from 'vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
-	plugins: [sveltekit()],
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
-	}
-});
+    plugins: [sveltekit(), visualizer() as PluginOption],
+})

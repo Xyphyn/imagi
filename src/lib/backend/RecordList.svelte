@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { ListQueryParams } from 'pocketbase'
+    import type { BaseQueryParams, ListQueryParams } from 'pocketbase'
     import type { CollectionResponses, Collections } from './schema'
     import { onMount } from 'svelte'
     import { pb } from './pocketbase'
 
-    export let query: ListQueryParams = {}
+    export let query: ListQueryParams & BaseQueryParams = {}
     type Collection = $$Generic<Collections>
     export let collection: Collections & Collection
     export let page = 1

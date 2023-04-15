@@ -61,7 +61,7 @@
 
 <title>{data.community.name}</title>
 <div
-    class="flex flex-col gap-4 justify-center items-center p-8 mx-auto max-w-xl max-h-48 bg-white rounded-lg shadow-lg dark:bg-zinc-900"
+    class="flex flex-col gap-4 justify-center items-center p-8 mx-auto max-w-xl max-h-48 bg-white rounded-lg shadow-lg animate-popIn dark:bg-zinc-900"
 >
     <div class="flex flex-row gap-4 items-center self-start">
         <CommunityAvatar

@@ -67,7 +67,7 @@
             {#if items}
                 {#each items as item}
                     <a
-                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu dark:bg-zinc-900 hover:-translate-y-1"
+                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu animate-popIn dark:bg-zinc-900 hover:-translate-y-1"
                         href={`/community/${item.name}`}
                     >
                         <CommunityAvatar
