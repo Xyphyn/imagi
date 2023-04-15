@@ -6,7 +6,6 @@
         UsersResponse,
     } from '$lib/backend/schema'
     import Button from '$lib/ui/Button.svelte'
-    import ToastContainer from '$lib/ui/toasts/ToastContainer.svelte'
     import { ChevronLeft, Icon } from 'svelte-hero-icons'
 
     export let data: {
@@ -18,7 +17,6 @@
     //
 </script>
 
-<ToastContainer />
 <div class="flex flex-col gap-4 mx-auto max-w-4xl">
     <h1
         class="flex flex-row gap-2 items-center py-4 text-3xl font-bold border-b border-black/10 dark:border-white/10"
