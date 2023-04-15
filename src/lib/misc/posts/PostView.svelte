@@ -87,7 +87,7 @@
                     <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
                     {post.expand?.['postCounts(post)'][0].comments}
                 </div> -->
-                <div class="mr-auto text-sm opacity-50">
+                <div class="self-start mr-auto text-sm opacity-50">
                     <RelativeDate date={post.created} />
                 </div>
                 <LikeButton {post} />

@@ -21,6 +21,7 @@
         The resolution to make thumbnails. 64x64 will disable video thumbnails.
     </p>
     <MultiSelect
+        separate={false}
         options={['256x256', '128x128', '64x64']}
         bind:selected={$userSettings.thumbSize}
     />

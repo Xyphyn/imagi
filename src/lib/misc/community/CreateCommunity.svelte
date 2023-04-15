@@ -55,6 +55,11 @@
                 )
 
                 goto(`/community/${formData.name}`)
+                open = false
+
+                formData.name = ''
+                formData.description = ''
+                formData.files = null
             })
 
         submitting = false

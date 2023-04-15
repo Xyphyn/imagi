@@ -5,6 +5,7 @@
     import Button from '$lib/ui/Button.svelte'
     import { Color } from '$lib/ui/colors'
     import TextInput from '$lib/ui/input/TextInput.svelte'
+    import { ToastType, addToast } from '$lib/ui/toasts/toasts'
 
     let submitting = false
     let err: any
@@ -31,14 +32,21 @@
 
     async function logIn() {
         submitting = true
+        err = null
 
         await pb
             .collection(Collections.Users)
             .authWithPassword(formData.username, formData.password)
-            .catch((error) => (err = error))
+            .then(() => {
+                submitting = false
+                goto('/')
+            })
+            .catch((error) => {
+                err = 'credentials'
+                addToast('Error', 'Invalid credentials.', ToastType.error)
+            })
 
         submitting = false
-        goto('/')
     }
 
     let signingUp = false
@@ -90,7 +98,7 @@
 
         <Button
             class="justify-center h-10"
-            color={Color.accent}
+            color={err == 'credentials' ? Color.danger : Color.accent}
             loading={submitting}
             disabled={submitting}
             submit
@@ -147,7 +155,7 @@
 
         <Button
             class="justify-center h-10"
-            color={Color.accent}
+            color={err == 'credentials' ? Color.danger : Color.accent}
             loading={submitting}
             disabled={submitting ||
                 formData.password != formData.passwordConfirm}

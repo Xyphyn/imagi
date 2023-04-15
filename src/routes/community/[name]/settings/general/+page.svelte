@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation'
     import { pb } from '$lib/backend/pocketbase'
     import {
         Collections,
@@ -27,6 +28,10 @@
         },
         image: {
             files: null,
+            submitting: false,
+        },
+        delete: {
+            confirm: '',
             submitting: false,
         },
     }
@@ -86,6 +91,33 @@
 
         formData.image.submitting = false
     }
+
+    async function deleteCommunity() {
+        if (formData.delete.confirm != 'delete my community') return
+
+        formData.delete.submitting = true
+
+        await pb
+            .collection(Collections.Communities)
+            .delete(data.community.id)
+            .then(() => {
+                addToast(
+                    'Deletion',
+                    'Your community was deleted.',
+                    ToastType.info
+                )
+                goto('/')
+            })
+            .catch(() => {
+                addToast(
+                    'Error',
+                    'Failed to delete community.',
+                    ToastType.error
+                )
+            })
+
+        formData.delete.submitting = false
+    }
 </script>
 
 <Setting>
@@ -118,5 +150,27 @@
         color={Color.accent}
     >
         Save
+    </Button>
+</Setting>
+<Setting>
+    <h1 slot="title" class="text-red-600 dark:text-red-400">Delete</h1>
+    <p slot="description" class="text-red-600 dark:text-red-400">
+        This will permanently delete your community. Posts will not be deleted.
+        Type "delete my community" to confirm.
+    </p>
+    <TextInput
+        placeholder="delete my community"
+        class="w-full md:max-w-[18rem] mr-auto"
+        bind:value={formData.delete.confirm}
+    />
+    <Button
+        onclick={deleteCommunity}
+        class="w-full md:max-w-[8rem] justify-center h-10"
+        loading={formData.delete.submitting}
+        disabled={formData.delete.submitting ||
+            formData.delete.confirm != 'delete my community'}
+        color={Color.danger}
+    >
+        Delete
     </Button>
 </Setting>
