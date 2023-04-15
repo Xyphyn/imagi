@@ -1,263 +1,176 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
-    import Button from '$lib/Button.svelte'
-    import TextInput from '$lib/custom/TextInput.svelte'
-    import FilePicker from '$lib/FilePicker.svelte'
-    import Loader from '$lib/Loader.svelte'
-    import Colored from '$lib/misc/Colored.svelte'
-    import Modal from '$lib/Modal.svelte'
-    import { pb } from '$lib/pocketbase'
-    import { addToast, ToastType } from '$lib/toasts/toasts'
-    import Tooltip from '$lib/Tooltip.svelte'
-    import {
-        Switch,
-        Tab,
-        TabGroup,
-        TabList,
-        TabPanel,
-        TabPanels,
-    } from '@rgossiaux/svelte-headlessui'
-    import { Check, Icon, InformationCircle } from 'svelte-hero-icons'
+    import { pb } from '$lib/backend/pocketbase'
+    import { Collections } from '$lib/backend/schema'
+    import Button from '$lib/ui/Button.svelte'
+    import { Color } from '$lib/ui/colors'
+    import TextInput from '$lib/ui/input/TextInput.svelte'
+    import { ToastType, addToast } from '$lib/ui/toasts/toasts'
 
-    interface FormData {
-        email: string
-        username: string
-        password: string
-        images: FileList | null
-        checks: FormChecks
-        loading: boolean
-    }
+    let submitting = false
+    let err: any
 
-    interface FormChecks {
-        rules: boolean
-    }
-
-    let formData: FormData = {
+    let formData = {
         email: '',
         username: '',
         password: '',
-        images: null,
-        checks: {
-            rules: false,
-        },
-        loading: false,
+        passwordConfirm: '',
     }
-
-    let forgotDialog = false
-    let forgotEmail = ''
 
     async function signUp() {
-        formData.loading = true
-        const data = new FormData()
-        data.append('email', formData.email)
-        data.append('username', formData.username)
-        data.append('password', formData.password)
-        data.append('passwordConfirm', formData.password)
-        if (
-            formData.username == '' ||
-            formData.password == '' ||
-            formData.email == ''
-        ) {
-            formData.loading = false
-            return
-        }
-        if (formData.images) {
-            data.append('avatar', formData.images[0])
-        }
+        submitting = true
 
-        const createdUser = await pb
-            .collection('users')
-            .create(data)
-            .then(() => {
-                addToast(
-                    'Success',
-                    'Successfully signed up. Check your email for a verification link.',
-                    ToastType.success
-                )
+        await pb.collection(Collections.Users).create({
+            email: formData.email,
+            username: formData.username,
+            password: formData.password,
+            passwordConfirm: formData.passwordConfirm,
+        })
 
-                login()
-                pb.collection('users').requestVerification(formData.email)
-                formData.loading = false
-            })
-            .catch((err) => {
-                addToast(
-                    'Error',
-                    'Could not sign up. Your username must be alphanumeric, and password 8-72 characters.',
-                    ToastType.error
-                )
-            })
+        await logIn()
     }
 
-    async function login() {
-        formData.loading = true
-        const user = await pb
-            .collection('users')
+    async function logIn() {
+        submitting = true
+        err = null
+
+        await pb
+            .collection(Collections.Users)
             .authWithPassword(formData.username, formData.password)
             .then(() => {
+                submitting = false
                 goto('/')
             })
-            .catch((err) => {
-                formData.loading = false
-
+            .catch((error) => {
+                err = 'credentials'
                 addToast('Error', 'Invalid credentials.', ToastType.error)
             })
-        formData.loading = false
+
+        submitting = false
     }
 
-    function resetPassword() {
-        if (forgotEmail == '') return
-
-        pb.collection('users')
-            .requestPasswordReset(forgotEmail)
-            .then(() => {
-                addToast(
-                    'Sent',
-                    'A password reset email was sent to your inbox.',
-                    ToastType.info
-                )
-            })
-            .catch(() => {
-                addToast(
-                    'Error',
-                    'That email address is likely invalid.',
-                    ToastType.error
-                )
-            })
-    }
+    let signingUp = false
 </script>
 
-<title>Imagi | Login</title>
-<TabGroup class="flex flex-col gap-4 justify-center items-center pt-8">
-    <TabList class="flex flex-row gap-4 w-full max-w-xl p-0">
-        <Tab
-            class={({ selected }) =>
-                `flex-1 rounded-md p-3 bg-white dark:bg-slate-800 shadow-sm ${
-                    selected
-                        ? 'bg-gradient-to-br from-primary to-secondary text-black'
-                        : ''
-                }`}
-        >
-            Log In
-        </Tab>
-        <Tab
-            class={({ selected }) =>
-                `flex-1 rounded-md p-3 bg-white dark:bg-slate-800 shadow-sm ${
-                    selected
-                        ? 'bg-gradient-to-br from-primary to-secondary text-black'
-                        : ''
-                }`}
-        >
-            Sign Up
-        </Tab>
-    </TabList>
-    <TabPanels class="px-8 pb-8">
-        <TabPanel class="px-4">
-            <form
-                on:submit|preventDefault={login}
-                class="flex flex-col gap-4 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
-            >
-                <h1 class="text-3xl font-bold">
-                    <Colored>Log In</Colored>
-                </h1>
-
-                <TextInput
-                    placeholder="you@example.com"
-                    bind:value={formData.username}
-                    type="text"
-                    label="Email or username"
-                />
-                <TextInput
-                    bind:value={formData.password}
-                    type="password"
-                    label="Password"
-                />
-                <Button
-                    class="mt-4 max-w-[24rem] w-full items-center justify-center py-2.5"
-                    major={true}
-                    type="submit"
-                    disabled={formData.loading}
-                >
-                    {#if formData.loading}<Loader />{/if} Log In
-                </Button>
-                <div
-                    class="border-b border-black/10 dark:border-white/10 w-96"
-                />
-
-                <button
-                    on:click={() => (forgotDialog = true)}
-                    class="text-xs text-left block text-sky-300"
-                    type="button"
-                >
-                    Forgot Password?
-                </button>
-            </form>
-        </TabPanel>
-        <TabPanel>
-            <form
-                on:submit|preventDefault={signUp}
-                class="flex flex-col gap-4 items-center p-4 py-16 m-4 my-auto mx-auto w-screen max-w-xl bg-white rounded-lg shadow-xl dark:bg-slate-800 popin"
-            >
-                <Colored><h1 class="text-3xl font-bold">Sign Up</h1></Colored>
-                <TextInput
-                    type="email"
-                    bind:value={formData.email}
-                    placeholder="you@example.com"
-                    label="Email"
-                />
-                <TextInput
-                    type="text"
-                    bind:value={formData.username}
-                    placeholder="Example"
-                    maxlength={128}
-                    label="Username"
-                />
-                <TextInput
-                    type="text"
-                    bind:value={formData.password}
-                    placeholder="8-72 characters"
-                    maxlength={128}
-                    label="Password"
-                />
-                <Button
-                    class="mt-4 max-w-[24rem] w-full items-center justify-center py-2.5"
-                    major={true}
-                    type="submit"
-                >
-                    {#if formData.loading}<Loader />{/if}Sign Up
-                </Button>
-                <div
-                    class="border-b border-black/10 dark:border-white/10 w-96"
-                />
-                <p
-                    class="text-xs text-slate-400 dark:text-slate-500 text-center"
-                >
-                    By creating an Imagi account, you agree to the <a
-                        href="/guidelines"
-                        class="text-primary underline"
-                    >
-                        community guidelines.
-                    </a>
-                </p>
-            </form>
-        </TabPanel>
-    </TabPanels>
-</TabGroup>
-
-<Modal bind:open={forgotDialog}>
-    <div class="flex flex-col w-full justify-center items-center gap-4 p-8">
-        <h1 class="text-2xl font-bold"><Colored>Forgot Password</Colored></h1>
+<title>Login</title>
+<div class="flex flex-row gap-2 items-center m-4 mx-auto w-max">
+    <img
+        src="/img/logo.svg"
+        alt="Xylo logo"
+        class="dark:hidden"
+        width="48"
+        height="48"
+    />
+    <img
+        src="/img/logo-dark.svg"
+        alt="Xylo logo"
+        class="hidden dark:block"
+        width="48"
+        height="48"
+    />
+    <span class="text-3xl font-bold">Imagi</span>
+</div>
+{#if !signingUp}
+    <form
+        class="bg-white animate-popIn dark:bg-zinc-900 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
+        on:submit|preventDefault={logIn}
+    >
         <div>
-            <label for="forgot-email" class="block my-1">Email</label>
-            <input
-                id="forgot-email"
-                type="email"
-                placeholder="you@example.com"
-                bind:value={forgotEmail}
-            />
+            <h1 class="text-3xl font-bold">Log in</h1>
+
+            <p class="mt-2 opacity-50">Enter your account details.</p>
         </div>
-        <p class="text-sm opacity-80">
-            We'll send a password reset link to your email.
+
+        <TextInput
+            label="Email or username"
+            placeholder="Example"
+            type="text"
+            maxlength={64}
+            bind:value={formData.username}
+        />
+
+        <TextInput
+            label="Password"
+            type="password"
+            maxlength={64}
+            bind:value={formData.password}
+        />
+
+        <Button
+            class="justify-center h-10"
+            color={err == 'credentials' ? Color.danger : Color.accent}
+            loading={submitting}
+            disabled={submitting}
+            submit
+        >
+            Log in
+        </Button>
+        <div class="w-full border-t border-black/10 dark:border-white/10" />
+        <p class="mx-auto text-sm text-gray-500">
+            Don't have an account? <button
+                on:click={() => (signingUp = true)}
+                class="text-black underline dark:text-white"
+            >
+                Sign Up
+            </button>
         </p>
-        <Button onclick={resetPassword} major>Submit</Button>
-    </div>
-</Modal>
+    </form>
+{:else}
+    <form
+        class="bg-white animate-popIn dark:bg-zinc-900 rounded-lg shadow-lg flex flex-col max-w-[36rem] mx-auto p-8 gap-6"
+        on:submit|preventDefault={signUp}
+    >
+        <div>
+            <h1 class="text-3xl font-bold">Sign up</h1>
+        </div>
+
+        <TextInput
+            label="Email"
+            placeholder="you@example.com"
+            type="email"
+            bind:value={formData.email}
+        />
+
+        <TextInput
+            label="Username"
+            placeholder="Example"
+            type="text"
+            bind:value={formData.username}
+        />
+
+        <TextInput
+            label="Password"
+            type="password"
+            maxlength={64}
+            bind:value={formData.password}
+        />
+
+        <TextInput
+            label="Confirm Password"
+            type="password"
+            maxlength={64}
+            err={formData.password != formData.passwordConfirm}
+            bind:value={formData.passwordConfirm}
+        />
+
+        <Button
+            class="justify-center h-10"
+            color={err == 'credentials' ? Color.danger : Color.accent}
+            loading={submitting}
+            disabled={submitting ||
+                formData.password != formData.passwordConfirm}
+            submit
+        >
+            Sign up
+        </Button>
+        <div class="w-full border-t border-black/10 dark:border-white/10" />
+        <p class="mx-auto text-sm text-gray-500">
+            Already have an account? <button
+                on:click={() => (signingUp = false)}
+                class="text-black underline dark:text-white"
+            >
+                Log In
+            </button>
+        </p>
+    </form>
+{/if}

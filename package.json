@@ -1,38 +1,35 @@
 {
 	"name": "imagi",
-	"version": "0.9.6",
+	"version": "0.0.1",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"test:unit": "vitest"
 	},
 	"devDependencies": {
-		"@rgossiaux/svelte-headlessui": "^1.0.2",
 		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/adapter-vercel": "^2.4.0",
 		"@sveltejs/kit": "^1.5.0",
 		"@types/nprogress": "^0.2.0",
-		"autoprefixer": "^10.4.13",
+		"autoprefixer": "^10.4.14",
 		"nprogress": "^0.2.0",
 		"postcss": "^8.4.21",
 		"rollup-plugin-visualizer": "^5.9.0",
-		"svelte": "^3.54.0",
+		"svelte": "^3.58.0",
 		"svelte-check": "^3.0.1",
 		"svelte-hero-icons": "^5.0.0",
 		"svelte-infinite-scroll": "^2.0.1",
-		"tailwindcss": "^3.2.7",
+		"tailwindcss": "^3.3.1",
 		"tslib": "^2.4.1",
-		"typescript": "^4.9.3",
-		"vite": "^4.0.0"
+		"typescript": "^5.0.0",
+		"vite": "^4.2.0",
+		"vitest": "^0.25.3"
 	},
 	"type": "module",
 	"dependencies": {
-		"@tailwindcss/container-queries": "^0.1.0",
-		"@types/eventsource": "^1.1.11",
-		"eventsource": "^2.0.2",
-		"pocketbase": "^0.12.0"
+		"pocketbase": "^0.13.1"
 	}
 }

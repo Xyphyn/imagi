@@ -1,28 +1,24 @@
-import { pb } from '$lib/pocketbase'
-import { error } from '@sveltejs/kit'
-import eventsource from 'eventsource'
+import { pb } from '$lib/backend/pocketbase.js'
+import {
+    Collections,
+    type CommunitiesResponse,
+    type PostCountsResponse,
+    type PostsResponse,
+    type UsersResponse,
+} from '$lib/backend/schema.js'
 
-//@ts-ignore
-global.EventSource = eventsource
-pb.autoCancellation(false)
-
-// @ts-ignore
 export async function load({ params }) {
-    try {
-        const post = await pb
-            .collection('posts')
-            .getOne(params.id, {
-                expand: 'user, postCounts(post)',
-                $autoCancel: false,
-            })
-            .catch((err) => {
-                throw error(404, 'Not found')
-            })
+    const id = params.id
 
-        if (post) return { post: JSON.parse(JSON.stringify(post)) }
+    const post = await pb.collection(Collections.Posts).getOne<
+        PostsResponse<{
+            user: UsersResponse
+            community: CommunitiesResponse
+            'postCounts(post)': PostCountsResponse[]
+        }>
+    >(id, { expand: 'postCounts(post),user,community' })
 
-        throw error(404, 'Not found')
-    } catch (err) {
-        throw error(500, 'Post ID not found.')
+    return {
+        post: JSON.parse(JSON.stringify(post)),
     }
 }

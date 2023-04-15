@@ -1,11 +1,20 @@
-import { pb } from '$lib/pocketbase'
-import type { CommunitiesResponse } from '$lib/types/pb-types'
+import { pb } from '$lib/backend/pocketbase'
+import type {
+    CommunitiesResponse,
+    CommunityCountsResponse,
+    UsersResponse,
+} from '$lib/backend/schema'
 import { error } from '@sveltejs/kit'
 
 export async function load({ params }) {
     const result = await pb
         .collection('communities')
-        .getFirstListItem<CommunitiesResponse<any>>(`name = "${params.name}"`, {
+        .getFirstListItem<
+            CommunitiesResponse<{
+                'communityCounts(community)': CommunityCountsResponse[]
+                owner: UsersResponse
+            }>
+        >(`name = "${params.name}"`, {
             expand: 'communityCounts(community),owner',
         })
         .catch((err) => {

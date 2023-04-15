@@ -1,140 +1,141 @@
 <script lang="ts">
-    import Live from '$lib/misc/Live.svelte'
-    import type {
-        CommunitiesResponse,
-        PostCountsResponse,
-        PostsResponse,
-    } from '$lib/types/pb-types'
-    import { onDestroy, onMount } from 'svelte'
-    import { currentUser, pb } from '$lib/pocketbase'
-    import PostList from '$lib/posts/PostList.svelte'
-    import Button from '$lib/Button.svelte'
-    import nProgress from 'nprogress'
-    import Colored from '$lib/misc/Colored.svelte'
-    import Loader from '$lib/Loader.svelte'
-    import Avatar from '$lib/Avatar.svelte'
-    import RowSkeleton from '$lib/skeletons/RowSkeleton.svelte'
-    import { ArrowUp, ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons'
+    import PostFetch from '$lib/misc/posts/PostFetch.svelte'
+    import PostList from '$lib/misc/posts/PostList.svelte'
     import InfiniteScroll from 'svelte-infinite-scroll'
-    import PostFetch from '$lib/posts/PostFetch.svelte'
-    import Actionbar from '$lib/Actionbar.svelte'
+    import { userSettings } from '$lib/settings'
+    import RecordList from '$lib/backend/RecordList.svelte'
+    import {
+        Collections,
+        type CommunitiesResponse,
+        type PostsResponse,
+    } from '$lib/backend/schema'
+    import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
+    import { user } from '$lib/backend/pocketbase'
+    import MultiSelect from '$lib/ui/input/MultiSelect.svelte'
 
-    let communities: CommunitiesResponse<any>[] | undefined
-
-    const sortStrings = {
-        recent: {
-            string: '',
-            filter: (record: any) => true,
-        },
-        following: {
-            string:
-                ($currentUser?.communities ?? [])
-                    .map((community: string) => `community.id = "${community}"`)
-                    .join(' || ') ?? '',
-            filter: (record: any): boolean => {
-                if ($currentUser && $currentUser.communities) {
-                    return $currentUser?.communities.includes(record.community)
-                } else {
-                    return true
-                }
-            },
-        },
+    interface Sort {
+        filterFunction: (
+            t: PostsResponse<{ community: CommunitiesResponse }>
+        ) => boolean
+        filterString: string
     }
 
-    let sort = sortStrings.recent
+    const sorts: Map<string, Sort> = new Map([
+        [
+            'recent',
+            {
+                filterFunction: (t) => true,
+                filterString: '',
+            },
+        ],
+        [
+            'followed',
+            {
+                filterFunction: (t) => {
+                    if (!$user) return true
+                    else
+                        return $user.communities.includes(
+                            t.expand?.community.id
+                        )
+                },
+                filterString: `${($user?.communities || [])
+                    .map((c: string) => `community.id = "${c}"`)
+                    .join(' || ')}`,
+            },
+        ],
+    ])
 
-    onMount(async () => {
-        pb.collection('communities')
-            .getList<CommunitiesResponse>(1, 50, {
-                sort: '-created',
-                filter:
-                    ($currentUser?.communities ?? [])
-                        .map((community: string) => `id = "${community}"`)
-                        .join(' || ') ?? '',
-            })
-            .then((data) => {
-                communities = data.items
-            })
-    })
+    let sort: Sort = sorts.get('recent')!
+
+    let selectedSort = 'recent'
 </script>
 
 <title>Imagi</title>
-<Actionbar>
-    <div slot="image" class="flex flex-row items-center gap-2">
-        <img src="/logo.svg" alt="Imagi logo" class="inline" />
-        <span class="text-lg font-bold">Imagi</span>
-    </div>
-    <Button onclick={() => window.scrollTo(0, 0)} major slot="buttons">
-        <Icon src={ArrowUp} size="20" />
-    </Button>
-</Actionbar>
-<h1 class="m-4 mt-0 text-4xl font-bold"><Colored>Communities</Colored></h1>
-<div class="flex overflow-auto flex-row gap-4 m-4 h-12">
-    {#if communities}
-        {#each communities as community}
-            <div class="flex flex-row flex-shrink-0 gap-2 items-center h-8">
-                <Avatar
-                    user={community}
-                    type="community"
-                    width={32}
-                    thumbnail="32x32"
-                />
-                <a href={`/community/${community.name}`} class="link">
-                    {community.name}
-                </a>
-            </div>
-        {/each}
-    {:else}
-        {#each new Array(6) as items}
-            <RowSkeleton />
-        {/each}
-    {/if}
-</div>
-<h1 class="m-4 mt-0 text-4xl font-bold">
-    <Colored>Posts</Colored>
-</h1>
-
-<PostFetch
-    let:posts
-    let:fetchPosts
-    let:hasMore
-    let:addPosts
-    filter={sort.filter}
+<div
+    class="flex flex-col gap-4 items-center {$userSettings.grid
+        ? ''
+        : 'max-w-xl mx-auto'}"
 >
-    <div class="flex flex-row gap-4 mb-4 ml-4">
-        <Button
-            major={sort == sortStrings.recent}
-            onclick={async () => {
-                sort = sortStrings.recent
-                addPosts(await fetchPosts(undefined, true, sort.string), true)
-            }}
+    <h1 class="self-start text-3xl font-bold">Communities</h1>
+
+    <div class="flex overflow-x-auto flex-row gap-4 pb-4 w-full">
+        <RecordList
+            collection={Collections.Communities}
+            let:items
+            query={{ sort: '-created' }}
         >
-            Recent
-        </Button>
-        <Button
-            major={sort == sortStrings.following}
-            onclick={async () => {
-                sort = sortStrings.following
-                addPosts(await fetchPosts(undefined, true, sort.string), true)
-            }}
-        >
-            Following
-        </Button>
+            {#if items}
+                {#each items as item}
+                    <a
+                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu animate-popIn dark:bg-zinc-900 hover:-translate-y-1"
+                        href={`/community/${item.name}`}
+                    >
+                        <CommunityAvatar
+                            width={32}
+                            thumb="32x32"
+                            community={item}
+                        />
+                        <span>
+                            {item.name}
+                        </span>
+                    </a>
+                {/each}
+            {:else}
+                {#each new Array(10) as item}
+                    <div
+                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu dark:bg-zinc-900 hover:-translate-y-1"
+                    >
+                        <div
+                            class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 animatepulse"
+                        />
+                        <div
+                            class="w-24 h-4 rounded-full animate-pulse bg-zinc-100 dark:bg-zinc-800"
+                        />
+                    </div>
+                {/each}
+            {/if}
+        </RecordList>
     </div>
-    <Live live={true} />
-    <PostList {posts} />
-    <InfiniteScroll
-        threshold={800}
-        on:loadMore={async () =>
-            addPosts(await fetchPosts(true, false, sort.string), false)}
-        window={true}
-        {hasMore}
-    />
-    {#if !hasMore}
-        <span
-            class="text-xl font-bold w-full flex flex-row justify-center items-center"
-        >
-            🎉 Congrats, you reached the end!
-        </span>
-    {/if}
-</PostFetch>
+    <h1 class="flex flex-row gap-2 items-center self-start text-3xl font-bold">
+        Posts
+    </h1>
+    <PostFetch
+        let:posts
+        let:fetchPosts
+        let:hasMore
+        let:addPosts
+        filter={sort.filterFunction}
+        filterString={sort.filterString}
+    >
+        <div class="self-start">
+            <MultiSelect
+                class="capitalize"
+                options={Array.from(sorts.keys())}
+                bind:selected={selectedSort}
+                on:select={async (selected) => {
+                    const sel = sorts.get(selected.detail)
+
+                    if (!sel) return
+                    sort = sel
+
+                    addPosts(
+                        await fetchPosts(false, true, sort.filterString),
+                        true
+                    )
+                }}
+            />
+        </div>
+        <PostList grid={$userSettings.grid} {posts} />
+        <InfiniteScroll
+            threshold={800}
+            on:loadMore={async () => {
+                addPosts(
+                    await fetchPosts(true, false, sort.filterString),
+                    false
+                )
+            }}
+            window={true}
+            {hasMore}
+        />
+    </PostFetch>
+</div>

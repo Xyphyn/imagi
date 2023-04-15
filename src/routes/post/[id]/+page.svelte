@@ -1,156 +1,106 @@
 <script lang="ts">
-    import Comments from '$lib/posts/Comments.svelte'
-    import Loader from '$lib/Loader.svelte'
-    import { currentUser, pb } from '$lib/pocketbase'
-    import type { PostsResponse } from '$lib/types/pb-types'
-    import Likes from '$lib/posts/Likes.svelte'
-    import { isVideo } from '$lib/util'
+    import { pb, user } from '$lib/backend/pocketbase.js'
+    import Comments from '$lib/misc/comments/Comments.svelte'
+    import LikeButton from '$lib/misc/likes/LikeButton.svelte'
+    import { isVideo } from '$lib/misc/posts/util.js'
+    import Button from '$lib/ui/Button.svelte'
+    import { Color } from '$lib/ui/colors.js'
+    import Menu from '$lib/ui/menus/Menu.svelte'
+    import MenuButton from '$lib/ui/menus/MenuButton.svelte'
     import {
-        ArrowDownTray,
-        EllipsisVertical,
+        ChatBubbleOvalLeftEllipsis,
+        EllipsisHorizontal,
         Icon,
-        InformationCircle,
         Square2Stack,
         Trash,
     } from 'svelte-hero-icons'
-    import {
-        Menu,
-        MenuButton,
-        MenuItem,
-        MenuItems,
-        Transition,
-    } from '@rgossiaux/svelte-headlessui'
-    import Button from '$lib/Button.svelte'
-    import Colored from '$lib/misc/Colored.svelte'
-    import { goto } from '$app/navigation'
     import { page } from '$app/stores'
+    import { Collections } from '$lib/backend/schema.js'
 
-    let loading = true
+    export let data
 
-    export let data: {
-        post: PostsResponse<any>
-    }
-
-    const image = pb.getFileUrl(data.post, data.post.image)
+    let deleting = false
 </script>
 
-<title>Imagi: {data.post.description}</title>
-<meta content={`Imagi: ${data.post.description}`} property="og:title" />
-<meta
-    content={`View this post on Imagi, a real-time social app.`}
-    property="og:description"
-/>
-<meta content={pb.getFileUrl(data.post, data.post.image)} property="og:image" />
-<meta content={`#72efdd`} data-react-helmet="true" name="theme-color" />
-<meta name="twitter:card" content="summary_large_image" />
 <div
-    class="w-max max-w-full mx-auto items-center flex flex-col gap-4 p-8 rounded-lg bg-white dark:bg-slate-800 shadow-lg popin"
+    class="flex flex-col gap-4 p-6 mx-auto w-max max-w-full bg-white rounded-lg shadow-lg dark:bg-zinc-900"
 >
-    <div class="inline-flex flex-col self-start w-full relative">
-        <span class="text-xl font-bold w-[90%] break-words">
-            {data.post.description}
-        </span>
-        <div class="flex flex-row gap-2">
+    <div class="flex flex-col">
+        <h1 class="text-xl font-bold">{data.post?.description}</h1>
+        <span class="text-base opacity-80">
             <a
-                href={`/user/${data.post.expand?.user.username}`}
-                class="text-base opacity-80 link"
+                href={`/user/${data.post?.expand?.user.username}`}
+                class="transition-colors hover:text-sky-500"
             >
-                {data.post.expand?.user.username}
-
-                {#if data.post.expand?.community}
-                    <a href={`/community/${data.post.expand?.community.name}`}>
-                        • {data.post.expand?.community.name}
-                    </a>
-                {/if}
+                {data.post?.expand?.user.username}
             </a>
-        </div>
-        <Menu class="absolute top-0 right-0 text-left">
-            <MenuButton>
-                <Button class="gap-0 px-[0.2rem] py-[0.20rem] -z-10">
-                    <Icon size="20" src={EllipsisVertical} />
-                </Button>
-            </MenuButton>
-            <Transition
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-            >
-                <MenuItems
-                    class="flex absolute right-0 z-20 flex-col gap-2 p-4 mt-2 w-56 bg-white rounded-md shadow-lg origin-top-right dark:bg-slate-900"
+
+            {#if data.post?.expand?.community}
+                <a
+                    href={`/community/${data.post?.expand?.community.name}`}
+                    class="transition-colors hover:text-sky-500"
                 >
-                    <Colored>
-                        <h1 class="font-bold">Post Actions</h1>
-                    </Colored>
-                    <MenuItem>
-                        <Button
-                            class="w-full"
-                            major={false}
-                            onclick={() => {
-                                if (typeof navigator.clipboard != 'undefined') {
-                                    navigator.clipboard.writeText(
-                                        `https://${$page.url.host}/post/${data.post.id}`
-                                    )
-                                }
-                            }}
-                        >
-                            <Icon src={Square2Stack} width="16" />Copy Link
-                        </Button>
-                    </MenuItem>
-                    <MenuItem>
-                        <Button
-                            class="w-full"
-                            major={false}
-                            onclick={() => {
-                                goto(pb.getFileUrl(data.post, data.post.image))
-                            }}
-                        >
-                            <Icon src={ArrowDownTray} width="16" />Download
-                        </Button>
-                    </MenuItem>
-                    {#if data.post.user == $currentUser?.id || $currentUser?.role == 'admin'}
-                        <MenuItem>
-                            <Button
-                                class="w-full"
-                                major={true}
-                                colorType="danger"
-                                onclick={() => {
-                                    pb.collection('posts').delete(data.post.id)
-                                }}
-                            >
-                                <Icon src={Trash} width="16" />Delete
-                            </Button>
-                        </MenuItem>
-                    {/if}
-                </MenuItems>
-            </Transition>
-        </Menu>
+                    • {data.post?.expand?.community.name}
+                </a>
+            {/if}
+        </span>
     </div>
-    {#if loading && !isVideo(image)}
-        <Loader />
-    {/if}
-    {#if isVideo(image)}
-        {#key image && open}
+    <div class="flex flex-col gap-4 items-center mt-4 w-full">
+        {#if isVideo(pb.getFileUrl(data.post, data.post?.image))}
             <!-- svelte-ignore a11y-media-has-caption -->
-            <video class="w-full max-w-xl rounded-lg shadow-md" controls loop>
-                <source src={image} />
+            <video
+                controls
+                loop
+                class="max-w-xl max-h-[80vh] rounded-lg w-full"
+            >
+                <source src={pb.getFileUrl(data.post, data.post?.image)} />
             </video>
-        {/key}
-    {:else}
-        {#key image}
+        {:else}
             <img
-                src={image}
-                alt={data.post.description}
-                width={700}
-                height={500}
-                class="w-full max-w-xl bg-white rounded-lg shadow-md"
-                on:load={() => (loading = false)}
-                on:loadstart={() => console.log('load start')}
+                src={pb.getFileUrl(data.post, data.post?.image)}
+                alt={data.post.alt_text || data.post.description}
+                class="w-full max-w-xl rounded-lg"
+                width={400}
+                height={200}
             />
-        {/key}
-    {/if}
-    <Likes post={data.post} />
-    <Comments post={data.post} />
+        {/if}
+        <div class="flex flex-row gap-2 ml-auto">
+            <div class="flex flex-row gap-1 items-center">
+                <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
+                {data.post.expand?.['postCounts(post)'][0].comments}
+            </div>
+            <LikeButton post={data.post} />
+            <Menu>
+                <Button color={Color.ghost} slot="button" class="h-9">
+                    <Icon src={EllipsisHorizontal} size="18" mini />
+                </Button>
+                <MenuButton
+                    onclick={() =>
+                        navigator.clipboard.writeText(
+                            `${$page.url.protocol}//${$page.url.hostname}/post/${data.post?.id}`
+                        )}
+                >
+                    <Icon src={Square2Stack} size="18" />
+                    Copy Link
+                </MenuButton>
+                {#if data.post && data.post.user == $user?.id}
+                    <MenuButton
+                        onclick={async () => {
+                            if (!data.post) return
+                            deleting = true
+                            await pb
+                                .collection(Collections.Posts)
+                                .delete(data.post.id)
+                            deleting = false
+                        }}
+                        color={Color.dangerSecondary}
+                    >
+                        <Icon src={Trash} mini size="18" />
+                        Delete
+                    </MenuButton>
+                {/if}
+            </Menu>
+        </div>
+        <Comments post={data.post} />
+    </div>
 </div>

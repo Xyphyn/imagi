@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Cantarell';
+    src: url('/font/cantarell.woff2') format('woff2');
+    font-display: swap;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Cantarell';
+    src: url('/font/cantarell-bold.woff2') format('woff2');
+    font-display: swap;
+    font-weight: bold;
+}
+
+:root {
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
+body {
+    @apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50 text-zinc-800;
+    scrollbar-gutter: both-edges;
+    font-family: 'Cantarell', sans-serif;
+}
+
+#nprogress .bar {
+    @apply bg-black dark:bg-white !important;
+}
+
+#nprogress .peg {
+    @apply hidden !important;
+}
+
+::-webkit-scrollbar {
+    position: absolute;
+    right: 0;
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #3f3f46;
+}

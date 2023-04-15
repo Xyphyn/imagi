@@ -1,129 +1,102 @@
 <script lang="ts">
-    import { goto } from '$app/navigation'
-
-    import Avatar from '$lib/Avatar.svelte'
-    import Colored from '$lib/misc/Colored.svelte'
-    import { pb } from '$lib/pocketbase'
-    import type {
-        CommunitiesResponse,
-        UsersResponse,
-    } from '$lib/types/pb-types'
-    import { onMount } from 'svelte'
+    // @ts-nocheck
+    import RecordList from '$lib/backend/RecordList.svelte'
+    import { Collections } from '$lib/backend/schema'
+    import Avatar from '$lib/ui/profile/Avatar.svelte'
+    import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
     import { Icon, PencilSquare, UserGroup } from 'svelte-hero-icons'
-
-    let users: UsersResponse[] | undefined
-    let communities: CommunitiesResponse<any>[] | undefined
-
-    onMount(async () => {
-        pb.collection('users')
-            .getList<UsersResponse>(1, 40, { sort: '-created' })
-            .then((data) => {
-                users = data.items
-            })
-
-        pb.collection('communities')
-            .getList<CommunitiesResponse<any>>(1, 40, {
-                sort: '-created',
-                expand: 'communityCounts(community)',
-            })
-            .then((data) => {
-                communities = data.items
-            })
-    })
 </script>
 
-<title>Imagi | Explore</title>
-<div class="flex flex-col items-center p-4 box-border w-full">
-    <h1 class="text-4xl font-bold md:self-start"><Colored>Explore</Colored></h1>
-    <span class="self-start mt-4 font-bold text-xl">New Users</span>
-    <div class="flex overflow-auto flex-row gap-4 my-4 h-12 self-start w-full">
-        {#if !users}
-            {#each new Array(10) as items}
-                <div class="flex flex-row flex-shrink-0 gap-2 items-center h-8">
-                    <div
-                        class="w-8 h-8 bg-white rounded-full animate-pulse dark:bg-slate-700"
-                    />
-                    <div
-                        class="w-24 h-8 bg-white rounded-full animate-pulse dark:bg-slate-700"
-                    />
-                </div>
-            {/each}
-        {:else}
-            {#each users as user}
-                <div
-                    class="flex flex-row flex-shrink-0 gap-2 items-center h-8 link popin"
-                >
-                    <Avatar {user} width={32} thumbnail="32x32" />
-                    <a href={`/user/${user.username}`}>{user.username}</a>
-                </div>
-            {/each}
-        {/if}
-    </div>
-    <span class="self-start mt-4 font-bold text-xl">New Communities</span>
-    <div
-        class="grid grid-cols-1 gap-4 mt-4 w-full md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
+<title>Explore</title>
+<div class="flex flex-col gap-4">
+    <RecordList
+        collection={Collections.Users}
+        let:items
+        query={{ sort: '-created' }}
     >
-        {#if !communities}
-            {#each new Array(8) as items}
-                <div
-                    class="w-full flex flex-col h-[13.5rem] shadow-lg p-6 rounded-lg gap-4 items-center bg-white dark:bg-slate-800 popin"
-                >
-                    <div
-                        class="w-16 h-16 animate-pulse bg-slate-200 dark:bg-slate-700 rounded-full p-2"
-                    />
-                    <div
-                        class="w-[70%] animate-pulse bg-slate-200 dark:bg-slate-700 rounded-lg p-2 mt-4"
-                    />
-                </div>
-            {/each}
-        {:else}
-            {#each communities as community}
-                <div
-                    class="popin flex flex-col gap-4 justify-center items-center p-6 w-full bg-white rounded-lg shadow-lg transition-transform transform-gpu cursor-pointer dark:bg-slate-800
-  hover:-translate-y-1"
-                    on:click={() => goto(`/community/${community.name}`)}
-                    on:keypress={() => goto(`/community/${community.name}`)}
-                >
-                    <Avatar
-                        user={community}
-                        type="community"
-                        width={64}
-                        thumbnail="48x48"
-                    />
-                    <div class="flex flex-col items-center max-w-full">
-                        <span
-                            class="text-lg font-bold text-center break-words max-w-full"
-                        >
-                            <Colored>{community.name}</Colored>
+        <h1 class="text-3xl font-bold">New Users</h1>
+        <div class="flex overflow-x-auto flex-row gap-4 pb-4 w-full">
+            {#if items}
+                {#each items as item}
+                    <a
+                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu animate-popIn dark:bg-zinc-900 hover:-translate-y-1"
+                        href={`/user/${item.username}`}
+                    >
+                        <Avatar width={32} thumb="32x32" user={item} />
+                        <span>
+                            {item.username}
                         </span>
-                        <span
-                            class="text-sm opacity-70 text-center break-words max-w-full"
-                        >
-                            {community.description}
-                        </span>
+                    </a>
+                {/each}
+            {:else}
+                {#each new Array(10) as item}
+                    <div
+                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu dark:bg-zinc-900 hover:-translate-y-1"
+                    >
+                        <div
+                            class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 animatepulse"
+                        />
+                        <div
+                            class="w-24 h-4 rounded-full animate-pulse bg-zinc-100 dark:bg-zinc-800"
+                        />
                     </div>
-                    <div class="flex flex-row gap-4">
-                        <div class="inline-block">
-                            <Icon
-                                src={UserGroup}
-                                size="20"
-                                class="inline-block align-top"
+                {/each}
+            {/if}
+        </div>
+    </RecordList>
+    <RecordList
+        collection={Collections.Communities}
+        query={{ expand: 'communityCounts(community)', sort: '-created' }}
+        let:items
+    >
+        <h1 class="text-3xl font-bold">New Communities</h1>
+        <div
+            class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+        >
+            {#if items}
+                {#each items as item}
+                    <a
+                        class="flex z-10 flex-col flex-shrink-0 gap-2 p-4 bg-white rounded-lg shadow-md transition-transform transform-gpu animate-popIn dark:bg-zinc-900 hover:-translate-y-1"
+                        href={`/community/${item.name}`}
+                    >
+                        <div class="flex flex-row gap-2 items-center">
+                            <CommunityAvatar
+                                width={32}
+                                thumb="32x32"
+                                community={item}
                             />
-                            {community.expand['communityCounts(community)'][0]
-                                .members}
+                            <span>
+                                {item.name}
+                            </span>
                         </div>
-                        <div class="inline-block">
-                            <Icon
-                                src={PencilSquare}
-                                size="20"
-                                class="inline-block align-top"
-                            />
-                            {community.expand['communityCounts(community)'][0]
-                                .posts}
+                        <div class="flex flex-row gap-4">
+                            <div class="flex flex-row gap-1 items-center">
+                                <Icon src={PencilSquare} mini size="18" />
+                                {item?.expand?.['communityCounts(community)'][0]
+                                    .posts}
+                            </div>
+                            <div class="flex flex-row gap-1 items-center">
+                                <Icon src={UserGroup} size="18" />
+                                {item?.expand?.['communityCounts(community)'][0]
+                                    .members}
+                            </div>
                         </div>
+                    </a>
+                {/each}
+            {:else}
+                {#each new Array(10) as item}
+                    <div
+                        class="flex z-10 flex-row flex-shrink-0 gap-2 items-center px-4 py-2 bg-white rounded-lg shadow-md transition-transform transform-gpu dark:bg-zinc-900 hover:-translate-y-1"
+                    >
+                        <div
+                            class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 animatepulse"
+                        />
+                        <div
+                            class="w-24 h-4 rounded-full animate-pulse bg-zinc-100 dark:bg-zinc-800"
+                        />
                     </div>
-                </div>
-            {/each}
-        {/if}
-    </div>
+                {/each}
+            {/if}
+        </div>
+    </RecordList>
 </div>
