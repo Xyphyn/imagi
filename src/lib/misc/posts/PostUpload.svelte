@@ -98,6 +98,13 @@
                         }
                         break
                     }
+                    case '429': {
+                        addToast(
+                            'Warning',
+                            'You are being rate limited. Please do not create posts so fast.',
+                            ToastType.warning
+                        )
+                    }
                     default: {
                         addToast(
                             'Error',

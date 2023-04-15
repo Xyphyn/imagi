@@ -25,6 +25,7 @@
     import { flip } from 'svelte/animate'
     import { expoInOut } from 'svelte/easing'
     import RelativeDate from '../RelativeDate.svelte'
+    import { ToastType, addToast } from '$lib/ui/toasts/toasts'
 
     export let post:
         | PostsResponse<{
@@ -118,8 +119,26 @@
             })
 
             newComment = ''
-        } catch (error) {
+        } catch (error: any) {
             err = error
+
+            switch (error.status) {
+                case '429': {
+                    addToast(
+                        'Warning',
+                        'You are being rate limited. Please do not comment so fast.',
+                        ToastType.warning
+                    )
+                    break
+                }
+                default: {
+                    addToast(
+                        'Error',
+                        'Failed to upload comment.',
+                        ToastType.error
+                    )
+                }
+            }
         }
 
         submitting = false
