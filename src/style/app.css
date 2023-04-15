@@ -27,7 +27,7 @@
 }
 
 body {
-    @apply bg-zinc-50 dark:bg-zinc-950 dark:text-zinc-50 text-zinc-800;
+    @apply bg-slate-50 dark:bg-zinc-950 dark:text-slate-50 text-zinc-800;
     scrollbar-gutter: both-edges;
     font-family: 'Cantarell', sans-serif;
 }
@@ -50,4 +50,13 @@ body {
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: #3f3f46;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 1rem;
+}
+
+ol {
+    list-style-type: decimal;
 }
