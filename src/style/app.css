@@ -32,6 +32,10 @@ body {
     font-family: 'Cantarell', sans-serif;
 }
 
+.wait * {
+    cursor: wait !important;
+}
+
 #nprogress .bar {
     @apply bg-black dark:bg-white !important;
 }

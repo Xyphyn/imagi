@@ -8,16 +8,22 @@
 
     nprogress.configure({
         minimum: 0.4,
-        trickleSpeed: 200,
+        trickleSpeed: 75,
         showSpinner: false,
     })
 
     $: {
         if ($navigating) {
             nprogress.start()
+            if (typeof document != 'undefined') {
+                document.body.classList.toggle('wait', true)
+            }
         }
         if (!$navigating) {
             nprogress.done()
+            if (typeof document != 'undefined') {
+                document.body.classList.toggle('wait', false)
+            }
         }
     }
 </script>
