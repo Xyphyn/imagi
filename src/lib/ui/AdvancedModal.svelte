@@ -17,7 +17,7 @@
             on:click|stopPropagation={() => {}}
             in:scale={{ duration: 300, start: 0.95 }}
             out:scale={{ duration: 100, easing: cubicOut, start: 0.95 }}
-            class={`min-h-[30vh] min-w-[max(20rem,30vw)] open:flex flex-col max-w-full backdrop:bg-black backdrop:bg-opacity-30 open:backdrop:animate-fade-in align-middle rounded-lg
+            class={`min-h-[30vh] min-w-[min(max(30rem,30vw),90%)] open:flex flex-col max-w-full backdrop:bg-black backdrop:bg-opacity-30 open:backdrop:animate-fade-in align-middle rounded-lg
      shadow-lg bg-white dark:bg-zinc-900 text-inherit p-6 m-2 md:m-4 overflow-y-auto`}
         >
             <div class="flex flex-row items-center">
