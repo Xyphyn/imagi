@@ -12,6 +12,7 @@
         ArrowLeftOnRectangle,
         Beaker,
         Squares2x2,
+        EllipsisHorizontal,
     } from 'svelte-hero-icons'
     import Menu from './menus/Menu.svelte'
     import PostUpload from '$lib/misc/posts/PostUpload.svelte'
@@ -21,6 +22,9 @@
     import { goto } from '$app/navigation'
     import { userSettings } from '$lib/settings'
     import CreateCommunity from '$lib/misc/community/CreateCommunity.svelte'
+    import RecordList from '$lib/backend/RecordList.svelte'
+    import { Collections } from '$lib/backend/schema'
+    import DotsLoad from './loaders/DotsLoad.svelte'
 
     let modals = {
         uploading: false,
@@ -50,6 +54,50 @@
     <div
         class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-zinc-900 sm:ml-auto sm:mr-0"
     >
+        <Menu rtl={false}>
+            <Button slot="button">
+                <Icon src={EllipsisHorizontal} size="18" mini />
+            </Button>
+            <a
+                href="/blog"
+                class="mx-4 my-2 text-xs text-left opacity-50 transition-colors hover:text-sky-400"
+            >
+                Blog
+            </a>
+            <RecordList
+                collection={Collections.Blog}
+                let:items
+                query={{ sort: '-created' }}
+                perPage={5}
+            >
+                {#if items}
+                    {#each items as item}
+                        <MenuButton link href={`/blog/${item.id}`}>
+                            {item.title}
+                        </MenuButton>
+                    {/each}
+                {:else}
+                    {#each new Array(5) as item}
+                        <MenuButton>
+                            <div class="h-[20px]">
+                                <DotsLoad />
+                            </div>
+                        </MenuButton>
+                    {/each}
+                {/if}
+            </RecordList>
+            <div
+                class="border-t border-black/10 dark:border-white/10 w-[90%] mx-auto my-2"
+            />
+            <span class="mx-4 mb-2 text-xs text-left opacity-50">Links</span>
+            <MenuButton link href="https://github.com/Xyphyn/Imagi">
+                GitHub
+            </MenuButton>
+            <MenuButton link href="mailto:imagi@xylight.us">Email</MenuButton>
+            <MenuButton link href="https://discord.gg/G64UcqzmZC">
+                Discord
+            </MenuButton>
+        </Menu>
         <Button link href="/explore">
             <Icon src={GlobeAlt} size="16" />
             Explore
@@ -82,7 +130,7 @@
                 <Icon src={UserCircle} size="18" />
                 Profile
             </MenuButton>
-            <MenuButton onclick={() => goto(`/settings`)}>
+            <MenuButton link href="/settings">
                 <Icon src={Cog6Tooth} size="18" />
                 Settings
             </MenuButton>
