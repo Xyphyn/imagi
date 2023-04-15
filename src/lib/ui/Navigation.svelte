@@ -20,9 +20,11 @@
     import MenuButton from './menus/MenuButton.svelte'
     import { goto } from '$app/navigation'
     import { userSettings } from '$lib/settings'
+    import CreateCommunity from '$lib/misc/community/CreateCommunity.svelte'
 
     let modals = {
         uploading: false,
+        community: false,
     }
 </script>
 
@@ -62,7 +64,7 @@
                 <Icon src={PencilSquare} mini size="18" />
                 Post
             </MenuButton>
-            <MenuButton>
+            <MenuButton onclick={() => (modals.community = true)}>
                 <Icon src={Newspaper} mini size="18" />
                 Community
             </MenuButton>
@@ -109,3 +111,4 @@
     {/if}
 </nav>
 <PostUpload bind:open={modals.uploading} />
+<CreateCommunity bind:open={modals.community} />
