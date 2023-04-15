@@ -55,7 +55,7 @@
         class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-zinc-900 sm:ml-auto sm:mr-0"
     >
         <Menu rtl={false}>
-            <Button slot="button">
+            <Button slot="button" label="Other menu">
                 <Icon src={EllipsisHorizontal} size="18" mini />
             </Button>
             <a
