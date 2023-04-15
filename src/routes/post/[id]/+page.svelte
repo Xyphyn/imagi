@@ -18,9 +18,18 @@
     import { Collections } from '$lib/backend/schema.js'
 
     export let data
-
-    let deleting = false
 </script>
+
+<title>{data.post.description}</title>
+<meta property="og:title" content={data.post.description} />
+<meta
+    property="og:description"
+    content={data.post.alt_text ||
+        'View this post on Imagi, a real time social app.'}
+/>
+<meta property="og:image" content={pb.getFileUrl(data.post, data.post.image)} />
+<meta property="#fff" data-react-helmet="true" name="theme-color" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <div
     class="flex flex-col gap-4 p-6 mx-auto w-max max-w-full bg-white rounded-lg shadow-lg dark:bg-zinc-900"
@@ -87,11 +96,9 @@
                     <MenuButton
                         onclick={async () => {
                             if (!data.post) return
-                            deleting = true
                             await pb
                                 .collection(Collections.Posts)
                                 .delete(data.post.id)
-                            deleting = false
                         }}
                         color={Color.dangerSecondary}
                     >
