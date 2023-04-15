@@ -25,6 +25,7 @@
     import { Color } from '$lib/ui/colors'
     import MenuButton from '$lib/ui/menus/MenuButton.svelte'
     import { page } from '$app/stores'
+    import RelativeDate from '../RelativeDate.svelte'
 
     export let open = false
     export let post:
@@ -81,10 +82,13 @@
                     height={200}
                 />
             {/if}
-            <div class="flex flex-row gap-2 ml-auto">
-                <div class="flex flex-row gap-1 items-center">
+            <div class="flex flex-row gap-2 items-center w-full">
+                <!-- <div class="flex flex-row gap-1 items-center">
                     <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
                     {post.expand?.['postCounts(post)'][0].comments}
+                </div> -->
+                <div class="mr-auto text-sm opacity-50">
+                    <RelativeDate date={post.created} />
                 </div>
                 <LikeButton {post} />
                 <Menu itemsClass="bg-slate-100 dark:bg-zinc-800">

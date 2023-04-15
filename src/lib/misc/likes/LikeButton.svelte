@@ -120,6 +120,10 @@
 >
     <div class="flex flex-row justify-self-center self-center">
         <Icon src={Heart} mini size="18" class="mx-1 align-bottom" />
-        <span class="leading-[18px] text-sm mr-[2px]">{likes}</span>
+        {#key likes}
+            <span class="leading-[18px] text-sm mr-[2px] animate-popIn">
+                {likes}
+            </span>
+        {/key}
     </div>
 </Button>
