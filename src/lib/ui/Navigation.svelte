@@ -56,7 +56,7 @@
     >
         <Menu rtl={false}>
             <Button slot="button" label="Other menu">
-                <Icon src={EllipsisHorizontal} size="18" mini />
+                <Icon src={EllipsisHorizontal} size="16" mini />
             </Button>
             <a
                 href="/blog"
@@ -98,9 +98,9 @@
                 Discord
             </MenuButton>
         </Menu>
-        <Button link href="/explore">
+        <Button link href="/explore" label="Explore">
             <Icon src={GlobeAlt} size="16" />
-            Explore
+            <span class="hidden xs:inline">Explore</span>
         </Button>
         <Menu>
             <Button color={Color.accent} slot="button">

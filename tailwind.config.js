@@ -15,6 +15,9 @@ export default {
       },
       animation: {
         'popIn': 'popIn 350ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards'
+      },
+      screens: {
+        'xs': '440px'
       }
     },
   },
