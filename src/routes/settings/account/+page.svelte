@@ -52,9 +52,17 @@
     async function changeBio() {
         if (!$user) return
         formData.bio.submitting = true
-        await pb.collection(Collections.Users).update($user.id, {
-            bio: formData.bio.value,
-        })
+        await pb
+            .collection(Collections.Users)
+            .update($user.id, {
+                bio: formData.bio.value,
+            })
+            .then(() =>
+                addToast('Success', 'Updated profile bio.', ToastType.success)
+            )
+            .catch(() => {
+                addToast('Error', 'Failed to profile bio.', ToastType.error)
+            })
         formData.bio.submitting = false
     }
 
@@ -125,7 +133,23 @@
             const data = new FormData()
             data.append('avatar', formData.avatar.files[0])
 
-            await pb.collection(Collections.Users).update($user.id, data)
+            await pb
+                .collection(Collections.Users)
+                .update($user.id, data)
+                .then(() => {
+                    addToast(
+                        'Success',
+                        'Updated avatar. You may need to refresh to see changes.',
+                        ToastType.success
+                    )
+                })
+                .catch(() => {
+                    addToast(
+                        'Error',
+                        'Failed to update avatar. Check the filetype and size.',
+                        ToastType.error
+                    )
+                })
 
             formData.avatar.submitting = false
         }}

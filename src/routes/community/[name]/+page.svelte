@@ -76,7 +76,9 @@
             {/if}
         </div>
     </div>
-    <div class="flex flex-row gap-4 self-start w-full opacity-90">
+    <div
+        class="flex flex-row flex-wrap gap-4 justify-center self-start w-full opacity-90 sm:justify-start"
+    >
         <div class="flex flex-row gap-1 items-center">
             <Icon src={Calendar} mini size="18" />
             {new Date(data.community.created).toLocaleDateString()}
@@ -89,17 +91,29 @@
             <Icon src={UserGroup} size="18" />
             {data.community.expand?.['communityCounts(community)'][0].members}
         </div>
-        <Button
-            class="justify-self-end ml-auto h-9 w-[6rem] justify-center"
-            loading={submitting}
-            disabled={submitting}
-            color={following($user?.communities || []) || submitting
-                ? Color.accent
-                : Color.ghost}
-            onclick={follow}
-        >
-            {following($user?.communities || []) ? 'Following' : 'Follow'}
-        </Button>
+        <div class="flex flex-row gap-2 sm:ml-auto">
+            {#if data.community.owner == $user?.id}
+                <Button
+                    class="justify-self-end h-9 w-[6rem] justify-center flex-shrink"
+                    link
+                    href="/community/{data.community.name}/settings/general"
+                    color={Color.ghost}
+                >
+                    Settings
+                </Button>
+            {/if}
+            <Button
+                class="justify-self-end h-9 w-[6rem] justify-center flex-shrink"
+                loading={submitting}
+                disabled={submitting}
+                color={following($user?.communities || []) || submitting
+                    ? Color.accent
+                    : Color.ghost}
+                onclick={follow}
+            >
+                {following($user?.communities || []) ? 'Following' : 'Follow'}
+            </Button>
+        </div>
     </div>
 </div>
 

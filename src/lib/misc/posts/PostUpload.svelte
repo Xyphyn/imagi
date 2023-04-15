@@ -7,6 +7,7 @@
     import { Color } from '$lib/ui/colors'
     import FileInput from '$lib/ui/input/FileInput.svelte'
     import TextInput from '$lib/ui/input/TextInput.svelte'
+    import { ToastType, addToast } from '$lib/ui/toasts/toasts'
     import {
         ArrowUpOnSquare,
         Icon,
@@ -71,15 +72,49 @@
                 formData.community = ''
                 formData.title = ''
                 formData.description = ''
+
+                addToast(
+                    'Success',
+                    'Your post was uploaded.',
+                    ToastType.success
+                )
             })
-            .catch(() => (err = 'upload'))
+            .catch((error) => {
+                err = 'upload'
+                switch (error.status) {
+                    case '400': {
+                        if (pb.authStore.isValid) {
+                            addToast(
+                                'Error',
+                                'Failed to upload post. Make sure you are verified. Check the file size and file type.',
+                                ToastType.error
+                            )
+                        } else {
+                            addToast(
+                                'Error',
+                                'Your session has expired. Log back in again.',
+                                ToastType.error
+                            )
+                        }
+                        break
+                    }
+                    default: {
+                        addToast(
+                            'Error',
+                            'Failed to upload post.',
+                            ToastType.error
+                        )
+                        break
+                    }
+                }
+            })
 
         submitting = false
     }
 </script>
 
 <AdvancedModal bind:open>
-    <h1 class="font-bold" slot="title">Upload a Post</h1>
+    <h1 class="ml-4 font-bold" slot="title">Upload a Post</h1>
     <form
         class="flex flex-col gap-6 p-4 w-full"
         on:submit|preventDefault={post}
