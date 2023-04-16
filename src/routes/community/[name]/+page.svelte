@@ -36,6 +36,12 @@
 
         submitting = true
 
+        const refreshedCommunities = await pb
+            .collection(Collections.Users)
+            .getOne<UsersResponse>($user.id)
+
+        $user.communities = refreshedCommunities.communities
+
         if (following($user?.communities || [])) {
             await pb.collection(Collections.Users).update($user.id, {
                 communities: $user?.communities.filter(
