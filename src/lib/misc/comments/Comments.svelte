@@ -26,6 +26,7 @@
     import { expoInOut } from 'svelte/easing'
     import RelativeDate from '../RelativeDate.svelte'
     import { ToastType, addToast } from '$lib/ui/toasts/toasts'
+    import { _ } from 'svelte-i18n'
 
     export let post:
         | PostsResponse<{
@@ -155,7 +156,7 @@
         </div>
         <div class="flex flex-col gap-2 w-full">
             <TextInput
-                placeholder="What are you thinking?"
+                placeholder={$_('placeholder.comment')}
                 bind:value={newComment}
             />
             <div class="flex flex-row gap-2 self-end">
@@ -164,7 +165,7 @@
                     class="self-end {newComment == '' ? 'hidden' : ''}"
                     onclick={() => (newComment = '')}
                 >
-                    Cancel
+                    {$_('button.comment.cancel')}
                 </Button>
                 <Button
                     color={err ? Color.danger : Color.accent}
@@ -173,7 +174,7 @@
                     disabled={submitting}
                     submit
                 >
-                    Comment
+                    {$_('button.post.comment')}
                 </Button>
             </div>
         </div>
@@ -206,7 +207,7 @@
                             color={Color.dangerSecondary}
                         >
                             <Icon src={Trash} size="16" mini />
-                            Delete
+                            {$_('button.action.delete')}
                         </MenuButton>
                     {/if}
                 </Menu>

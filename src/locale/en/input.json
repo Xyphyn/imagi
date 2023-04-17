@@ -1,0 +1,11 @@
+{
+    "placeholder.comment": "What are you thinking?",
+    "placeholder.post.title": "A cool photo I took",
+    "placeholder.post.description": "I took this photo during a nuclear explosion",
+    "modal.post.title": "Upload a Post",
+    "label.post.title": "Title",
+    "label.post.description": "Description",
+    "label.post.community": "Community",
+    "label.optional": "Optional",
+    "file.attach": "Attach a file"
+}

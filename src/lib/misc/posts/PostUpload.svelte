@@ -14,6 +14,7 @@
         PencilSquare,
         XMark,
     } from 'svelte-hero-icons'
+    import { _ } from 'svelte-i18n'
 
     export let open = false
 
@@ -128,18 +129,18 @@
     >
         <FileInput image bind:files={formData.files} />
         <TextInput
-            label="Title"
-            placeholder="A cool photo"
+            label={$_('label.post.title')}
+            placeholder={$_('placeholder.post.title')}
             bind:value={formData.title}
         />
         <TextInput
-            label="Description (optional)"
-            placeholder="I took this photo during a nuclear explosion"
+            label={`${$_('label.post.description')} (${$_('label.optional')})`}
+            placeholder={$_('placeholder.post.description')}
             bind:value={formData.description}
         />
         <TextInput
             err={err == 'community'}
-            label="Community (optional)"
+            label={`${$_('label.post.community')} (${$_('label.optional')})`}
             placeholder="memes"
             bind:value={formData.community}
         />
