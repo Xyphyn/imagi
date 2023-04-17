@@ -3,6 +3,7 @@
 
     type T = $$Generic
     export let options: T[]
+    export let optionNames: string[] = []
     export let selected: T
     export let separate = false
 
@@ -21,7 +22,7 @@
         ? 'gap-2'
         : ''}"
 >
-    {#each options as option}
+    {#each options as option, index}
         <button
             class="px-3 py-2 text-sm
              transition-colors {separate ? 'rounded-full' : ''}
@@ -32,7 +33,7 @@
             "
             on:click={() => (selected = option)}
         >
-            {option}
+            {optionNames[index] || option}
         </button>
     {/each}
 </div>

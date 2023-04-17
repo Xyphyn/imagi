@@ -1,0 +1,14 @@
+{
+    "button.create": "Create",
+    "button.explore": "Explore",
+    "button.post.comment": "Comment",
+    "button.post.copy": "Copy Link",
+    "button.action.delete": "Delete",
+    "button.create.post": "Post",
+    "button.create.community": "Community",
+    "button.profile.profile": "Profile",
+    "button.profile.settings": "Settings",
+    "button.profile.logout": "Log Out",
+    "button.comment.cancel": "Cancel",
+    "button.post.upload": "Upload"
+}

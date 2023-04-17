@@ -1,0 +1,18 @@
+{
+    "placeholder.comment": "מה אתה חושב?",
+    "placeholder.post.title": "תמונה מגניבה שצילמתי",
+    "placeholder.post.description": "צילמתי את התמונה הזו במהלך פיצוץ גרעיני",
+    "modal.post.title": "העלה פוסט",
+    "label.post.title": "כותרת",
+    "label.post.description": "תיאור",
+    "label.post.community": "קהילה",
+    "label.optional": "אופציונאלי",
+    "file.attach": "צרף קובץ",
+    "label.username": "שם משתמש",
+    "label.email": "אימייל",
+    "label.emailOrUsername": " שם משתמש או אימייל",
+    "label.password": "סיסמה",
+    "label.passwordConfirm": "אשר סיסמה",
+    "login.detailMessage": "הזן את פרטי החשבון שלך.",
+    "label.name": "שֵׁם"
+}

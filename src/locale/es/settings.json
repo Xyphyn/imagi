@@ -1,0 +1,43 @@
+{
+    "settings": {
+        "userSettings": "Ajustes de usuario",
+        "general": {
+            "name": "General",
+            "grid": {
+                "title": "Red",
+                "description": "Hace que las listas de publicaciones sean una cuadrícula en lugar de una columna."
+            },
+            "thumbSize": {
+                "title": "Tamaño de la uña del pulgar",
+                "description": "La resolución para hacer miniaturas. 64x64 deshabilitará las miniaturas de video."
+            },
+            "language": {
+                "title": "Idioma",
+                "beta": "Beta",
+                "description": "El idioma en el que se encuentra la interfaz de usuario. ¿Ve una traducción inexacta o faltante? Haz una solicitud de extracción."
+            }
+        },
+        "account": {
+            "name": "Cuenta",
+            "email": {
+                "title": "Correo electrónico",
+                "description": "El correo electrónico de su cuenta para iniciar sesión."
+            },
+            "bio": {
+                "title": "Biografía",
+                "description": "Una descripción que se muestra en su página de perfil."
+            },
+            "avatar": {
+                "title": "Avatar",
+                "description": "El avatar que se muestra en tu perfil y comentarios."
+            },
+            "delete": {
+                "title": "Borrar cuenta",
+                "description": "Esto eliminará permanentemente todo el contenido que haya creado. Escribe \"eliminar mi cuenta\" para confirmar.",
+                "confirm": "eliminar mi cuenta"
+            }
+        },
+        "save": "Ahorrar",
+        "delete": "Borrar"
+    }
+}

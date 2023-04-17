@@ -6,6 +6,7 @@
     import { Color } from '$lib/ui/colors'
     import TextInput from '$lib/ui/input/TextInput.svelte'
     import { ToastType, addToast } from '$lib/ui/toasts/toasts'
+    import { _ } from 'svelte-i18n'
 
     let submitting = false
     let err: any
@@ -52,7 +53,7 @@
     let signingUp = false
 </script>
 
-<title>Login</title>
+<title>{$_('account.login')}</title>
 <div class="flex flex-row gap-2 items-center m-4 mx-auto w-max">
     <img
         src="/img/logo.svg"
@@ -76,13 +77,13 @@
         on:submit|preventDefault={logIn}
     >
         <div>
-            <h1 class="text-3xl font-bold">Log in</h1>
+            <h1 class="text-3xl font-bold">{$_('account.login')}</h1>
 
-            <p class="mt-2 opacity-50">Enter your account details.</p>
+            <p class="mt-2 opacity-50">{$_('login.detailMessage')}</p>
         </div>
 
         <TextInput
-            label="Email or username"
+            label={$_('label.emailOrUsername')}
             placeholder="Example"
             type="text"
             maxlength={64}
@@ -90,7 +91,7 @@
         />
 
         <TextInput
-            label="Password"
+            label={$_('label.password')}
             type="password"
             maxlength={64}
             bind:value={formData.password}
@@ -103,15 +104,16 @@
             disabled={submitting}
             submit
         >
-            Log in
+            {$_('account.login')}
         </Button>
         <div class="w-full border-t border-black/10 dark:border-white/10" />
         <p class="mx-auto text-sm text-gray-500">
-            Don't have an account? <button
+            {$_('account.noAccount')}
+            <button
                 on:click={() => (signingUp = true)}
                 class="text-black underline dark:text-white"
             >
-                Sign Up
+                {$_('account.signup')}
             </button>
         </p>
     </form>
@@ -121,32 +123,32 @@
         on:submit|preventDefault={signUp}
     >
         <div>
-            <h1 class="text-3xl font-bold">Sign up</h1>
+            <h1 class="text-3xl font-bold">{$_('account.signup')}</h1>
         </div>
 
         <TextInput
-            label="Email"
+            label={$_('label.email')}
             placeholder="you@example.com"
             type="email"
             bind:value={formData.email}
         />
 
         <TextInput
-            label="Username"
+            label={$_('label.username')}
             placeholder="Example"
             type="text"
             bind:value={formData.username}
         />
 
         <TextInput
-            label="Password"
+            label={$_('label.password')}
             type="password"
             maxlength={64}
             bind:value={formData.password}
         />
 
         <TextInput
-            label="Confirm Password"
+            label={$_('label.passwordConfirm')}
             type="password"
             maxlength={64}
             err={formData.password != formData.passwordConfirm}
@@ -161,15 +163,16 @@
                 formData.password != formData.passwordConfirm}
             submit
         >
-            Sign up
+            {$_('account.signup')}
         </Button>
         <div class="w-full border-t border-black/10 dark:border-white/10" />
         <p class="mx-auto text-sm text-gray-500">
-            Already have an account? <button
+            {$_('account.yesAccount')}
+            <button
                 on:click={() => (signingUp = false)}
                 class="text-black underline dark:text-white"
             >
-                Log In
+                {$_('account.login')}
             </button>
         </p>
     </form>

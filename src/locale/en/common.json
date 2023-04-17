@@ -1,0 +1,15 @@
+{
+    "account.login": "Log in",
+    "account.signup": "Sign up",
+    "account.noAccount": "Don't have an account?",
+    "account.yesAccount": "Already have an account?",
+    "home.communities": "Communities",
+    "home.posts": "Posts",
+    "home.posts.sort.recent": "Recent",
+    "home.posts.sort.followed": "Followed",
+    "navbar.blog": "Blog",
+    "navbar.links": "Links",
+    "modal.community.create": "Create a community",
+    "modal.community.notice": "Name must be alphanumeric, lowercase",
+    "modal.community.placeholder.description": "Post your cool pictures here"
+}

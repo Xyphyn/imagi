@@ -26,6 +26,7 @@
     import MenuButton from '$lib/ui/menus/MenuButton.svelte'
     import { page } from '$app/stores'
     import RelativeDate from '../RelativeDate.svelte'
+    import { _ } from 'svelte-i18n'
 
     export let open = false
     export let post:
@@ -83,10 +84,6 @@
                 />
             {/if}
             <div class="flex flex-row gap-2 items-center w-full">
-                <!-- <div class="flex flex-row gap-1 items-center">
-                    <Icon src={ChatBubbleOvalLeftEllipsis} size="18" mini />
-                    {post.expand?.['postCounts(post)'][0].comments}
-                </div> -->
                 <div class="self-start mr-auto text-sm opacity-50">
                     <RelativeDate date={post.created} />
                 </div>
@@ -102,7 +99,7 @@
                             )}
                     >
                         <Icon src={Square2Stack} size="18" />
-                        Copy Link
+                        {$_('button.post.copy')}
                     </MenuButton>
                     {#if post && post.user == $user?.id}
                         <MenuButton
@@ -117,7 +114,7 @@
                             color={Color.dangerSecondary}
                         >
                             <Icon src={Trash} mini size="18" />
-                            Delete
+                            {$_('button.action.delete')}
                         </MenuButton>
                     {/if}
                 </Menu>

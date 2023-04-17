@@ -1,5 +1,11 @@
 # [Imagi](https://imagi.xylight.us)
 
+## Translators wanted!
+
+**Know a language fluently, or feel like making Google Translate cry? You can help translate Imagi _easily_!**
+
+See [Translating.md](/Translating.md)
+
 A **realtime** social app.
 
 Upload images in real time, and get comments, likes, and more, live.
