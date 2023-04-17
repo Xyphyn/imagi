@@ -11,5 +11,8 @@
     "navbar.links": "Enlaces",
     "modal.community.create": "Crear una comunidad",
     "modal.community.notice": "El nombre debe ser alfanumérico, en minúsculas",
-    "modal.community.placeholder.description": "Publica tus fotos geniales aquí"
+    "modal.community.placeholder.description": "Publica tus fotos geniales aquí",
+    "explore.users": "Nuevos usuarios",
+    "explore.communities": "Nuevas comunidades",
+    "misc.madeBy": "Hecho por"
 }

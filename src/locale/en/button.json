@@ -10,5 +10,7 @@
     "button.profile.settings": "Settings",
     "button.profile.logout": "Log Out",
     "button.comment.cancel": "Cancel",
-    "button.post.upload": "Upload"
+    "button.post.upload": "Upload",
+    "button.community.follow": "Follow",
+    "button.community.followed": "Followed"
 }

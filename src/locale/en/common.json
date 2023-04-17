@@ -11,5 +11,8 @@
     "navbar.links": "Links",
     "modal.community.create": "Create a community",
     "modal.community.notice": "Name must be alphanumeric, lowercase",
-    "modal.community.placeholder.description": "Post your cool pictures here"
+    "modal.community.placeholder.description": "Post your cool pictures here",
+    "explore.users": "New Users",
+    "explore.communities": "New Communities",
+    "misc.madeBy": "Made by"
 }

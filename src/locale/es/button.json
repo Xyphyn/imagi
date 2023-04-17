@@ -10,5 +10,7 @@
     "button.profile.settings": "Parámetros",
     "button.profile.logout": "Cerrar sesión",
     "button.comment.cancel": "Cancelar",
-    "button.post.upload": "Subir"
+    "button.post.upload": "Subir",
+    "button.community.follow": "Seguir",
+    "button.community.followed": "Seguido"
 }

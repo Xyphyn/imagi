@@ -11,5 +11,8 @@
     "navbar.links": "קישורים",
     "modal.community.create": "צור קהילה",
     "modal.community.notice": "השם חייב להיות אלפאנומרי, אותיות קטנות",
-    "modal.community.placeholder.description": "פרסם כאן את התמונות המגניבות שלך"
+    "modal.community.placeholder.description": "פרסם כאן את התמונות המגניבות שלך",
+    "explore.users": "משתמשים חדשים",
+    "explore.communities": "קהילות חדשות",
+    "misc.madeBy": "מעשה ידי"
 }

@@ -5,6 +5,7 @@
     import Avatar from '$lib/ui/profile/Avatar.svelte'
     import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
     import { Icon, PencilSquare, UserGroup } from 'svelte-hero-icons'
+    import { _ } from 'svelte-i18n'
 </script>
 
 <title>Explore</title>
@@ -15,7 +16,7 @@
         query={{ sort: '-created' }}
         perPage={30}
     >
-        <h1 class="text-3xl font-bold">New Users</h1>
+        <h1 class="text-3xl font-bold">{$_('explore.users')}</h1>
         <div class="flex overflow-x-auto flex-row gap-4 pb-4 w-full">
             {#if items}
                 {#each items as item}
@@ -50,7 +51,7 @@
         query={{ expand: 'communityCounts(community)', sort: '-created' }}
         let:items
     >
-        <h1 class="text-3xl font-bold">New Communities</h1>
+        <h1 class="text-3xl font-bold">{$_('explore.communities')}</h1>
         <div
             class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
         >

@@ -25,7 +25,7 @@
     import RecordList from '$lib/backend/RecordList.svelte'
     import { Collections } from '$lib/backend/schema'
     import DotsLoad from './loaders/DotsLoad.svelte'
-    import { _ } from 'svelte-i18n'
+    import { _, locale } from 'svelte-i18n'
 
     let modals = {
         uploading: false,
@@ -149,15 +149,33 @@
             <div
                 class="border-t border-black/10 dark:border-white/10 w-[90%] mx-auto my-2"
             />
-            <span class="mx-4 mb-2 text-xs text-left opacity-50">
-                Experiments
-            </span>
-            <MenuButton
-                onclick={() => ($userSettings.grid = !$userSettings.grid)}
+            <span
+                class="flex flex-row {$locale == 'he'
+                    ? 'flex-row-reverse'
+                    : ''} gap-1 items-center mx-4 mr-auto text-left my-2 text-sm"
             >
-                <Icon src={Squares2x2} mini size="18" />
-                Toggle Grid
-            </MenuButton>
+                {$_('misc.madeBy')}
+                <a
+                    href="https://xylight.us"
+                    class="inline-flex gap-[2px] flex-row items-center font-bold"
+                >
+                    <img
+                        src="/img/logo.svg"
+                        width={24}
+                        height={24}
+                        alt="Imagi logo"
+                        class="inline cursor-pointer dark:hidden"
+                    />
+                    <img
+                        src="/img/logo-dark.svg"
+                        width={24}
+                        height={24}
+                        alt="Imagi logo"
+                        class="hidden cursor-pointer dark:inline"
+                    />
+                    Xylo
+                </a>
+            </span>
         </Menu>
     {:else}
         <Button color={Color.accent} link href="/login">

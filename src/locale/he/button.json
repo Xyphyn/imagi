@@ -10,5 +10,7 @@
     "button.profile.settings": "הגדרות",
     "button.profile.logout": "להתנתק",
     "button.comment.cancel": "לְבַטֵל",
-    "button.post.upload": "העלה"
+    "button.post.upload": "העלה",
+    "button.community.follow": "לעקוב אחר",
+    "button.community.followed": "בעקבות"
 }

@@ -14,6 +14,7 @@
     import { Color } from '$lib/ui/colors'
     import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
     import { Calendar, Icon, PencilSquare, UserGroup } from 'svelte-hero-icons'
+    import { _ } from 'svelte-i18n'
     import InfiniteScroll from 'svelte-infinite-scroll'
 
     export let data: {
@@ -105,7 +106,7 @@
                     href="/community/{data.community.name}/settings/general"
                     color={Color.ghost}
                 >
-                    Settings
+                    {$_('button.profile.settings')}
                 </Button>
             {/if}
             <Button
@@ -117,7 +118,9 @@
                     : Color.ghost}
                 onclick={follow}
             >
-                {following($user?.communities || []) ? 'Following' : 'Follow'}
+                {following($user?.communities || [])
+                    ? $_('button.community.followed')
+                    : $_('button.community.follow')}
             </Button>
         </div>
     </div>
