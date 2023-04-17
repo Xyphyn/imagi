@@ -1,6 +1,8 @@
 {
     "settings": {
         "userSettings": "User Settings",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
         "general": {
             "name": "General",
             "grid": {

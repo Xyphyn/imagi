@@ -1,6 +1,8 @@
 {
     "settings": {
         "userSettings": "הגדרות משתמש",
+        "enabled": "מופעל",
+        "disabled": "נָכֶה",
         "general": {
             "name": "כללי",
             "grid": {

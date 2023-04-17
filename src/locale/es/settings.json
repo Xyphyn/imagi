@@ -1,6 +1,8 @@
 {
     "settings": {
         "userSettings": "Ajustes de usuario",
+        "enabled": "Activado",
+        "disabled": "Desactivado",
         "general": {
             "name": "General",
             "grid": {

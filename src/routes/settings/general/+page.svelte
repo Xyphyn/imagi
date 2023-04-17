@@ -39,7 +39,7 @@
     <p slot="description">{$_('settings.general.grid.description')}</p>
     <SwitchInput bind:enabled={$userSettings.grid} />
     <span class="text-sm">
-        {$userSettings.grid ? 'Enabled' : 'Disabled'}
+        {$userSettings.grid ? $_('settings.enabled') : $_('settings.disabled')}
     </span>
 </Setting>
 <Setting>
