@@ -3,6 +3,12 @@ import { init, locale, register } from 'svelte-i18n'
 
 const defaultLocale = 'en'
 
+/**
+ *  Translators: Copy a group of these register statements,
+ *  and replace the country code (e.g., en) with the country
+ *  code of the language you're translating to.
+ */
+
 register('en', () => import('../../locale/en/button.json'))
 register('en', () => import('../../locale/en/common.json'))
 register('en', () => import('../../locale/en/input.json'))
