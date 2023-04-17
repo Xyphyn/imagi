@@ -8,5 +8,8 @@
     "home.posts.sort.recent": "Reciente",
     "home.posts.sort.followed": "Seguido",
     "navbar.blog": "Blog",
-    "navbar.links": "Enlaces"
+    "navbar.links": "Enlaces",
+    "modal.community.create": "Crear una comunidad",
+    "modal.community.notice": "El nombre debe ser alfanumérico, en minúsculas",
+    "modal.community.placeholder.description": "Publica tus fotos geniales aquí"
 }

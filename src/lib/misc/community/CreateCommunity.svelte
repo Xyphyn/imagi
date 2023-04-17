@@ -9,6 +9,7 @@
     import { goto } from '$app/navigation'
     import { Collections } from '$lib/backend/schema'
     import { ToastType, addToast } from '$lib/ui/toasts/toasts'
+    import { _ } from 'svelte-i18n'
 
     export let open = false
     let err: any
@@ -67,8 +68,8 @@
 </script>
 
 <AdvancedModal bind:open>
-    <h1 class="ml-4 font-bold" slot="title">Create a Community</h1>
-    <p class="ml-4 opacity-75">Name must be alphanumeric, lowercase</p>
+    <h1 class="ml-4 font-bold" slot="title">{$_('modal.community.create')}</h1>
+    <p class="ml-4 opacity-75">{$_('modal.community.notice')}</p>
     <form
         class="flex flex-col gap-6 p-4 w-full"
         on:submit|preventDefault={create}
@@ -78,15 +79,15 @@
             <FileInput image bind:files={formData.files} />
         </div>
         <TextInput
-            label="Name"
+            label={$_('label.name')}
             placeholder="cool_pictures"
             bind:value={formData.name}
             err={formData.name.toLowerCase() != formData.name}
             maxlength={24}
         />
         <TextInput
-            label="Description"
-            placeholder="Post your cool pictures here"
+            label={$_('label.post.description')}
+            placeholder={$_('modal.community.placeholder.description')}
             bind:value={formData.description}
             maxlength={64}
         />
@@ -99,7 +100,7 @@
             submit
         >
             <Icon src={err == 'upload' ? XMark : Plus} size="18" />
-            Create
+            {$_('button.create')}
         </Button>
     </form>
 </AdvancedModal>

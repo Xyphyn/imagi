@@ -8,5 +8,8 @@
     "home.posts.sort.recent": "לאחרונה",
     "home.posts.sort.followed": "בעקבות",
     "navbar.blog": "בלוג",
-    "navbar.links": "קישורים"
+    "navbar.links": "קישורים",
+    "modal.community.create": "צור קהילה",
+    "modal.community.notice": "השם חייב להיות אלפאנומרי, אותיות קטנות",
+    "modal.community.placeholder.description": "פרסם כאן את התמונות המגניבות שלך"
 }

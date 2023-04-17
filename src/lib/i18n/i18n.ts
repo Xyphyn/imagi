@@ -18,7 +18,7 @@ register('he', () => import('../../locale/he/common.json'))
 register('he', () => import('../../locale/he/input.json'))
 register('he', () => import('../../locale/he/settings.json'))
 
-await init({
+init({
     fallbackLocale: defaultLocale,
     initialLocale: browser ? window.navigator.language : defaultLocale,
 })

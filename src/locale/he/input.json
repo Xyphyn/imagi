@@ -13,5 +13,6 @@
     "label.emailOrUsername": " שם משתמש או אימייל",
     "label.password": "סיסמה",
     "label.passwordConfirm": "אשר סיסמה",
-    "login.detailMessage": "הזן את פרטי החשבון שלך."
+    "login.detailMessage": "הזן את פרטי החשבון שלך.",
+    "label.name": "שֵׁם"
 }

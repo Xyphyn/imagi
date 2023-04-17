@@ -13,6 +13,7 @@
         collection={Collections.Users}
         let:items
         query={{ sort: '-created' }}
+        perPage={30}
     >
         <h1 class="text-3xl font-bold">New Users</h1>
         <div class="flex overflow-x-auto flex-row gap-4 pb-4 w-full">
