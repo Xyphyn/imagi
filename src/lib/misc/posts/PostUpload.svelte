@@ -75,8 +75,8 @@
                 formData.description = ''
 
                 addToast(
-                    'Success',
-                    'Your post was uploaded.',
+                    $_('toasts.success'),
+                    $_('toasts.posts.success.upload'),
                     ToastType.success
                 )
             })
@@ -86,14 +86,14 @@
                     case '400': {
                         if (pb.authStore.isValid) {
                             addToast(
-                                'Error',
-                                'Failed to upload post. Make sure you are verified. Check the file size and file type.',
+                                $_('toasts.error'),
+                                $_('toasts.posts.error.validSession'),
                                 ToastType.error
                             )
                         } else {
                             addToast(
-                                'Error',
-                                'Your session has expired. Log back in again.',
+                                $_('toasts.error'),
+                                $_('toasts.posts.error.invalidSession'),
                                 ToastType.error
                             )
                         }
@@ -101,15 +101,15 @@
                     }
                     case '429': {
                         addToast(
-                            'Warning',
-                            'You are being rate limited. Please do not create posts so fast.',
+                            $_('toasts.warning'),
+                            $_('toasts.posts.error.rateLimit'),
                             ToastType.warning
                         )
                     }
                     default: {
                         addToast(
-                            'Error',
-                            'Failed to upload post.',
+                            $_('toasts.error'),
+                            $_('toasts.posts.error.unknown'),
                             ToastType.error
                         )
                         break

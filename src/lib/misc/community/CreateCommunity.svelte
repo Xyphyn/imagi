@@ -41,17 +41,10 @@
         await pb
             .collection(Collections.Communities)
             .create(data)
-            .catch((err) => {
-                addToast(
-                    'Error',
-                    'Could not create community. Check the image file type and size, and make sure the name is alphanumeric.',
-                    ToastType.error
-                )
-            })
             .then(() => {
                 addToast(
-                    'Success',
-                    'Your new community was created.',
+                    $_('toasts.success'),
+                    $_('toasts.community.success.create'),
                     ToastType.success
                 )
 
@@ -61,6 +54,13 @@
                 formData.name = ''
                 formData.description = ''
                 formData.files = null
+            })
+            .catch((err) => {
+                addToast(
+                    $_('toasts.error'),
+                    $_('toasts.community.error.create'),
+                    ToastType.error
+                )
             })
 
         submitting = false

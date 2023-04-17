@@ -1,0 +1,51 @@
+{
+    "toasts": {
+        "error": "Error",
+        "warning": "Advertencia",
+        "info": "Información",
+        "success": "Éxito",
+        "community": {
+            "error": {
+                "create": "No se pudo crear la comunidad. Compruebe el tipo y el tamaño del archivo de imagen y asegúrese de que el nombre sea alfanumérico."
+            },
+            "success": {
+                "success.create": "Tu nueva comunidad fue creada."
+            }
+        },
+        "settings": {
+            "error": {
+                "email": "No se pudo cambiar el correo electrónico. Puede que ya esté tomado.",
+                "bio": "No se pudo cambiar la biografía del perfil.",
+                "avatar": "No se pudo actualizar el avatar. Compruebe el tipo de archivo y el tamaño."
+            },
+            "success": {
+                "email": "Se envió un enlace de verificación a su correo electrónico.",
+                "bio": "Biografía de perfil actualizada.",
+                "delete": "Tu cuenta ha sido eliminada. ¡Adiós!",
+                "avatar": "Avatar actualizado. Es posible que deba actualizar para ver los cambios."
+            }
+        },
+        "login": {
+            "error": {
+                "credentials": "Credenciales no válidas."
+            }
+        },
+        "comments": {
+            "error": {
+                "rateLimit": "Tienes una tarifa limitada. Por favor, no comentes tan rápido.",
+                "comment": "No se pudo cargar el comentario."
+            }
+        },
+        "posts": {
+            "error": {
+                "rateLimit": "Tienes una tarifa limitada. Por favor, no publiques tan rápido.",
+                "validSession": "No se pudo cargar la publicación. Asegúrate de estar verificado. Compruebe el tamaño y el tipo de archivo.",
+                "invalidSession": "Su sesión ha caducado. Ingresar de nuevo.",
+                "unknown": "No se pudo cargar la publicación."
+            },
+            "success": {
+                "upload": "Tu publicación fue cargada."
+            }
+        }
+    }
+}

@@ -35,15 +35,15 @@
             .requestEmailChange(formData.email.value)
             .then((data) => {
                 addToast(
-                    'Verify',
-                    'A verification link was sent to your email.',
+                    $_('toasts.info'),
+                    $_('toasts.settings.success.email'),
                     ToastType.info
                 )
             })
             .catch((e) => {
                 addToast(
-                    'Error',
-                    'Failed to change email. It may be already taken.',
+                    $_('toasts.error'),
+                    $_('toasts.settings.error.email'),
                     ToastType.error
                 )
             })
@@ -59,10 +59,18 @@
                 bio: formData.bio.value,
             })
             .then(() =>
-                addToast('Success', 'Updated profile bio.', ToastType.success)
+                addToast(
+                    $_('toasts.success'),
+                    $_('toasts.settings.success.bio'),
+                    ToastType.success
+                )
             )
             .catch(() => {
-                addToast('Error', 'Failed to profile bio.', ToastType.error)
+                addToast(
+                    $_('toasts.error'),
+                    $_('toasts.settings.error.bio'),
+                    ToastType.error
+                )
             })
         formData.bio.submitting = false
     }
@@ -73,8 +81,8 @@
         await pb.collection(Collections.Users).delete($user.id)
 
         addToast(
-            'Deletion',
-            'Your account has been deleted. Goodbye!',
+            $_('toasts.info'),
+            $_('toasts.settings.success.delete'),
             ToastType.info
         )
 
@@ -139,15 +147,15 @@
                 .update($user.id, data)
                 .then(() => {
                     addToast(
-                        'Success',
-                        'Updated avatar. You may need to refresh to see changes.',
+                        $_('toasts.success'),
+                        $_('toasts.settings.success.avatar'),
                         ToastType.success
                     )
                 })
                 .catch(() => {
                     addToast(
-                        'Error',
-                        'Failed to update avatar. Check the filetype and size.',
+                        $_('toasts.error'),
+                        $_('toasts.settings.error.avatar'),
                         ToastType.error
                     )
                 })

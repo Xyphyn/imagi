@@ -44,7 +44,11 @@
             })
             .catch((error) => {
                 err = 'credentials'
-                addToast('Error', 'Invalid credentials.', ToastType.error)
+                addToast(
+                    $_('toasts.error'),
+                    $_('toasts.login.error.credentials'),
+                    ToastType.error
+                )
             })
 
         submitting = false

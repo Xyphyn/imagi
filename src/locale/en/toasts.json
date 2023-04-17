@@ -1,0 +1,51 @@
+{
+    "toasts": {
+        "error": "Error",
+        "warning": "Warning",
+        "info": "Info",
+        "success": "Success",
+        "community": {
+            "error": {
+                "create": "Could not create community. Check the image file type and size, and make sure the name is alphanumeric."
+            },
+            "success": {
+                "success.create": "Your new community was created."
+            }
+        },
+        "settings": {
+            "error": {
+                "email": "Failed to change email. It may be already taken.",
+                "bio": "Failed to change profile bio.",
+                "avatar": "Failed to update avatar. Check the filetype and size."
+            },
+            "success": {
+                "email": "A verification link was sent to your email.",
+                "bio": "Updated profile bio.",
+                "delete": "Your account has been deleted. Goodbye!",
+                "avatar": "Updated avatar. You may need to refresh to see changes."
+            }
+        },
+        "login": {
+            "error": {
+                "credentials": "Invalid credentials."
+            }
+        },
+        "comments": {
+            "error": {
+                "rateLimit": "You are being rate limited. Please don't comment so fast.",
+                "comment": "Failed to upload comment."
+            }
+        },
+        "posts": {
+            "error": {
+                "rateLimit": "You are being rate limited. Please don't post so fast.",
+                "validSession": "Failed to upload post. Make sure you are verified. Check the file size and file type.",
+                "invalidSession": "Your session has expired. Log in again.",
+                "unknown": "Failed to upload post."
+            },
+            "success": {
+                "upload": "Your post was uploaded."
+            }
+        }
+    }
+}
