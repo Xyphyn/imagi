@@ -12,6 +12,7 @@
     import CommunityAvatar from '$lib/ui/profile/CommunityAvatar.svelte'
     import { user } from '$lib/backend/pocketbase'
     import MultiSelect from '$lib/ui/input/MultiSelect.svelte'
+    import { _ } from 'svelte-i18n'
 
     interface Sort {
         filterFunction: (
@@ -56,7 +57,7 @@
         ? ''
         : 'max-w-xl mx-auto'}"
 >
-    <h1 class="self-start text-3xl font-bold">Communities</h1>
+    <h1 class="self-start text-3xl font-bold">{$_('home.communities')}</h1>
 
     <div class="flex overflow-x-auto flex-row gap-4 pb-4 w-full">
         <RecordList
@@ -97,7 +98,7 @@
         </RecordList>
     </div>
     <h1 class="flex flex-row gap-2 items-center self-start text-3xl font-bold">
-        Posts
+        {$_('home.posts')}
     </h1>
     <PostFetch
         let:posts
@@ -111,6 +112,10 @@
             <MultiSelect
                 class="capitalize"
                 options={Array.from(sorts.keys())}
+                optionNames={[
+                    $_('home.posts.sort.recent'),
+                    $_('home.posts.sort.followed'),
+                ]}
                 bind:selected={selectedSort}
                 on:select={async (selected) => {
                     const sel = sorts.get(selected.detail)

@@ -4,13 +4,14 @@
     import Button from '$lib/ui/Button.svelte'
     import MultiSelect from '$lib/ui/input/MultiSelect.svelte'
     import Setting from '../Setting.svelte'
-    import { locales, locale } from 'svelte-i18n'
+    import { locales, locale, _ } from 'svelte-i18n'
     import { browser } from '$app/environment'
+    import { Color } from '$lib/ui/colors'
 
     const names: Map<string, string> = new Map([
         ['en', '🇬🇧 English'],
-        ['es', '🇪🇸 Spanish'],
-        ['he', '🇮🇱 Hebrew'],
+        ['es', '🇪🇸 Español'],
+        ['he', '🇮🇱 עִברִית'],
     ])
 
     $: {
@@ -34,17 +35,17 @@
 
 <title>Settings | General</title>
 <Setting>
-    <span slot="title">Grid</span>
-    <p slot="description">Makes the post lists a grid rather than a column.</p>
+    <span slot="title">{$_('settings.general.grid.title')}</span>
+    <p slot="description">{$_('settings.general.grid.description')}</p>
     <SwitchInput bind:enabled={$userSettings.grid} />
     <span class="text-sm">
         {$userSettings.grid ? 'Enabled' : 'Disabled'}
     </span>
 </Setting>
 <Setting>
-    <span slot="title">Thumbnail Size</span>
+    <span slot="title">{$_('settings.general.thumbSize.title')}</span>
     <p slot="description">
-        The resolution to make thumbnails. 64x64 will disable video thumbnails.
+        {$_('settings.general.thumbSize.description')}.
     </p>
     <MultiSelect
         separate={false}
@@ -54,15 +55,15 @@
 </Setting>
 <Setting>
     <span slot="title">
-        Language <span
+        {$_('settings.general.language.title')}
+        <span
             class="px-2 py-1 ml-2 text-sm text-white bg-black rounded-md dark:bg-white dark:text-black"
         >
-            Beta
+            {$_('settings.general.language.beta')}
         </span>
     </span>
     <p slot="description">
-        The language UI is in. See an inaccurate or missing translation? Make a
-        pull request.
+        {$_('settings.general.language.description')}
     </p>
     <select
         bind:value={selectedLocale}
@@ -74,4 +75,14 @@
             </option>
         {/each}
     </select>
+    <Button
+        color={Color.ghost}
+        class="justify-center w-full md:max-w-[8rem] h-10 ml-auto"
+        onclick={() => {
+            localStorage.removeItem('locale')
+            locale.set(window.navigator.language)
+        }}
+    >
+        Reset
+    </Button>
 </Setting>

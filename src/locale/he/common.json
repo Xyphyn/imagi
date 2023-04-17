@@ -2,5 +2,11 @@
     "account.login": "התחברות",
     "account.signup": "הירשם",
     "account.noAccount": "אין לך חשבון?",
-    "account.yesAccount": "כבר יש לך חשבון?"
+    "account.yesAccount": "כבר יש לך חשבון?",
+    "home.communities": "קהילות",
+    "home.posts": "פוסטים",
+    "home.posts.sort.recent": "לאחרונה",
+    "home.posts.sort.followed": "בעקבות",
+    "navbar.blog": "בלוג",
+    "navbar.links": "קישורים"
 }

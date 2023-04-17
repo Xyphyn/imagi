@@ -7,6 +7,7 @@
     import FileInput from '$lib/ui/input/FileInput.svelte'
     import TextInput from '$lib/ui/input/TextInput.svelte'
     import { ToastType, addToast } from '$lib/ui/toasts/toasts'
+    import { _ } from 'svelte-i18n'
     import Setting from '../Setting.svelte'
 
     export let formData = {
@@ -83,12 +84,12 @@
 
 <title>Settings | Account</title>
 <Setting>
-    <h1 slot="title">Email</h1>
-    <p slot="description">Your account email for logging in.</p>
+    <h1 slot="title">{$_('settings.account.email.title')}</h1>
+    <p slot="description">{$_('settings.account.email.description')}</p>
     <TextInput
         class="w-full md:max-w-[18rem] h-10 mr-auto"
         bind:value={formData.email.value}
-        placeholder="Email"
+        placeholder={$_('settings.account.email.title')}
     />
     <Button
         color={Color.accent}
@@ -97,12 +98,12 @@
         disabled={formData.email.submitting}
         onclick={changeEmail}
     >
-        Save
+        {$_('settings.save')}
     </Button>
 </Setting>
 <Setting>
-    <h1 slot="title">Bio</h1>
-    <p slot="description">A description displayed on your profile page.</p>
+    <h1 slot="title">{$_('settings.account.bio.title')}</h1>
+    <p slot="description">{$_('settings.account.bio.description')}</p>
     <TextInput
         class="w-full md:max-w-[18rem] h-10 mr-auto"
         bind:value={formData.bio.value}
@@ -115,12 +116,12 @@
         disabled={formData.bio.submitting}
         onclick={changeBio}
     >
-        Save
+        {$_('settings.save')}
     </Button>
 </Setting>
 <Setting col>
-    <h1 slot="title">Avatar</h1>
-    <p slot="description">The avatar displayed on your profile and comments.</p>
+    <h1 slot="title">{$_('settings.account.avatar.title')}</h1>
+    <p slot="description">{$_('settings.account.avatar.description')}</p>
     <FileInput image bind:files={formData.avatar.files} />
     <Button
         color={Color.accent}
@@ -154,27 +155,29 @@
             formData.avatar.submitting = false
         }}
     >
-        Save
+        {$_('settings.save')}
     </Button>
 </Setting>
 <Setting>
-    <h1 class="text-red-600" slot="title">Delete Account</h1>
+    <h1 class="text-red-600" slot="title">
+        {$_('settings.account.delete.title')}
+    </h1>
     <p class="text-red-600" slot="description">
-        This will permanently remove all content you have created. Type "delete
-        my account" to confirm.
+        {$_('settings.account.delete.description')}
     </p>
 
     <TextInput
-        placeholder="delete my account"
+        placeholder={$_('settings.account.delete.confirm')}
         class="w-full md:max-w-[18rem] mr-auto"
         bind:value={formData.delete.confirm}
     />
     <Button
         color={Color.danger}
         class="justify-center w-full md:max-w-[8rem] h-10 ml-auto"
-        disabled={formData.delete.confirm != 'delete my account'}
+        disabled={formData.delete.confirm !=
+            $_('settings.account.delete.confirm')}
         onclick={deleteAccount}
     >
-        Delete
+        {$_('settings.delete')}
     </Button>
 </Setting>

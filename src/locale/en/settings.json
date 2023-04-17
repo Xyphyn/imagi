@@ -1,0 +1,43 @@
+{
+    "settings": {
+        "userSettings": "User Settings",
+        "general": {
+            "name": "General",
+            "grid": {
+                "title": "Grid",
+                "description": "Makes the post lists a grid rather than a column."
+            },
+            "thumbSize": {
+                "title": "Thumbnail Size",
+                "description": "The resolution to make thumbnails. 64x64 will disable video thumbnails."
+            },
+            "language": {
+                "title": "Language",
+                "beta": "Beta",
+                "description": "The language the UI is in. See an inaccurate or missing translation? Make a pull request."
+            }
+        },
+        "account": {
+            "name": "Account",
+            "email": {
+                "title": "Email",
+                "description": "Your account email for logging in."
+            },
+            "bio": {
+                "title": "Bio",
+                "description": "A description displayed on your profile page."
+            },
+            "avatar": {
+                "title": "Avatar",
+                "description": "The avatar displayed on your profile and comments."
+            },
+            "delete": {
+                "title": "Delete Account",
+                "description": "This will permanently remove all content you have created. Type \"delete my account\" to confirm.",
+                "confirm": "delete my account"
+            }
+        },
+        "save": "Save",
+        "delete": "Delete"
+    }
+}

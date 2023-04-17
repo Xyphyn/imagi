@@ -63,7 +63,7 @@
                 href="/blog"
                 class="mx-4 my-2 text-xs text-left opacity-50 transition-colors hover:text-sky-400"
             >
-                Blog
+                {$_('navbar.blog')}
             </a>
             <RecordList
                 collection={Collections.Blog}
@@ -90,7 +90,9 @@
             <div
                 class="border-t border-black/10 dark:border-white/10 w-[90%] mx-auto my-2"
             />
-            <span class="mx-4 mb-2 text-xs text-left opacity-50">Links</span>
+            <span class="mx-4 mb-2 text-xs text-left opacity-50">
+                {$_('navbar.links')}
+            </span>
             <MenuButton link href="https://github.com/Xyphyn/Imagi">
                 GitHub
             </MenuButton>
