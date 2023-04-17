@@ -30,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"pocketbase": "^0.13.1"
+		"pocketbase": "^0.13.1",
+		"svelte-i18n": "^3.6.0"
 	}
 }

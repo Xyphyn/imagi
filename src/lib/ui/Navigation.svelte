@@ -25,6 +25,7 @@
     import RecordList from '$lib/backend/RecordList.svelte'
     import { Collections } from '$lib/backend/schema'
     import DotsLoad from './loaders/DotsLoad.svelte'
+    import { _ } from 'svelte-i18n'
 
     let modals = {
         uploading: false,
@@ -100,21 +101,23 @@
         </Menu>
         <Button link href="/explore" label="Explore">
             <Icon src={GlobeAlt} size="16" />
-            <span class="hidden xs:inline">Explore</span>
+            <span class="hidden xs:inline">{$_('button.explore')}</span>
         </Button>
         <Menu>
             <Button color={Color.accent} slot="button">
                 <Icon src={Plus} mini size="16" />
-                Create
+                {$_('button.create')}
             </Button>
-            <span class="mx-4 my-2 text-xs text-left opacity-50">Create</span>
+            <span class="mx-4 my-2 text-xs text-left opacity-50">
+                {$_('button.create')}
+            </span>
             <MenuButton onclick={() => (modals.uploading = true)}>
                 <Icon src={PencilSquare} mini size="18" />
-                Post
+                {$_('button.create.post')}
             </MenuButton>
             <MenuButton onclick={() => (modals.community = true)}>
                 <Icon src={Newspaper} mini size="18" />
-                Community
+                {$_('button.create.community')}
             </MenuButton>
         </Menu>
     </div>
@@ -128,18 +131,18 @@
             </span>
             <MenuButton onclick={() => goto(`/user/${$user?.username}`)}>
                 <Icon src={UserCircle} size="18" />
-                Profile
+                {$_('button.profile.profile')}
             </MenuButton>
             <MenuButton link href="/settings">
                 <Icon src={Cog6Tooth} size="18" />
-                Settings
+                {$_('button.profile.settings')}
             </MenuButton>
             <MenuButton
                 onclick={() => pb.authStore.clear()}
                 color={Color.dangerSecondary}
             >
                 <Icon src={ArrowLeftOnRectangle} mini size="18" />
-                Log Out
+                {$_('button.profile.logout')}
             </MenuButton>
             <div
                 class="border-t border-black/10 dark:border-white/10 w-[90%] mx-auto my-2"
