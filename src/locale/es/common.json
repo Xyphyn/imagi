@@ -1,2 +1,6 @@
 {
+    "account.login": "Acceso",
+    "account.signup": "Inscribirse",
+    "account.noAccount": "¿No tienes una cuenta?",
+    "account.yesAccount": "¿Ya tienes una cuenta?"
 }

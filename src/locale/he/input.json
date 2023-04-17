@@ -7,5 +7,11 @@
     "label.post.description": "תיאור",
     "label.post.community": "קהילה",
     "label.optional": "אופציונאלי",
-    "file.attach": "צרף קובץ"
+    "file.attach": "צרף קובץ",
+    "label.username": "שם משתמש",
+    "label.email": "אימייל",
+    "label.emailOrUsername": " שם משתמש או אימייל",
+    "label.password": "סיסמה",
+    "label.passwordConfirm": "אשר סיסמה",
+    "login.detailMessage": "הזן את פרטי החשבון שלך."
 }

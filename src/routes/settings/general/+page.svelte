@@ -14,8 +14,6 @@
     ])
 
     $: {
-        console.log(selectedLocale)
-
         if (browser) {
             localStorage.locale = selectedLocale
         }

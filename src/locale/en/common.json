@@ -1,2 +1,10 @@
 {
+    "account.login": "Log in",
+    "account.signup": "Sign up",
+    "account.noAccount": "Don't have an account?",
+    "account.yesAccount": "Already have an account?",
+    "home.communities": "Communities",
+    "home.posts": "Posts",
+    "home.posts.sort.recent": "Recent",
+    "home.posts.sort.followed": "Followed"
 }

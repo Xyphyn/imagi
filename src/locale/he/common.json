@@ -1,2 +1,6 @@
 {
+    "account.login": "התחברות",
+    "account.signup": "הירשם",
+    "account.noAccount": "אין לך חשבון?",
+    "account.yesAccount": "כבר יש לך חשבון?"
 }

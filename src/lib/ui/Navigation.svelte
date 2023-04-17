@@ -158,7 +158,9 @@
             </MenuButton>
         </Menu>
     {:else}
-        <Button color={Color.accent} link href="/login">Log In</Button>
+        <Button color={Color.accent} link href="/login">
+            {$_('account.login')}
+        </Button>
     {/if}
 </nav>
 <PostUpload bind:open={modals.uploading} />

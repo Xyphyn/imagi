@@ -7,5 +7,11 @@
     "label.post.description": "Descripción",
     "label.post.community": "Comunidad",
     "label.optional": "Opcional",
-    "file.attach": "Adjuntar un archivo"
+    "file.attach": "Adjuntar un archivo",
+    "label.username": "Nombre de usuario",
+    "label.email": "Correo electrónico",
+    "label.emailOrUsername": "Correo electrónico o nombre de usuario",
+    "label.password": "Contraseña",
+    "label.passwordConfirm": "Confirmar Contraseña",
+    "login.detailMessage": "Ingrese los detalles de su cuenta."
 }
