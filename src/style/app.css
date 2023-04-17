@@ -44,7 +44,7 @@ body {
     @apply hidden !important;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     position: absolute;
     right: 0;
     width: 4px;
@@ -54,7 +54,7 @@ body {
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: #3f3f46;
-}
+} */
 
 ul {
     list-style-type: disc;

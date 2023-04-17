@@ -5,6 +5,8 @@
     import nprogress from 'nprogress'
     import 'nprogress/nprogress.css'
     import ToastContainer from '$lib/ui/toasts/ToastContainer.svelte'
+    import { browser } from '$app/environment'
+    import { locale } from 'svelte-i18n'
 
     nprogress.configure({
         minimum: 0.4,
@@ -26,6 +28,18 @@
             }
         }
     }
+
+    const getLocale = (locale: string | null | undefined) => {
+        if (!browser) {
+            return locale
+        }
+
+        if (localStorage.locale) return localStorage.locale
+        else if (window.navigator.language) return window.navigator.language
+        else return locale
+    }
+
+    locale.update((locale) => getLocale(locale))
 </script>
 
 <ToastContainer />

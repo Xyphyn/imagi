@@ -1,5 +1,5 @@
 import { browser } from '$app/environment'
-import { init, register } from 'svelte-i18n'
+import { init, locale, register } from 'svelte-i18n'
 
 const defaultLocale = 'en'
 
@@ -15,7 +15,7 @@ register('he', () => import('../../locale/he/button.json'))
 register('he', () => import('../../locale/he/common.json'))
 register('he', () => import('../../locale/he/input.json'))
 
-init({
+await init({
     fallbackLocale: defaultLocale,
     initialLocale: browser ? window.navigator.language : defaultLocale,
 })

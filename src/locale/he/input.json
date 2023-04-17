@@ -1,5 +1,11 @@
 {
     "placeholder.comment": "מה אתה חושב?",
     "placeholder.post.title": "תמונה מגניבה שצילמתי",
-    "placeholder.post.description": "צילמתי את התמונה הזו במהלך פיצוץ גרעיני"
+    "placeholder.post.description": "צילמתי את התמונה הזו במהלך פיצוץ גרעיני",
+    "modal.post.title": "העלה פוסט",
+    "label.post.title": "כותרת",
+    "label.post.description": "תיאור",
+    "label.post.community": "קהילה",
+    "label.optional": "אופציונאלי",
+    "file.attach": "צרף קובץ"
 }

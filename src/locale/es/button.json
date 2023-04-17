@@ -8,5 +8,7 @@
     "button.create.community": "Comunidad",
     "button.profile.profile": "Perfil",
     "button.profile.settings": "Parámetros",
-    "button.profile.logout": "Cerrar sesión"
+    "button.profile.logout": "Cerrar sesión",
+    "button.comment.cancel": "Cancelar",
+    "button.post.upload": "Subir"
 }

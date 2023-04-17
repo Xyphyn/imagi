@@ -122,7 +122,7 @@
 </script>
 
 <AdvancedModal bind:open>
-    <h1 class="ml-4 font-bold" slot="title">Upload a Post</h1>
+    <h1 class="ml-4 font-bold" slot="title">{$_('modal.post.title')}</h1>
     <form
         class="flex flex-col gap-6 p-4 w-full"
         on:submit|preventDefault={post}
@@ -152,7 +152,7 @@
             submit
         >
             <Icon src={err == 'upload' ? XMark : ArrowUpOnSquare} size="18" />
-            Upload
+            {$_('button.post.upload')}
         </Button>
     </form>
 </AdvancedModal>

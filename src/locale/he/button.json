@@ -8,5 +8,7 @@
     "button.create.community": "קהילה",
     "button.profile.profile": "פּרוֹפִיל",
     "button.profile.settings": "הגדרות",
-    "button.profile.logout": "להתנתק"
+    "button.profile.logout": "להתנתק",
+    "button.comment.cancel": "לְבַטֵל",
+    "button.post.upload": "העלה"
 }

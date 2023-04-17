@@ -1,5 +1,11 @@
 {
     "placeholder.comment": "¿Qué estás pensando?",
     "placeholder.post.title": "Una foto genial que tomé",
-    "placeholder.post.description": "Tomé esta foto durante una explosión nuclear."
+    "placeholder.post.description": "Tomé esta foto durante una explosión nuclear.",
+    "modal.post.title": "Subir una publicación",
+    "label.post.title": "Título",
+    "label.post.description": "Descripción",
+    "label.post.community": "Comunidad",
+    "label.optional": "Opcional",
+    "file.attach": "Adjuntar un archivo"
 }

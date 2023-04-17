@@ -1,5 +1,6 @@
 <script lang="ts">
     import { DocumentPlus, Icon } from 'svelte-hero-icons'
+    import { _ } from 'svelte-i18n'
 
     export let accept = 'image/*,video/*'
     export let multiple = false
@@ -38,7 +39,7 @@
         />
     {:else}
         <Icon src={DocumentPlus} class="opacity-50" size="36" />
-        <p class="text-sm opacity-50">Attach a file</p>
+        <p class="text-sm opacity-50">{$_('file.attach')}</p>
     {/if}
     <input type="file" bind:files {accept} class="hidden" {multiple} />
 </label>
