@@ -50,19 +50,7 @@
         if (formData.description) data.append('alt_text', formData.description)
 
         if (formData.community) {
-            try {
-                const community = await pb
-                    .collection(Collections.Communities)
-                    .getFirstListItem<CommunitiesResponse>(
-                        `name = "${formData.community}"`
-                    )
-
-                data.append('community', community.id)
-            } catch (error) {
-                err = 'community'
-                submitting = false
-                return
-            }
+            data.append('community', formData.community.id)
         }
 
         await pb
