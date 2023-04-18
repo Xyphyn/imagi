@@ -149,9 +149,7 @@
                 class="border-t border-black/10 dark:border-white/10 w-[90%] mx-auto my-2"
             />
             <span
-                class="flex flex-row {$locale == 'he'
-                    ? 'flex-row-reverse'
-                    : ''} gap-1 items-center mx-4 mr-auto text-left my-2 text-sm"
+                class="flex flex-row gap-1 items-center mx-4 my-2 mr-auto text-sm text-left"
             >
                 {$_('misc.madeBy')}
                 <a
