@@ -51,7 +51,13 @@
     </p>
     <MultiSelect
         separate={false}
-        options={['256x256', '128x128', '64x64']}
+        options={['0x0', '256x256', '128x128', '64x64']}
+        optionNames={[
+            $_('settings.general.thumbSize.fullQuality'),
+            '256x256',
+            '128x128',
+            '64x64',
+        ]}
         bind:selected={$userSettings.thumbSize}
     />
 </Setting>

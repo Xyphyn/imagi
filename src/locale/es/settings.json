@@ -11,7 +11,8 @@
             },
             "thumbSize": {
                 "title": "Tamaño de la uña del pulgar",
-                "description": "La resolución para hacer miniaturas. 64x64 deshabilitará las miniaturas de video."
+                "description": "La resolución para hacer miniaturas. 64x64 deshabilitará las miniaturas de video.",
+                "fullQuality": "Calidad total"
             },
             "language": {
                 "title": "Idioma",

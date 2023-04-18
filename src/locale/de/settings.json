@@ -11,7 +11,8 @@
             },
             "thumbSize": {
                 "title": "Größe der Vorschaubilder",
-                "description": "Die Auflösung für die Erstellung von Miniaturbildern. 64x64 deaktiviert die Video-Miniaturansichten."
+                "description": "Die Auflösung für die Erstellung von Miniaturbildern. 64x64 deaktiviert die Video-Miniaturansichten.",
+                "fullQuality": "Volle Qualität"
             },
             "language": {
                 "title": "Sprache",

@@ -11,7 +11,8 @@
             },
             "thumbSize": {
                 "title": "Thumbnail Size",
-                "description": "The resolution to make thumbnails. 64x64 will disable video thumbnails."
+                "description": "The resolution to make thumbnails. 64x64 will disable video thumbnails.",
+                "fullQuality": "Full Quality"
             },
             "language": {
                 "title": "Language",
