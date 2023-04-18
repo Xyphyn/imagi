@@ -61,6 +61,7 @@
                 formData.files = null
                 formData.title = ''
                 formData.description = ''
+                formData.community = null
 
                 addToast(
                     $_('toasts.success'),
