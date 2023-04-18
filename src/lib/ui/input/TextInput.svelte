@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { createEventDispatcher } from 'svelte'
     import { Icon, ExclamationCircle } from 'svelte-hero-icons'
 
     export let label = ''
@@ -15,6 +16,8 @@
 
     let clazz = ''
     export { clazz as class }
+
+    const dispatcher = createEventDispatcher<{ input: string }>()
 </script>
 
 <label class="flex flex-col items-center {clazz}">
@@ -33,6 +36,7 @@
     <input
         use:typeAction
         bind:value
+        on:input={() => dispatcher('input', value)}
         {placeholder}
         {maxlength}
         class="w-full px-3 text-sm py-2.5 bg-transparent border border-black/20

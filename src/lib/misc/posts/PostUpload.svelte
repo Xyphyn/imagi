@@ -6,6 +6,7 @@
     import Button from '$lib/ui/Button.svelte'
     import { Color } from '$lib/ui/colors'
     import FileInput from '$lib/ui/input/FileInput.svelte'
+    import SearchInput from '$lib/ui/input/SearchInput.svelte'
     import TextInput from '$lib/ui/input/TextInput.svelte'
     import { ToastType, addToast } from '$lib/ui/toasts/toasts'
     import {
@@ -24,12 +25,12 @@
         files: FileList | null
         title: string
         description: string
-        community: string
+        community: CommunitiesResponse | null
     } = {
         files: null,
         title: '',
         description: '',
-        community: '',
+        community: null,
     }
 
     let err: any
@@ -70,7 +71,6 @@
             .then(() => {
                 open = false
                 formData.files = null
-                formData.community = ''
                 formData.title = ''
                 formData.description = ''
 
@@ -119,6 +119,15 @@
 
         submitting = false
     }
+
+    const communitySearch = async (input: string) => {
+        return pb
+            .collection(Collections.Communities)
+            .getList<CommunitiesResponse>(1, 10, {
+                filter: `name ~ "${input}"`,
+            })
+            .then((results) => results.items)
+    }
 </script>
 
 <AdvancedModal bind:open>
@@ -138,12 +147,16 @@
             placeholder={$_('placeholder.post.description')}
             bind:value={formData.description}
         />
-        <TextInput
-            err={err == 'community'}
-            label={`${$_('label.post.community')} (${$_('label.optional')})`}
-            placeholder="memes"
-            bind:value={formData.community}
-        />
+        <div class="relative">
+            <SearchInput
+                search={communitySearch}
+                extract={(community) => community.name}
+                label={`${$_('label.post.community')} (${$_(
+                    'label.optional'
+                )})`}
+                bind:selected={formData.community}
+            />
+        </div>
         <Button
             color={err == 'upload' ? Color.danger : Color.accent}
             class="justify-center h-10"
