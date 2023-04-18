@@ -11,6 +11,7 @@
 
     export let absolute = false
     export let rtl = true
+    export let top = false
 </script>
 
 <button
@@ -28,8 +29,9 @@
                 easing: expoOut,
             }}
             class="absolute {rtl
-                ? 'origin-top-right top-[100%] right-0'
-                : 'origin-top-left top-[100%] left-0'}
+                ? 'origin-top-right right-0'
+                : 'origin-top-left left-0'}
+                {top ? 'bottom-[100%] origin-bottom-left' : 'top-[100%]'}
             rounded-md py-2 min-w-[16rem] my-2 flex flex-col shadow-lg {itemsClass
                 ? itemsClass
                 : 'bg-white dark:bg-zinc-900'}"

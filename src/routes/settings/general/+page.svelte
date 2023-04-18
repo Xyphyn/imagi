@@ -7,11 +7,13 @@
     import { locales, locale, _ } from 'svelte-i18n'
     import { browser } from '$app/environment'
     import { Color } from '$lib/ui/colors'
+    import SelectMenu from '$lib/ui/input/SelectMenu.svelte'
 
     const names: Map<string, string> = new Map([
         ['en', '🇬🇧 English'],
-        ['es', '🇪🇸 Español'],
         ['he', '🇮🇱 עִברִית'],
+        ['es', '🇪🇸 Español'],
+        ['de', '🇩🇪 Deutsch'],
     ])
 
     $: {
@@ -65,24 +67,21 @@
     <p slot="description">
         {$_('settings.general.language.description')}
     </p>
-    <select
-        bind:value={selectedLocale}
-        class="p-2 py-1 rounded-md dark:bg-zinc-700"
-    >
-        {#each $locales as locale}
-            <option value={locale}>
-                {names.get(locale) || locale}
-            </option>
-        {/each}
-    </select>
-    <Button
-        color={Color.ghost}
-        class="justify-center w-full md:max-w-[8rem] h-10 ml-auto"
-        onclick={() => {
-            localStorage.removeItem('locale')
-            locale.set(window.navigator.language)
-        }}
-    >
-        Reset
-    </Button>
+    <div class="flex flex-row items-center w-full">
+        <SelectMenu
+            bind:selected={selectedLocale}
+            options={$locales}
+            optionNames={names}
+        />
+        <Button
+            color={Color.ghost}
+            class="justify-center top-12 w-full max-w-[8rem] md:top-0 h-10 ml-auto"
+            onclick={() => {
+                localStorage.removeItem('locale')
+                locale.set(window.navigator.language)
+            }}
+        >
+            Reset
+        </Button>
+    </div>
 </Setting>

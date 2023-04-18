@@ -1,0 +1,45 @@
+{
+    "settings": {
+        "userSettings": "Benutzereinstellungen",
+        "enabled": "Aktiviert",
+        "disabled": "Behinderte",
+        "general": {
+            "name": "Allgemein",
+            "grid": {
+                "title": "Raster",
+                "description": "Macht die Beitragslisten zu einem Raster statt zu einer Spalte."
+            },
+            "thumbSize": {
+                "title": "Größe der Vorschaubilder",
+                "description": "Die Auflösung für die Erstellung von Miniaturbildern. 64x64 deaktiviert die Video-Miniaturansichten."
+            },
+            "language": {
+                "title": "Sprache",
+                "beta": "Beta",
+                "description": "Die Sprache, in der die Benutzeroberfläche vorliegt. Sehen Sie eine ungenaue oder fehlende Übersetzung? Stellen Sie einen Pull-Request."
+            }
+        },
+        "account": {
+            "name": "Konto",
+            "email": {
+                "title": "E-Mail",
+                "description": "Ihre Konto-E-Mail zum Einloggen."
+            },
+            "bio": {
+                "title": "Bio",
+                "description": "Eine Beschreibung, die auf Ihrer Profilseite angezeigt wird."
+            },
+            "avatar": {
+                "title": "Avatar",
+                "description": "Der Avatar, der in Ihrem Profil und Ihren Kommentaren angezeigt wird."
+            },
+            "delete": {
+                "title": "Konto löschen",
+                "description": "Dadurch werden alle Inhalte, die Sie erstellt haben, dauerhaft entfernt. Geben Sie zur Bestätigung \"mein konto loschen\" ein.",
+                "confirm": "mein konto loschen"
+            }
+        },
+        "save": "Speichern Sie",
+        "delete": "Löschen"
+    }
+}

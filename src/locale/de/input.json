@@ -1,0 +1,18 @@
+{
+    "placeholder.comment": "Was denken Sie?",
+    "placeholder.post.title": "Ein cooles Foto, das ich aufgenommen habe",
+    "placeholder.post.description": "Ich habe dieses Foto während einer atomexplosion aufgenommen",
+    "modal.post.title": "Beitrag hochladen",
+    "label.post.title": "Titel",
+    "label.post.description": "Beschreibung",
+    "label.post.community": "Gemeinschaft",
+    "label.optional": "Optional",
+    "file.attach": "Eine Datei anhängen",
+    "label.username": "Benutzername",
+    "label.email": "E-Mail",
+    "label.emailOrUsername": "E-Mail oder Benutzername",
+    "label.password": "Passwort",
+    "label.passwordConfirm": "Bestätigen Sie Ihr Passwort",
+    "login.detailMessage": "Geben Sie Ihre Kontodaten ein.",
+    "label.name": "Name"
+}
