@@ -16,6 +16,7 @@
     } from 'svelte-hero-icons'
     import { page } from '$app/stores'
     import { Collections } from '$lib/backend/schema.js'
+    import { _ } from 'svelte-i18n'
 
     export let data
 </script>
@@ -90,7 +91,7 @@
                         )}
                 >
                     <Icon src={Square2Stack} size="18" />
-                    Copy Link
+                    {$_('button.post.copy')}
                 </MenuButton>
                 {#if data.post && data.post.user == $user?.id}
                     <MenuButton
@@ -103,7 +104,7 @@
                         color={Color.dangerSecondary}
                     >
                         <Icon src={Trash} mini size="18" />
-                        Delete
+                        {$_('button.action.delete')}
                     </MenuButton>
                 {/if}
             </Menu>

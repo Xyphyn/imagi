@@ -12,5 +12,6 @@
     "button.comment.cancel": "Cancel",
     "button.post.upload": "Upload",
     "button.community.follow": "Follow",
-    "button.community.followed": "Followed"
+    "button.community.followed": "Followed",
+    "button.comment.copy": "Copy Text"
 }

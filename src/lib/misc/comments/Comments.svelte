@@ -199,7 +199,7 @@
                             navigator.clipboard.writeText(comment.content)}
                     >
                         <Icon src={Square2Stack} size="16" mini />
-                        Copy Text
+                        {$_('button.comment.copy')}
                     </MenuButton>
                     {#if comment.user == $user?.id}
                         <MenuButton

@@ -12,5 +12,6 @@
     "button.comment.cancel": "לְבַטֵל",
     "button.post.upload": "העלה",
     "button.community.follow": "לעקוב אחר",
-    "button.community.followed": "בעקבות"
+    "button.community.followed": "בעקבות",
+    "button.comment.copy": "העתק טקסט"
 }
