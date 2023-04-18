@@ -20,7 +20,6 @@
     import Avatar from './profile/Avatar.svelte'
     import MenuButton from './menus/MenuButton.svelte'
     import { goto } from '$app/navigation'
-    import { userSettings } from '$lib/settings'
     import CreateCommunity from '$lib/misc/community/CreateCommunity.svelte'
     import RecordList from '$lib/backend/RecordList.svelte'
     import { Collections } from '$lib/backend/schema'
