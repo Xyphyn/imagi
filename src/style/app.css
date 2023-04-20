@@ -44,21 +44,6 @@ body {
     @apply hidden !important;
 }
 
-::-webkit-scrollbar {
-    position: absolute;
-    right: 0;
-    width: 6px;
-    margin: 2px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #060607;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: #3f3f46;
-}
 
 ul {
     list-style-type: disc;
