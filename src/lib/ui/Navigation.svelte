@@ -50,7 +50,7 @@
             alt="Imagi logo"
             class="hidden cursor-pointer dark:block"
         />
-        <span class="bg-black text-white dark:bg-white dark:text-black px-2 py-1 uppercase text-sm font-bold hidden sm:block rounded-md">{import.meta.env.version || '1.0.0'}</span>
+        <span class="bg-black text-white dark:bg-white dark:text-black px-2 py-1 uppercase text-sm font-bold hidden sm:block rounded-md">{import.meta.env.VITE_VERSION || '1.0.0'}</span>
     </a>
     <div
         class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-zinc-900 sm:ml-auto sm:mr-0"
