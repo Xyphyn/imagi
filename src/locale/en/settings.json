@@ -17,7 +17,7 @@
             "language": {
                 "title": "Language",
                 "beta": "Beta",
-                "description": "The language the UI is in. See an inaccurate or missing translation? Make a pull request."
+                "description": "The language the UI is in. Translations ARE inaccurate. If you know any of these languages fluently, you can fix the translations. See the GitHub for details."
             }
         },
         "account": {

@@ -17,7 +17,7 @@
             "language": {
                 "title": "Idioma",
                 "beta": "Beta",
-                "description": "El idioma en el que se encuentra la interfaz de usuario. ¿Ve una traducción inexacta o faltante? Haz una solicitud de extracción."
+                "description": "El idioma de la interfaz de usuario. Las traducciones SON inexactas. Si conoces alguno de estos idiomas con fluidez, puedes corregir las traducciones. Consulta GitHub para más detalles."
             }
         },
         "account": {

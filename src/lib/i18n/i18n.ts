@@ -27,12 +27,6 @@ register('es', () => import('../../locale/es/input.json'))
 register('es', () => import('../../locale/es/settings.json'))
 register('es', () => import('../../locale/es/toasts.json'))
 
-register('de', () => import('../../locale/de/button.json'))
-register('de', () => import('../../locale/de/common.json'))
-register('de', () => import('../../locale/de/input.json'))
-register('de', () => import('../../locale/de/settings.json'))
-register('de', () => import('../../locale/de/toasts.json'))
-
 init({
     fallbackLocale: defaultLocale,
     initialLocale: browser ? window.navigator.language : defaultLocale,
