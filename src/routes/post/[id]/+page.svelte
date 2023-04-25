@@ -28,7 +28,17 @@
     content={data.post.alt_text ||
         'View this post on Imagi, a real time social app.'}
 />
-<meta property="og:image" content={pb.getFileUrl(data.post, data.post.image)} />
+{#if isVideo(pb.getFileUrl(data.post, data.post.image))}
+    <meta
+        property="og:video"
+        content={pb.getFileUrl(data.post, data.post.image)}
+    />
+{:else}
+    <meta
+        property="og:image"
+        content={pb.getFileUrl(data.post, data.post.image)}
+    />
+{/if}
 <meta property="#fff" data-react-helmet="true" name="theme-color" />
 <meta name="twitter:card" content="summary_large_image" />
 
