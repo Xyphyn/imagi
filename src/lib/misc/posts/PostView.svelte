@@ -92,6 +92,13 @@
                     height={200}
                 />
             {/if}
+            {#if post?.alt_text}
+                <div
+                    class="p-2 px-4 w-full max-w-full text-sm break-words rounded-md bg-slate-100 dark:bg-zinc-800"
+                >
+                    {post?.alt_text}
+                </div>
+            {/if}
             <div class="flex flex-row gap-2 items-center w-full">
                 <div class="self-start mr-auto text-sm opacity-50">
                     <RelativeDate date={post.created} />
