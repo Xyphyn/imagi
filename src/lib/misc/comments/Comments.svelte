@@ -225,7 +225,7 @@
                         </a>
                         • <RelativeDate date={comment.created} />
                     </span>
-                    <span class="text-sm">
+                    <span class="max-w-full text-sm break-words">
                         {comment.content}
                     </span>
                 </div>
