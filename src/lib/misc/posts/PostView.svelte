@@ -94,7 +94,7 @@
             {/if}
             {#if post?.alt_text}
                 <div
-                    class="p-2 px-4 w-full max-w-full text-sm break-words rounded-md bg-slate-100 dark:bg-zinc-800"
+                    class="p-2 px-4 w-full max-w-full text-sm break-words rounded-md bg-black/5 dark:bg-white/5"
                 >
                     {post?.alt_text}
                 </div>
