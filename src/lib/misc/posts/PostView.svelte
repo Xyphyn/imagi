@@ -27,6 +27,7 @@
     import { page } from '$app/stores'
     import RelativeDate from '../RelativeDate.svelte'
     import { _ } from 'svelte-i18n'
+    import Avatar from '$lib/ui/profile/Avatar.svelte'
 
     export let open = false
     export let post:
@@ -44,22 +45,30 @@
     <AdvancedModal bind:open>
         <div class="flex flex-col" slot="title">
             <h1 class="text-xl font-bold">{post?.description}</h1>
-            <span class="text-base opacity-80">
+            <span
+                class="flex flex-row gap-1 items-center mt-1 text-base opacity-80"
+            >
                 <button
                     on:click={() =>
                         goto(`/user/${post?.expand?.user.username}`)}
-                    class="transition-colors hover:text-sky-500"
+                    class="flex flex-row gap-2 items-center transition-colors hover:text-sky-500"
                 >
+                    <Avatar
+                        width={20}
+                        thumb="32x32"
+                        user={post?.expand?.user}
+                    />
                     {post?.expand?.user.username}
                 </button>
 
                 {#if post?.expand?.community}
+                    •
                     <button
                         on:click={() =>
                             goto(`/community/${post?.expand?.community.name}`)}
                         class="transition-colors hover:text-sky-500"
                     >
-                        • {post?.expand?.community.name}
+                        {post?.expand?.community.name}
                     </button>
                 {/if}
             </span>
