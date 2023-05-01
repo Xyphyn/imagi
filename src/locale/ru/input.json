@@ -1,0 +1,18 @@
+{
+    "placeholder.comment": "Что ты думаешь?",
+    "placeholder.post.title": "Классное фото я сделал",
+    "placeholder.post.description": "Я сделал это фото во время ядерного взрыва",
+    "modal.post.title": "Загрузка публикации",
+    "label.post.title": "Заголовок",
+    "label.post.description": "Описание",
+    "label.post.community": "Сообщество",
+    "label.optional": "Опционально",
+    "file.attach": "Прикрепить файл",
+    "label.username": "Никнейм",
+    "label.email": "Почта",
+    "label.emailOrUsername": "Почта или никнейм",
+    "label.password": "Пароль",
+    "label.passwordConfirm": "Повторить пароль",
+    "login.detailMessage": "Введите данные своей учетной записи.",
+    "label.name": "Имя"
+}

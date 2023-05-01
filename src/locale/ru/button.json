@@ -1,0 +1,17 @@
+{
+    "button.create": "Создать",
+    "button.explore": "Explore",
+    "button.post.comment": "Комментировать",
+    "button.post.copy": "Копировать ссылку",
+    "button.action.delete": "Удалить",
+    "button.create.post": "Опубликовать",
+    "button.create.community": "Сообществт",
+    "button.profile.profile": "Профиль",
+    "button.profile.settings": "Настройки",
+    "button.profile.logout": "Выйти",
+    "button.comment.cancel": "Отмена",
+    "button.post.upload": "Загрузить",
+    "button.community.follow": "Подписаться",
+    "button.community.followed": "Подписаны",
+    "button.comment.copy": "Копировать текст"
+}

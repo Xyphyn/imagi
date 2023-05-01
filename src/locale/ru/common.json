@@ -1,0 +1,18 @@
+{
+    "account.login": "Войти",
+    "account.signup": "Зарегистрироваться",
+    "account.noAccount": "Нет аккаунта?",
+    "account.yesAccount": "Уже есть аккаунт?",
+    "home.communities": "Сообщества",
+    "home.posts": "Публикации",
+    "home.posts.sort.recent": "Недавние",
+    "home.posts.sort.followed": "Подписан",
+    "navbar.blog": "Блог",
+    "navbar.links": "Ссылки",
+    "modal.community.create": "Создать сообщество",
+    "modal.community.notice": "Имя должно быть буквенно-цифровым, строчными буквами",
+    "modal.community.placeholder.description": "Публикуйте сюда свои крутые фотки",
+    "explore.users": "Новые пользователи",
+    "explore.communities": "Новое сообщество",
+    "misc.madeBy": "Сделано в"
+}
