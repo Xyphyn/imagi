@@ -60,7 +60,7 @@
         <div
             class="flex flex-row gap-2 items-center px-4 py-2 mx-auto bg-white rounded-full shadow-lg dark:bg-zinc-900 sm:ml-auto sm:mr-0"
         >
-            <Menu rtl={false}>
+            <Menu rtl={false} itemsClass="mt-4 bg-white dark:bg-zinc-900">
                 <Button slot="button" label="Other menu">
                     <Icon src={EllipsisHorizontal} size="16" mini />
                 </Button>
@@ -112,7 +112,7 @@
                 <Icon src={GlobeAlt} size="16" />
                 <span class="hidden xs:inline">{$_('button.explore')}</span>
             </Button>
-            <Menu>
+            <Menu itemsClass="mt-4 bg-white dark:bg-zinc-900">
                 <Button color={Color.accent} slot="button">
                     <Icon src={Plus} mini size="16" />
                     {$_('button.create')}

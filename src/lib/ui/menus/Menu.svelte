@@ -12,13 +12,27 @@
     export let absolute = false
     export let rtl = true
     export let top = false
+
+    let element: any
 </script>
 
+<svelte:body
+    on:click={(event) => {
+        let path = event.composedPath()
+
+        if (!path.includes(element)) {
+            if (open) {
+                open = false
+            }
+        }
+    }}
+/>
 <button
     class="overflow-visible z-30 {absolute
         ? 'absolute'
         : 'relative'} cursor-auto {clazz}"
     on:click={() => (open = !open)}
+    bind:this={element}
 >
     <slot name="button" />
     {#if open}
