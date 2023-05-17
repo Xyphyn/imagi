@@ -55,8 +55,8 @@ ol {
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     padding: 2px;
     margin: 2px;
     background-color: transparent;
@@ -64,12 +64,12 @@ ol {
 }
 
 ::-webkit-scrollbar-track {
-    width: 4px;
+    width: 3px;
     margin: 2px;
     @apply rounded-l-full bg-slate-200 dark:bg-zinc-900;
 }
 
 ::-webkit-scrollbar-thumb {
-    width: 4px;
+    width: 3px;
     @apply rounded-l-full bg-slate-400 dark:bg-zinc-800;
 }
