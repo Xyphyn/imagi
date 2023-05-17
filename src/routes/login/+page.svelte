@@ -21,14 +21,23 @@
     async function signUp() {
         submitting = true
 
-        await pb.collection(Collections.Users).create({
-            email: formData.email,
-            username: formData.username,
-            password: formData.password,
-            passwordConfirm: formData.passwordConfirm,
-        })
+        await pb
+            .collection(Collections.Users)
+            .create({
+                email: formData.email,
+                username: formData.username,
+                password: formData.password,
+                passwordConfirm: formData.passwordConfirm,
+            })
+            .then(async () => {
+                addToast(
+                    $_('toasts.info'),
+                    $_('toasts.settings.success.email'),
+                    ToastType.info
+                )
 
-        await logIn()
+                await logIn()
+            })
     }
 
     async function logIn() {

@@ -19,7 +19,7 @@
                 "avatar": "Failed to update avatar. Check the filetype and size."
             },
             "success": {
-                "email": "A verification link was sent to your email.",
+                "email": "A verification link was sent to your email. You must verify to upload posts.",
                 "bio": "Updated profile bio.",
                 "delete": "Your account has been deleted. Goodbye!",
                 "avatar": "Updated avatar. You may need to refresh to see changes."
