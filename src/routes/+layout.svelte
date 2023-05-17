@@ -44,6 +44,8 @@
 
 <ToastContainer />
 <Navigation />
-<div class="m-4">
-    <slot />
+<div class="mx-auto max-w-7xl">
+    <div class="m-4">
+        <slot />
+    </div>
 </div>
