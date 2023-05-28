@@ -36,7 +36,7 @@
             },
             "delete": {
                 "title": "Eliminar cuenta",
-                "description": "Esto eliminará permanentemente todo el contenido que haya creado. Escribe \"eliminar mi cuenta\" para confirmar.",
+                "description": "Esto eliminará permanentemente todo el contenido que hayas creado. Escribe \"eliminar mi cuenta\" para confirmar.",
                 "confirm": "eliminar mi cuenta"
             }
         },
