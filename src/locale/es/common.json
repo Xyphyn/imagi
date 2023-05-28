@@ -1,6 +1,6 @@
 {
-    "account.login": "Acceso",
-    "account.signup": "Inscribirse",
+    "account.login": "Iniciar sesion",
+    "account.signup": "Registrarse",
     "account.noAccount": "¿No tienes una cuenta?",
     "account.yesAccount": "¿Ya tienes una cuenta?",
     "home.communities": "Comunidades",
@@ -10,7 +10,7 @@
     "navbar.blog": "Blog",
     "navbar.links": "Enlaces",
     "modal.community.create": "Crear una comunidad",
-    "modal.community.notice": "El nombre debe ser alfanumérico, en minúsculas",
+    "modal.community.notice": "El nombre debe ser alfanumérico y en minúsculas",
     "modal.community.placeholder.description": "Publica tus fotos geniales aquí",
     "explore.users": "Nuevos usuarios",
     "explore.communities": "Nuevas comunidades",

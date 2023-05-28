@@ -6,12 +6,12 @@
         "general": {
             "name": "General",
             "grid": {
-                "title": "Red",
+                "title": "Cuadrícula",
                 "description": "Hace que las listas de publicaciones sean una cuadrícula en lugar de una columna."
             },
             "thumbSize": {
-                "title": "Tamaño de la uña del pulgar",
-                "description": "La resolución para hacer miniaturas. 64x64 deshabilitará las miniaturas de video.",
+                "title": "Tamaño de la miniatura",
+                "description": "La resolución al hacer miniaturas. 64x64 deshabilitará las miniaturas de video.",
                 "fullQuality": "Calidad total"
             },
             "language": {
@@ -35,12 +35,12 @@
                 "description": "El avatar que se muestra en tu perfil y comentarios."
             },
             "delete": {
-                "title": "Borrar cuenta",
+                "title": "Eliminar cuenta",
                 "description": "Esto eliminará permanentemente todo el contenido que haya creado. Escribe \"eliminar mi cuenta\" para confirmar.",
                 "confirm": "eliminar mi cuenta"
             }
         },
-        "save": "Ahorrar",
-        "delete": "Borrar"
+        "save": "Guardar",
+        "delete": "Eliminar"
     }
 }
